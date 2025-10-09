@@ -1,3 +1,29 @@
+// ========== Simple Product Grid Render (for demo) ==========
+function renderProductGridHTML(products) {
+  return `
+    <div class="product-grid">
+      ${products.map(p => `
+        <div class="product-card">
+          <img src="images/${p.img||'default.jpg'}" alt="${p.name}">
+          <h4>${p.name}</h4>
+          <div class="price">
+            <span class="sale-price">${money(p.price)}</span>
+            <span class="original-price">${p.oldPrice ? money(p.oldPrice) : ''}</span>
+          </div>
+          <button class="buy-button" onclick="addToCart('${p.id}', 1)">MUA</button>
+        </div>
+      `).join('')}
+    </div>
+  `;
+}
+
+// Hàm này có thể gọi để test lưới sản phẩm đơn giản
+function showSimpleProductGrid(cat) {
+  const grid = document.getElementById('productGrid');
+  if (!grid) return;
+  const items = PRODUCTS.filter(p => p.cat === cat);
+  grid.innerHTML = renderProductGridHTML(items);
+}
 /* Vựa Vui Vẻ — Expanded JS (no backend) */
 
 // ========= Utilities =========
@@ -46,47 +72,70 @@ const I18N = {
 
 // ========= Data =========
 const PRODUCTS = [
+  // Bánh kẹo có hình ảnh, giá khuyến mãi, giá gốc, phần trăm giảm giá
+  {id:'bk1', name:'Bánh tuyết Mochi khoai môn phô mai 450g', cat:'biscuits', price:90000, unit:'Hộp 450g', stock:true, pop:90, emoji:'', img:'mochi-khoai-mon.jpg', oldPrice:290000, discount:69, rating:4.8, reviewCount:35, nutrition:'Khoai môn, phô mai, bột nếp.'},
+  {id:'bk2', name:'Bánh nướng Mochi khoai môn chà bông 500g', cat:'biscuits', price:90000, unit:'Hộp 500g', stock:true, pop:85, emoji:'', img:'mochi-cha-bong.jpg', oldPrice:290000, discount:69, rating:4.7, reviewCount:28, nutrition:'Khoai môn, chà bông, bột mì.'},
+  {id:'bk3', name:'Hộp 4 bánh trung thu Bảo Ngọc Thu Bình An xanh', cat:'biscuits', price:125000, unit:'Hộp 4 bánh', stock:true, pop:80, emoji:'', img:'trungthu-xanh.jpg', oldPrice:250000, discount:50, rating:4.9, reviewCount:41, nutrition:'Bột mì, trứng, đậu xanh.'},
+  {id:'bk4', name:'Hộp 4 bánh trung thu Bảo Ngọc Thu Bình An cam', cat:'biscuits', price:125000, unit:'Hộp 4 bánh', stock:true, pop:78, emoji:'', img:'trungthu-cam.jpg', oldPrice:250000, discount:50, rating:4.9, reviewCount:39, nutrition:'Bột mì, trứng, đậu xanh.'},
+  {id:'bk5', name:'Hộp 6 bánh trung thu Momoyama vị trà 300g', cat:'biscuits', price:90000, unit:'Hộp 6 bánh', stock:true, pop:75, emoji:'', img:'momoyama-tra.jpg', oldPrice:450000, discount:80, rating:4.8, reviewCount:22, nutrition:'Bột trà xanh, đậu đỏ.'},
+  {id:'bk6', name:'Hộp 4 bánh trung thu Boni truyền thống 200g', cat:'biscuits', price:50000, unit:'Hộp 4 bánh', stock:true, pop:70, emoji:'', img:'boni-truyen-thong.jpg', oldPrice:198000, discount:75, rating:4.7, reviewCount:18, nutrition:'Bột mì, đậu xanh.'},
+  {id:'bk7', name:'Hộp 4 bánh trung thu Hữu Nghị Momiji Mochi 200g', cat:'biscuits', price:190000, unit:'Hộp 4 bánh', stock:true, pop:68, emoji:'', img:'huunghi-mochi.jpg', oldPrice:380000, discount:50, rating:4.8, reviewCount:25, nutrition:'Bột nếp, đậu đỏ.'},
+  {id:'bk8', name:'Bánh trung thu Phúc An thập cẩm trứng 120g', cat:'biscuits', price:15000, unit:'Gói 120g', stock:true, pop:65, emoji:'', img:'phucan-trung.jpg', oldPrice:59000, discount:75, rating:4.6, reviewCount:17, nutrition:'Thập cẩm, trứng muối.'},
+  {id:'bk9', name:'Bánh trung thu chay Phúc An thập cẩm 120g', cat:'biscuits', price:15000, unit:'Gói 120g', stock:true, pop:60, emoji:'', img:'phucan-chay.jpg', oldPrice:59000, discount:75, rating:4.5, reviewCount:13, nutrition:'Thập cẩm chay.'},
+  // Bánh kẹo
+  {id:'p40', name:'Bánh quy bơ (200g)', cat:'biscuits', price:32000, unit:'hộp', stock:true, pop:40, emoji:'🍪', tags:['bestseller'], nutrition:'Bơ, bột mì, đường.', rating:4.7, reviewCount:25},
+  {id:'p41', name:'Kẹo dẻo trái cây (100g)', cat:'biscuits', price:18000, unit:'gói', stock:true, pop:32, emoji:'🍬', tags:[], nutrition:'Đường, gelatin, hương trái cây.', rating:4.5, reviewCount:14},
+  {id:'p42', name:'Bánh xốp socola (150g)', cat:'biscuits', price:27000, unit:'gói', stock:true, pop:28, emoji:'🍫', tags:[], nutrition:'Socola, bột mì, sữa.', rating:4.6, reviewCount:19},
+  {id:'p43', name:'Bánh gạo vị rong biển (90g)', cat:'biscuits', price:22000, unit:'gói', stock:true, pop:22, emoji:'🍘', tags:['organic'], nutrition:'Gạo, rong biển.', rating:4.4, reviewCount:11},
+  {id:'p44', name:'Kẹo sữa mềm (120g)', cat:'biscuits', price:21000, unit:'gói', stock:true, pop:18, emoji:'🍭', tags:[], nutrition:'Sữa, đường.', rating:4.3, reviewCount:8},
+  // Sản phẩm mới bổ sung
+  {id:'p27', name:'Dưa hấu (1kg)', cat:'fruit', price:32000, unit:'kg', stock:true, pop:58, emoji:'🍉', tags:['organic'], nutrition:'Giàu nước, vitamin C.', rating:4.5, reviewCount:21},
+  {id:'p28', name:'Khoai tây (500g)', cat:'veg', price:17000, unit:'gói', stock:true, pop:49, emoji:'🥔', tags:[], nutrition:'Tinh bột, vitamin B6.', rating:4.3, reviewCount:15},
+  {id:'p29', name:'Sữa chua (4 hộp)', cat:'dairy', price:28000, unit:'lốc', stock:true, pop:37, emoji:'🍦', tags:['bestseller'], nutrition:'Probiotic, canxi.', rating:4.7, reviewCount:33},
+  {id:'p30', name:'Trứng gà ta (10 quả)', cat:'eggs', price:39000, unit:'vỉ', stock:true, pop:61, emoji:'🥚', tags:[], nutrition:'Protein, vitamin D.', rating:4.6, reviewCount:27},
+  {id:'p31', name:'Bánh mì sandwich (400g)', cat:'breakfast', price:25000, unit:'ổ', stock:true, pop:44, emoji:'🍞', tags:[], nutrition:'Carb, chất xơ.', rating:4.4, reviewCount:18},
+  {id:'p32', name:'Nho Mỹ (500g)', cat:'fruit', price:69000, unit:'hộp', stock:true, pop:53, emoji:'🍇', tags:['bestseller'], nutrition:'Chất chống oxy hóa.', rating:4.8, reviewCount:41},
   // Rau củ
-  {id:'p1',  name:'Bí đỏ (500g)',       cat:'veg',   price:25000,  unit:'gói',  stock:true,  pop:80, emoji:'🎃', tags:['organic'], nutrition:'Giàu beta-carotene, chất xơ.'},
-  {id:'p2',  name:'Rau muống (400g)',   cat:'veg',   price:18000,  unit:'bó',   stock:true,  pop:86, emoji:'🥬', tags:['bestseller'], nutrition:'Vitamin A, C; chất xơ.'},
-  {id:'p3',  name:'Cải thìa (400g)',    cat:'veg',   price:22000,  unit:'bó',   stock:true,  pop:60, emoji:'🥗', tags:['organic'], nutrition:'Canxi, vitamin K.'},
-  {id:'p4',  name:'Cà rốt (500g)',      cat:'veg',   price:21000,  unit:'gói',  stock:true,  pop:55, emoji:'🥕', tags:['bestseller'], nutrition:'Beta-carotene, chất xơ.'},
-  {id:'p5',  name:'Hành lá (100g)',     cat:'veg',   price:8000,   unit:'bó',   stock:true,  pop:74, emoji:'🧅', tags:[], nutrition:'Vitamin K, hợp chất lưu huỳnh.'},
-  
+  {id:'p1',  name:'Bí đỏ (500g)',       cat:'veg',   price:25000,  unit:'gói',  stock:true,  pop:80, emoji:'🎃', tags:['organic'], nutrition:'Giàu beta-carotene, chất xơ.', rating: 4.7, reviewCount: 82},
+  {id:'p2',  name:'Rau muống (400g)',   cat:'veg',   price:18000,  unit:'bó',   stock:true,  pop:86, emoji:'🥬', tags:['bestseller'], nutrition:'Vitamin A, C; chất xơ.', rating: 4.5, reviewCount: 68},
+  {id:'p3',  name:'Cải thìa (400g)',    cat:'veg',   price:22000,  unit:'bó',   stock:true,  pop:60, emoji:'🥗', tags:['organic'], nutrition:'Canxi, vitamin K.', rating: 4.3, reviewCount: 41},
+  {id:'p4',  name:'Cà rốt (500g)',      cat:'veg',   price:21000,  unit:'gói',  stock:true,  pop:55, emoji:'🥕', tags:['bestseller'], nutrition:'Beta-carotene, chất xơ.', rating: 4.6, reviewCount: 55},
+  {id:'p5',  name:'Hành lá (100g)',     cat:'veg',   price:8000,   unit:'bó',   stock:true,  pop:74, emoji:'🧅', tags:[], nutrition:'Vitamin K, hợp chất lưu huỳnh.', rating: 4.2, reviewCount: 23},
+
   // Trái cây
-  {id:'p6',  name:'Táo Fuji (1kg)',     cat:'fruit', price:65000,  unit:'kg',   stock:true,  pop:92, emoji:'🍎', tags:['bestseller'], nutrition:'Chất xơ, vitamin C.'},
-  {id:'p7',  name:'Chuối (1kg)',        cat:'fruit', price:38000,  unit:'kg',   stock:true,  pop:70, emoji:'🍌', tags:[], nutrition:'Kali, năng lượng tự nhiên.'},
-  {id:'p8',  name:'Cam sành (1kg)',     cat:'fruit', price:52000,  unit:'kg',   stock:true,  pop:68, emoji:'🍊', tags:['organic'], nutrition:'Vitamin C, chất chống oxy hóa.'},
-  
+  {id:'p6',  name:'Táo Fuji (1kg)',     cat:'fruit', price:65000,  unit:'kg',   stock:true,  pop:92, emoji:'🍎', tags:['bestseller'], nutrition:'Chất xơ, vitamin C.', rating: 4.8, reviewCount: 97},
+  {id:'p7',  name:'Chuối (1kg)',        cat:'fruit', price:38000,  unit:'kg',   stock:true,  pop:70, emoji:'🍌', tags:[], nutrition:'Kali, năng lượng tự nhiên.', rating: 4.4, reviewCount: 36},
+  {id:'p8',  name:'Cam sành (1kg)',     cat:'fruit', price:52000,  unit:'kg',   stock:true,  pop:68, emoji:'🍊', tags:['organic'], nutrition:'Vitamin C, chất chống oxy hóa.', rating: 4.6, reviewCount: 44},
+
   // Thịt tươi
-  {id:'p9',  name:'Thịt heo ba rọi (300g)', cat:'meat', price:76000, unit:'khay', stock:true, pop:88, emoji:'🥓', tags:[], nutrition:'Protein, chất béo.'},
-  {id:'p10', name:'Phi lê gà (300g)',   cat:'meat',  price:52000,  unit:'khay', stock:true,  pop:64, emoji:'🍗', tags:['bestseller'], nutrition:'Protein nạc.'},
-  {id:'p11', name:'Thịt bò xay (300g)', cat:'meat',  price:85000,  unit:'khay', stock:true,  pop:75, emoji:'🥩', tags:[], nutrition:'Protein, sắt, kẽm.'},
-  {id:'p12', name:'Ức gà (400g)',       cat:'meat',  price:48000,  unit:'khay', stock:true,  pop:70, emoji:'🍗', tags:['organic'], nutrition:'Protein nạc, ít béo.'},
-  
+  {id:'p9',  name:'Thịt heo ba rọi (300g)', cat:'meat', price:76000, unit:'khay', stock:true, pop:88, emoji:'🥓', tags:[], nutrition:'Protein, chất béo.', rating: 4.5, reviewCount: 51},
+  {id:'p10', name:'Phi lê gà (300g)',   cat:'meat',  price:52000,  unit:'khay', stock:true,  pop:64, emoji:'🍗', tags:['bestseller'], nutrition:'Protein nạc.', rating: 4.7, reviewCount: 62},
+  {id:'p11', name:'Thịt bò xay (300g)', cat:'meat',  price:85000,  unit:'khay', stock:true,  pop:75, emoji:'🥩', tags:[], nutrition:'Protein, sắt, kẽm.', rating: 4.4, reviewCount: 29},
+  {id:'p12', name:'Ức gà (400g)',       cat:'meat',  price:48000,  unit:'khay', stock:true,  pop:70, emoji:'🍗', tags:['organic'], nutrition:'Protein nạc, ít béo.', rating: 4.3, reviewCount: 18},
+
   // Hải sản
-  {id:'p13', name:'Cá basa phi lê (400g)', cat:'seafood', price:54000, unit:'khay', stock:true, pop:73, emoji:'🐟', tags:[], nutrition:'Omega-3, protein.'},
-  {id:'p14', name:'Tôm sú (300g)',      cat:'seafood', price:120000, unit:'khay', stock:true, pop:82, emoji:'🦐', tags:['bestseller'], nutrition:'Protein, canxi.'},
-  {id:'p15', name:'Mực tươi (300g)',    cat:'seafood', price:95000,  unit:'khay', stock:true, pop:78, emoji:'🦑', tags:[], nutrition:'Protein, khoáng chất.'},
-  
+  {id:'p13', name:'Cá basa phi lê (400g)', cat:'seafood', price:54000, unit:'khay', stock:true, pop:73, emoji:'🐟', tags:[], nutrition:'Omega-3, protein.', rating: 4.5, reviewCount: 33},
+  {id:'p14', name:'Tôm sú (300g)',      cat:'seafood', price:120000, unit:'khay', stock:true, pop:82, emoji:'🦐', tags:['bestseller'], nutrition:'Protein, canxi.', rating: 4.8, reviewCount: 54},
+  {id:'p15', name:'Mực tươi (300g)',    cat:'seafood', price:95000,  unit:'khay', stock:true, pop:78, emoji:'🦑', tags:[], nutrition:'Protein, khoáng chất.', rating: 4.6, reviewCount: 27},
+
   // Đồ đông lạnh
-  {id:'p16', name:'Viên bò viên (500g)', cat:'frozen', price:65000, unit:'gói', stock:true, pop:65, emoji:'🔵', tags:[], nutrition:'Protein.'},
-  {id:'p17', name:'Cá viên (500g)',     cat:'frozen', price:55000, unit:'gói', stock:true, pop:60, emoji:'🔵', tags:[], nutrition:'Protein cá.'},
-  {id:'p18', name:'Tôm viên (500g)',    cat:'frozen', price:75000, unit:'gói', stock:true, pop:62, emoji:'🔵', tags:[], nutrition:'Protein hải sản.'},
-  
+  {id:'p16', name:'Viên bò viên (500g)', cat:'frozen', price:65000, unit:'gói', stock:true, pop:65, emoji:'🔵', tags:[], nutrition:'Protein.', rating: 4.2, reviewCount: 12},
+  {id:'p17', name:'Cá viên (500g)',     cat:'frozen', price:55000, unit:'gói', stock:true, pop:60, emoji:'🔵', tags:[], nutrition:'Protein cá.', rating: 4.1, reviewCount: 9},
+  {id:'p18', name:'Tôm viên (500g)',    cat:'frozen', price:75000, unit:'gói', stock:true, pop:62, emoji:'🔵', tags:[], nutrition:'Protein hải sản.', rating: 4.3, reviewCount: 11},
+
   // Gia vị & Nêm nếm
-  {id:'p19', name:'Nước mắm 500ml',     cat:'spice',  price:32000,  unit:'chai', stock:true, pop:84, emoji:'🧂', tags:[], nutrition:'Đạm cá lên men.'},
-  {id:'p20', name:'Dầu ăn 1L',          cat:'spice',  price:52000,  unit:'chai', stock:true, pop:76, emoji:'🛢️', tags:[], nutrition:'Lipid; dùng vừa đủ.'},
-  {id:'p21', name:'Hạt nêm 500g',       cat:'spice',  price:42000,  unit:'gói',  stock:true, pop:80, emoji:'🧂', tags:['bestseller'], nutrition:'Gia vị tổng hợp.'},
-  {id:'p22', name:'Bột ngọt 500g',      cat:'spice',  price:35000,  unit:'gói',  stock:true, pop:75, emoji:'🧂', tags:[], nutrition:'Bột gia vị.'},
-  
+  {id:'p19', name:'Nước mắm 500ml',     cat:'spice',  price:32000,  unit:'chai', stock:true, pop:84, emoji:'🧂', tags:[], nutrition:'Đạm cá lên men.', rating: 4.5, reviewCount: 21},
+  {id:'p20', name:'Dầu ăn 1L',          cat:'spice',  price:52000,  unit:'chai', stock:true, pop:76, emoji:'�', tags:[], nutrition:'Lipid; dùng vừa đủ.', rating: 4.3, reviewCount: 15},
+  {id:'p21', name:'Hạt nêm 500g',       cat:'spice',  price:42000,  unit:'gói',  stock:true, pop:80, emoji:'🧂', tags:['bestseller'], nutrition:'Gia vị tổng hợp.', rating: 4.6, reviewCount: 32},
+  {id:'p22', name:'Bột ngọt 500g',      cat:'spice',  price:35000,  unit:'gói',  stock:true, pop:75, emoji:'🧂', tags:[], nutrition:'Bột gia vị.', rating: 4.2, reviewCount: 10},
+
   // Đồ khô
-  {id:'p23', name:'Gạo ST25 (5kg)',     cat:'dry',   price:180000, unit:'túi',  stock:true,  pop:95, emoji:'🍚', tags:['bestseller'], nutrition:'Carb phức, ít tạp chất.'},
-  {id:'p24', name:'Mì gói (thùng 30)',  cat:'dry',   price:120000, unit:'thùng', stock:true, pop:88, emoji:'🍜', tags:[], nutrition:'Tiện lợi.'},
-  
+  {id:'p23', name:'Gạo ST25 (5kg)',     cat:'dry',   price:180000, unit:'túi',  stock:true,  pop:95, emoji:'🍚', tags:['bestseller'], nutrition:'Carb phức, ít tạp chất.', rating: 4.9, reviewCount: 120},
+  {id:'p24', name:'Mì gói (thùng 30)',  cat:'dry',   price:120000, unit:'thùng', stock:true, pop:88, emoji:'🍜', tags:[], nutrition:'Tiện lợi.', rating: 4.4, reviewCount: 38},
+
   // Đồ uống
-  {id:'p25', name:'Sữa tươi 1L',        cat:'drink', price:34000,  unit:'hộp',  stock:true,  pop:71, emoji:'🥛', tags:[], nutrition:'Canxi, protein.'},
-  {id:'p26', name:'Nước khoáng 500ml',  cat:'drink', price:6000,   unit:'chai', stock:true,  pop:50, emoji:'💧', tags:['bestseller'], nutrition:'Khoáng chất, nước.'},
+  {id:'p25', name:'Sữa tươi 1L',        cat:'drink', price:34000,  unit:'hộp',  stock:true,  pop:71, emoji:'🥛', tags:[], nutrition:'Canxi, protein.', rating: 4.5, reviewCount: 19},
+  {id:'p26', name:'Nước khoáng 500ml',  cat:'drink', price:6000,   unit:'chai', stock:true,  pop:50, emoji:'💧', tags:['bestseller'], nutrition:'Khoáng chất, nước.', rating: 4.3, reviewCount: 14},
 ];
 
 const RECIPES = [
@@ -330,13 +379,38 @@ function render(){
 }
 
 function cardHTML(p){
-  const catClass = ({veg:'thumb--veg',fruit:'thumb--fruit',meat:'thumb--meat',dry:'thumb--dry',drink:'thumb--drink'})[p.cat] || 'thumb--veg';
+  const catClass = ({veg:'thumb--veg',fruit:'thumb--fruit',meat:'thumb--meat',dry:'thumb--dry',drink:'thumb--drink',biscuits:'thumb--veg'})[p.cat] || 'thumb--veg';
   const favPressed = favs.has(p.id) ? 'true':'false';
   const chips = (p.tags||[]).map(t=>`<span class="chip">${t==='organic'?'Hữu cơ':'Bán chạy'}</span>`).join('');
+  // Nếu có hình ảnh thì hiển thị ảnh, giá khuyến mãi, giá gốc, phần trăm giảm giá
+  if (p.cat === 'biscuits' && p.img) {
+    return `
+    <article class="card" data-id="${p.id}">
+      <button class="thumb ${catClass}" data-action="detail" aria-label="${p.name}" style="padding:0;background:none;">
+        <img src="images/${p.img}" alt="${p.name}" style="width:100%;height:120px;object-fit:cover;border-radius:10px;">
+      </button>
+      <div class="name" style="min-height:38px;">${p.name}</div>
+      <div class="meta" style="flex-direction:column;align-items:flex-start;gap:2px;">
+        <div>
+          <span class="price" style="color:#e53935;font-weight:700;font-size:18px;">${money(p.price)}/${p.unit}</span>
+          <span style="text-decoration:line-through;color:#888;font-size:13px;margin-left:6px;">${p.oldPrice ? money(p.oldPrice) : ''}</span>
+          <span style="color:#d32f2f;font-size:13px;margin-left:4px;">${p.discount ? '-'+p.discount+'%' : ''}</span>
+        </div>
+        <div class="rating-row"><span class="star">⭐</span> <span class="rating-num">${p.rating?.toFixed(1) ?? '0.0'}</span> <span class="review-count">(${p.reviewCount ?? 0} đánh giá)</span></div>
+      </div>
+      <div class="kit">
+        <button class="btn fav" aria-pressed="${favPressed}" data-action="fav">❤️</button>
+        <button class="btn" data-action="add">Thêm</button>
+        <button class="btn" data-action="detail">Chi tiết</button>
+      </div>
+    </article>`;
+  }
+  // ...các loại sản phẩm khác giữ nguyên...
   return `
   <article class="card" data-id="${p.id}">
     <button class="thumb ${catClass}" data-action="detail" aria-label="${p.name}">${p.emoji||'🛒'}</button>
     <div class="name">${p.name}</div>
+    <div class="rating-row"><span class="star">⭐</span> <span class="rating-num">${p.rating?.toFixed(1) ?? '0.0'}</span> <span class="review-count">(${p.reviewCount ?? 0} đánh giá)</span></div>
     <div class="pm-tags">${chips}</div>
     <div class="meta">
       <span class="price">${money(p.price)}</span>
@@ -552,6 +626,40 @@ function openProduct(pid){
   pmTags.innerHTML = (p.tags||[]).map(t=>`<span class="chip">${t==='organic'?'Hữu cơ':'Bán chạy'}</span>`).join('');
   pmNutri.textContent = p.nutrition || '';
   pmQty.value = 1;
+
+  // Hiển thị rating chi tiết
+  const pmRating = document.getElementById('pmRating');
+  if (pmRating) {
+    pmRating.innerHTML = `<span class="star">⭐</span> <span class="rating-num">${p.rating?.toFixed(1) ?? '0.0'}</span> <span class="review-count">(${p.reviewCount ?? 0} đánh giá)</span>`;
+  }
+
+  // Hiển thị 2-3 bình luận mẫu
+  const pmReviewsList = document.getElementById('pmReviewsList');
+  if (pmReviewsList) {
+    pmReviewsList.innerHTML = [
+      {user: 'Ngọc', comment: 'Sản phẩm rất tươi và ngon!'},
+      {user: 'Minh', comment: 'Đóng gói cẩn thận, giao hàng nhanh.'},
+      {user: 'Lan', comment: 'Giá hợp lý, sẽ ủng hộ tiếp.'}
+    ].slice(0, Math.floor(2 + Math.random())).map(r =>
+      `<div class="review-item"><strong>${r.user}</strong>: <span>${r.comment}</span></div>`
+    ).join('');
+  }
+
+  // Xử lý submit form đánh giá
+  const pmReviewForm = document.getElementById('pmReviewForm');
+  if (pmReviewForm) {
+    pmReviewForm.onsubmit = function(e) {
+      e.preventDefault();
+      const user = document.getElementById('pmReviewUser').value.trim();
+      const comment = document.getElementById('pmReviewComment').value.trim();
+      if (!user || !comment) return;
+      const reviewHTML = `<div class="review-item"><strong>${user}</strong>: <span>${comment}</span></div>`;
+      if (pmReviewsList) pmReviewsList.insertAdjacentHTML('afterbegin', reviewHTML);
+      pmReviewForm.reset();
+      toast('Cảm ơn bạn đã đánh giá!');
+    };
+  }
+
   // related
   const related = PRODUCTS.filter(x=>x.cat===p.cat && x.id!==p.id).slice(0,4);
   pmRelated.innerHTML = related.map(r=>`

@@ -1,3 +1,66 @@
+/* Rating & Review */
+.rating-row, .pm-rating {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 15px;
+  margin-bottom: 2px;
+}
+.star {
+  color: #ffca28;
+  font-size: 1.1em;
+  margin-right: 2px;
+}
+.review-count {
+  color: var(--muted);
+  font-size: 13px;
+}
+.pm-reviews {
+  margin: 18px 0 0 0;
+  padding: 14px 0 0 0;
+  border-top: 1px solid var(--border);
+}
+.pm-reviews > strong {
+  display: block;
+  margin-bottom: 8px;
+}
+.reviews-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+.review-item {
+  background: #fffbe7;
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-size: 15px;
+  border: 1px solid #ffe082;
+}
+.review-item strong {
+  font-weight: 700;
+  color: #e69500;
+}
+.review-form {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 8px;
+}
+.review-form input, .review-form textarea {
+  font-size: 15px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  padding: 8px 10px;
+}
+.review-form textarea {
+  min-height: 48px;
+  resize: vertical;
+}
+.review-form button {
+  align-self: flex-end;
+  margin-top: 4px;
+}
 :root{
   --green:#2ecc71;--green-600:#27ae60;--orange:#ff8a00;
   --text:#222;--muted:#6b7280;--bg:#f7faf9;--white:#fff;--border:#e5e7eb;

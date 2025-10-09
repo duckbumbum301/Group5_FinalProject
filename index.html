@@ -140,6 +140,44 @@
             <div class="product-filters">
               <label class="pill"><input type="checkbox" id="favOnly"> <span>Yêu thích</span></label>
               <label class="pill">
+                <span>Danh mục:</span>
+                <select class="input input--small" id="categoryFilter">
+                  <option value="all">Tất cả</option>
+                  <option value="biscuits">Bánh kẹo</option>
+                  <option value="breakfast">Đồ ăn sáng</option>
+                  <option value="canned-fruits">Trái cây đóng hộp</option>
+                  <option value="chocolate">Chocolate & Bánh kẹo</option>
+                  <option value="drinks">Đồ uống nóng lạnh</option>
+                  <option value="dairy">Sản phẩm từ sữa</option>
+                  <option value="snacks">Đồ ăn vặt & Hạt</option>
+                  <option value="baking">Nguyên liệu làm bánh</option>
+                  <option value="beans">Các loại đậu</option>
+                  <option value="canned">Đồ hộp</option>
+                  <option value="dried-veg">Rau củ khô</option>
+                  <option value="condiments">Gia vị & Dầu ăn</option>
+                  <option value="noodles">Mì & Bún</option>
+                  <option value="rice">Gạo</option>
+                  <option value="sauce">Nước sốt & Gia vị</option>
+                  <option value="butter">Bơ</option>
+                  <option value="cheese">Phô mai</option>
+                  <option value="eggs">Trứng</option>
+                  <option value="meat">Thịt tươi</option>
+                  <option value="seafood">Hải sản tươi</option>
+                  <option value="vegetables">Rau củ tươi</option>
+                  <option value="fruits">Trái cây tươi</option>
+                  <option value="frozen-seafood">Hải sản đông lạnh</option>
+                  <option value="frozen-meat">Thịt đông lạnh</option>
+                  <option value="frozen-veg">Rau củ đông lạnh</option>
+                  <option value="ice-cream">Kem</option>
+                  <option value="ready-meals">Thực phẩm chế biến sẵn</option>
+                  <option value="beer">Bia</option>
+                  <option value="wine">Rượu</option>
+                  <option value="soft-drinks">Nước giải khát</option>
+                  <option value="juice">Nước ép</option>
+                  <option value="water">Nước khoáng</option>
+                </select>
+              </label>
+              <label class="pill">
                 <span>Sắp xếp:</span>
                 <select class="input input--small" id="sortSelect">
                   <option value="pop">Phổ biến</option>
@@ -148,6 +186,23 @@
                   <option value="nameAsc">Tên A-Z</option>
                 </select>
               </label>
+              <label class="pill">
+                <span>Hiển thị:</span>
+                <select class="input input--small" id="perPage">
+                  <option value="12">12</option>
+                  <option value="24">24</option>
+                  <option value="48">48</option>
+                </select>
+              </label>
+              <div class="range-wrap">
+                <label for="priceRange">Giá tối đa:</label>
+                <input id="priceRange" type="range" min="20000" max="250000" step="10000" value="250000">
+                <span id="priceValue" class="pill">≤ 250.000₫</span>
+              </div>
+              <div class="pill">
+                <label><input type="checkbox" id="tagOrganic"> <span>Hữu cơ</span></label>
+                <label><input type="checkbox" id="tagBestseller"> <span>Bán chạy</span></label>
+              </div>
             </div>
           </div>
           <div id="productGrid" class="grid" aria-live="polite"></div>
@@ -156,30 +211,7 @@
           </div>
         </div>
 
-          <label for="sortSelect" data-i18n="filter.sort">Sắp xếp:</label>
-          <select id="sortSelect" class="input">
-            <option value="pop" data-i18n="sort.pop">Phổ biến</option>
-            <option value="priceAsc" data-i18n="sort.asc">Giá ↑</option>
-            <option value="priceDesc" data-i18n="sort.desc">Giá ↓</option>
-            <option value="nameAsc" data-i18n="sort.name">Tên A→Z</option>
-          </select>
-
-          <div class="range-wrap">
-            <label for="priceRange" data-i18n="filter.maxprice">Giá tối đa:</label>
-            <input id="priceRange" type="range" min="20000" max="250000" step="10000" value="250000">
-            <span id="priceValue" class="pill">≤ 250.000₫</span>
-          </div>
-
-          <div class="pill">
-            <label><input type="checkbox" id="tagOrganic"> <span data-i18n="tag.organic">Hữu cơ</span></label>
-            <label><input type="checkbox" id="tagBestseller"> <span data-i18n="tag.best">Bán chạy</span></label>
-          </div>
-        </div>
-
-        <div id="productGrid" class="grid" aria-live="polite"></div>
-        <div class="loadmore">
-          <button class="btn" id="loadMoreBtn" data-i18n="btn.loadmore">Hiển thị thêm</button>
-        </div>
+        
       </div>
     </section>
 
@@ -240,11 +272,22 @@
       <div class="modal__body">
         <div class="pm-hero" id="pmThumb">🥬</div>
         <div class="pm-meta">
+          <div id="pmRating" class="pm-rating"></div>
           <div class="pm-price" id="pmPrice">0₫</div>
           <div class="pm-tags" id="pmTags"></div>
           <div class="pm-nutri">
             <strong data-i18n="product.nutrition">Dinh dưỡng</strong>
             <p id="pmNutri" class="muted"></p>
+          </div>
+          <div class="pm-reviews">
+            <strong>Đánh giá từ khách hàng</strong>
+            <div id="pmReviewsList" class="reviews-list"></div>
+            <form id="pmReviewForm" class="review-form">
+              <strong>Gửi đánh giá của bạn</strong>
+              <input type="text" id="pmReviewUser" class="input" placeholder="Tên của bạn" required>
+              <textarea id="pmReviewComment" class="input" placeholder="Viết bình luận..." required></textarea>
+              <button type="submit" class="btn btn--pri">Gửi</button>
+            </form>
           </div>
           <div class="pm-related">
             <strong data-i18n="product.related">Gợi ý liên quan</strong>
@@ -325,6 +368,6 @@
     <div class="container">© <span id="year"></span> Vựa Vui Vẻ</div>
   </footer>
 
-  <script src="app.js"></script>
+  <script src="vvv.js"></script>
 </body>
 </html>
