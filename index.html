@@ -14,6 +14,7 @@
   <!-- Header -->
   <header class="header">
     <div class="container header__row">
+<<<<<<< Updated upstream
       <a href="#home" class="logo" aria-label="Trang chủ Vựa Vui Vẻ">Vựa Vui Vẻ</a>
       <nav class="nav" aria-label="Main">
         <a href="#home" data-i18n="nav.home">Trang chủ</a>
@@ -21,6 +22,107 @@
         <a href="#recipes" data-i18n="nav.recipes">Công thức</a>
         <a href="#orders" data-i18n="nav.orders">Đơn hàng</a>
         <a href="#account" data-i18n="nav.account">Tài khoản</a>
+=======
+      <a href="#" class="logo" aria-label="Trang chủ Vựa Vui Vẻ">Vựa Vui Vẻ</a>
+      <nav class="nav" aria-label="Điều hướng chính">
+        <a href="#home">Trang chủ</a>
+        <div class="nav-item nav-item--dropdown">
+          <button class="nav-link nav-link--dropdown" id="productsMenuToggle" aria-expanded="false" aria-haspopup="true" aria-controls="productsMegaMenu">
+            Sản phẩm
+            <svg class="nav-arrow" width="12" height="8" viewBox="0 0 12 8" fill="none" aria-hidden="true">
+              <path d="M1 1.5L6 6.5L11 1.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+          <div id="productsMegaMenu" class="mega-menu" role="menu" aria-labelledby="productsMenuToggle" hidden>
+            <div class="mega-menu__content">
+              <div class="mega-menu__column">
+                <h3 class="mega-menu__title">Rau củ</h3>
+                <ul class="mega-menu__list">
+                  <li><a href="#catalog" class="mega-menu__link" data-category="veg" data-subcategory="leaf">Rau lá</a></li>
+                  <li><a href="#catalog" class="mega-menu__link" data-category="veg" data-subcategory="root">Củ & rễ</a></li>
+                  <li><a href="#catalog" class="mega-menu__link" data-category="veg" data-subcategory="fruit">Quả rau</a></li>
+                  <li><a href="#catalog" class="mega-menu__link" data-category="veg" data-subcategory="cabbage">Họ cải</a></li>
+                  <li><a href="#catalog" class="mega-menu__link" data-category="veg" data-subcategory="mushroom">Nấm</a></li>
+                  <li><a href="#catalog" class="mega-menu__link" data-category="veg" data-subcategory="spice">Rau thơm & gia vị</a></li>
+                  <li><a href="#catalog" class="mega-menu__link" data-category="veg" data-subcategory="processed">Đã sơ chế</a></li>
+                  <li><a href="#catalog" class="mega-menu__link" data-category="veg" data-subcategory="organic">Hữu cơ / Theo mùa</a></li>
+                </ul>
+              </div>
+              <div class="mega-menu__column">
+                <h3 class="mega-menu__title">Trái cây</h3>
+                <ul class="mega-menu__list">
+                  <li><a href="#catalog" class="mega-menu__link" data-category="fruit" data-subcategory="mixed">Trái cây các loại</a></li>
+                  <li><a href="#catalog" class="mega-menu__link" data-category="fruit" data-subcategory="gift">Giỏ quà</a></li>
+                </ul>
+              </div>
+              <div class="mega-menu__column">
+                <h3 class="mega-menu__title">Thịt cá</h3>
+                <ul class="mega-menu__list">
+                  <li><a href="#catalog" class="mega-menu__link" data-category="meat" data-subcategory="beef">Thịt đỏ</a></li>
+                  <li><a href="#catalog" class="mega-menu__link" data-category="meat" data-subcategory="pork">Thịt heo</a></li>
+                  <li><a href="#catalog" class="mega-menu__link" data-category="meat" data-subcategory="poultry">Gia cầm</a></li>
+                  <li><a href="#catalog" class="mega-menu__link" data-category="meat" data-subcategory="fish">Cá tươi</a></li>
+                  <li><a href="#catalog" class="mega-menu__link" data-category="meat" data-subcategory="seafood">Hải sản</a></li>
+                </ul>
+              </div>
+              <div class="mega-menu__column">
+                <h3 class="mega-menu__title">Đồ khô</h3>
+                <ul class="mega-menu__list">
+                  <li><a href="#catalog" class="mega-menu__link" data-category="dry" data-subcategory="rice">Gạo & ngũ cốc</a></li>
+                  <li><a href="#catalog" class="mega-menu__link" data-category="dry" data-subcategory="noodle">Mì/Bún/Phở khô</a></li>
+                  <li><a href="#catalog" class="mega-menu__link" data-category="dry" data-subcategory="beans">Đậu & hạt</a></li>
+                  <li><a href="#catalog" class="mega-menu__link" data-category="dry" data-subcategory="flour">Bột, bột trộn sẵn</a></li>
+                  <li><a href="#catalog" class="mega-menu__link" data-category="dry" data-subcategory="canned">Đồ hộp & đóng gói</a></li>
+                  <li><a href="#catalog" class="mega-menu__link" data-category="dry" data-subcategory="seaweed">Rong biển & nấm khô</a></li>
+                </ul>
+              </div>
+              <div class="mega-menu__column">
+                <h3 class="mega-menu__title">Đồ uống</h3>
+                <ul class="mega-menu__list">
+                  <li><a href="#catalog" class="mega-menu__link" data-category="drink" data-subcategory="water">Nước đóng chai</a></li>
+                  <li><a href="#catalog" class="mega-menu__link" data-category="drink" data-subcategory="juice">Nước ép & sinh tố</a></li>
+                  <li><a href="#catalog" class="mega-menu__link" data-category="drink" data-subcategory="milk">Sữa & chế phẩm sữa</a></li>
+                  <li><a href="#catalog" class="mega-menu__link" data-category="drink" data-subcategory="tea">Trà & thảo mộc</a></li>
+                  <li><a href="#catalog" class="mega-menu__link" data-category="drink" data-subcategory="coffee">Cà phê</a></li>
+                </ul>
+              </div>
+              <div class="mega-menu__column">
+                <h3 class="mega-menu__title">Gia vị</h3>
+                <ul class="mega-menu__list">
+                  <li><a href="#catalog" class="mega-menu__link" data-category="spice" data-subcategory="oil">Dầu ăn & giấm</a></li>
+                  <li><a href="#catalog" class="mega-menu__link" data-category="spice" data-subcategory="sauce">Nước mắm & nước chấm</a></li>
+                  <li><a href="#catalog" class="mega-menu__link" data-category="spice" data-subcategory="soy">Xì dầu, tương & sốt</a></li>
+                  <li><a href="#catalog" class="mega-menu__link" data-category="spice" data-subcategory="powder">Bột nêm & gia vị khô</a></li>
+                </ul>
+              </div>
+              <div class="mega-menu__column">
+                <h3 class="mega-menu__title">Đồ gia dụng</h3>
+                <ul class="mega-menu__list">
+                  <li><a href="#catalog" class="mega-menu__link" data-category="household" data-subcategory="paper">Giấy & khăn</a></li>
+                  <li><a href="#catalog" class="mega-menu__link" data-category="household" data-subcategory="laundry">Giặt giũ</a></li>
+                  <li><a href="#catalog" class="mega-menu__link" data-category="household" data-subcategory="cleaning">Rửa chén & vệ sinh nhà</a></li>
+                  <li><a href="#catalog" class="mega-menu__link" data-category="household" data-subcategory="kitchenware">Dụng cụ bếp & lưu trữ</a></li>
+                  <li><a href="#catalog" class="mega-menu__link" data-category="household" data-subcategory="bags">Túi rác & bao bì</a></li>
+                  <li><a href="#catalog" class="mega-menu__link" data-category="household" data-subcategory="personal">Chăm sóc cá nhân</a></li>
+                </ul>
+              </div>
+              <div class="mega-menu__column">
+                <h3 class="mega-menu__title">Đồ ngọt</h3>
+                <ul class="mega-menu__list">
+                  <li><a href="#catalog" class="mega-menu__link" data-category="sweet" data-subcategory="snack">Bánh snack</a></li>
+                  <li><a href="#catalog" class="mega-menu__link" data-category="sweet" data-subcategory="chocolate">Socola</a></li>
+                  <li><a href="#catalog" class="mega-menu__link" data-category="sweet" data-subcategory="candy">Kẹo ngọt</a></li>
+                  <li><a href="#catalog" class="mega-menu__link" data-category="sweet" data-subcategory="dried">Mứt & trái cây sấy</a></li>
+                  <li><a href="#catalog" class="mega-menu__link" data-category="sweet" data-subcategory="cereal">Ngũ cốc & granola</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+        <a href="#recipes">Công thức</a>
+        <a href="#about">Giới thiệu</a>
+        <a href="#contact">Liên hệ</a>
+>>>>>>> Stashed changes
       </nav>
       <div class="actions">
         <button class="btn btn--icon" id="langToggle" title="VI/EN">VI/EN</button>
