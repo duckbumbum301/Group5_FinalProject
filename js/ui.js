@@ -2,7 +2,7 @@
 
 import { $, money } from './utils.js';
 import { PRODUCTS } from './data.js';
-import { getCart, removeFromCart, updateCartQuantity } from './cart.js';
+import { getCart } from './cart.js';
 
 // DOM refs cho UI
 const gridEl = $('#productGrid');
@@ -18,17 +18,32 @@ export function renderUI() {
 
 // Render lưới sản phẩm
 export function renderProducts(productsToRender, favoriteSet) {
+  const catToThumb = (cat) => ({
+    veg:'thumb--veg', 
+    fruit:'thumb--fruit', 
+    meat:'thumb--meat', 
+    dry:'thumb--dry', 
+    drink:'thumb--drink',
+    spice:'thumb--spice',
+    household:'thumb--household',
+    sweet:'thumb--sweet',
+
+    // --- Danh mục mới (map về class có sẵn) ---
+    vegfruit:'thumb--veg',
+    meatfish:'thumb--meat',
+    cookingoil:'thumb--spice',
+    noodle:'thumb--dry',
+    milk:'thumb--drink',
+    icecream:'thumb--sweet',
+    frozen:'thumb--meat',
+    snack:'thumb--sweet',
+    personalcare:'thumb--household',
+    cleaning:'thumb--household',
+    baby:'thumb--household',
+  }[cat] || 'thumb--veg');
+  
   const cardHTML = p => {
-    const catClass = ({
-      veg:'thumb--veg', 
-      fruit:'thumb--fruit', 
-      meat:'thumb--meat', 
-      dry:'thumb--dry', 
-      drink:'thumb--drink',
-      spice:'thumb--spice',
-      household:'thumb--household',
-      sweet:'thumb--sweet'
-    })[p.cat] || 'thumb--veg';
+    const catClass = catToThumb(p.cat);
     const favPressed = favoriteSet.has(p.id) ? 'true' : 'false';
     return `
     <article class="card" data-id="${p.id}">
@@ -68,8 +83,6 @@ function renderCart() {
     ` : '';
   }).join('');
   cartItemsEl.innerHTML = lines || `<p class="muted">Giỏ hàng đang trống.</p>`;
-
-  // Event listeners sẽ được thêm bằng event delegation trong main.js
 
   const subtotal = entries.reduce((s, [pid, q]) => {
     const p = PRODUCTS.find(x => x.id === pid);

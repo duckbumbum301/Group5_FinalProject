@@ -24,89 +24,158 @@
             </svg>
           </button>
           <div id="productsMegaMenu" class="mega-menu" role="menu" aria-labelledby="productsMenuToggle" hidden>
-            <div class="mega-menu__content">
-              <div class="mega-menu__column">
-                <h3 class="mega-menu__title">Rau củ</h3>
-                <ul class="mega-menu__list">
-                  <li><a href="#catalog" class="mega-menu__link" data-category="veg">Rau muống</a></li>
-                  <li><a href="#catalog" class="mega-menu__link" data-category="veg">Rau cải</a></li>
-                  <li><a href="#catalog" class="mega-menu__link" data-category="veg">Bí đỏ</a></li>
-                  <li><a href="#catalog" class="mega-menu__link" data-category="veg">Cà rốt</a></li>
-                  <li><a href="#catalog" class="mega-menu__link" data-category="veg">Khoai tây</a></li>
-                </ul>
-              </div>
-              <div class="mega-menu__column">
-                <h3 class="mega-menu__title">Trái cây</h3>
-                <ul class="mega-menu__list">
-                  <li><a href="#catalog" class="mega-menu__link" data-category="fruit">Táo</a></li>
-                  <li><a href="#catalog" class="mega-menu__link" data-category="fruit">Cam</a></li>
-                  <li><a href="#catalog" class="mega-menu__link" data-category="fruit">Chuối</a></li>
-                  <li><a href="#catalog" class="mega-menu__link" data-category="fruit">Nho</a></li>
-                  <li><a href="#catalog" class="mega-menu__link" data-category="fruit">Dâu tây</a></li>
-                </ul>
-              </div>
-              <div class="mega-menu__column">
-                <h3 class="mega-menu__title">Thịt cá</h3>
-                <ul class="mega-menu__list">
-                  <li><a href="#catalog" class="mega-menu__link" data-category="meat">Thịt bò</a></li>
-                  <li><a href="#catalog" class="mega-menu__link" data-category="meat">Thịt heo</a></li>
-                  <li><a href="#catalog" class="mega-menu__link" data-category="meat">Cá hồi</a></li>
-                  <li><a href="#catalog" class="mega-menu__link" data-category="meat">Tôm</a></li>
-                  <li><a href="#catalog" class="mega-menu__link" data-category="meat">Cua</a></li>
-                </ul>
-              </div>
-              <div class="mega-menu__column">
-                <h3 class="mega-menu__title">Đồ khô</h3>
-                <ul class="mega-menu__list">
-                  <li><a href="#catalog" class="mega-menu__link" data-category="dry">Gạo</a></li>
-                  <li><a href="#catalog" class="mega-menu__link" data-category="dry">Mì gói</a></li>
-                  <li><a href="#catalog" class="mega-menu__link" data-category="dry">Đậu phộng</a></li>
-                  <li><a href="#catalog" class="mega-menu__link" data-category="dry">Hạt điều</a></li>
-                  <li><a href="#catalog" class="mega-menu__link" data-category="dry">Nấm khô</a></li>
-                </ul>
-              </div>
-              <div class="mega-menu__column">
-                <h3 class="mega-menu__title">Đồ uống</h3>
-                <ul class="mega-menu__list">
-                  <li><a href="#catalog" class="mega-menu__link" data-category="drink">Nước suối</a></li>
-                  <li><a href="#catalog" class="mega-menu__link" data-category="drink">Nước ép</a></li>
-                  <li><a href="#catalog" class="mega-menu__link" data-category="drink">Sữa tươi</a></li>
-                  <li><a href="#catalog" class="mega-menu__link" data-category="drink">Trà</a></li>
-                  <li><a href="#catalog" class="mega-menu__link" data-category="drink">Cà phê</a></li>
-                </ul>
-              </div>
-              <div class="mega-menu__column">
-                <h3 class="mega-menu__title">Gia vị</h3>
-                <ul class="mega-menu__list">
-                  <li><a href="#catalog" class="mega-menu__link" data-category="spice">Muối</a></li>
-                  <li><a href="#catalog" class="mega-menu__link" data-category="spice">Đường</a></li>
-                  <li><a href="#catalog" class="mega-menu__link" data-category="spice">Tiêu</a></li>
-                  <li><a href="#catalog" class="mega-menu__link" data-category="spice">Tỏi</a></li>
-                  <li><a href="#catalog" class="mega-menu__link" data-category="spice">Hành</a></li>
-                </ul>
-              </div>
-              <div class="mega-menu__column">
-                <h3 class="mega-menu__title">Đồ gia dụng</h3>
-                <ul class="mega-menu__list">
-                  <li><a href="#catalog" class="mega-menu__link" data-category="household">Khăn giấy</a></li>
-                  <li><a href="#catalog" class="mega-menu__link" data-category="household">Nước rửa chén</a></li>
-                  <li><a href="#catalog" class="mega-menu__link" data-category="household">Túi nilon</a></li>
-                  <li><a href="#catalog" class="mega-menu__link" data-category="household">Bàn chải</a></li>
-                  <li><a href="#catalog" class="mega-menu__link" data-category="household">Xà phòng</a></li>
-                </ul>
-              </div>
-              <div class="mega-menu__column">
-                <h3 class="mega-menu__title">Đồ ngọt</h3>
-                <ul class="mega-menu__list">
-                  <li><a href="#catalog" class="mega-menu__link" data-category="sweet">Bánh kẹo</a></li>
-                  <li><a href="#catalog" class="mega-menu__link" data-category="sweet">Socola</a></li>
-                  <li><a href="#catalog" class="mega-menu__link" data-category="sweet">Bánh quy</a></li>
-                  <li><a href="#catalog" class="mega-menu__link" data-category="sweet">Kẹo cao su</a></li>
-                  <li><a href="#catalog" class="mega-menu__link" data-category="sweet">Mứt</a></li>
-                </ul>
+              <div class="mega-menu__content">
+                <!-- Thịt, cá, trứng, hải sản -->
+                <div class="mega-menu__column">
+                  <h3 class="mega-menu__title">Thịt, Cá, Trứng, Hải Sản</h3>
+                  <ul class="mega-menu__list">
+                    <li><a href="#catalog" class="mega-menu__link" data-category="meatfish">Thịt bò</a></li>
+                    <li><a href="#catalog" class="mega-menu__link" data-category="meatfish">Thịt heo</a></li>
+                    <li><a href="#catalog" class="mega-menu__link" data-category="meatfish">Cá </a></li>
+                    <li><a href="#catalog" class="mega-menu__link" data-category="meatfish">Tôm</a></li>
+                    <li><a href="#catalog" class="mega-menu__link" data-category="meatfish">Cua</a></li>
+                  </ul>
+                </div>
+
+                <!-- Rau, củ, nấm, trái cây -->
+                <div class="mega-menu__column">
+                  <h3 class="mega-menu__title">Rau, Củ, Nấm, Trái Cây</h3>
+                  <ul class="mega-menu__list">
+                    <li><a href="#catalog" class="mega-menu__link" data-category="vegfruit">Rau muống</a></li>
+                    <li><a href="#catalog" class="mega-menu__link" data-category="vegfruit">Rau cải</a></li>
+                    <li><a href="#catalog" class="mega-menu__link" data-category="vegfruit">Bí đỏ</a></li>
+                    <li><a href="#catalog" class="mega-menu__link" data-category="vegfruit">Táo</a></li>
+                    <li><a href="#catalog" class="mega-menu__link" data-category="vegfruit">Cam</a></li>
+                  </ul>
+                </div>
+
+                <!-- Dầu ăn, nước chấm, gia vị -->
+                <div class="mega-menu__column">
+                  <h3 class="mega-menu__title">Dầu Ăn, Nước Chấm, Gia Vị</h3>
+                  <ul class="mega-menu__list">
+                    <li><a href="#catalog" class="mega-menu__link" data-category="cookingoil">Dầu ăn</a></li>
+                    <li><a href="#catalog" class="mega-menu__link" data-category="cookingoil">Nước mắm</a></li>
+                    <li><a href="#catalog" class="mega-menu__link" data-category="cookingoil">Muối</a></li>
+                    <li><a href="#catalog" class="mega-menu__link" data-category="cookingoil">Đường</a></li>
+                    <li><a href="#catalog" class="mega-menu__link" data-category="cookingoil">Tiêu</a></li>
+                  </ul>
+                </div>
+
+                <!-- Bia, nước giải khát -->
+                <div class="mega-menu__column">
+                  <h3 class="mega-menu__title">Bia, Nước Giải Khát</h3>
+                  <ul class="mega-menu__list">
+                    <li><a href="#catalog" class="mega-menu__link" data-category="drink">Nước suối</a></li>
+                    <li><a href="#catalog" class="mega-menu__link" data-category="drink">Nước ép</a></li>
+                    <li><a href="#catalog" class="mega-menu__link" data-category="drink">Trà</a></li>
+                    <li><a href="#catalog" class="mega-menu__link" data-category="drink">Cà phê</a></li>
+                    <li><a href="#catalog" class="mega-menu__link" data-category="drink">Bia</a></li>
+                  </ul>
+                </div>
+
+                <!-- Gạo, bột, đồ khô -->
+                <div class="mega-menu__column">
+                  <h3 class="mega-menu__title">Gạo, Bột, Đồ Khô</h3>
+                  <ul class="mega-menu__list">
+                    <li><a href="#catalog" class="mega-menu__link" data-category="dry">Gạo</a></li>
+                    <li><a href="#catalog" class="mega-menu__link" data-category="dry">Đậu phộng</a></li>
+                    <li><a href="#catalog" class="mega-menu__link" data-category="dry">Hạt điều</a></li>
+                    <li><a href="#catalog" class="mega-menu__link" data-category="dry">Nấm khô</a></li>
+                    <li><a href="#catalog" class="mega-menu__link" data-category="dry">Bột</a></li>
+                  </ul>
+                </div>
+
+                <!-- Mì, miến, cháo, phở -->
+                <div class="mega-menu__column">
+                  <h3 class="mega-menu__title">Mì, Miến, Cháo, Phở</h3>
+                  <ul class="mega-menu__list">
+                    <li><a href="#catalog" class="mega-menu__link" data-category="noodle">Mì gói</a></li>
+                    <li><a href="#catalog" class="mega-menu__link" data-category="noodle">Miến</a></li>
+                    <li><a href="#catalog" class="mega-menu__link" data-category="noodle">Cháo</a></li>
+                    <li><a href="#catalog" class="mega-menu__link" data-category="noodle">Phở khô</a></li>
+                  </ul>
+                </div>
+
+                <!-- Sữa các loại -->
+                <div class="mega-menu__column">
+                  <h3 class="mega-menu__title">Sữa Các Loại</h3>
+                  <ul class="mega-menu__list">
+                    <li><a href="#catalog" class="mega-menu__link" data-category="milk">Sữa tươi</a></li>
+                    <li><a href="#catalog" class="mega-menu__link" data-category="milk">Sữa hạt</a></li>
+                    <li><a href="#catalog" class="mega-menu__link" data-category="milk">Sữa tiệt trùng</a></li>
+                  </ul>
+                </div>
+
+                <!-- Kem & sữa chua -->
+                <div class="mega-menu__column">
+                  <h3 class="mega-menu__title">Kem & Sữa Chua</h3>
+                  <ul class="mega-menu__list">
+                    <li><a href="#catalog" class="mega-menu__link" data-category="icecream">Kem</a></li>
+                    <li><a href="#catalog" class="mega-menu__link" data-category="icecream">Sữa chua</a></li>
+                  </ul>
+                </div>
+
+                <!-- Thực phẩm đông mát -->
+                <div class="mega-menu__column">
+                  <h3 class="mega-menu__title">Thực Phẩm Đông Mát</h3>
+                  <ul class="mega-menu__list">
+                    <li><a href="#catalog" class="mega-menu__link" data-category="frozen">Thịt đông lạnh</a></li>
+                    <li><a href="#catalog" class="mega-menu__link" data-category="frozen">Hải sản đông lạnh</a></li>
+                    <li><a href="#catalog" class="mega-menu__link" data-category="frozen">Rau củ đông lạnh</a></li>
+                  </ul>
+                </div>
+
+                <!-- Bánh kẹo -->
+                <div class="mega-menu__column">
+                  <h3 class="mega-menu__title">Bánh Kẹo Các Loại</h3>
+                  <ul class="mega-menu__list">
+                    <li><a href="#catalog" class="mega-menu__link" data-category="snack">Bánh kẹo mix</a></li>
+                    <li><a href="#catalog" class="mega-menu__link" data-category="snack">Bánh quy</a></li>
+                    <li><a href="#catalog" class="mega-menu__link" data-category="snack">Socola</a></li>
+                  </ul>
+                </div>
+
+                <!-- Chăm sóc cá nhân -->
+                <div class="mega-menu__column">
+                  <h3 class="mega-menu__title">Chăm Sóc Cá Nhân</h3>
+                  <ul class="mega-menu__list">
+                    <li><a href="#catalog" class="mega-menu__link" data-category="personalcare">Bàn chải</a></li>
+                    <li><a href="#catalog" class="mega-menu__link" data-category="personalcare">Khăn giấy</a></li>
+                    <li><a href="#catalog" class="mega-menu__link" data-category="personalcare">Xà phòng</a></li>
+                  </ul>
+                </div>
+
+                <!-- Vệ sinh nhà cửa -->
+                <div class="mega-menu__column">
+                  <h3 class="mega-menu__title">Vệ Sinh Nhà Cửa</h3>
+                  <ul class="mega-menu__list">
+                    <li><a href="#catalog" class="mega-menu__link" data-category="cleaning">Nước rửa chén</a></li>
+                    <li><a href="#catalog" class="mega-menu__link" data-category="cleaning">Nước lau sàn</a></li>
+                    <li><a href="#catalog" class="mega-menu__link" data-category="cleaning">Nước vệ sinh bếp</a></li>
+                  </ul>
+                </div>
+
+                <!-- Sản phẩm mẹ & bé -->
+                <div class="mega-menu__column">
+                  <h3 class="mega-menu__title">Sản Phẩm Mẹ Và Bé</h3>
+                  <ul class="mega-menu__list">
+                    <li><a href="#catalog" class="mega-menu__link" data-category="baby">Tã / Bỉm</a></li>
+                    <li><a href="#catalog" class="mega-menu__link" data-category="baby">Khăn ướt</a></li>
+                    <li><a href="#catalog" class="mega-menu__link" data-category="baby">Sữa cho bé</a></li>
+                  </ul>
+                </div>
+
+                <!-- Đồ dùng gia đình -->
+                <div class="mega-menu__column">
+                  <h3 class="mega-menu__title">Đồ Dùng Gia Đình</h3>
+                  <ul class="mega-menu__list">
+                    <li><a href="#catalog" class="mega-menu__link" data-category="household">Túi nilon</a></li>
+                    <li><a href="#catalog" class="mega-menu__link" data-category="household">Hộp đựng thực phẩm</a></li>
+                    <li><a href="#catalog" class="mega-menu__link" data-category="household">Giấy vệ sinh</a></li>
+                  </ul>
+                </div>
               </div>
             </div>
-          </div>
         </div>
         <a href="#recipes">Công thức</a>
         <a href="#about">Giới thiệu</a>
@@ -153,14 +222,20 @@
           <label for="categoryFilter">Danh mục:</label>
           <select id="categoryFilter" class="input">
             <option value="all">Tất cả</option>
-            <option value="veg">Rau củ</option>
-            <option value="fruit">Trái cây</option>
-            <option value="meat">Thịt & cá</option>
-            <option value="dry">Đồ khô</option>
-            <option value="drink">Đồ uống</option>
-            <option value="spice">Gia vị</option>
-            <option value="household">Đồ gia dụng</option>
-            <option value="sweet">Đồ ngọt</option>
+            <option value="meatfish">Thịt, Cá, Trứng, Hải Sản</option>
+            <option value="vegfruit">Rau, Củ, Nấm, Trái Cây</option>
+            <option value="cookingoil">Dầu Ăn, Nước Chấm, Gia Vị</option>
+            <option value="drink">Bia, Nước Giải Khát</option>
+            <option value="dry">Gạo, Bột, Đồ Khô</option>
+            <option value="noodle">Mì, Miến, Cháo, Phở</option>
+            <option value="milk">Sữa Các Loại</option>
+            <option value="icecream">Kem & Sữa Chua</option>
+            <option value="frozen">Thực Phẩm Đông Mát</option>
+            <option value="snack">Bánh Kẹo Các Loại</option>
+            <option value="personalcare">Chăm Sóc Cá Nhân</option>
+            <option value="cleaning">Vệ Sinh Nhà Cửa</option>
+            <option value="baby">Sản Phẩm Mẹ Và Bé</option>
+            <option value="household">Đồ Dùng Gia Đình</option>
           </select>
 
           <label for="sortSelect">Sắp xếp:</label>

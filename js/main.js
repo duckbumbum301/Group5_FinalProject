@@ -1,4 +1,4 @@
-// js/main.js (File điều phối chính)
+// js/main.js (File điều phối chính - cập nhật: lọc theo tên/tokens + scroll mega menu)
 
 import { $, money, debounce } from './utils.js';
 import { PRODUCTS, RECIPES } from './data.js';
@@ -24,7 +24,6 @@ function showToast(message, duration = 2500) {
   t.innerHTML = `<span class="toast-message">${message}</span><button class="toast-close" aria-label="Close">×</button>`;
   container.appendChild(t);
 
-  // show
   requestAnimationFrame(() => t.classList.add('show'));
 
   const remove = () => {
@@ -33,7 +32,6 @@ function showToast(message, duration = 2500) {
   };
 
   const timer = setTimeout(remove, duration);
-
   t.querySelector('.toast-close').addEventListener('click', () => {
     clearTimeout(timer);
     remove();
@@ -53,6 +51,9 @@ let filters = {
   sort: 'pop',
   priceMax: 250000,
   favOnly: false,
+  nameOnly: false,
+  nameTerm: '',
+  nameTokens: [],      // nhiều từ khóa tên (để hiển thị nhóm như "Cá", "Hải sản đông lạnh"…)
 };
 
 // ---------- DOM refs ----------
@@ -70,7 +71,7 @@ const cartOpenBtn = $('#cartOpenBtn');
 const cartOverlay = $('#cartOverlay');
 const cartCloseBtn = $('#cartCloseBtn');
 const cartItems = $('#cartItems');
-const cartPanel = $('#cartDrawer .drawer__panel'); // <-- Ref quan trọng để sửa lỗi
+const cartPanel = $('#cartDrawer .drawer__panel');
 const recipeInput = $('#recipeInput');
 const recipeList = $('#recipeList');
 const recipeAddAllBtn = $('#recipeAddAllBtn');
@@ -89,14 +90,21 @@ const productsMenuToggle = $('#productsMenuToggle');
 const productsMegaMenu = $('#productsMegaMenu');
 const navItem = $('.nav-item--dropdown');
 
-// DOM elements đã được khởi tạo
-
 // ---------- Core Logic ----------
 function applyFiltersAndRender() {
   let items = PRODUCTS.filter(p => p.stock && p.price <= filters.priceMax);
-  if (filters.cat !== 'all') items = items.filter(p => p.cat === filters.cat);
-  if (filters.q) items = items.filter(p => p.name.toLowerCase().includes(filters.q));
-  if (filters.favOnly) items = items.filter(p => favs.has(p.id));
+
+  if ((filters.nameOnly && filters.nameTerm) || (filters.nameTokens && filters.nameTokens.length)) {
+    const tokens = (filters.nameTokens || []).map(s => s.toLowerCase());
+    const hasTerm = (txt) => tokens.length
+      ? tokens.some(tk => txt.includes(tk))
+      : (filters.nameTerm ? txt.includes(filters.nameTerm.toLowerCase()) : true);
+    items = items.filter(p => hasTerm(p.name.toLowerCase()));
+  } else {
+    if (filters.cat !== 'all') items = items.filter(p => p.cat === filters.cat);
+    if (filters.q) items = items.filter(p => p.name.toLowerCase().includes(filters.q));
+    if (filters.favOnly) items = items.filter(p => favs.has(p.id));
+  }
 
   if (filters.sort === 'priceAsc') items.sort((a,b) => a.price - b.price);
   else if (filters.sort === 'priceDesc') items.sort((a,b) => b.price - a.price);
@@ -188,8 +196,13 @@ function openMegaMenu() {
   productsMegaMenu.setAttribute('aria-hidden', 'false');
   productsMenuToggle.setAttribute('aria-expanded', 'true');
   navItem.setAttribute('aria-expanded', 'true');
-  
-  // Focus first link for keyboard navigation
+  // Scroll cho nội dung mega menu
+  const content = productsMegaMenu.querySelector('.mega-menu__content');
+  if (content) {
+    content.style.maxHeight = '70vh';
+    content.style.overflowY = 'auto';
+    content.style.paddingRight = '8px';
+  }
   const firstLink = productsMegaMenu.querySelector('.mega-menu__link');
   if (firstLink) firstLink.focus();
 }
@@ -203,11 +216,7 @@ function closeMegaMenu() {
 
 function toggleMegaMenu() {
   const isOpen = !productsMegaMenu.hasAttribute('hidden');
-  if (isOpen) {
-    closeMegaMenu();
-  } else {
-    openMegaMenu();
-  }
+  if (isOpen) closeMegaMenu(); else openMegaMenu();
 }
 
 function handleMegaMenuKeydown(e) {
@@ -215,20 +224,13 @@ function handleMegaMenuKeydown(e) {
     closeMegaMenu();
     productsMenuToggle.focus();
   }
-  
-  // Handle arrow keys for navigation
   if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
     e.preventDefault();
     const links = Array.from(productsMegaMenu.querySelectorAll('.mega-menu__link'));
     const currentIndex = links.indexOf(document.activeElement);
     let nextIndex;
-    
-    if (e.key === 'ArrowDown') {
-      nextIndex = currentIndex < links.length - 1 ? currentIndex + 1 : 0;
-    } else {
-      nextIndex = currentIndex > 0 ? currentIndex - 1 : links.length - 1;
-    }
-    
+    if (e.key === 'ArrowDown') nextIndex = currentIndex < links.length - 1 ? currentIndex + 1 : 0;
+    else nextIndex = currentIndex > 0 ? currentIndex - 1 : links.length - 1;
     links[nextIndex].focus();
   }
 }
@@ -236,21 +238,47 @@ function handleMegaMenuKeydown(e) {
 function handleMegaMenuLinkClick(e) {
   const link = e.target.closest('.mega-menu__link');
   if (!link) return;
-  
-  const category = link.dataset.category;
-  if (category) {
-    // Set category filter and close menu
-    filters.cat = category;
-    catFilter.value = category;
-    applyFiltersAndRender();
-    closeMegaMenu();
-    
-    // Scroll to catalog section
-    const catalogSection = document.getElementById('catalog');
-    if (catalogSection) {
-      catalogSection.scrollIntoView({ behavior: 'smooth' });
-    }
+  const text = (link.textContent || '').trim();
+  if (!text) return;
+
+  // Mặc định: lọc theo TÊN sản phẩm đúng như text bạn click
+  filters.nameOnly = true;
+  filters.nameTerm = text;
+  filters.nameTokens = [];
+
+  // Trường hợp nhóm đặc biệt
+  const raw = text;
+  if (raw === 'Cá') {
+    // cho tất cả loại cá (tránh dính 'Cà rốt')
+    filters.nameTerm = '';
+    filters.nameTokens = ['Cá '];
   }
+  if (raw === 'Thịt đông lạnh') {
+    filters.cat = 'frozen';
+    filters.nameTerm = '';
+    filters.nameTokens = ['Thịt'];
+  } else if (raw === 'Hải sản đông lạnh') {
+    filters.cat = 'frozen';
+    filters.nameTerm = '';
+    filters.nameTokens = ['Hải sản', 'Tôm', 'Cua', 'Cá '];
+  } else if (raw === 'Rau củ đông lạnh') {
+    filters.cat = 'frozen';
+    filters.nameTerm = '';
+    filters.nameTokens = ['Rau', 'Rau củ', 'Ngô'];
+  } else {
+    // item đơn lẻ (Thịt bò, Rau muống, Táo...) => đối sánh theo tên
+    filters.cat = 'all';
+  }
+
+  // Đồng bộ UI
+  if (catFilter && filters.cat) catFilter.value = filters.cat;
+  if (searchInput) searchInput.value = text;
+  filters.q = '';
+
+  applyFiltersAndRender();
+  closeMegaMenu();
+  const catalogSection = document.getElementById('catalog');
+  if (catalogSection) catalogSection.scrollIntoView({ behavior: 'smooth' });
 }
 
 // ---------- Recipe & Contact Logic ----------
@@ -295,12 +323,21 @@ function setupListeners() {
 
   searchInput.addEventListener('input', debounce(e => {
     filters.q = (e.target.value || '').trim().toLowerCase();
+    filters.nameOnly = false; filters.nameTerm = ''; filters.nameTokens = [];
     applyFiltersAndRender();
   }, 250));
 
-  catFilter.addEventListener('change', e => { filters.cat = e.target.value; applyFiltersAndRender(); });
+  catFilter.addEventListener('change', e => {
+    filters.cat = e.target.value;
+    filters.nameOnly=false; filters.nameTerm=''; filters.nameTokens=[];
+    applyFiltersAndRender();
+  });
   sortSelect.addEventListener('change', e => { filters.sort = e.target.value; applyFiltersAndRender(); });
-  favOnly.addEventListener('change', e => { filters.favOnly = e.target.checked; applyFiltersAndRender(); });
+  favOnly.addEventListener('change', e => {
+    filters.favOnly = e.target.checked;
+    filters.nameOnly=false; filters.nameTerm=''; filters.nameTokens=[];
+    applyFiltersAndRender();
+  });
 
   priceRange.addEventListener('input', e => {
     filters.priceMax = +e.target.value;
@@ -313,7 +350,6 @@ function setupListeners() {
   cartCloseBtn.addEventListener('click', closeCart);
   document.addEventListener('keydown', e => { if (e.key === 'Escape') closeCart(); });
   cartOverlay.addEventListener('click', closeCart);
-  // Không cần ngăn chặn event bubbling vì overlay đã xử lý đóng cart
 
   // Account Modal
   accountBtn.addEventListener('click', openAccountModal);
@@ -341,15 +377,12 @@ function setupListeners() {
     clearTimeout(hoverTimeout);
     openMegaMenu();
   });
-  
   navItem.addEventListener('mouseleave', () => {
     hoverTimeout = setTimeout(closeMegaMenu, 150);
   });
-  
   productsMegaMenu.addEventListener('mouseenter', () => {
     clearTimeout(hoverTimeout);
   });
-  
   productsMegaMenu.addEventListener('mouseleave', () => {
     hoverTimeout = setTimeout(closeMegaMenu, 150);
   });
@@ -377,7 +410,6 @@ function setupListeners() {
     if (!pid) return;
 
     if (action === 'add') {
-      // Show a non-blocking toast to confirm the product was added
       const product = PRODUCTS.find(p => p.id === pid);
       const name = product ? product.name : 'Sản phẩm';
       showToast(`${name} đã được thêm vào giỏ hàng.`);
@@ -386,7 +418,7 @@ function setupListeners() {
     if (action === 'fav') toggleFav(pid, btn);
   });
 
-  // Event delegation cho cartItems
+  // Remove buttons in cart
   cartItems.addEventListener('click', e => {
     const removeBtn = e.target.closest('[data-action="remove"]');
     if (removeBtn) {
@@ -400,7 +432,7 @@ function setupListeners() {
     }
   });
 
-  // Event delegation cho input quantity
+  // Quantity inputs in cart
   cartItems.addEventListener('input', e => {
     const qtyInput = e.target.closest('[data-action="qty"]');
     if (qtyInput) {
