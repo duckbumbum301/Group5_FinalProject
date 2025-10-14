@@ -4,7 +4,7 @@ export const PRODUCTS = [
   // id, name, category, price (VND), unit, stock, pop, emoji
 
   // Rau, Củ, Nấm, Trái Cây (vegfruit)
-  {id:'p1',  name:'Bí đỏ (500g)',            cat:'vegfruit',   price:25000,  unit:'gói',  stock:true,  pop:80, emoji:'🎃'},
+  {id:'p1',  name:'Bí đỏ (500g)',            cat:'vegfruit',   price:25000,  unit:'gói',  stock:true,  pop:80, image: '../images/kem/celano.jpg'},
   {id:'p2',  name:'Rau muống (400g)',        cat:'vegfruit',   price:18000,  unit:'bó',   stock:true,  pop:86, emoji:'🥬'},
   {id:'p3',  name:'Cải thìa (400g)',         cat:'vegfruit',   price:22000,  unit:'bó',   stock:true,  pop:60, emoji:'🥗'},
   {id:'p4',  name:'Cà rốt (500g)',           cat:'vegfruit',   price:21000,  unit:'gói',  stock:true,  pop:55, emoji:'🥕'},
@@ -12,6 +12,7 @@ export const PRODUCTS = [
   {id:'p6',  name:'Táo Fuji (1kg)',          cat:'vegfruit',   price:65000,  unit:'kg',   stock:true,  pop:92, emoji:'🍎'},
   {id:'p7',  name:'Chuối (1kg)',             cat:'vegfruit',   price:38000,  unit:'kg',   stock:true,  pop:70, emoji:'🍌'},
   {id:'p8',  name:'Cam sành (1kg)',          cat:'vegfruit',   price:52000,  unit:'kg',   stock:true,  pop:68, emoji:'🍊'},
+  {id:'p99',  name:'Cam sành (2kg)',          cat:'vegfruit',   price:104000,  unit:'kg',   stock:true,  pop:68, emoji:'🍊'},
 
   // Thịt, Cá, Trứng, Hải Sản (meatfish)
   {id:'p9',  name:'Thịt heo ba rọi (300g)',  cat:'meatfish',   price:76000,  unit:'khay', stock:true,  pop:88, emoji:'🥓'},

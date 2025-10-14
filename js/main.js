@@ -185,7 +185,13 @@ async function openProductModal(productId) {
   $('#pmName', modal).textContent = p.name;
   $('#pmPrice', modal).textContent = money(p.price) + ' • ' + p.unit;
   $('#pmDesc', modal).textContent = 'Sản phẩm tươi ngon, giao nhanh trong ngày. (Mô tả demo)';
-  $('#pmThumb', modal).textContent = p.emoji || '🛒';
+  const pmThumb = $('#pmThumb', modal);
+  pmThumb.innerHTML = '';
+  if (p.image) {
+    pmThumb.innerHTML = `<img src="${p.image}" alt="${p.name}" style="width:160px;height:160px;object-fit:cover;border-radius:12px;" />`;
+  } else {
+    pmThumb.textContent = p.emoji || '🛒';
+  }
   $('#pmQty', modal).value = 1;
 
   $('#pmAdd', modal).onclick = () => {
