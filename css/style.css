@@ -315,3 +315,39 @@ select.input, input[type="range"]{padding:10px;height:auto}
 .toast .toast-close{
   background:transparent;border:0;color:rgba(255,255,255,0.8);cursor:pointer;margin-left:8px;font-weight:700;padding:0;
 }
+/* (tuỳ chọn) thêm vào css/style.css để modal đẹp hơn */
+.pm-body{ display:grid; grid-template-columns:120px 1fr; gap:12px; }
+.pm-thumb{ width:120px; height:120px; border-radius:12px; display:flex; align-items:center; justify-content:center; font-size:42px; background:#f3f4f6; }
+.pm-name{ font-size:18px; font-weight:600; }
+.pm-price{ margin:4px 0 8px; color:#16a34a; font-weight:600; }
+.pm-desc{ color:#555; }
+.pm-qty input{ width:90px; margin-left:6px; }
+/* === Modal (Product Detail, Checkout) === */
+.modal[hidden]{ display:none; }
+.modal{
+  position:fixed; inset:0; z-index:120; /* cao hơn drawer (60) & toast (120) nếu cần */
+  display:flex; align-items:center; justify-content:center;
+}
+.modal__overlay{
+  position:absolute; inset:0; background:rgba(0,0,0,.35);
+}
+.modal__panel{
+  position:relative; z-index:1;
+  width:min(640px, 94vw);
+  background:var(--white);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  box-shadow:var(--shadow);
+  padding:16px;
+  max-height:90vh; overflow:auto;
+}
+.modal__head{
+  display:flex; align-items:center; justify-content:space-between;
+  margin-bottom:12px; border-bottom:1px solid var(--border); padding-bottom:8px;
+}
+/* Mega Menu scroll nếu nội dung dài */
+.mega-menu__content{
+  max-height:70vh;
+  overflow-y:auto;
+  padding-right:8px; /* tránh dính sát khi xuất hiện scrollbar */
+}

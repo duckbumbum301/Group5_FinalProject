@@ -183,8 +183,6 @@
       </nav>
       <div class="actions">
         <button class="btn btn--icon" id="searchToggle" aria-expanded="false" aria-controls="searchbar">Tìm kiếm</button>
-        <!-- Nút ĐƠN HÀNG mới -->
-        <button class="btn" id="ordersBtn">Đơn hàng</button>
         <button class="btn btn--icon" id="accountBtn">Tài khoản</button>
         <button class="btn btn--pri" id="cartOpenBtn" aria-haspopup="dialog" aria-controls="cartDrawer">
           Giỏ hàng <span id="cartBadge" class="badge">0</span>
@@ -308,7 +306,6 @@
     <div class="drawer__overlay" id="cartOverlay" tabindex="-1"></div>
   </aside>
 
-  <!-- Account (drawer giữ nguyên) -->
   <aside id="accountModal" class="drawer" role="dialog" aria-modal="true" aria-label="Thông tin tài khoản" hidden>
     <div class="drawer__panel">
       <div class="drawer__head">
@@ -325,18 +322,6 @@
     </div>
     <div class="drawer__overlay" id="accountOverlay" tabindex="-1"></div>
   </aside>
-
-  <!-- ====== ORDERS MODAL (mới) ====== -->
-  <section id="ordersModal" class="modal" hidden>
-    <div id="ordersOverlay" class="modal__overlay"></div>
-    <div class="modal__panel">
-      <header class="modal__head">
-        <h3>Đơn hàng của tôi</h3>
-        <button id="ordersCloseBtn" class="btn btn--icon">✕</button>
-      </header>
-      <div id="ordersBody" class="orders-body"></div>
-    </div>
-  </section>
 
   <footer class="footer">
     <div class="container">© <span id="year"></span> Vựa Vui Vẻ</div>
