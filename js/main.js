@@ -42,6 +42,7 @@ let filters = {
   q: '',
   qNorm: '',
   cat: 'all',
+  sub: 'all',
   sort: 'pop',
   priceMax: 250000,
   favOnly: false,
@@ -110,6 +111,7 @@ function applyFilters() {
     items = items.filter(p => hasTerm(p._norm));
   } else {
     if (filters.cat !== 'all') items = items.filter(p => p.cat === filters.cat);
+    if (filters.sub !== 'all') items = items.filter(p => (p.sub || 'all') === filters.sub);
     if (filters.qNorm) items = items.filter(p => p._norm.includes(filters.qNorm));
     if (filters.favOnly) items = items.filter(p => favs.has(p.id));
   }
@@ -448,23 +450,19 @@ function handleMegaMenuKeydown(e) {
 function handleMegaMenuLinkClick(e) {
   const link = e.target.closest('.mega-menu__link');
   if (!link) return;
-  const text = (link.textContent || '').trim();
-  if (!text) return;
 
-  // mặc định lọc theo tên click
-  filters.nameOnly = true;
-  filters.nameTerm = text;
+  const catAttr = link.getAttribute('data-category') || 'all';
+  const subAttr = link.getAttribute('data-sub') || 'all';
+
+  // Lọc theo cat & sub, không dùng lọc theo tên
+  filters.nameOnly = false;
+  filters.nameTerm = '';
   filters.nameTokens = [];
+  filters.cat = catAttr;
+  filters.sub = subAttr;
 
-  // nhóm đặc biệt:
-  if (text === 'Cá') { filters.nameTerm = ''; filters.nameTokens = ['Cá ']; }
-  if (text === 'Thịt đông lạnh') { filters.cat = 'frozen'; filters.nameTerm = ''; filters.nameTokens = ['Thịt']; }
-  else if (text === 'Hải sản đông lạnh') { filters.cat = 'frozen'; filters.nameTerm = ''; filters.nameTokens = ['Hải sản', 'Tôm', 'Cua', 'Cá ']; }
-  else if (text === 'Rau củ đông lạnh') { filters.cat = 'frozen'; filters.nameTerm = ''; filters.nameTokens = ['Rau', 'Rau củ', 'Ngô']; }
-  else { filters.cat = 'all'; }
-
-  if (catFilter && filters.cat) catFilter.value = filters.cat;
-  if (searchInput) searchInput.value = text;
+  if (catFilter) catFilter.value = filters.cat;
+  if (searchInput) searchInput.value = '';
   filters.q = ''; filters.qNorm = '';
 
   renderWithPagination();
