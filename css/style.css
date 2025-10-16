@@ -345,9 +345,29 @@ select.input, input[type="range"]{padding:10px;height:auto}
   display:flex; align-items:center; justify-content:space-between;
   margin-bottom:12px; border-bottom:1px solid var(--border); padding-bottom:8px;
 }
+
 /* Mega Menu scroll nếu nội dung dài */
 .mega-menu__content{
   max-height:70vh;
   overflow-y:auto;
   padding-right:8px; /* tránh dính sát khi xuất hiện scrollbar */
 }
+/* === FIX HÌNH SẢN PHẨM FIT KHUNG === */
+.card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.card img,
+.product-img {
+  width: 100%;                 /* chiếm hết chiều ngang card */
+  height: 200px;               /* đặt cùng 1 chiều cao cố định */
+  object-fit: cover;           /* cắt ảnh cho vừa khung, không méo */
+  object-position: center;     /* căn giữa ảnh */
+  border-radius: 12px;         /* bo nhẹ góc ảnh */
+  background: #f8f8f8;         /* nền xám nhạt nếu ảnh không load */
+  display: block;
+}
+
