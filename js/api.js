@@ -2,6 +2,8 @@
 import { PRODUCTS } from './data.js';
 
 const LS_ORDERS = 'vvv_orders';
+const LS_USERS  = 'vvv_users';      // danh sách người dùng đã đăng ký
+const LS_SESSION = 'vvv_session';   // phiên đăng nhập hiện tại
 
 function lsGet(key, fallback) {
   try { return JSON.parse(localStorage.getItem(key) || JSON.stringify(fallback)); }
@@ -77,4 +79,62 @@ export async function apiCreateOrder(orderPayload) {
 }
 export async function apiListOrders() {
   return lsGet(LS_ORDERS, []);
+}
+
+// ========= AUTH / USERS (mock) =========
+// User shape: { id, name, email, password, address }
+function getUsers(){ return lsGet(LS_USERS, []); }
+function setUsers(list){ lsSet(LS_USERS, list); }
+
+export async function apiRegisterUser({ name, email, password, address }){
+  email = (email || '').trim().toLowerCase();
+  const users = getUsers();
+  if (!name || !email || !password) {
+    return { ok:false, message:'Vui lòng nhập đủ họ tên, email, mật khẩu.' };
+  }
+  if (users.some(u => u.email === email)) {
+    return { ok:false, message:'Email đã tồn tại.' };
+  }
+  const id = Date.now().toString();
+  const user = { id, name: name.trim(), email, password: String(password), address: (address||'').trim() };
+  users.push(user);
+  setUsers(users);
+  // tự động đăng nhập sau khi đăng ký
+  lsSet(LS_SESSION, { id: user.id, email: user.email, name: user.name });
+  return { ok:true, user: { id:user.id, name:user.name, email:user.email, address:user.address } };
+}
+
+export async function apiLoginUser({ email, password }){
+  const users = getUsers();
+  const e = (email||'').trim().toLowerCase();
+  const p = String(password||'');
+  const u = users.find(x => x.email === e && x.password === p);
+  if (!u) return { ok:false, message:'Sai email hoặc mật khẩu.' };
+  lsSet(LS_SESSION, { id: u.id, email: u.email, name: u.name });
+  return { ok:true, user: { id:u.id, name:u.name, email:u.email, address:u.address } };
+}
+
+export async function apiLogoutUser(){
+  localStorage.removeItem(LS_SESSION);
+  return { ok:true };
+}
+
+export async function apiCurrentUser(){
+  const s = lsGet(LS_SESSION, null);
+  if (!s) return null;
+  const users = getUsers();
+  const u = users.find(x => x.id === s.id);
+  return u ? { id:u.id, name:u.name, email:u.email, address:u.address } : null;
+}
+
+export async function apiUpdateProfile({ name, address }){
+  const s = lsGet(LS_SESSION, null);
+  if (!s) return { ok:false, message:'Chưa đăng nhập.' };
+  const users = getUsers();
+  const idx = users.findIndex(x => x.id === s.id);
+  if (idx === -1) return { ok:false, message:'Không tìm thấy người dùng.' };
+  users[idx] = { ...users[idx], name: (name||users[idx].name), address: (address||users[idx].address) };
+  setUsers(users);
+  lsSet(LS_SESSION, { id: users[idx].id, email: users[idx].email, name: users[idx].name });
+  return { ok:true, user: { id:users[idx].id, name:users[idx].name, email:users[idx].email, address:users[idx].address } };
 }

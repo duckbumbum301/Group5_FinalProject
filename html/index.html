@@ -135,7 +135,20 @@
         <button class="btn btn--icon" id="searchToggle" aria-expanded="false" aria-controls="searchbar">Tìm kiếm</button>
         <!-- Nút ĐƠN HÀNG mới -->
         <button class="btn" id="ordersBtn">Đơn hàng</button>
-        <button class="btn btn--icon" id="accountBtn">Tài khoản</button>
+        <div class="account">
+          <button class="avatar-btn" id="accountMenuBtn" aria-expanded="false" aria-haspopup="true" aria-controls="accountMenu" title="Tài khoản">
+            <span id="avatarEmoji" aria-hidden="true">👤</span>
+          </button>
+          <div class="dropdown" id="accountMenu" role="menu" hidden>
+            <button class="dropdown__item" data-action="profile">Hồ sơ</button>
+            <button class="dropdown__item" data-action="orders">Đơn hàng</button>
+            <button class="dropdown__item" data-action="login">Đăng nhập</button>
+            <button class="dropdown__item" data-action="register">Đăng ký</button>
+            <button class="dropdown__item danger" data-action="logout" hidden>Đăng xuất</button>
+          </div>
+        </div>
+        <span id="authBadge" class="badge" aria-live="polite"></span>
+        <button class="btn btn--outline" id="btnLogout" hidden>Đăng xuất</button>
         <button class="btn btn--pri" id="cartOpenBtn" aria-haspopup="dialog" aria-controls="cartDrawer">
           Giỏ hàng <span id="cartBadge" class="badge">0</span>
         </button>
@@ -275,6 +288,43 @@
     </div>
     <div class="drawer__overlay" id="accountOverlay" tabindex="-1"></div>
   </aside>
+
+  <!-- ====== AUTH MODAL ====== -->
+  <section id="authModal" class="modal" hidden>
+    <div id="authOverlay" class="modal__overlay"></div>
+    <div class="modal__panel">
+      <header class="modal__head">
+        <h3 id="authTitle">Đăng nhập</h3>
+        <button id="authCloseBtn" class="btn btn--icon">✕</button>
+      </header>
+      <div class="tabs" role="tablist" aria-label="Tài khoản">
+        <button class="tab" id="tabLogin" aria-selected="true">Đăng nhập</button>
+        <button class="tab" id="tabRegister" aria-selected="false">Đăng ký</button>
+      </div>
+      <div class="tabpanels">
+        <form id="loginForm" class="form" autocomplete="on">
+          <input class="input" type="email" name="email" placeholder="Email" required>
+          <div class="password-wrap">
+            <input class="input" type="password" name="password" placeholder="Mật khẩu" required>
+            <button class="pw-toggle" type="button" aria-label="Hiện/ẩn mật khẩu">👁️</button>
+          </div>
+          <button class="btn btn--pri" type="submit">Đăng nhập</button>
+          <p class="muted" id="loginMsg" role="status" aria-live="polite"></p>
+        </form>
+        <form id="registerForm" class="form" hidden autocomplete="on">
+          <input class="input" type="text" name="name" placeholder="Họ và tên" required>
+          <input class="input" type="email" name="email" placeholder="Email" required>
+          <div class="password-wrap">
+            <input class="input" type="password" name="password" placeholder="Mật khẩu" required>
+            <button class="pw-toggle" type="button" aria-label="Hiện/ẩn mật khẩu">👁️</button>
+          </div>
+          <textarea class="input" name="address" rows="3" placeholder="Địa chỉ (tuỳ chọn)"></textarea>
+          <button class="btn btn--pri" type="submit">Tạo tài khoản</button>
+          <p class="muted" id="registerMsg" role="status" aria-live="polite"></p>
+        </form>
+      </div>
+    </div>
+  </section>
 
   <!-- ====== ORDERS MODAL (mới) ====== -->
   <section id="ordersModal" class="modal" hidden>

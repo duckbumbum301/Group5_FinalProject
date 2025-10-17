@@ -4,7 +4,7 @@ import { $, money, debounce, normalizeVN, ensureDatalist } from './utils.js';
 import { PRODUCTS, RECIPES } from './data.js';
 import { loadCart, addToCart, removeFromCart, updateCartQuantity, getCart, clearCart } from './cart.js';
 import { renderUI, renderProducts, openCart, closeCart } from './ui.js';
-import { apiListProducts, apiGetProductById, apiApplyVoucher, apiListDeliverySlots, calcShippingFee, apiCreateOrder, apiListOrders } from './api.js';
+import { apiListProducts, apiGetProductById, apiApplyVoucher, apiListDeliverySlots, calcShippingFee, apiCreateOrder, apiListOrders, apiRegisterUser, apiLoginUser, apiLogoutUser, apiCurrentUser, apiUpdateProfile } from './api.js';
 
 // Toast helper
 function ensureToastContainer() {
@@ -77,13 +77,28 @@ const recipeList = $('#recipeList');
 const recipeAddAllBtn = $('#recipeAddAllBtn');
 const contactForm = $('#contactForm');
 const contactMsg = $('#contactMsg');
-const accountBtn = $('#accountBtn');
+const accountBtn = $('#accountBtn'); // cũ (không còn dùng trực tiếp)
 const accountModal = $('#accountModal');
 const accountOverlay = $('#accountOverlay');
 const accountCloseBtn = $('#accountCloseBtn');
 const accountForm = $('#accountForm');
 const accountMsg = $('#accountMsg');
 const checkoutBtn = $('#checkoutBtn');
+
+// Auth UI refs
+const authBadge = document.getElementById('authBadge');
+const accountMenuBtn = document.getElementById('accountMenuBtn');
+const accountMenu = document.getElementById('accountMenu');
+const btnLogout = document.getElementById('btnLogout');
+const authModal = document.getElementById('authModal');
+const authOverlay = document.getElementById('authOverlay');
+const authCloseBtn = document.getElementById('authCloseBtn');
+const tabLogin = document.getElementById('tabLogin');
+const tabRegister = document.getElementById('tabRegister');
+const loginForm = document.getElementById('loginForm');
+const registerForm = document.getElementById('registerForm');
+const loginMsg = document.getElementById('loginMsg');
+const registerMsg = document.getElementById('registerMsg');
 
 // NEW: Orders
 const ordersBtn = $('#ordersBtn');
@@ -221,6 +236,50 @@ function attachCardClicks() {
     });
   });
 }
+// ---------- Auth helpers ----------
+async function refreshCurrentUser() {
+  try {
+    const u = await apiCurrentUser();
+    if (u) {
+      user = { ...user, name: u.name || user.name, email: u.email || user.email, address: u.address || user.address };
+      localStorage.setItem(LS_USER, JSON.stringify(user));
+      if (authBadge) authBadge.textContent = u.name || u.email;
+      if (btnLogout) btnLogout.hidden = false;
+      // cập nhật menu
+      const logoutItem = accountMenu?.querySelector('[data-action="logout"]');
+      const loginItem = accountMenu?.querySelector('[data-action="login"]');
+      const regItem = accountMenu?.querySelector('[data-action="register"]');
+      if (logoutItem) logoutItem.hidden = false;
+      if (loginItem) loginItem.hidden = true;
+      if (regItem) regItem.hidden = true;
+    } else {
+      if (authBadge) authBadge.textContent = '';
+      if (btnLogout) btnLogout.hidden = true;
+      const logoutItem = accountMenu?.querySelector('[data-action="logout"]');
+      const loginItem = accountMenu?.querySelector('[data-action="login"]');
+      const regItem = accountMenu?.querySelector('[data-action="register"]');
+      if (logoutItem) logoutItem.hidden = true;
+      if (loginItem) loginItem.hidden = false;
+      if (regItem) regItem.hidden = false;
+    }
+  } catch {}
+}
+
+function openAuthModal(mode = 'login') {
+  if (!authModal) return;
+  const showLogin = mode === 'login';
+  if (tabLogin && tabRegister) {
+    tabLogin.setAttribute('aria-selected', String(showLogin));
+    tabRegister.setAttribute('aria-selected', String(!showLogin));
+  }
+  if (loginForm && registerForm) {
+    loginForm.hidden = !showLogin;
+    registerForm.hidden = showLogin;
+  }
+  authModal.hidden = false;
+}
+function closeAuthModal(){ if (authModal) authModal.hidden = true; }
+
 
 // ---------- Checkout Modal ----------
 function ensureCheckoutModal() {
@@ -324,6 +383,9 @@ async function openCheckoutModal() {
 
   form.onsubmit = async (e) => {
     e.preventDefault();
+    // Bảo vệ: yêu cầu đăng nhập trước khi đặt hàng
+    const cur = await apiCurrentUser();
+    if (!cur) { closeCheckoutModal(); openAuthModal('login'); return; }
     const fd = new FormData(form);
     const name = (fd.get('name') || '').toString().trim();
     const phone = (fd.get('phone') || '').toString().trim();
@@ -340,6 +402,7 @@ async function openCheckoutModal() {
 
     user = { ...user, name, phone, address };
     localStorage.setItem(LS_USER, JSON.stringify(user));
+    await apiUpdateProfile({ name, address });
 
     const newOrder = await apiCreateOrder({
       user, slot, voucher, payment, note,
@@ -373,11 +436,13 @@ async function openOrdersModal() {
   const modal = ensureOrdersModal();
   const body = document.getElementById('ordersBody');
   const data = await apiListOrders();
+  const cur = await apiCurrentUser();
+  const filtered = cur ? data.filter(o => (o?.user?.email || '').toLowerCase() === (cur.email||'').toLowerCase()) : data;
 
-  if (!data || data.length === 0) {
+  if (!filtered || filtered.length === 0) {
     body.innerHTML = `<p class="muted">Bạn chưa có đơn hàng nào.</p>`;
   } else {
-    body.innerHTML = data.slice().reverse().map(o => {
+    body.innerHTML = filtered.slice().reverse().map(o => {
       const items = Object.entries(o.items || {})
         .filter(([,q]) => q > 0)
         .map(([pid, q]) => {
@@ -550,12 +615,17 @@ function setupListeners() {
   document.addEventListener('keydown', e => { if (e.key === 'Escape') closeCart(); });
   cartOverlay.addEventListener('click', closeCart);
 
-  // Account
-  accountBtn.addEventListener('click', () => {
-    accountForm.elements.name.value = user.name || '';
-    accountForm.elements.email.value = user.email || '';
-    accountForm.elements.address.value = user.address || '';
-    accountModal.removeAttribute('hidden');
+  // Account (hợp nhất): nếu đã đăng nhập mở hồ sơ, nếu chưa mở Auth modal
+  accountBtn.addEventListener('click', async () => {
+    const cur = await apiCurrentUser();
+    if (cur) {
+      accountForm.elements.name.value = cur.name || '';
+      accountForm.elements.email.value = cur.email || '';
+      accountForm.elements.address.value = cur.address || '';
+      accountModal.removeAttribute('hidden');
+    } else {
+      openAuthModal('login');
+    }
   });
   accountCloseBtn.addEventListener('click', () => accountModal.setAttribute('hidden',''));
   accountOverlay.addEventListener('click', () => accountModal.setAttribute('hidden',''));
@@ -578,6 +648,83 @@ function setupListeners() {
 
   // Orders (mới)
   ordersBtn?.addEventListener('click', openOrdersModal);
+
+  // Auth UI
+  btnLogout?.addEventListener('click', async () => { await apiLogoutUser(); await refreshCurrentUser(); });
+  authCloseBtn?.addEventListener('click', closeAuthModal);
+  authOverlay?.addEventListener('click', closeAuthModal);
+  tabLogin?.addEventListener('click', () => openAuthModal('login'));
+  tabRegister?.addEventListener('click', () => openAuthModal('register'));
+  loginForm?.addEventListener('submit', async (e) => {
+    e.preventDefault(); loginMsg.textContent = '';
+    const fd = new FormData(loginForm);
+    const email = (fd.get('email')||'').toString().trim();
+    const password = (fd.get('password')||'').toString();
+    const res = await apiLoginUser({ email, password });
+    if (!res.ok) { loginMsg.textContent = res.message; return; }
+    await refreshCurrentUser();
+    closeAuthModal();
+  });
+  registerForm?.addEventListener('submit', async (e) => {
+    e.preventDefault(); registerMsg.textContent = '';
+    const fd = new FormData(registerForm);
+    const name = (fd.get('name')||'').toString().trim();
+    const email = (fd.get('email')||'').toString().trim();
+    const password = (fd.get('password')||'').toString();
+    const address = (fd.get('address')||'').toString();
+    const res = await apiRegisterUser({ name, email, password, address });
+    if (!res.ok) { registerMsg.textContent = res.message; return; }
+    await refreshCurrentUser();
+    closeAuthModal();
+  });
+
+  // Account avatar dropdown
+  function closeAccountMenu(){ if (accountMenu) accountMenu.hidden = true; accountMenuBtn?.setAttribute('aria-expanded','false'); }
+  function openAccountMenu(){ if (accountMenu) accountMenu.hidden = false; accountMenuBtn?.setAttribute('aria-expanded','true'); }
+  accountMenuBtn?.addEventListener('click', async (e) => {
+    e.stopPropagation();
+    const cur = await apiCurrentUser();
+    if (!cur) { openAuthModal('login'); return; }
+    const isOpen = accountMenu && !accountMenu.hidden;
+    if (isOpen) closeAccountMenu(); else openAccountMenu();
+  });
+  document.addEventListener('click', (e) => {
+    if (!accountMenu) return;
+    if (accountMenu.hidden) return;
+    if (e.target.closest('#accountMenuBtn') || e.target.closest('#accountMenu')) return;
+    closeAccountMenu();
+  });
+  accountMenu?.addEventListener('click', async (e) => {
+    const item = e.target.closest('.dropdown__item'); if (!item) return;
+    const action = item.dataset.action;
+    if (action === 'profile') {
+      const cur = await apiCurrentUser();
+      if (cur) {
+        accountForm.elements.name.value = cur.name || '';
+        accountForm.elements.email.value = cur.email || '';
+        accountForm.elements.address.value = cur.address || '';
+        accountModal.removeAttribute('hidden');
+      } else {
+        openAuthModal('login');
+      }
+    }
+    if (action === 'orders') { openOrdersModal(); }
+    if (action === 'login') { openAuthModal('login'); }
+    if (action === 'register') { openAuthModal('register'); }
+    if (action === 'logout') { await apiLogoutUser(); await refreshCurrentUser(); }
+    closeAccountMenu();
+  });
+
+  // Password visibility toggles
+  document.querySelectorAll('.password-wrap .pw-toggle').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const input = btn.parentElement.querySelector('input[type="password"], input[type="text"]');
+      if (!input) return;
+      const isPw = input.type === 'password';
+      input.type = isPw ? 'text' : 'password';
+      btn.textContent = isPw ? '🙈' : '👁️';
+    });
+  });
 
   // Recipes & Contact
   recipeAddAllBtn.addEventListener('click', addRecipeToCart);
@@ -653,5 +800,6 @@ function init() {
 
   apiListProducts().then(list => { productIndex = buildSearchIndex(list); renderWithPagination(); });
   renderUI();
+  refreshCurrentUser();
 }
 init();
