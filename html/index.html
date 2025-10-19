@@ -1,42 +1,139 @@
 <!DOCTYPE html>
 <html lang="vi">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Vựa Vui Vẻ — Tươi ngon mỗi ngày</title>
-  <meta name="description" content="Vựa Vui Vẻ: Cửa hàng thực phẩm tươi sống, tiện lợi và thân thiện.">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../css/style.css">
-</head>
-<body>
-  <header class="header">
-    <div class="container header__row">
-      <a href="#" class="logo" aria-label="Trang chủ Vựa Vui Vẻ">Vựa Vui Vẻ</a>
-      <nav class="nav" aria-label="Điều hướng chính">
-        <a href="#home">Trang chủ</a>
-        <div class="nav-item nav-item--dropdown">
-          <button class="nav-link nav-link--dropdown" id="productsMenuToggle" aria-expanded="false" aria-haspopup="true" aria-controls="productsMegaMenu">
-            Sản phẩm
-            <svg class="nav-arrow" width="12" height="8" viewBox="0 0 12 8" fill="none" aria-hidden="true">
-              <path d="M1 1.5L6 6.5L11 1.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          </button>
-          <div id="productsMegaMenu" class="mega-menu" role="menu" aria-labelledby="productsMenuToggle" hidden>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Vựa Vui Vẻ — Tươi ngon mỗi ngày</title>
+    <meta
+      name="description"
+      content="Vựa Vui Vẻ: Cửa hàng thực phẩm tươi sống, tiện lợi và thân thiện."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../css/style.css" />
+  </head>
+  <body>
+    <header class="header">
+      <div class="container header__row">
+        <a href="#" class="logo" aria-label="Trang chủ Vựa Vui Vẻ"
+          >Vựa Vui Vẻ</a
+        >
+        <nav class="nav" aria-label="Điều hướng chính">
+          <a href="#home">Trang chủ</a>
+          <div class="nav-item nav-item--dropdown">
+            <button
+              class="nav-link nav-link--dropdown"
+              id="productsMenuToggle"
+              aria-expanded="false"
+              aria-haspopup="true"
+              aria-controls="productsMegaMenu"
+            >
+              Sản phẩm
+              <svg
+                class="nav-arrow"
+                width="12"
+                height="8"
+                viewBox="0 0 12 8"
+                fill="none"
+                aria-hidden="true"
+              >
+                <path
+                  d="M1 1.5L6 6.5L11 1.5"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </button>
+            <div
+              id="productsMegaMenu"
+              class="mega-menu"
+              role="menu"
+              aria-labelledby="productsMenuToggle"
+              hidden
+            >
               <div class="mega-menu__content">
                 <!-- Rau củ -->
                 <div class="mega-menu__column">
                   <h3 class="mega-menu__title">Rau Củ</h3>
                   <ul class="mega-menu__list">
-                    <li><a href="#catalog" class="mega-menu__link" data-category="veg" data-sub="leaf">Rau lá</a></li>
-                    <li><a href="#catalog" class="mega-menu__link" data-category="veg" data-sub="root">Củ & rễ</a></li>
-                    <li><a href="#catalog" class="mega-menu__link" data-category="veg" data-sub="fruit">Quả rau</a></li>
-                    <li><a href="#catalog" class="mega-menu__link" data-category="veg" data-sub="cabbage">Họ cải</a></li>
-                    <li><a href="#catalog" class="mega-menu__link" data-category="veg" data-sub="mushroom">Nấm</a></li>
-                    <li><a href="#catalog" class="mega-menu__link" data-category="veg" data-sub="herb">Rau thơm & gia vị</a></li>
-                    <li><a href="#catalog" class="mega-menu__link" data-category="veg" data-sub="processed">Đã sơ chế</a></li>
-                    <li><a href="#catalog" class="mega-menu__link" data-category="veg" data-sub="organic">Hữu cơ</a></li>
+                    <li>
+                      <a
+                        href="#catalog"
+                        class="mega-menu__link"
+                        data-category="veg"
+                        data-sub="leaf"
+                        >Rau lá</a
+                      >
+                    </li>
+                    <li>
+                      <a
+                        href="#catalog"
+                        class="mega-menu__link"
+                        data-category="veg"
+                        data-sub="root"
+                        >Củ & rễ</a
+                      >
+                    </li>
+                    <li>
+                      <a
+                        href="#catalog"
+                        class="mega-menu__link"
+                        data-category="veg"
+                        data-sub="fruit"
+                        >Quả rau</a
+                      >
+                    </li>
+                    <li>
+                      <a
+                        href="#catalog"
+                        class="mega-menu__link"
+                        data-category="veg"
+                        data-sub="cabbage"
+                        >Họ cải</a
+                      >
+                    </li>
+                    <li>
+                      <a
+                        href="#catalog"
+                        class="mega-menu__link"
+                        data-category="veg"
+                        data-sub="mushroom"
+                        >Nấm</a
+                      >
+                    </li>
+                    <li>
+                      <a
+                        href="#catalog"
+                        class="mega-menu__link"
+                        data-category="veg"
+                        data-sub="herb"
+                        >Rau thơm & gia vị</a
+                      >
+                    </li>
+                    <li>
+                      <a
+                        href="#catalog"
+                        class="mega-menu__link"
+                        data-category="veg"
+                        data-sub="processed"
+                        >Đã sơ chế</a
+                      >
+                    </li>
+                    <li>
+                      <a
+                        href="#catalog"
+                        class="mega-menu__link"
+                        data-category="veg"
+                        data-sub="organic"
+                        >Hữu cơ</a
+                      >
+                    </li>
                   </ul>
                 </div>
 
@@ -44,8 +141,24 @@
                 <div class="mega-menu__column">
                   <h3 class="mega-menu__title">Trái Cây</h3>
                   <ul class="mega-menu__list">
-                    <li><a href="#catalog" class="mega-menu__link" data-category="fruit" data-sub="mixed">Trái cây các loại</a></li>
-                    <li><a href="#catalog" class="mega-menu__link" data-category="fruit" data-sub="gift">Giỏ quà</a></li>
+                    <li>
+                      <a
+                        href="#catalog"
+                        class="mega-menu__link"
+                        data-category="fruit"
+                        data-sub="mixed"
+                        >Trái cây các loại</a
+                      >
+                    </li>
+                    <li>
+                      <a
+                        href="#catalog"
+                        class="mega-menu__link"
+                        data-category="fruit"
+                        data-sub="gift"
+                        >Giỏ quà</a
+                      >
+                    </li>
                   </ul>
                 </div>
 
@@ -53,11 +166,51 @@
                 <div class="mega-menu__column">
                   <h3 class="mega-menu__title">Thịt Cá</h3>
                   <ul class="mega-menu__list">
-                    <li><a href="#catalog" class="mega-menu__link" data-category="meat" data-sub="redmeat">Thịt đỏ</a></li>
-                    <li><a href="#catalog" class="mega-menu__link" data-category="meat" data-sub="pork">Thịt heo</a></li>
-                    <li><a href="#catalog" class="mega-menu__link" data-category="meat" data-sub="poultry">Gia cầm</a></li>
-                    <li><a href="#catalog" class="mega-menu__link" data-category="meat" data-sub="fish">Cá tươi</a></li>
-                    <li><a href="#catalog" class="mega-menu__link" data-category="meat" data-sub="seafood">Hải sản</a></li>
+                    <li>
+                      <a
+                        href="#catalog"
+                        class="mega-menu__link"
+                        data-category="meat"
+                        data-sub="redmeat"
+                        >Thịt đỏ</a
+                      >
+                    </li>
+                    <li>
+                      <a
+                        href="#catalog"
+                        class="mega-menu__link"
+                        data-category="meat"
+                        data-sub="pork"
+                        >Thịt heo</a
+                      >
+                    </li>
+                    <li>
+                      <a
+                        href="#catalog"
+                        class="mega-menu__link"
+                        data-category="meat"
+                        data-sub="poultry"
+                        >Gia cầm</a
+                      >
+                    </li>
+                    <li>
+                      <a
+                        href="#catalog"
+                        class="mega-menu__link"
+                        data-category="meat"
+                        data-sub="fish"
+                        >Cá tươi</a
+                      >
+                    </li>
+                    <li>
+                      <a
+                        href="#catalog"
+                        class="mega-menu__link"
+                        data-category="meat"
+                        data-sub="seafood"
+                        >Hải sản</a
+                      >
+                    </li>
                   </ul>
                 </div>
 
@@ -65,24 +218,112 @@
                 <div class="mega-menu__column">
                   <h3 class="mega-menu__title">Nước Giải Khát</h3>
                   <ul class="mega-menu__list">
-                    <li><a href="#catalog" class="mega-menu__link" data-category="drink" data-sub="can">Nước đóng chai</a></li>
-                    <li><a href="#catalog" class="mega-menu__link" data-category="drink" data-sub="juice">Nước ép & sinh tố</a></li>
-                    <li><a href="#catalog" class="mega-menu__link" data-category="drink" data-sub="milk">Sữa & chế phẩm sữa</a></li>
-                    <li><a href="#catalog" class="mega-menu__link" data-category="drink" data-sub="tea">Trà & thảo mộc</a></li>
-                    <li><a href="#catalog" class="mega-menu__link" data-category="drink" data-sub="coffee">Cà phê</a></li>
+                    <li>
+                      <a
+                        href="#catalog"
+                        class="mega-menu__link"
+                        data-category="drink"
+                        data-sub="can"
+                        >Nước đóng chai</a
+                      >
+                    </li>
+                    <li>
+                      <a
+                        href="#catalog"
+                        class="mega-menu__link"
+                        data-category="drink"
+                        data-sub="juice"
+                        >Nước ép & sinh tố</a
+                      >
+                    </li>
+                    <li>
+                      <a
+                        href="#catalog"
+                        class="mega-menu__link"
+                        data-category="drink"
+                        data-sub="milk"
+                        >Sữa & chế phẩm sữa</a
+                      >
+                    </li>
+                    <li>
+                      <a
+                        href="#catalog"
+                        class="mega-menu__link"
+                        data-category="drink"
+                        data-sub="tea"
+                        >Trà & thảo mộc</a
+                      >
+                    </li>
+                    <li>
+                      <a
+                        href="#catalog"
+                        class="mega-menu__link"
+                        data-category="drink"
+                        data-sub="coffee"
+                        >Cà phê</a
+                      >
+                    </li>
                   </ul>
                 </div>
 
                 <!-- Gạo, bột, đồ khô -->
                 <div class="mega-menu__column">
-                  <h3 class="mega-menu__title"> Đồ Khô</h3>
+                  <h3 class="mega-menu__title">Đồ Khô</h3>
                   <ul class="mega-menu__list">
-                    <li><a href="#catalog" class="mega-menu__link" data-category="dry" data-sub="rice">Gạo & ngũ cốc</a></li>
-                    <li><a href="#catalog" class="mega-menu__link" data-category="dry" data-sub="noodle">Mì/Bún/Phở khô</a></li>
-                    <li><a href="#catalog" class="mega-menu__link" data-category="dry" data-sub="beans">Đậu & hạt</a></li>
-                    <li><a href="#catalog" class="mega-menu__link" data-category="dry" data-sub="flour">Bột, bột trộn sẵn</a></li>
-                    <li><a href="#catalog" class="mega-menu__link" data-category="dry" data-sub="canned">Đồ hộp & đóng gói</a></li>
-                    <li><a href="#catalog" class="mega-menu__link" data-category="dry" data-sub="seaweed">Rong biển & nấm khô</a></li>
+                    <li>
+                      <a
+                        href="#catalog"
+                        class="mega-menu__link"
+                        data-category="dry"
+                        data-sub="rice"
+                        >Gạo & ngũ cốc</a
+                      >
+                    </li>
+                    <li>
+                      <a
+                        href="#catalog"
+                        class="mega-menu__link"
+                        data-category="dry"
+                        data-sub="noodle"
+                        >Mì/Bún/Phở khô</a
+                      >
+                    </li>
+                    <li>
+                      <a
+                        href="#catalog"
+                        class="mega-menu__link"
+                        data-category="dry"
+                        data-sub="beans"
+                        >Đậu & hạt</a
+                      >
+                    </li>
+                    <li>
+                      <a
+                        href="#catalog"
+                        class="mega-menu__link"
+                        data-category="dry"
+                        data-sub="flour"
+                        >Bột, bột trộn sẵn</a
+                      >
+                    </li>
+                    <li>
+                      <a
+                        href="#catalog"
+                        class="mega-menu__link"
+                        data-category="dry"
+                        data-sub="canned"
+                        >Đồ hộp & đóng gói</a
+                      >
+                    </li>
+                    <li>
+                      <a
+                        href="#catalog"
+                        class="mega-menu__link"
+                        data-category="dry"
+                        data-sub="seaweed"
+                        >Rong biển & nấm khô</a
+                      >
+                    </li>
                   </ul>
                 </div>
 
@@ -90,12 +331,33 @@
                 <div class="mega-menu__column">
                   <h3 class="mega-menu__title">Gia Vị</h3>
                   <ul class="mega-menu__list">
-                    <li><a href="#catalog" class="mega-menu__link" data-category="spice" data-sub="oil">Dầu ăn</a></li>
-                    <li><a href="#catalog" class="mega-menu__link" data-category="spice" data-sub="sauce">Nước chấm</a></li>
-                    <li><a href="#catalog" class="mega-menu__link" data-category="spice" data-sub="powder">Bột nêm & gia vị khô</a></li>
-                    
-                    
-                    
+                    <li>
+                      <a
+                        href="#catalog"
+                        class="mega-menu__link"
+                        data-category="spice"
+                        data-sub="oil"
+                        >Dầu ăn</a
+                      >
+                    </li>
+                    <li>
+                      <a
+                        href="#catalog"
+                        class="mega-menu__link"
+                        data-category="spice"
+                        data-sub="sauce"
+                        >Nước chấm</a
+                      >
+                    </li>
+                    <li>
+                      <a
+                        href="#catalog"
+                        class="mega-menu__link"
+                        data-category="spice"
+                        data-sub="powder"
+                        >Bột nêm & gia vị khô</a
+                      >
+                    </li>
                   </ul>
                 </div>
 
@@ -103,195 +365,396 @@
                 <div class="mega-menu__column">
                   <h3 class="mega-menu__title">Đồ Gia Dụng</h3>
                   <ul class="mega-menu__list">
-                    <li><a href="#catalog" class="mega-menu__link" data-category="household" data-sub="paper">Giấy & khăn</a></li>
-                    <li><a href="#catalog" class="mega-menu__link" data-category="household" data-sub="laundry">Giặt giũ</a></li>
-                    <li><a href="#catalog" class="mega-menu__link" data-category="household" data-sub="cleaning">Rửa chén & vệ sinh nhà</a></li>
-                    <li><a href="#catalog" class="mega-menu__link" data-category="household" data-sub="kitchenware">Dụng cụ bếp & lưu trữ</a></li>
-                    <li><a href="#catalog" class="mega-menu__link" data-category="household" data-sub="bags">Túi rác & bao bì</a></li>
-                    <li><a href="#catalog" class="mega-menu__link" data-category="household" data-sub="personal">Chăm sóc cá nhân</a></li>
+                    <li>
+                      <a
+                        href="#catalog"
+                        class="mega-menu__link"
+                        data-category="household"
+                        data-sub="paper"
+                        >Giấy & khăn</a
+                      >
+                    </li>
+                    <li>
+                      <a
+                        href="#catalog"
+                        class="mega-menu__link"
+                        data-category="household"
+                        data-sub="laundry"
+                        >Giặt giũ</a
+                      >
+                    </li>
+                    <li>
+                      <a
+                        href="#catalog"
+                        class="mega-menu__link"
+                        data-category="household"
+                        data-sub="cleaning"
+                        >Rửa chén & vệ sinh nhà</a
+                      >
+                    </li>
+                    <li>
+                      <a
+                        href="#catalog"
+                        class="mega-menu__link"
+                        data-category="household"
+                        data-sub="kitchenware"
+                        >Dụng cụ bếp & lưu trữ</a
+                      >
+                    </li>
+                    <li>
+                      <a
+                        href="#catalog"
+                        class="mega-menu__link"
+                        data-category="household"
+                        data-sub="bags"
+                        >Túi rác & bao bì</a
+                      >
+                    </li>
+                    <li>
+                      <a
+                        href="#catalog"
+                        class="mega-menu__link"
+                        data-category="household"
+                        data-sub="personal"
+                        >Chăm sóc cá nhân</a
+                      >
+                    </li>
                   </ul>
                 </div>
 
-          
                 <!-- Bánh kẹo -->
                 <div class="mega-menu__column">
                   <h3 class="mega-menu__title">Đồ Ngọt</h3>
                   <ul class="mega-menu__list">
-                    <li><a href="#catalog" class="mega-menu__link" data-category="sweet" data-sub="snack">Bánh snack</a></li>
-                    <li><a href="#catalog" class="mega-menu__link" data-category="sweet" data-sub="chocolate">Socola</a></li>
-                    <li><a href="#catalog" class="mega-menu__link" data-category="sweet" data-sub="candy">Kẹo ngọt</a></li>
-                    <li><a href="#catalog" class="mega-menu__link" data-category="sweet" data-sub="dried">Mứt & trái cây sấy</a></li>
-                    <li><a href="#catalog" class="mega-menu__link" data-category="sweet" data-sub="cereal">Ngũ cốc & granola</a></li>
+                    <li>
+                      <a
+                        href="#catalog"
+                        class="mega-menu__link"
+                        data-category="sweet"
+                        data-sub="snack"
+                        >Bánh snack</a
+                      >
+                    </li>
+                    <li>
+                      <a
+                        href="#catalog"
+                        class="mega-menu__link"
+                        data-category="sweet"
+                        data-sub="chocolate"
+                        >Socola</a
+                      >
+                    </li>
+                    <li>
+                      <a
+                        href="#catalog"
+                        class="mega-menu__link"
+                        data-category="sweet"
+                        data-sub="candy"
+                        >Kẹo ngọt</a
+                      >
+                    </li>
+                    <li>
+                      <a
+                        href="#catalog"
+                        class="mega-menu__link"
+                        data-category="sweet"
+                        data-sub="dried"
+                        >Mứt & trái cây sấy</a
+                      >
+                    </li>
+                    <li>
+                      <a
+                        href="#catalog"
+                        class="mega-menu__link"
+                        data-category="sweet"
+                        data-sub="cereal"
+                        >Ngũ cốc & granola</a
+                      >
+                    </li>
                   </ul>
                 </div>
               </div>
             </div>
+          </div>
+          <a href="#recipes">Công thức</a>
+          <a href="#about">Giới thiệu</a>
+          <a href="#contact">Liên hệ</a>
+        </nav>
+        <div class="actions">
+          <button
+            class="btn btn--icon"
+            id="searchToggle"
+            aria-expanded="false"
+            aria-controls="searchbar"
+          >
+            Tìm kiếm
+          </button>
+          <!-- Nút ĐƠN HÀNG mới -->
+          <button class="btn" id="ordersBtn">Đơn hàng</button>
+          <a href="../client/index.html"
+            ><button class="btn btn--icon" id="accountBtn">Tài khoản</button></a
+          >
+          <button
+            class="btn btn--pri"
+            id="cartOpenBtn"
+            aria-haspopup="dialog"
+            aria-controls="cartDrawer"
+          >
+            Giỏ hàng <span id="cartBadge" class="badge">0</span>
+          </button>
         </div>
-        <a href="#recipes">Công thức</a>
-        <a href="#about">Giới thiệu</a>
-        <a href="#contact">Liên hệ</a>
-      </nav>
-      <div class="actions">
-        <button class="btn btn--icon" id="searchToggle" aria-expanded="false" aria-controls="searchbar">Tìm kiếm</button>
-        <!-- Nút ĐƠN HÀNG mới -->
-        <button class="btn" id="ordersBtn">Đơn hàng</button>
-        <button class="btn btn--icon" id="accountBtn">Tài khoản</button>
-        <button class="btn btn--pri" id="cartOpenBtn" aria-haspopup="dialog" aria-controls="cartDrawer">
-          Giỏ hàng <span id="cartBadge" class="badge">0</span>
-        </button>
       </div>
-    </div>
-    <div id="searchbar" class="searchbar" hidden>
-      <div class="container searchbar__row">
-        <input id="searchInput" class="input" type="search" placeholder="Tìm: bí đỏ, rau muống, táo..." aria-label="Tìm kiếm sản phẩm">
+      <div id="searchbar" class="searchbar" hidden>
+        <div class="container searchbar__row">
+          <input
+            id="searchInput"
+            class="input"
+            type="search"
+            placeholder="Tìm: bí đỏ, rau muống, táo..."
+            aria-label="Tìm kiếm sản phẩm"
+          />
+        </div>
       </div>
-    </div>
-  </header>
+    </header>
 
-  <main id="home">
-    <section class="hero">
-      <div class="container hero__grid">
-        <div>
-          <h1>Đi chợ online, <br> tươi — nhanh — vui</h1>
-          <p>Giao nhanh trong ngày, hàng tươi mỗi sáng. Công thức nấu ăn gợi ý và “thêm tất cả vào giỏ” chỉ 1 chạm.</p>
-          <div class="promo-row">
-            <span class="promo">Miễn phí giao ≥ 299k</span>
-            <span class="promo">Giảm 15% Rau & Củ</span>
-            <span class="promo">Thịt/Cá tươi mới mỗi ngày</span>
+    <main id="home">
+      <section class="hero">
+        <div class="container hero__grid">
+          <div>
+            <h1>
+              Đi chợ online, <br />
+              tươi — nhanh — vui
+            </h1>
+            <p>
+              Giao nhanh trong ngày, hàng tươi mỗi sáng. Công thức nấu ăn gợi ý
+              và “thêm tất cả vào giỏ” chỉ 1 chạm.
+            </p>
+            <div class="promo-row">
+              <span class="promo">Miễn phí giao ≥ 299k</span>
+              <span class="promo">Giảm 15% Rau & Củ</span>
+              <span class="promo">Thịt/Cá tươi mới mỗi ngày</span>
+            </div>
+          </div>
+          <div class="illus">
+            <div class="illus__emoji" aria-hidden="true">🛒🥬🍊</div>
           </div>
         </div>
-        <div class="illus"><div class="illus__emoji" aria-hidden="true">🛒🥬🍊</div></div>
-      </div>
-    </section>
+      </section>
 
-    <section id="catalog" class="section">
-      <div class="container">
-        <div class="title">
-          <h2>Sản phẩm</h2>
-          <label class="pill"><input type="checkbox" id="favOnly"> Chỉ xem Yêu thích</label>
-        </div>
-        <div class="controls">
-          <label for="categoryFilter">Danh mục:</label>
-          <select id="categoryFilter" class="input">
-            <option value="all">Tất cả</option>
-            <option value="meatfish">Thịt, Cá, Trứng, Hải Sản</option>
-            <option value="vegfruit">Rau, Củ, Nấm, Trái Cây</option>
-            <option value="cookingoil">Dầu Ăn, Nước Chấm, Gia Vị</option>
-            <option value="drink">Bia, Nước Giải Khát</option>
-            <option value="dry">Gạo, Bột, Đồ Khô</option>
-            <option value="noodle">Mì, Miến, Cháo, Phở</option>
-            <option value="milk">Sữa Các Loại</option>
-            <option value="icecream">Kem & Sữa Chua</option>
-            <option value="frozen">Thực Phẩm Đông Mát</option>
-            <option value="snack">Bánh Kẹo Các Loại</option>
-            <option value="personalcare">Chăm Sóc Cá Nhân</option>
-            <option value="cleaning">Vệ Sinh Nhà Cửa</option>
-            <option value="baby">Sản Phẩm Mẹ Và Bé</option>
-            <option value="household">Đồ Dùng Gia Đình</option>
-          </select>
-
-          <label for="sortSelect">Sắp xếp:</label>
-          <select id="sortSelect" class="input">
-            <option value="pop">Phổ biến</option>
-            <option value="priceAsc">Giá ↑</option>
-            <option value="priceDesc">Giá ↓</option>
-          </select>
-
-          <div class="range-wrap">
-            <label for="priceRange">Giá tối đa:</label>
-            <input id="priceRange" type="range" min="20000" max="250000" step="10000" value="250000">
-            <span id="priceValue" class="pill">≤ 250.000₫</span>
+      <section id="catalog" class="section">
+        <div class="container">
+          <div class="title">
+            <h2>Sản phẩm</h2>
+            <label class="pill"
+              ><input type="checkbox" id="favOnly" /> Chỉ xem Yêu thích</label
+            >
           </div>
+          <div class="controls">
+            <label for="categoryFilter">Danh mục:</label>
+            <select id="categoryFilter" class="input">
+              <option value="all">Tất cả</option>
+              <option value="meatfish">Thịt, Cá, Trứng, Hải Sản</option>
+              <option value="vegfruit">Rau, Củ, Nấm, Trái Cây</option>
+              <option value="cookingoil">Dầu Ăn, Nước Chấm, Gia Vị</option>
+              <option value="drink">Bia, Nước Giải Khát</option>
+              <option value="dry">Gạo, Bột, Đồ Khô</option>
+              <option value="noodle">Mì, Miến, Cháo, Phở</option>
+              <option value="milk">Sữa Các Loại</option>
+              <option value="icecream">Kem & Sữa Chua</option>
+              <option value="frozen">Thực Phẩm Đông Mát</option>
+              <option value="snack">Bánh Kẹo Các Loại</option>
+              <option value="personalcare">Chăm Sóc Cá Nhân</option>
+              <option value="cleaning">Vệ Sinh Nhà Cửa</option>
+              <option value="baby">Sản Phẩm Mẹ Và Bé</option>
+              <option value="household">Đồ Dùng Gia Đình</option>
+            </select>
+
+            <label for="sortSelect">Sắp xếp:</label>
+            <select id="sortSelect" class="input">
+              <option value="pop">Phổ biến</option>
+              <option value="priceAsc">Giá ↑</option>
+              <option value="priceDesc">Giá ↓</option>
+            </select>
+
+            <div class="range-wrap">
+              <label for="priceRange">Giá tối đa:</label>
+              <input
+                id="priceRange"
+                type="range"
+                min="20000"
+                max="250000"
+                step="10000"
+                value="250000"
+              />
+              <span id="priceValue" class="pill">≤ 250.000₫</span>
+            </div>
+          </div>
+
+          <div id="productGrid" class="grid" aria-live="polite"></div>
         </div>
+      </section>
 
-        <div id="productGrid" class="grid" aria-live="polite"></div>
-      </div>
-    </section>
-
-    <section id="recipes" class="section">
-      <div class="container">
-        <div class="title"><h2>Trợ lý công thức</h2></div>
-        <div class="recipe-row">
-          <input id="recipeInput" class="input" list="recipeList" placeholder="Nhập món: canh bí đỏ, canh chua cá, rau muống xào..." aria-label="Tên món ăn">
-          <datalist id="recipeList"></datalist>
-          <button class="btn btn--pri" id="recipeAddAllBtn">Thêm tất cả nguyên liệu vào giỏ</button>
+      <section id="recipes" class="section">
+        <div class="container">
+          <div class="title"><h2>Trợ lý công thức</h2></div>
+          <div class="recipe-row">
+            <input
+              id="recipeInput"
+              class="input"
+              list="recipeList"
+              placeholder="Nhập món: canh bí đỏ, canh chua cá, rau muống xào..."
+              aria-label="Tên món ăn"
+            />
+            <datalist id="recipeList"></datalist>
+            <button class="btn btn--pri" id="recipeAddAllBtn">
+              Thêm tất cả nguyên liệu vào giỏ
+            </button>
+          </div>
+          <p class="muted">
+            Mẹo: Chọn món trong gợi ý để đúng công thức dữ liệu mẫu.
+          </p>
         </div>
-        <p class="muted">Mẹo: Chọn món trong gợi ý để đúng công thức dữ liệu mẫu.</p>
-      </div>
-    </section>
+      </section>
 
-    <section id="about" class="section">
-      <div class="container">
-        <div class="title"><h2>Về Vựa Vui Vẻ</h2></div>
-        <p>Chúng tôi chọn nông sản địa phương, ưu tiên mùa vụ và độ tươi. Mọi thao tác đều chạy trên trình duyệt (không cần backend), phù hợp đồ án cuối kì.</p>
-      </div>
-    </section>
+      <section id="about" class="section">
+        <div class="container">
+          <div class="title"><h2>Về Vựa Vui Vẻ</h2></div>
+          <p>
+            Chúng tôi chọn nông sản địa phương, ưu tiên mùa vụ và độ tươi. Mọi
+            thao tác đều chạy trên trình duyệt (không cần backend), phù hợp đồ
+            án cuối kì.
+          </p>
+        </div>
+      </section>
 
-    <section id="contact" class="section">
-      <div class="container">
-        <div class="title"><h2>Liên hệ</h2></div>
-        <form id="contactForm" class="contact" novalidate>
-          <input class="input" type="text" name="name" placeholder="Họ và tên" required>
-          <input class="input" type="email" name="email" placeholder="Email" required>
-          <textarea class="input" name="message" rows="4" placeholder="Lời nhắn..." required></textarea>
-          <button class="btn btn--pri" type="submit">Gửi</button>
-          <p class="muted" id="contactMsg" role="status" aria-live="polite"></p>
+      <section id="contact" class="section">
+        <div class="container">
+          <div class="title"><h2>Liên hệ</h2></div>
+          <form id="contactForm" class="contact" novalidate>
+            <input
+              class="input"
+              type="text"
+              name="name"
+              placeholder="Họ và tên"
+              required
+            />
+            <input
+              class="input"
+              type="email"
+              name="email"
+              placeholder="Email"
+              required
+            />
+            <textarea
+              class="input"
+              name="message"
+              rows="4"
+              placeholder="Lời nhắn..."
+              required
+            ></textarea>
+            <button class="btn btn--pri" type="submit">Gửi</button>
+            <p
+              class="muted"
+              id="contactMsg"
+              role="status"
+              aria-live="polite"
+            ></p>
+          </form>
+        </div>
+      </section>
+    </main>
+
+    <aside
+      id="cartDrawer"
+      class="drawer"
+      role="dialog"
+      aria-modal="true"
+      aria-label="Giỏ hàng"
+      hidden
+    >
+      <div class="drawer__panel">
+        <div class="drawer__head">
+          <h3>Giỏ hàng</h3>
+          <button
+            class="btn btn--icon"
+            id="cartCloseBtn"
+            aria-label="Đóng giỏ hàng"
+          >
+            Đóng
+          </button>
+        </div>
+        <div id="cartItems" class="cart-list"></div>
+        <div class="drawer__foot">
+          <div class="total-row">
+            <span>Tạm tính</span><strong id="cartSubtotal">0₫</strong>
+          </div>
+          <button class="btn btn--pri" id="checkoutBtn">Thanh toán</button>
+        </div>
+      </div>
+      <div class="drawer__overlay" id="cartOverlay" tabindex="-1"></div>
+    </aside>
+
+    <!-- Account (drawer giữ nguyên) -->
+    <aside
+      id="accountModal"
+      class="drawer"
+      role="dialog"
+      aria-modal="true"
+      aria-label="Thông tin tài khoản"
+      hidden
+    >
+      <div class="drawer__panel">
+        <div class="drawer__head">
+          <h3>Thông tin giao hàng</h3>
+          <button class="btn btn--icon" id="accountCloseBtn" aria-label="Đóng">
+            Đóng
+          </button>
+        </div>
+        <form id="accountForm" class="contact" style="padding: 16px">
+          <input
+            class="input"
+            type="text"
+            name="name"
+            placeholder="Họ và tên"
+            required
+          />
+          <input
+            class="input"
+            type="email"
+            name="email"
+            placeholder="Email"
+            required
+          />
+          <textarea
+            class="input"
+            name="address"
+            rows="3"
+            placeholder="Địa chỉ giao hàng..."
+            required
+          ></textarea>
+          <button class="btn btn--pri" type="submit">Lưu thông tin</button>
+          <p class="muted" id="accountMsg" role="status" aria-live="polite"></p>
         </form>
       </div>
+      <div class="drawer__overlay" id="accountOverlay" tabindex="-1"></div>
+    </aside>
+
+    <!-- ====== ORDERS MODAL (mới) ====== -->
+    <section id="ordersModal" class="modal" hidden>
+      <div id="ordersOverlay" class="modal__overlay"></div>
+      <div class="modal__panel">
+        <header class="modal__head">
+          <h3>Đơn hàng của tôi</h3>
+          <button id="ordersCloseBtn" class="btn btn--icon">✕</button>
+        </header>
+        <div id="ordersBody" class="orders-body"></div>
+      </div>
     </section>
-  </main>
 
-  <aside id="cartDrawer" class="drawer" role="dialog" aria-modal="true" aria-label="Giỏ hàng" hidden>
-    <div class="drawer__panel">
-      <div class="drawer__head">
-        <h3>Giỏ hàng</h3>
-        <button class="btn btn--icon" id="cartCloseBtn" aria-label="Đóng giỏ hàng">Đóng</button>
-      </div>
-      <div id="cartItems" class="cart-list"></div>
-      <div class="drawer__foot">
-        <div class="total-row">
-          <span>Tạm tính</span><strong id="cartSubtotal">0₫</strong>
-        </div>
-        <button class="btn btn--pri" id="checkoutBtn">Thanh toán</button>
-      </div>
-    </div>
-    <div class="drawer__overlay" id="cartOverlay" tabindex="-1"></div>
-  </aside>
-
-  <!-- Account (drawer giữ nguyên) -->
-  <aside id="accountModal" class="drawer" role="dialog" aria-modal="true" aria-label="Thông tin tài khoản" hidden>
-    <div class="drawer__panel">
-      <div class="drawer__head">
-        <h3>Thông tin giao hàng</h3>
-        <button class="btn btn--icon" id="accountCloseBtn" aria-label="Đóng">Đóng</button>
-      </div>
-      <form id="accountForm" class="contact" style="padding: 16px;">
-        <input class="input" type="text" name="name" placeholder="Họ và tên" required>
-        <input class="input" type="email" name="email" placeholder="Email" required>
-        <textarea class="input" name="address" rows="3" placeholder="Địa chỉ giao hàng..." required></textarea>
-        <button class="btn btn--pri" type="submit">Lưu thông tin</button>
-        <p class="muted" id="accountMsg" role="status" aria-live="polite"></p>
-      </form>
-    </div>
-    <div class="drawer__overlay" id="accountOverlay" tabindex="-1"></div>
-  </aside>
-
-  <!-- ====== ORDERS MODAL (mới) ====== -->
-  <section id="ordersModal" class="modal" hidden>
-    <div id="ordersOverlay" class="modal__overlay"></div>
-    <div class="modal__panel">
-      <header class="modal__head">
-        <h3>Đơn hàng của tôi</h3>
-        <button id="ordersCloseBtn" class="btn btn--icon">✕</button>
-      </header>
-      <div id="ordersBody" class="orders-body"></div>
-    </div>
-  </section>
-
-  <footer class="footer">
-    <div class="container">© <span id="year"></span> Vựa Vui Vẻ</div>
-  </footer>
-
-  <script type="module" src="../js/main.js"></script>
-</body>
+    <footer class="footer">
+      <div class="container">© <span id="year"></span> Vựa Vui Vẻ</div>
+    </footer>
+    <script src="auth.js"></script>
+    <script type="module" src="../js/main.js"></script>
+  </body>
 </html>

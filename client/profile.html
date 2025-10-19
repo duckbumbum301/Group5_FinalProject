@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Hồ sơ — Vựa Vui Vẻ</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <!-- Trang: Profile (giữ bố cục bình thường, không căn giữa dọc) -->
+    <header class="topbar">
+      <strong>👤 Hồ sơ khách hàng</strong>
+      <span class="right"></span>
+      <button id="btnLogout" class="btn btn-danger">Đăng xuất</button>
+
+      <a class="btn btn-ghost" href="../html/index.html">Front Store</a>
+    </header>
+
+    <div class="spacer"></div>
+
+    <main class="page">
+      <!-- Chức năng: Hiển thị thông tin tài khoản đang đăng nhập -->
+      <section class="card">
+        <h2>Thông tin tài khoản</h2>
+        <div id="profile"></div>
+      </section>
+    </main>
+
+    <!-- Core auth dùng chung -->
+    <script src="auth.js"></script>
+    <script>
+      /* Điều hướng: nếu chưa đăng nhập -> về login */
+      const s = getSession();
+      if (!s) {
+        go("login.html");
+      }
+
+      /* Render bảng thông tin */
+      const name = s?.name || "(Chưa đặt tên)";
+      const email = s?.email || "";
+      const phone = s?.phone || "";
+      const dob = s?.dob || "";
+
+      document.getElementById("profile").innerHTML = `
+      <table class="table">
+        <thead><tr><th>Trường</th><th>Giá trị</th></tr></thead>
+        <tbody>
+          <tr><td>Tên</td><td><strong>${name}</strong></td></tr>
+          <tr><td>Email</td><td>${email}</td></tr>
+          <tr><td>Số điện thoại</td><td>${phone}</td></tr>
+          <tr><td>Ngày sinh</td><td>${dob}</td></tr>
+        </tbody>
+      </table>
+    `;
+
+      /* Chức năng: Đăng xuất */
+      document.getElementById("btnLogout").addEventListener("click", () => {
+        clearSession();
+        go("login.html");
+      });
+    </script>
+  </body>
+</html>

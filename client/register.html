@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Đăng ký — Vựa Vui Vẻ</title>
+    <link rel="stylesheet" href="styles.css" />
+    <style>
+      /* ===== Verify Box (overlay) — dùng riêng cho register ===== */
+      .verify-overlay {
+        position: fixed;
+        inset: 0;
+        display: none;
+        place-items: center;
+        background: rgba(0, 0, 0, 0.45);
+        z-index: 50;
+      }
+      .verify-card {
+        width: min(420px, 92vw);
+        background: linear-gradient(180deg, #0f172af0, #0b1220e0);
+        border: 1px solid #233a5a;
+        border-radius: 16px;
+        box-shadow: 0 18px 60px #00000055, 0 2px 8px #00000066;
+        padding: 18px;
+      }
+      .code-inputs {
+        display: grid;
+        grid-template-columns: repeat(6, 1fr);
+        gap: 8px;
+        margin: 12px 0;
+      }
+      .code-inputs input {
+        text-align: center;
+        font-size: 18px;
+        padding: 10px 0;
+        border-radius: 12px;
+        border: 1px solid #233a5a;
+        background: #0b152b;
+        color: #e5f2ff;
+      }
+      .verify-actions {
+        display: flex;
+        gap: 8px;
+        align-items: center;
+      }
+      .verify-note {
+        color: #cbd5e1;
+        font-size: 14px;
+        margin-top: 6px;
+      }
+      .dim {
+        opacity: 0.6;
+      }
+      .linklike {
+        background: transparent;
+        border: 0;
+        color: #22c55e;
+        cursor: pointer;
+        padding: 0 4px;
+        font-weight: 700;
+      }
+      .linklike[disabled] {
+        opacity: 0.4;
+        cursor: not-allowed;
+      }
+      @media (max-width: 420px) {
+        .verify-card {
+          padding: 14px;
+        }
+        .code-inputs input {
+          font-size: 16px;
+          padding: 8px 0;
+        }
+      }
+    </style>
+  </head>
+  <body class="page-center">
+    <div class="container container--wide">
+      <!-- Trang: Register -->
+      <div class="row" style="text-align: center">
+        <h1 align="center">Tạo tài khoản</h1>
+        <a class="btn btn-ghost right" href="index.html">Trang chủ</a>
+        <a class="btn btn-ghost right" href="login.html"
+          >Đã có tài khoản? Đăng nhập</a
+        >
+      </div>
+
+      <!-- Chức năng: Form đăng ký -->
+      <form id="formRegister" novalidate>
+        <table class="form-table">
+          <tr>
+            <td><label for="reName">Họ và tên</label></td>
+            <td>
+              <input
+                id="reName"
+                name="name"
+                placeholder="Nguyễn Văn A"
+                required
+              />
+            </td>
+          </tr>
+          <tr>
+            <td><label for="reDob">Ngày sinh</label></td>
+            <td><input id="reDob" name="dob" type="date" required /></td>
+          </tr>
+          <tr>
+            <td><label for="reEmail">Email</label></td>
+            <td>
+              <input
+                id="reEmail"
+                name="email"
+                type="email"
+                placeholder="email@domain.com"
+                required
+              />
+            </td>
+          </tr>
+          <tr>
+            <td><label for="rePhone">Số điện thoại</label></td>
+            <td>
+              <input
+                id="rePhone"
+                name="phone"
+                inputmode="numeric"
+                placeholder="VD: 0912345678"
+                required
+              />
+            </td>
+          </tr>
+
+          <!-- Mật khẩu + eye -->
+          <tr>
+            <td><label for="rePass">Mật khẩu</label></td>
+            <td>
+              <div class="pw-wrap">
+                <input
+                  id="rePass"
+                  name="password"
+                  type="password"
+                  minlength="6"
+                  placeholder="Tối thiểu 6 ký tự"
+                  required
+                />
+                <button
+                  type="button"
+                  id="toggleRePass"
+                  class="pw-toggle"
+                  aria-label="Hiện/ẩn mật khẩu"
+                >
+                  <svg
+                    class="icon-eye"
+                    viewBox="0 0 24 24"
+                    width="22"
+                    height="22"
+                    aria-hidden="true"
+                  >
+                    <path
+                      d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8S1 12 1 12z"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      fill="none"
+                    />
+                    <circle cx="12" cy="12" r="3" fill="currentColor" />
+                  </svg>
+                  <svg
+                    class="icon-eye-off"
+                    viewBox="0 0 24 24"
+                    width="22"
+                    height="22"
+                    aria-hidden="true"
+                  >
+                    <path
+                      d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8S1 12 1 12z"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      fill="none"
+                    />
+                    <path
+                      d="M4 4l16 16"
+                      stroke="currentColor"
+                      stroke-width="2"
+                    />
+                  </svg>
+                </button>
+              </div>
+            </td>
+          </tr>
+
+          <!-- Nhập lại mật khẩu + eye -->
+          <tr>
+            <td><label for="rePass2">Nhập lại mật khẩu</label></td>
+            <td>
+              <div class="pw-wrap">
+                <input
+                  id="rePass2"
+                  name="password2"
+                  type="password"
+                  minlength="6"
+                  placeholder="Nhập lại mật khẩu"
+                  required
+                />
+                <button
+                  type="button"
+                  id="toggleRePass2"
+                  class="pw-toggle"
+                  aria-label="Hiện/ẩn mật khẩu"
+                >
+                  <svg
+                    class="icon-eye"
+                    viewBox="0 0 24 24"
+                    width="22"
+                    height="22"
+                    aria-hidden="true"
+                  >
+                    <path
+                      d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8S1 12 1 12z"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      fill="none"
+                    />
+                    <circle cx="12" cy="12" r="3" fill="currentColor" />
+                  </svg>
+                  <svg
+                    class="icon-eye-off"
+                    viewBox="0 0 24 24"
+                    width="22"
+                    height="22"
+                    aria-hidden="true"
+                  >
+                    <path
+                      d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8S1 12 1 12z"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      fill="none"
+                    />
+                    <path
+                      d="M4 4l16 16"
+                      stroke="currentColor"
+                      stroke-width="2"
+                    />
+                  </svg>
+                </button>
+              </div>
+            </td>
+          </tr>
+        </table>
+
+        <div class="row" style="margin-top: 10px; text-align: right">
+          <button type="reset" class="btn btn-ghost">Làm mới</button>
+          <button class="btn btn-primary">Đăng ký</button>
+        </div>
+
+        <p id="regMsg" class="alert" style="display: none"></p>
+        <p id="regOk" class="notice" style="display: none"></p>
+      </form>
+    </div>
+
+    <!-- Verify Code Overlay -->
+    <div id="verifyOverlay" class="verify-overlay" aria-hidden="true">
+      <div
+        class="verify-card"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="verifyTitle"
+      >
+        <h2 id="verifyTitle" style="text-align: center">Xác minh email</h2>
+        <p class="verify-note" id="verifyInfo">
+          Chúng tôi đã gửi mã 6 số tới email.
+        </p>
+
+        <!-- Ô nhập 6 số -->
+        <div
+          class="code-inputs"
+          id="codeInputs"
+          aria-label="Mã xác minh gồm 6 chữ số"
+        >
+          <input inputmode="numeric" maxlength="1" />
+          <input inputmode="numeric" maxlength="1" />
+          <input inputmode="numeric" maxlength="1" />
+          <input inputmode="numeric" maxlength="1" />
+          <input inputmode="numeric" maxlength="1" />
+          <input inputmode="numeric" maxlength="1" />
+        </div>
+
+        <div class="verify-actions">
+          <button id="btnConfirmCode" class="btn btn-primary">Xác nhận</button>
+          <span class="right"></span>
+          <span id="countdown" class="dim">00:60</span>
+          <button id="btnResend" class="linklike" disabled>Gửi lại</button>
+        </div>
+
+        <p id="verifyMsg" class="alert" style="display: none"></p>
+      </div>
+    </div>
+
+    <!-- Core auth dùng chung -->
+    <script src="auth.js"></script>
+    <script>
+      /* ===========================
+         Toggle con mắt hiện đại
+         =========================== */
+      function bindEyeToggle(inputId, btnId) {
+        const input = document.getElementById(inputId);
+        const btn = document.getElementById(btnId);
+        if (!input || !btn) return;
+        btn.addEventListener("click", () => {
+          const show = input.type === "password";
+          input.type = show ? "text" : "password";
+          btn.classList.toggle("active", show);
+        });
+      }
+      bindEyeToggle("rePass", "toggleRePass");
+      bindEyeToggle("rePass2", "toggleRePass2");
+
+      /* ===========================
+         Luồng đăng ký + xác minh email (frontend-only)
+         - Tạo mã 6 số và console.log (mô phỏng gửi email)
+         - Đếm ngược 60s, gửi lại tối đa 3 lần
+         - Nhập đúng: lưu user vào localStorage & chuyển login
+         =========================== */
+      const form = document.getElementById("formRegister");
+      const err = document.getElementById("regMsg");
+      const ok = document.getElementById("regOk");
+
+      // Trạng thái verify
+      let pendingUser = null;
+      let currentCode = null;
+      let resendLeft = 3;
+      let timerId = null;
+      let expireAt = 0;
+
+      function genCode6() {
+        return Math.floor(100000 + Math.random() * 900000).toString();
+      }
+
+      function openVerify(email) {
+        currentCode = genCode6();
+        expireAt = Date.now() + 60 * 1000;
+        // MÔ PHỎNG gửi email -> in code ra console để test
+        console.log(
+          `[DEV] Verification code sent to ${email} => ${currentCode}`
+        );
+        // UI
+        document.getElementById("verifyInfo").textContent =
+          "Đã gửi mã 6 số tới: " + email + ". Vui lòng nhập trong 60 giây.";
+        document.getElementById("verifyMsg").style.display = "none";
+        document.getElementById("btnResend").disabled = true;
+        document.getElementById("countdown").textContent = "00:60";
+        // reset boxes
+        const boxes = [...document.querySelectorAll("#codeInputs input")];
+        boxes.forEach((b) => (b.value = ""));
+        boxes[0].focus();
+        // show overlay
+        document.getElementById("verifyOverlay").style.display = "grid";
+        document
+          .getElementById("verifyOverlay")
+          .setAttribute("aria-hidden", "false");
+        // start timer
+        if (timerId) clearInterval(timerId);
+        timerId = setInterval(() => {
+          const left = Math.max(0, Math.floor((expireAt - Date.now()) / 1000));
+          const s = left.toString().padStart(2, "0");
+          document.getElementById("countdown").textContent = "00:" + s;
+          if (left <= 0) {
+            clearInterval(timerId);
+            timerId = null;
+            const can = resendLeft > 0;
+            const btn = document.getElementById("btnResend");
+            btn.disabled = !can;
+            btn.textContent = can
+              ? "Gửi lại (" + resendLeft + ")"
+              : "Hết lượt gửi lại";
+          }
+        }, 250);
+      }
+
+      function closeVerify() {
+        document.getElementById("verifyOverlay").style.display = "none";
+        document
+          .getElementById("verifyOverlay")
+          .setAttribute("aria-hidden", "true");
+        if (timerId) clearInterval(timerId);
+        timerId = null;
+      }
+
+      // focus flow for 6 inputs
+      document.getElementById("codeInputs").addEventListener("input", (e) => {
+        const t = e.target;
+        if (t.tagName !== "INPUT") return;
+        t.value = t.value.replace(/\D/g, "").slice(0, 1);
+        if (t.value && t.nextElementSibling) t.nextElementSibling.focus();
+      });
+      document.getElementById("codeInputs").addEventListener("keydown", (e) => {
+        if (
+          e.key === "Backspace" &&
+          !e.target.value &&
+          e.target.previousElementSibling
+        ) {
+          e.target.previousElementSibling.focus();
+        }
+      });
+
+      // Confirm code
+      document
+        .getElementById("btnConfirmCode")
+        .addEventListener("click", () => {
+          const boxes = [...document.querySelectorAll("#codeInputs input")];
+          const val = boxes.map((b) => b.value).join("");
+          const vm = document.getElementById("verifyMsg");
+          vm.style.display = "none";
+          if (val.length !== 6) {
+            vm.textContent = "Vui lòng nhập đủ 6 số.";
+            vm.style.display = "block";
+            return;
+          }
+          if (Date.now() > expireAt) {
+            vm.textContent = "Mã đã hết hạn. Hãy nhấn Gửi lại.";
+            vm.style.display = "block";
+            return;
+          }
+          if (val !== currentCode) {
+            vm.textContent = "Mã không đúng. Hãy thử lại.";
+            vm.style.display = "block";
+            return;
+          }
+          // success: save user -> close -> redirect to login
+          const users = loadUsers();
+          users.push(pendingUser);
+          saveUsers(users);
+          closeVerify();
+          alert("Xác minh thành công! Đăng ký hoàn tất.");
+          go("login.html");
+        });
+
+      // Resend
+      document.getElementById("btnResend").addEventListener("click", () => {
+        if (resendLeft <= 0) return;
+        resendLeft--;
+        openVerify(pendingUser.email);
+      });
+
+      // Submit register form
+      form.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const f = new FormData(form);
+        const name = (f.get("name") || "").toString().trim();
+        const dob = (f.get("dob") || "").toString();
+        const email = (f.get("email") || "").toString().trim().toLowerCase();
+        const phone = normalizePhoneVN(f.get("phone"));
+        const pass = (f.get("password") || "").toString();
+        const pass2 = (f.get("password2") || "").toString();
+
+        err.style.display = "none";
+        ok.style.display = "none";
+
+        if (!name || !dob || !email || !phone || !pass) {
+          err.textContent = "Vui lòng nhập đầy đủ thông tin.";
+          err.style.display = "block";
+          return;
+        }
+        if (!emailOk(email)) {
+          err.textContent = "Email không hợp lệ.";
+          err.style.display = "block";
+          return;
+        }
+        if (!validVNPhone(phone)) {
+          err.textContent = "SĐT phải 10 số và bắt đầu bằng 0.";
+          err.style.display = "block";
+          return;
+        }
+        if (pass.length < 6) {
+          err.textContent = "Mật khẩu tối thiểu 6 ký tự.";
+          err.style.display = "block";
+          return;
+        }
+        if (pass !== pass2) {
+          err.textContent = "Mật khẩu nhập lại không khớp.";
+          err.style.display = "block";
+          return;
+        }
+
+        const users = loadUsers();
+        if (users.some((u) => u.phone === phone)) {
+          err.textContent = "Số điện thoại đã được đăng ký.";
+          err.style.display = "block";
+          return;
+        }
+        if (users.some((u) => u.email === email)) {
+          err.textContent = "Email đã được đăng ký.";
+          err.style.display = "block";
+          return;
+        }
+
+        // prepare pending user and open verify overlay
+        pendingUser = {
+          name,
+          dob,
+          email,
+          phone,
+          password: pass,
+          createdAt: new Date().toISOString(),
+        };
+        resendLeft = 3;
+        openVerify(email);
+      });
+    </script>
+  </body>
+</html>

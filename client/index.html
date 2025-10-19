@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Client • Home — Vựa Vui Vẻ</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body class="page-center">
+    <div class="container">
+      <!-- Trang: Home (chức năng) -->
+      <h1 class="center">🍀 Vựa Vui Vẻ</h1>
+      <p class="muted center">Chọn chức năng bên dưới để tiếp tục</p>
+
+      <div class="grid cols-3" style="margin-top: 12px">
+        <a class="btn btn-primary" href="login.html">Đăng nhập</a>
+        <a class="btn btn-ghost" href="register.html">Đăng ký</a>
+        <a class="btn btn-ghost" href="../html/index.html">Trở về Vựa Vui Vẻ</a>
+      </div>
+    </div>
+
+    <!-- Core auth dùng chung -->
+    <script src="auth.js"></script>
+    <script>
+      // Chức năng: nếu đã đăng nhập, hiển thị trạng thái nhanh
+      const s = getSession();
+      if (s) {
+        const p = document.getElementById("sessionInfo");
+        p.style.display = "block";
+        p.textContent = `Đang đăng nhập: ${s.name || ""} • ${
+          s.phone || ""
+        }. Xem "Hồ sơ" để quản lý.`;
+      }
+    </script>
+  </body>
+</html>

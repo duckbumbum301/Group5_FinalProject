@@ -1,0 +1,317 @@
+/* ==========================================================================
+   VỰA VUI VẺ — CLIENT UI
+   Tập trung cho 3 trang auth (index, login, register) + 1 trang profile
+   - Các trang auth: body có class .page-center -> căn giữa theo cả 2 chiều
+   - Trang profile: body mặc định -> bố cục đọc tự nhiên từ trên xuống
+   ========================================================================== */
+
+/* ========== Màu & token giao diện hiện đại ========== */
+:root {
+  --bg: #0b1220; /* nền tối đậm hiện đại */
+  --bg-grad: radial-gradient(
+      1200px 600px at 10% 0%,
+      #1b2a4b 0%,
+      transparent 60%
+    ),
+    radial-gradient(900px 500px at 90% 10%, #123c2d 0%, transparent 65%),
+    radial-gradient(1000px 600px at 50% 100%, #14213d66 0%, transparent 70%),
+    linear-gradient(180deg, #0a152b 0%, #0b1220 60%, #0b1220 100%);
+  --panel: #0f172a; /* card tối dịu, dễ đọc */
+  --panel-2: #111827; /* panel phụ */
+  --soft: #cbd5e1; /* text phụ */
+  --text: #e5f2ff; /* text chính */
+  --primary: #22c55e; /* xanh lá thương hiệu */
+  --primary-2: #16a34a;
+  --danger: #ef4444;
+  --border: #233a5a;
+  --ring: #22c55e55; /* focus ring */
+  --radius: 16px;
+  --shadow: 0 18px 60px #00000055, 0 2px 8px #00000066;
+}
+
+/* ========== Reset cơ bản ========== */
+* {
+  box-sizing: border-box;
+}
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  color: var(--text);
+  font: 15px/1.6 Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial,
+    sans-serif;
+  background: var(--bg-grad), var(--bg);
+}
+
+/* ========== Center layout cho các trang AUTH ========== */
+.page-center {
+  min-height: 100dvh;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+}
+
+/* ========== Container card hiện đại (glass) ========== */
+.container {
+  width: min(420px, 92vw);
+  background: linear-gradient(180deg, #0f172aee, #0b1220dd);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  backdrop-filter: saturate(1.1) blur(6px);
+  padding: 22px 22px 18px;
+}
+.container--wide {
+  width: min(640px, 94vw);
+} /* dùng riêng cho đăng ký */
+
+/* ========== Heading & text ========== */
+h1,
+h2,
+h3 {
+  margin: 0 0 10px;
+}
+h1 {
+  font-size: 22px;
+}
+h2 {
+  font-size: 18px;
+}
+.muted {
+  color: var(--soft);
+}
+.center {
+  text-align: center;
+}
+.right {
+  margin-left: auto;
+}
+
+/* ========== Button hiện đại ========== */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border: 0;
+  border-radius: 12px;
+  padding: 12px 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.08s ease, filter 0.2s ease;
+  text-decoration: none;
+}
+.btn:hover {
+  filter: brightness(0.98);
+}
+.btn:active {
+  transform: translateY(1px);
+}
+.btn-primary {
+  background: linear-gradient(90deg, var(--primary), var(--primary-2));
+  color: #02140a;
+}
+.btn-ghost {
+  background: #0f172a;
+  border: 1px solid var(--border);
+  color: var(--text);
+}
+.btn-danger {
+  background: linear-gradient(90deg, #f87171, var(--danger));
+  color: #300;
+}
+
+/* ========== Input & focus ring ========== */
+input,
+select {
+  width: 100%;
+  background: #0b152b;
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 12px 14px;
+  outline: none;
+}
+input::placeholder {
+  color: #9cb3d1aa;
+}
+input:focus,
+select:focus {
+  box-shadow: 0 0 0 2px var(--ring);
+}
+
+/* ========== Bảng form hai cột ========== */
+.form-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0 8px;
+  margin-top: 8px;
+}
+.form-table td {
+  vertical-align: middle;
+  padding: 4px 6px;
+}
+.form-table td:first-child {
+  width: 160px;
+  color: #cde4ff;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+/* ========== Password toggle ========== */
+.pw-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+.pw-wrap input {
+  flex: 1;
+  padding-right: 40px;
+}
+.pw-toggle {
+  position: absolute;
+  right: 8px;
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  font-size: 18px;
+  opacity: 0.8;
+  color: #cde4ff;
+}
+
+/* ========== Alert/Notice ========== */
+.alert {
+  margin-top: 10px;
+  border-left: 4px solid #ff9aa2;
+  background: #3d0d17;
+  color: #ffe3e6;
+  padding: 10px 12px;
+  border-radius: 10px;
+  font-weight: 600;
+}
+.notice {
+  margin-top: 10px;
+  border-left: 4px solid #b2f5ea;
+  background: #0a2a22;
+  color: #d4fff4;
+  padding: 10px 12px;
+  border-radius: 10px;
+  font-weight: 600;
+}
+
+/* ========== Thanh điều hướng nhỏ (dùng ở profile) ========== */
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 56px;
+  padding: 0 16px;
+  background: linear-gradient(90deg, #0b152b, #0f172a);
+  border-bottom: 1px solid var(--border);
+}
+.spacer {
+  height: 16px;
+}
+
+/* ========== Khối hiển thị hồ sơ khách hàng (giữ bình thường) ========== */
+.page {
+  max-width: 920px;
+  margin: 0 auto;
+  padding: 18px 20px 36px;
+}
+.card {
+  background: linear-gradient(180deg, #0f172af0, #0b1220e0);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 16px;
+}
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+}
+.table th,
+.table td {
+  padding: 12px 10px;
+  border-bottom: 1px solid #14325a;
+}
+.table th {
+  text-align: left;
+  color: #cde4ff;
+  background: #0b152b;
+}
+
+/* ========== Liên kết dạng nút trong grid ========== */
+.grid {
+  display: grid;
+  gap: 10px;
+}
+.cols-2 {
+  grid-template-columns: 1fr 1fr;
+}
+@media (max-width: 720px) {
+  .container--wide {
+    width: min(92vw, 540px);
+  }
+  .cols-2 {
+    grid-template-columns: 1fr;
+  }
+}
+/* === Checkbox hiển thị mật khẩu === */
+.show-pass {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+  color: var(--soft);
+  margin-top: 6px;
+  user-select: none;
+}
+.show-pass input[type="checkbox"] {
+  accent-color: var(--primary);
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+}
+.show-pass:hover {
+  color: var(--text);
+}
+/*================button eyes==============*/
+.pw-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+.pw-wrap input {
+  flex: 1;
+  padding-right: 42px;
+}
+.pw-toggle {
+  position: absolute;
+  right: 10px;
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: transparent;
+  border: 0;
+  color: #9cb3d1;
+  cursor: pointer;
+  opacity: 0.9;
+}
+.pw-toggle:hover {
+  color: #e5f2ff;
+}
+.pw-toggle[aria-pressed="true"] {
+  color: #22c55e;
+}
