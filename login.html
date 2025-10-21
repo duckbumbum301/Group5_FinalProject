@@ -3,122 +3,12 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>Đăng nhập — Vựa Vui Vẻ</title>
-    <link rel="stylesheet" href="styles.css" />
+    <title>Đang chuyển hướng…</title>
+    <meta http-equiv="refresh" content="0;url=client/login.html" />
+    <script>location.replace('client/login.html');</script>
+    <style>body{font-family:system-ui,Segoe UI,Roboto,Arial,sans-serif;padding:24px;color:#333}</style>
   </head>
-  <body class="page-center">
-    <div class="container">
-      <!-- Trang: Login -->
-      <div class="row">
-        <h1 align="center">Đăng nhập</h1>
-        <div style="text-align: center; margin-top: 10px">
-          <a class="btn btn-ghost right" href="index.html">Trang chủ</a>
-          <a class="btn btn-ghost right" href="register.html"
-            >Chưa có tài khoản? Đăng ký</a
-          >
-        </div>
-      </div>
-      <p class="muted">
-        Nhập <strong>SĐT</strong> và <strong>Mật khẩu</strong> để tiếp tục.
-      </p>
-
-      <!-- Chức năng: Form đăng nhập -->
-    <form id="formLogin">
-      <table class="form-table">
-        <tr>
-          <td><label for="liPhone">Số điện thoại</label></td>
-          <td>
-            <input
-              id="liPhone"
-              name="phone"
-              inputmode="numeric"
-              placeholder="VD: 0912345678"
-              required
-            />
-          </td>
-        </tr>
-        <tr>
-          <td><label for="liPass">Mật khẩu</label></td>
-          <td>
-            <div class="pw-wrap">
-              <input
-                id="liPass"
-                name="password"
-                type="password"
-                placeholder="••••••••"
-                required
-              />
-            </div>
-            <!--  Checkbox hiển thị mật khẩu -->
-            <label class="show-pass">
-              <input type="checkbox" id="showPassword" /> Hiển thị mật khẩu
-            </label>
-          </td>
-        </tr>
-      </table>
-
-      <div class="row" style="text-align: right; margin-top: 10px">
-        <button class="btn btn-primary">Đăng nhập</button>
-      </div>
-
-      <p id="loginMsg" class="alert" style="display: none"></p>
-    </form>
-
-
-    <!-- Core auth dùng chung -->
-    <script src="auth.js"></script>
-    <script>
-      /*  Chức năng: Hiển thị / Ẩn mật khẩu bằng checkbox */
-      const showBox = document.getElementById("showPassword");
-      const passInput = document.getElementById("liPass");
-
-      if (showBox && passInput) {
-        showBox.addEventListener("change", () => {
-          passInput.type = showBox.checked ? "text" : "password";
-        });
-}
-
-      /* Điều hướng: nếu đã đăng nhập -> sang hồ sơ */
-      if (getSession()) go("profile.html");
-
-      /* Xử lý đăng nhập */
-      document.getElementById("formLogin").addEventListener("submit", (e) => {
-        e.preventDefault();
-        const f = new FormData(e.target);
-        const phone = normalizePhoneVN(f.get("phone"));
-        const pass = (f.get("password") || "").toString();
-
-        const msg = document.getElementById("loginMsg");
-        msg.style.display = "none";
-
-        if (!validVNPhone(phone)) {
-          msg.textContent = "SĐT không hợp lệ (10 số, bắt đầu 0).";
-          msg.style.display = "block";
-          return;
-        }
-        if (!pass) {
-          msg.textContent = "Vui lòng nhập mật khẩu.";
-          msg.style.display = "block";
-          return;
-        }
-
-        const users = loadUsers();
-        const u = users.find((x) => x.phone === phone && x.password === pass);
-        if (!u) {
-          msg.textContent = "Sai số điện thoại hoặc mật khẩu.";
-          msg.style.display = "block";
-          return;
-        }
-
-        setSession({
-          name: u.name,
-          phone: u.phone,
-          email: u.email,
-          dob: u.dob,
-          at: Date.now(),
-        });
-        go("profile.html");
-      });
-    </script>
+  <body>
+    <p>Đang chuyển sang trang đăng nhập… Nếu không tự chuyển, <a href="client/login.html">bấm vào đây</a>.</p>
   </body>
 </html>

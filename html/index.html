@@ -15,6 +15,10 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="../css/style.css" />
+    <!-- Cache busting + no-cache for go live -->
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
   </head>
   <body>
     <header class="header">
@@ -491,9 +495,7 @@
           </button>
           <!-- Nút ĐƠN HÀNG mới -->
           <button class="btn" id="ordersBtn">Đơn hàng</button>
-          <a href="../client/index.html"
-            ><button class="btn btn--icon" id="accountBtn">Tài khoản</button></a
-          >
+          <a class="btn btn--icon" id="accountBtn" href="../client/login.html">Tài khoản</a>
           <button
             class="btn btn--pri"
             id="cartOpenBtn"
@@ -754,7 +756,7 @@
     <footer class="footer">
       <div class="container">© <span id="year"></span> Vựa Vui Vẻ</div>
     </footer>
-    <script src="auth.js"></script>
-    <script type="module" src="../js/main.js"></script>
+    <script src="../client/auth.js"></script>
+    <script type="module" src="../js/main.js?v=flowfix1"></script>
   </body>
 </html>

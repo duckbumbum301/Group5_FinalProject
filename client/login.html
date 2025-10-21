@@ -5,6 +5,10 @@
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <title>Đăng nhập — Vựa Vui Vẻ</title>
     <link rel="stylesheet" href="styles.css" />
+    <!-- Cache busting + no-cache for go live -->
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
   </head>
   <body class="page-center">
     <div class="container">
@@ -13,9 +17,7 @@
         <h1 align="center">Đăng nhập</h1>
         <div style="text-align: center; margin-top: 10px">
           <a class="btn btn-ghost right" href="index.html">Trang chủ</a>
-          <a class="btn btn-ghost right" href="register.html"
-            >Chưa có tài khoản? Đăng ký</a
-          >
+          <!-- Đã bỏ liên kết Đăng ký theo yêu cầu -->
         </div>
       </div>
       <p class="muted">
@@ -23,7 +25,7 @@
       </p>
 
       <!-- Chức năng: Form đăng nhập -->
-    <form id="formLogin">
+    <form id="formLogin" novalidate>
       <table class="form-table">
         <tr>
           <td><label for="liPhone">Số điện thoại</label></td>
@@ -31,7 +33,10 @@
             <input
               id="liPhone"
               name="phone"
+              type="tel"
               inputmode="numeric"
+              autocomplete="username"
+              autofocus
               placeholder="VD: 0912345678"
               required
             />
@@ -45,6 +50,7 @@
                 id="liPass"
                 name="password"
                 type="password"
+                autocomplete="current-password"
                 placeholder="••••••••"
                 required
               />
@@ -53,6 +59,7 @@
             <label class="show-pass">
               <input type="checkbox" id="showPassword" /> Hiển thị mật khẩu
             </label>
+            <label id="capsHint" class="small muted" style="display:none">Caps Lock đang bật</label>
           </td>
         </tr>
       </table>
@@ -66,8 +73,9 @@
 
 
     <!-- Core auth dùng chung -->
-    <script src="auth.js"></script>
-    <script>
+    <script src="auth.js?v=flowfix1"></script>
+    <script type="module">
+      import { apiLoginUser } from "../js/api.js?v=flowfix1";
       /*  Chức năng: Hiển thị / Ẩn mật khẩu bằng checkbox */
       const showBox = document.getElementById("showPassword");
       const passInput = document.getElementById("liPass");
@@ -76,13 +84,42 @@
         showBox.addEventListener("change", () => {
           passInput.type = showBox.checked ? "text" : "password";
         });
-}
+      }
 
-      /* Điều hướng: nếu đã đăng nhập -> sang hồ sơ */
-      if (getSession()) go("profile.html");
+      /* Điều hướng: nếu đã đăng nhập -> quay lại trang trước hoặc trang chủ */
+      (function(){
+        const sess = getSession();
+        if (sess) {
+          const ret = localStorage.getItem("vvv_return_to");
+          if (ret) {
+            localStorage.removeItem("vvv_return_to");
+            go(ret);
+          } else {
+            go("../html/index.html");
+          }
+        }
+      })();
+
+      // Prefill SĐT lần đăng nhập trước + đặt focus hợp lý
+      (function(){
+        const phoneInput = document.getElementById("liPhone");
+        try {
+          const lastPhone = localStorage.getItem("vvv_last_login_phone");
+          if (!getSession() && lastPhone && phoneInput && !phoneInput.value) phoneInput.value = lastPhone;
+        } catch {}
+        if (phoneInput && phoneInput.value) { passInput?.focus(); } else { phoneInput?.focus(); }
+      })();
+
+      // Caps Lock hint
+      passInput?.addEventListener("keydown", (e)=>{
+        const hint = document.getElementById("capsHint");
+        if (!hint || !e.getModifierState) return;
+        const on = e.getModifierState("CapsLock");
+        hint.style.display = on ? "inline" : "none";
+      });
 
       /* Xử lý đăng nhập */
-      document.getElementById("formLogin").addEventListener("submit", (e) => {
+      document.getElementById("formLogin").addEventListener("submit", async (e) => {
         e.preventDefault();
         const f = new FormData(e.target);
         const phone = normalizePhoneVN(f.get("phone"));
@@ -91,33 +128,52 @@
         const msg = document.getElementById("loginMsg");
         msg.style.display = "none";
 
+        const btn = document.querySelector("#formLogin button[type='submit'], #formLogin .btn.btn-primary");
+        const setBusy = (b) => { if (!btn) return; btn.disabled = b; btn.textContent = b ? "Đang đăng nhập…" : (btn.getAttribute("data-prev")||"Đăng nhập"); btn.setAttribute("aria-busy", String(b)); };
+        if (btn && !btn.getAttribute("data-prev")) btn.setAttribute("data-prev", btn.textContent||"Đăng nhập");
+        setBusy(true);
+
         if (!validVNPhone(phone)) {
           msg.textContent = "SĐT không hợp lệ (10 số, bắt đầu 0).";
           msg.style.display = "block";
+          setBusy(false);
           return;
         }
         if (!pass) {
           msg.textContent = "Vui lòng nhập mật khẩu.";
           msg.style.display = "block";
+          setBusy(false);
           return;
         }
 
-        const users = loadUsers();
-        const u = users.find((x) => x.phone === phone && x.password === pass);
-        if (!u) {
-          msg.textContent = "Sai số điện thoại hoặc mật khẩu.";
+        try {
+          // Lưu SĐT để lần sau autofill
+          try { localStorage.setItem("vvv_last_login_phone", phone); } catch {}
+          const res = await apiLoginUser({ phone, password: pass });
+          if (!res?.ok) {
+            msg.textContent = res?.message || "Đăng nhập thất bại.";
+            msg.style.display = "block";
+            setBusy(false);
+            return;
+          }
+          // API đã set session: quay lại trang trước nếu có, ngược lại về Front Store
+          try {
+            const ret = localStorage.getItem("vvv_return_to");
+            if (ret) {
+              localStorage.removeItem("vvv_return_to");
+              go(ret);
+            } else {
+              go("../html/index.html");
+            }
+          } catch {
+            go("../html/index.html");
+          }
+        } catch (err) {
+          msg.textContent = "Có lỗi xảy ra. Vui lòng thử lại.";
           msg.style.display = "block";
-          return;
+          console.error(err);
+          setBusy(false);
         }
-
-        setSession({
-          name: u.name,
-          phone: u.phone,
-          email: u.email,
-          dob: u.dob,
-          at: Date.now(),
-        });
-        go("profile.html");
       });
     </script>
   </body>

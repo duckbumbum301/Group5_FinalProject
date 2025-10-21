@@ -94,6 +94,7 @@
               <input
                 id="reName"
                 name="name"
+                autocomplete="name"
                 placeholder="Nguyễn Văn A"
                 required
               />
@@ -101,7 +102,7 @@
           </tr>
           <tr>
             <td><label for="reDob">Ngày sinh</label></td>
-            <td><input id="reDob" name="dob" type="date" required /></td>
+            <td><input id="reDob" name="dob" type="date" autocomplete="bday" required /></td>
           </tr>
           <tr>
             <td><label for="reEmail">Email</label></td>
@@ -110,7 +111,8 @@
                 id="reEmail"
                 name="email"
                 type="email"
-                placeholder="email@domain.com"
+                autocomplete="email"
+                placeholder="nguyenvana@example.com"
                 required
               />
             </td>
@@ -121,7 +123,9 @@
               <input
                 id="rePhone"
                 name="phone"
+                type="tel"
                 inputmode="numeric"
+                autocomplete="tel"
                 placeholder="VD: 0912345678"
                 required
               />
@@ -138,6 +142,7 @@
                   name="password"
                   type="password"
                   minlength="6"
+                  autocomplete="new-password"
                   placeholder="Tối thiểu 6 ký tự"
                   required
                 />
@@ -196,6 +201,7 @@
                   name="password2"
                   type="password"
                   minlength="6"
+                  autocomplete="new-password"
                   placeholder="Nhập lại mật khẩu"
                   required
                 />
@@ -295,7 +301,8 @@
 
     <!-- Core auth dùng chung -->
     <script src="auth.js"></script>
-    <script>
+    <script type="module">
+      import { apiRegisterUser } from "../js/api.js";
       /* ===========================
          Toggle con mắt hiện đại
          =========================== */
@@ -316,7 +323,7 @@
          Luồng đăng ký + xác minh email (frontend-only)
          - Tạo mã 6 số và console.log (mô phỏng gửi email)
          - Đếm ngược 60s, gửi lại tối đa 3 lần
-         - Nhập đúng: lưu user vào localStorage & chuyển login
+         - Nhập đúng: gọi API đăng ký & chuyển login
          =========================== */
       const form = document.getElementById("formRegister");
       const err = document.getElementById("regMsg");
@@ -403,7 +410,7 @@
       // Confirm code
       document
         .getElementById("btnConfirmCode")
-        .addEventListener("click", () => {
+        .addEventListener("click", async () => {
           const boxes = [...document.querySelectorAll("#codeInputs input")];
           const val = boxes.map((b) => b.value).join("");
           const vm = document.getElementById("verifyMsg");
@@ -423,13 +430,33 @@
             vm.style.display = "block";
             return;
           }
-          // success: save user -> close -> redirect to login
-          const users = loadUsers();
-          users.push(pendingUser);
-          saveUsers(users);
-          closeVerify();
-          alert("Xác minh thành công! Đăng ký hoàn tất.");
-          go("login.html");
+          // success: gọi API đăng ký -> close -> redirect
+          try {
+            const res = await apiRegisterUser({
+              name: pendingUser.name,
+              email: pendingUser.email,
+              phone: pendingUser.phone,
+              password: pendingUser.password,
+              address: "",
+            });
+            if (!res?.ok) {
+              vm.textContent = res?.message || "Đăng ký thất bại.";
+              vm.style.display = "block";
+              return;
+            }
+            // Thêm dob vào session (phục vụ hiển thị ở profile)
+            try {
+              const sess = getSession();
+              setSession({ ...(sess || {}), dob: pendingUser.dob });
+            } catch {}
+            closeVerify();
+            alert("Xác minh thành công! Đăng ký hoàn tất.");
+            go("login.html");
+          } catch (err) {
+            vm.textContent = "Có lỗi xảy ra. Vui lòng thử lại.";
+            vm.style.display = "block";
+            console.error(err);
+          }
         });
 
       // Resend

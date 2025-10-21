@@ -1,5 +1,4 @@
 // js/cart.js (Quản lý logic giỏ hàng)
-import { renderUI } from './ui.js';
 
 const LS_CART = 'vvv_cart';
 let cart = {}; // { productId: qty }
@@ -25,7 +24,7 @@ export function addToCart(productId, quantity = 1)
 {
   cart[productId] = (cart[productId] || 0) + quantity;
   saveCart();
-  renderUI(); // Yêu cầu UI cập nhật sau khi thay đổi dữ liệu
+  document.dispatchEvent(new CustomEvent('cart:changed', { detail: { cart } }));
 }
 
 // Xóa sản phẩm khỏi giỏ
@@ -34,7 +33,7 @@ export function removeFromCart(productId)
   if (cart[productId]) {
     delete cart[productId];
     saveCart();
-    renderUI();
+    document.dispatchEvent(new CustomEvent('cart:changed', { detail: { cart } }));
   }
 }
 
@@ -53,16 +52,15 @@ export function updateCartQuantity(productId, quantity)
     }
     
     saveCart();
-    renderUI();
+    document.dispatchEvent(new CustomEvent('cart:changed', { detail: { cart } }));
   }
 }
 
 // Xóa toàn bộ giỏ hàng
-export function clearCart() 
-{
+export function clearCart() {
   cart = {};
   saveCart();
-  renderUI();
+  document.dispatchEvent(new CustomEvent('cart:changed', { detail: { cart } }));
 }
 
 // Trả về dữ liệu giỏ hàng hiện tại

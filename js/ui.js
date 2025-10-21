@@ -1,8 +1,8 @@
 // js/ui.js (Quản lý việc hiển thị, cập nhật giao diện)
 
 import { $, money } from './utils.js';
-import { PRODUCTS } from './data.js';
 import { getCart } from './cart.js';
+import { apiGetProductById } from './api.js';
 
 // DOM refs cho UI
 const gridEl = $('#productGrid');
@@ -12,8 +12,8 @@ const cartSubtotalEl = $('#cartSubtotal');
 const cartDrawer = $('#cartDrawer');
 
 // Hàm chính để render toàn bộ giao diện (trừ product grid)
-export function renderUI() {
-  renderCart();
+export async function renderUI() {
+  await renderCart();
 }
 
 // Render lưới sản phẩm
@@ -65,30 +65,29 @@ export function renderProducts(productsToRender, favoriteSet) {
 }
 
 // Render giỏ hàng
-function renderCart() {
+async function renderCart() {
   const cart = getCart();
-  const entries = Object.entries(cart).filter(([,q]) => q > 0);
+  const entries = Object.entries(cart).filter(([, q]) => q > 0);
 
-  const lines = entries.map(([pid, qty]) => {
-    const p = PRODUCTS.find(x => x.id === pid);
-    return p ? `
-      <div class="cart-item" data-id="${p.id}">
-        <div>
-          <strong>${p.name}</strong>
-          <div class="muted">${money(p.price)} • ${p.unit}</div>
-        </div>
-        <div class="qty">
-          <label for="qty-${p.id}" class="muted">SL:</label>
-          <input id="qty-${p.id}" type="number" min="1" step="1" value="${qty}" data-action="qty">
-        </div>
-        <button class="btn btn--icon remove-btn" data-action="remove" data-product-id="${p.id}">Xóa</button>
-      </div>
-    ` : '';
-  }).join('');
+  const ids = entries.map(([pid]) => pid);
+  const products = await Promise.all(ids.map((id) => apiGetProductById(id)));
+  const map = {};
+  for (const p of products) {
+    if (p && p.id) map[p.id] = p;
+  }
+
+  const lines = entries
+    .map(([pid, qty]) => {
+      const p = map[pid];
+      return p
+        ? `\n      <div class="cart-item" data-id="${p.id}">\n        <div>\n          <strong>${p.name}</strong>\n          <div class="muted">${money(p.price)} • ${p.unit}</div>\n        </div>\n        <div class="qty">\n          <label for="qty-${p.id}" class="muted">SL:</label>\n          <input id="qty-${p.id}" type="number" min="1" step="1" value="${qty}" data-action="qty">\n        </div>\n        <button class="btn btn--icon remove-btn" data-action="remove" data-product-id="${p.id}">Xóa</button>\n      </div>\n    `
+        : '';
+    })
+    .join('');
   cartItemsEl.innerHTML = lines || `<p class="muted">Giỏ hàng đang trống.</p>`;
 
   const subtotal = entries.reduce((s, [pid, q]) => {
-    const p = PRODUCTS.find(x => x.id === pid);
+    const p = map[pid];
     return s + (p ? p.price * q : 0);
   }, 0);
   cartSubtotalEl.textContent = money(subtotal);

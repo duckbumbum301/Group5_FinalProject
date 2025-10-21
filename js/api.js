@@ -2,8 +2,12 @@
 import { PRODUCTS } from "./data.js";
 
 const LS_ORDERS = "vvv_orders";
-const LS_USERS = "vvv_users"; // danh sách người dùng (email/pass)
-const LS_SESSION = "vvv_session"; // phiên đăng nhập nội bộ (email/pass)
+const LS_USERS = "vvv_users_v1"; // danh sách người dùng (email/phone/pass)
+const LS_SESSION = "vvv_session_v1"; // phiên đăng nhập thống nhất (email/phone)
+const OLD_LS_USERS = "vvv_users";
+const OLD_CLIENT_USERS = "client_users_v1";
+const OLD_LS_SESSION = "vvv_session";
+const OLD_CLIENT_SESSION = "client_session_v1";
 
 // ---- LocalStorage helpers ----
 function lsGet(key, fallback) {
@@ -16,6 +20,26 @@ function lsGet(key, fallback) {
 function lsSet(key, val) {
   localStorage.setItem(key, JSON.stringify(val));
 }
+
+// ---- Migration users (best-effort) ----
+(function migrateAuthKeys() {
+  try {
+    const newUsersRaw = localStorage.getItem(LS_USERS);
+    if (!newUsersRaw) {
+      const old1 = localStorage.getItem(OLD_LS_USERS);
+      const old2 = localStorage.getItem(OLD_CLIENT_USERS);
+      if (old1) localStorage.setItem(LS_USERS, old1);
+      else if (old2) localStorage.setItem(LS_USERS, old2);
+    }
+    const newSessRaw = localStorage.getItem(LS_SESSION);
+    if (!newSessRaw) {
+      const oldS1 = localStorage.getItem(OLD_LS_SESSION);
+      const oldS2 = localStorage.getItem(OLD_CLIENT_SESSION);
+      if (oldS1) localStorage.setItem(LS_SESSION, oldS1);
+      else if (oldS2) localStorage.setItem(LS_SESSION, oldS2);
+    }
+  } catch {}
+})();
 
 // ========= PRODUCTS =========
 export async function apiListProducts() {
@@ -99,64 +123,123 @@ export async function apiListOrders() {
   return lsGet(LS_ORDERS, []);
 }
 
-// ========= AUTH / USERS (email/pass nội bộ) =========
+// ========= AUTH / USERS =========
 function getUsers() {
-  return lsGet(LS_USERS, []);
+  try {
+    const u = JSON.parse(localStorage.getItem(LS_USERS) || "[]");
+    if (Array.isArray(u)) return u;
+    return [];
+  } catch {
+    return [];
+  }
 }
 function setUsers(list) {
   lsSet(LS_USERS, list);
 }
 
-export async function apiRegisterUser({ name, email, password, address }) {
-  email = (email || "").trim().toLowerCase();
+// ====== Seed tài khoản test cố định (phục vụ demo) ======
+(function seedFixedTestUser() {
+  try {
+    const users = getUsers();
+    const idx = users.findIndex((u) => (u.phone || "") === "0906760495");
+    if (idx === -1) {
+      const testUser = {
+        id: "seed-0906760495",
+        name: "Tài khoản Demo",
+        email: "",
+        phone: "0906760495",
+        password: "123123",
+        address: "",
+      };
+      users.push(testUser);
+      setUsers(users);
+    } else {
+      // Cập nhật mật khẩu & tên để đảm bảo đăng nhập ổn định
+      users[idx] = {
+        ...users[idx],
+        name: users[idx].name || "Tài khoản Demo",
+        password: "123123",
+      };
+      setUsers(users);
+    }
+    // Không tự đăng nhập; chỉ tạo/đồng bộ tài khoản
+  } catch {}
+})();
+
+export async function apiRegisterUser({ name, email, phone, password, address }) {
+  const e = (email || "").trim().toLowerCase();
+  const p = (phone || "").replace(/\D/g, "");
   const users = getUsers();
-  if (!name || !email || !password)
-    return { ok: false, message: "Vui lòng nhập đủ họ tên, email, mật khẩu." };
-  if (users.some((u) => u.email === email))
+  if (!name || (!e && !p) || !password)
+    return { ok: false, message: "Vui lòng nhập đủ họ tên, SĐT/email và mật khẩu." };
+  if (e && users.some((u) => (u.email || "").toLowerCase() === e))
     return { ok: false, message: "Email đã tồn tại." };
+  if (p && users.some((u) => (u.phone || "") === p))
+    return { ok: false, message: "SĐT đã tồn tại." };
   const id = Date.now().toString();
   const user = {
     id,
     name: name.trim(),
-    email,
+    email: e || "",
+    phone: p || "",
     password: String(password),
     address: (address || "").trim(),
   };
   users.push(user);
   setUsers(users);
-  lsSet(LS_SESSION, { id: user.id, email: user.email, name: user.name });
+  lsSet(LS_SESSION, { id: user.id, email: user.email, phone: user.phone, name: user.name });
   return {
     ok: true,
     user: {
       id: user.id,
       name: user.name,
       email: user.email,
+      phone: user.phone,
       address: user.address,
     },
   };
 }
 
-export async function apiLoginUser({ email, password }) {
+export async function apiLoginUser({ email, phone, password }) {
   const users = getUsers();
   const e = (email || "").trim().toLowerCase();
-  const p = String(password || "");
-  const u = users.find((x) => x.email === e && x.password === p);
-  if (!u) return { ok: false, message: "Sai email hoặc mật khẩu." };
-  lsSet(LS_SESSION, { id: u.id, email: u.email, name: u.name });
+  const p = (phone || "").replace(/\D/g, "");
+  const pw = String(password || "");
+  const u = users.find((x) =>
+    ((e && (x.email || "").toLowerCase() === e) || (p && (x.phone || "") === p)) &&
+    x.password === pw
+  );
+  if (!u) return { ok: false, message: "Sai SĐT/email hoặc mật khẩu." };
+  lsSet(LS_SESSION, { id: u.id, email: u.email, phone: u.phone, name: u.name });
   return {
     ok: true,
-    user: { id: u.id, name: u.name, email: u.email, address: u.address },
+    user: { id: u.id, name: u.name, email: u.email, phone: u.phone, address: u.address },
   };
 }
 
 /**
  * Đọc phiên hiện tại theo thứ tự ưu tiên:
- * 1) Phiên từ phần client (đăng nhập bằng SĐT): localStorage['client_session_v1']
- * 2) Phiên nội bộ LS_SESSION (email/pass)
+ * 1) Phiên thống nhất LS_SESSION (vvv_session_v1)
+ * 2) Fallback: client_session_v1
+ * 3) Fallback: vvv_session (cũ)
  */
 export async function apiCurrentUser() {
   try {
-    const c = JSON.parse(localStorage.getItem("client_session_v1") || "null");
+    const s = JSON.parse(localStorage.getItem(LS_SESSION) || "null");
+    if (s && (s.id || s.phone || s.email)) {
+      const users = getUsers();
+      let u = null;
+      if (s.id) u = users.find((x) => x.id === s.id);
+      if (!u && s.email) u = users.find((x) => (x.email || "").toLowerCase() === String(s.email).toLowerCase());
+      if (!u && s.phone) u = users.find((x) => (x.phone || "") === String(s.phone));
+      if (u) return { id: u.id, name: u.name, email: u.email, phone: u.phone, address: u.address };
+      // nếu không có trong users, trả về thông tin tối thiểu từ session
+      return { id: s.id || s.phone || s.email, name: s.name || "", email: s.email || "", phone: s.phone || "", address: s.address || "" };
+    }
+  } catch {}
+  // Fallback client
+  try {
+    const c = JSON.parse(localStorage.getItem(OLD_CLIENT_SESSION) || "null");
     if (c && (c.phone || c.email)) {
       return {
         id: c.phone || c.email,
@@ -167,26 +250,34 @@ export async function apiCurrentUser() {
       };
     }
   } catch {}
-  const s = lsGet(LS_SESSION, null);
-  if (!s) return null;
+  // Fallback nội bộ cũ
+  const sOld = lsGet(OLD_LS_SESSION, null);
+  if (!sOld) return null;
   const users = getUsers();
-  const u = users.find((x) => x.id === s.id);
-  return u
-    ? { id: u.id, name: u.name, email: u.email, address: u.address }
+  const uOld = users.find((x) => x.id === sOld.id);
+  return uOld
+    ? { id: uOld.id, name: uOld.name, email: uOld.email, phone: uOld.phone, address: uOld.address }
     : null;
 }
 
 export async function apiLogoutUser() {
-  localStorage.removeItem("client_session_v1"); // đồng bộ đăng xuất phía client
-  localStorage.removeItem(LS_SESSION); // đăng xuất nội bộ
+  localStorage.removeItem(LS_SESSION);
+  localStorage.removeItem(OLD_CLIENT_SESSION);
+  localStorage.removeItem(OLD_LS_SESSION);
   return { ok: true };
 }
 
 export async function apiUpdateProfile({ name, address }) {
-  const s = lsGet(LS_SESSION, null);
+  // Ưu tiên session mới
+  const sRaw = localStorage.getItem(LS_SESSION);
+  let s = null;
+  try { s = JSON.parse(sRaw || "null"); } catch {}
   if (!s) return { ok: false, message: "Chưa đăng nhập." };
   const users = getUsers();
-  const idx = users.findIndex((x) => x.id === s.id);
+  let idx = -1;
+  if (s.id) idx = users.findIndex((x) => x.id === s.id);
+  if (idx === -1 && s.email) idx = users.findIndex((x) => (x.email || "").toLowerCase() === String(s.email).toLowerCase());
+  if (idx === -1 && s.phone) idx = users.findIndex((x) => (x.phone || "") === String(s.phone));
   if (idx === -1) return { ok: false, message: "Không tìm thấy người dùng." };
   users[idx] = {
     ...users[idx],
@@ -197,6 +288,7 @@ export async function apiUpdateProfile({ name, address }) {
   lsSet(LS_SESSION, {
     id: users[idx].id,
     email: users[idx].email,
+    phone: users[idx].phone,
     name: users[idx].name,
   });
   return {
@@ -205,6 +297,7 @@ export async function apiUpdateProfile({ name, address }) {
       id: users[idx].id,
       name: users[idx].name,
       email: users[idx].email,
+      phone: users[idx].phone,
       address: users[idx].address,
     },
   };

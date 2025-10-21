@@ -255,9 +255,9 @@ function renderDashboard(){
         <button data-d="90" class="${(localStorage.getItem("vvv_dash_from")?false:days===90)?"active":""}">90 ngày</button>
       </div>
       <div class="right" style="display:flex; gap:6px; align-items:center">
-        <input type="date" id="dFrom" value="${fromStr||""}"/>
+        <input type="date" id="dFrom" value="${fromStr||""}" autocomplete="off"/>
         <span>→</span>
-        <input type="date" id="dTo" value="${toStr||""}"/>
+        <input type="date" id="dTo" value="${toStr||""}" autocomplete="off"/>
         <button class="btn small" id="applyRange">Áp dụng</button>
         <button class="btn small btn-outline" id="resetRange">Mặc định</button>
       </div>
@@ -314,10 +314,10 @@ function renderOrders(){
   view.innerHTML = `
     <div class="card">
       <div class="row controls">
-        <input id="q" placeholder="Tìm đơn (#id, email)"/>
-        <input id="from" type="date" />
+        <input id="q" placeholder="Tìm đơn (#id, email)" autocomplete="off"/>
+        <input id="from" type="date" autocomplete="off" />
         <span>→</span>
-        <input id="to" type="date" />
+        <input id="to" type="date" autocomplete="off" />
         <select id="st">
           <option value="">Tất cả trạng thái</option>
           <option>Pending</option><option>Paid</option><option>Cancelled</option><option>Refunded</option>
@@ -443,7 +443,7 @@ function renderProducts(){
   el("#view").innerHTML = `
     <div class="card">
       <div class="row controls">
-        <input id="pq" placeholder="Tìm sản phẩm..." />
+        <input id="pq" placeholder="Tìm sản phẩm..." autocomplete="off" />
         <select id="pcat"><option value="">Tất cả danh mục</option>${CATEGORIES.map(c=>`<option>${c}</option>`).join("")}</select>
         <button class="btn primary right" id="newP">+ Thêm</button>
       </div>
@@ -485,12 +485,12 @@ function renderProducts(){
       <div class="login-screen" style="display:flex">
         <form class="card login-card" id="pForm" style="width:min(520px,92vw)">
           <h1>${isNew?"Thêm sản phẩm":"Sửa sản phẩm"}</h1>
-          <label>SKU</label><input name="id" value="${p.id}" ${isNew?"":"readonly"} required/>
-          <label>Tên</label><input name="name" value="${p.name}" required/>
+          <label>SKU</label><input name="id" value="${p.id}" ${isNew?"":"readonly"} required autocomplete="off"/>
+          <label>Tên</label><input name="name" value="${p.name}" required autocomplete="off"/>
           <label>Danh mục</label>
           <select name="category">${CATEGORIES.map(c=>`<option ${c===p.category?"selected":""}>${c}</option>`).join("")}</select>
-          <label>Giá (VND)</label><input type="number" name="price" value="${p.price}" min="0" required/>
-          <label>Tồn kho</label><input type="number" name="stock" value="${p.stock}" min="0" required/>
+          <label>Giá (VND)</label><input type="number" name="price" value="${p.price}" min="0" required autocomplete="off"/>
+          <label>Tồn kho</label><input type="number" name="stock" value="${p.stock}" min="0" required autocomplete="off"/>
           <label>Trạng thái</label>
           <select name="status"><option ${p.status==="active"?"selected":""}>active</option><option ${p.status==="inactive"?"selected":""}>inactive</option></select>
           <div class="row">

@@ -5,8 +5,10 @@
    - BỔ SUNG: tự động quay lại trang trước (vvv_return_to) sau khi đăng nhập
    ========================================================================== */
 
-const LS_USERS = "client_users_v1";
-const LS_SESSION = "client_session_v1";
+const LS_USERS = "vvv_users_v1";
+const LS_SESSION = "vvv_session_v1";
+const OLD_LS_USERS = "client_users_v1";
+const OLD_LS_SESSION = "client_session_v1";
 
 /* ---------- Helpers DOM & Điều hướng ---------- */
 const $ = (s, r = document) => r.querySelector(s);
@@ -18,6 +20,23 @@ function go(href) {
 const normalizePhoneVN = (p) => (p || "").replace(/\D/g, "");
 const validVNPhone = (p) => /^0\d{9}$/.test(p); // 10 số, bắt đầu 0
 const emailOk = (e) => /^\S+@\S+\.\S+$/.test(e); // đơn giản
+
+/* ---------- Migration keys cũ -> mới (an toàn) ---------- */
+(function migrateKeys() {
+  try {
+    const newUsersRaw = localStorage.getItem(LS_USERS);
+    const oldUsersRaw = localStorage.getItem(OLD_LS_USERS);
+    if (!newUsersRaw && oldUsersRaw) {
+      localStorage.setItem(LS_USERS, oldUsersRaw);
+    }
+    const newSessRaw = localStorage.getItem(LS_SESSION);
+    const oldSessRaw = localStorage.getItem(OLD_LS_SESSION);
+    if (!newSessRaw && oldSessRaw) {
+      localStorage.setItem(LS_SESSION, oldSessRaw);
+      // không xóa ngay key cũ để tránh race condition giữa các tab
+    }
+  } catch {}
+})();
 
 /* ---------- Storage người dùng ---------- */
 function loadUsers() {
@@ -43,31 +62,42 @@ function getSession() {
   }
 }
 function clearSession() {
-  localStorage.removeItem(LS_SESSION);
+  try {
+    localStorage.removeItem(LS_SESSION);
+    localStorage.removeItem(OLD_LS_SESSION);
+    // Xóa thêm key rất cũ nếu còn
+    localStorage.removeItem('vvv_session');
+  } catch {}
 }
 
 /* ====== Seed 1 tài khoản mặc định (phục vụ demo) ====== */
 (function seedDefaultUser() {
-  const DEFAULT_USER = {
-    name: "Trần Duy Thanh",
-    dob: "1999-09-09",
-    email: "tranduythanh@gmail.com",
-    phone: "0912345678",
-    password: "123456",
-    createdAt: new Date().toISOString(),
-  };
-  let users = [];
   try {
-    users = JSON.parse(localStorage.getItem(LS_USERS)) || [];
+    const users = loadUsers();
+    const idx = users.findIndex((u) => (u.phone || "") === "0906760495");
+    if (idx === -1) {
+      users.push({
+        id: "client-seed-0906760495",
+        name: "Tài khoản Demo",
+        dob: "1990-01-01",
+        email: "",
+        phone: "0906760495",
+        password: "123123",
+        address: "",
+        createdAt: new Date().toISOString(),
+      });
+      saveUsers(users);
+      console.log("[SEED] Đã tạo tài khoản mặc định:", "0906760495");
+    } else {
+      users[idx] = {
+        ...users[idx],
+        name: users[idx].name || "Tài khoản Demo",
+        password: "123123",
+      };
+      saveUsers(users);
+      console.log("[SEED] Đã cập nhật tài khoản demo:", users[idx].phone);
+    }
   } catch {}
-  const exists = users.some(
-    (u) => u.phone === DEFAULT_USER.phone || u.email === DEFAULT_USER.email
-  );
-  if (!exists) {
-    users.push(DEFAULT_USER);
-    localStorage.setItem(LS_USERS, JSON.stringify(users));
-    console.log("[SEED] Đã tạo tài khoản mặc định:", DEFAULT_USER.phone);
-  }
 })();
 
 /* ====== BỔ SUNG: Tự động quay lại trang trước sau khi đăng nhập ======
@@ -109,3 +139,21 @@ window.vvvAuth = {
   emailOk,
   go,
 };
+
+/* Enforce canonical origin for local dev: localhost:8080 */
+(function enforceCanonicalOrigin(){
+  try {
+    const canonicalHost = 'localhost';
+    const canonicalPort = '8080';
+    const h = location.hostname;
+    const p = location.port || (location.protocol === 'http:' ? '80' : '443');
+    // Only enforce for localhost/127.0.0.1 during dev
+    if ((h === '127.0.0.1' || h === 'localhost') && (h !== canonicalHost || p !== canonicalPort)) {
+      const url = new URL(location.href);
+      url.hostname = canonicalHost;
+      url.port = canonicalPort;
+      // Preserve path/search/hash
+      try { location.replace(url.toString()); } catch { location.href = url.toString(); }
+    }
+  } catch {}
+})();

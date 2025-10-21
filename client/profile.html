@@ -5,6 +5,10 @@
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <title>Hồ sơ — Vựa Vui Vẻ</title>
     <link rel="stylesheet" href="styles.css" />
+    <!-- Cache busting + no-cache for go live -->
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
   </head>
   <body>
     <!-- Trang: Profile (giữ bố cục bình thường, không căn giữa dọc) -->
@@ -24,16 +28,24 @@
         <h2>Thông tin tài khoản</h2>
         <div id="profile"></div>
       </section>
+      
+      <!-- Lịch sử đơn hàng -->
+      <section class="card" style="margin-top: 16px;">
+        <h2>Lịch sử đơn hàng</h2>
+        <div id="ordersList"></div>
+      </section>
     </main>
 
     <!-- Core auth dùng chung -->
-    <script src="auth.js"></script>
+    <script src="auth.js?v=flowfix1"></script>
     <script>
       /* Điều hướng: nếu chưa đăng nhập -> về login */
       const s = getSession();
       if (!s) {
         go("login.html");
       }
+      // Đánh dấu đã xem profile để lần sau bấm Tài khoản sẽ đăng xuất
+      try { localStorage.setItem("vvv_has_seen_profile", "1"); } catch {}
 
       /* Render bảng thông tin */
       const name = s?.name || "(Chưa đặt tên)";
@@ -58,6 +70,58 @@
         clearSession();
         go("login.html");
       });
+    </script>
+    <script type="module">
+      import { apiListOrders, apiGetProductById } from '../js/api.js?v=flowfix1';
+      import { money } from '../js/utils.js?v=flowfix1';
+
+      const fmtDate = (iso) => {
+        try { const d = new Date(iso); return d.toLocaleString('vi-VN'); } catch { return iso; }
+      };
+
+      async function renderOrders() {
+        const wrap = document.getElementById('ordersList');
+        try {
+          const data = await apiListOrders();
+          if (!data || !data.length) {
+            wrap.innerHTML = `<p class="muted">Bạn chưa có đơn hàng nào.</p>`;
+            return;
+          }
+          const cards = await Promise.all(
+            data.slice().reverse().map(async (o) => {
+              const entries = Object.entries(o.items || {}).filter(([, q]) => q > 0);
+              const ids = entries.map(([pid]) => pid);
+              const products = await Promise.all(ids.map((id) => apiGetProductById(id)));
+              const map = {}; for (const p of products) if (p && p.id) map[p.id] = p;
+              const itemsHtml = entries.map(([pid, q]) => {
+                const p = map[pid];
+                return p ? `• ${p.name} × ${q}` : `• ${pid} × ${q}`;
+              }).join('<br>');
+              return `
+                <div class="order-card">
+                  <div class="order-head">
+                    <div><strong>Mã đơn:</strong> ${o.id}</div>
+                    <div class="muted">${fmtDate(o.created_at)}</div>
+                  </div>
+                  <div class="muted">Thanh toán: ${o.payment || 'COD'} · Khung giờ: ${o.slot || '-'}</div>
+                  <div class="order-items">${itemsHtml || '(Không có mục hàng)'}</div>
+                  <div style="margin-top:8px;">
+                    <span class="muted">Tạm tính:</span> ${money(o.subtotal || 0)} · 
+                    <span class="muted">Giảm:</span> ${money(o.discount || 0)} · 
+                    <span class="muted">Ship:</span> ${money(o.shipping_fee || 0)} · 
+                    <span class="order-total">Tổng: ${money(o.total || 0)}</span>
+                  </div>
+                </div>`;
+            })
+          );
+          wrap.innerHTML = cards.join('');
+        } catch (err) {
+          wrap.innerHTML = `<p class="muted">Không tải được lịch sử đơn hàng.</p>`;
+          console.error(err);
+        }
+      }
+
+      renderOrders();
     </script>
   </body>
 </html>
