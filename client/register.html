@@ -5,6 +5,10 @@
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <title>Đăng ký — Vựa Vui Vẻ</title>
     <link rel="stylesheet" href="styles.css" />
+    <!-- Cache busting + no-cache for go live -->
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
     <style>
       /* ===== Verify Box (overlay) — dùng riêng cho register ===== */
       .verify-overlay {
@@ -249,15 +253,14 @@
               </div>
             </td>
           </tr>
+
+          <div class="row" style="text-align: right; margin-top: 10px">
+            <button class="btn btn-primary">Đăng ký</button>
+          </div>
+
+          <p id="regMsg" class="alert" style="display: none"></p>
+          <p id="regOk" class="notice" style="display: none"></p>
         </table>
-
-        <div class="row" style="margin-top: 10px; text-align: right">
-          <button type="reset" class="btn btn-ghost">Làm mới</button>
-          <button class="btn btn-primary">Đăng ký</button>
-        </div>
-
-        <p id="regMsg" class="alert" style="display: none"></p>
-        <p id="regOk" class="notice" style="display: none"></p>
       </form>
     </div>
 
@@ -300,9 +303,9 @@
     </div>
 
     <!-- Core auth dùng chung -->
-    <script src="auth.js"></script>
+    <script src="auth.js?v=flowfix1"></script>
     <script type="module">
-      import { apiRegisterUser } from "../js/api.js";
+      import { apiRegisterUser } from "../js/api.js?v=flowfix1";
       /* ===========================
          Toggle con mắt hiện đại
          =========================== */
@@ -336,76 +339,33 @@
       let timerId = null;
       let expireAt = 0;
 
-      function genCode6() {
-        return Math.floor(100000 + Math.random() * 900000).toString();
-      }
-
       function openVerify(email) {
-        currentCode = genCode6();
-        expireAt = Date.now() + 60 * 1000;
-        // MÔ PHỎNG gửi email -> in code ra console để test
-        console.log(
-          `[DEV] Verification code sent to ${email} => ${currentCode}`
-        );
-        // UI
-        document.getElementById("verifyInfo").textContent =
-          "Đã gửi mã 6 số tới: " + email + ". Vui lòng nhập trong 60 giây.";
-        document.getElementById("verifyMsg").style.display = "none";
-        document.getElementById("btnResend").disabled = true;
-        document.getElementById("countdown").textContent = "00:60";
-        // reset boxes
+        const ov = document.getElementById("verifyOverlay");
         const boxes = [...document.querySelectorAll("#codeInputs input")];
+        ov.style.display = "grid";
         boxes.forEach((b) => (b.value = ""));
-        boxes[0].focus();
-        // show overlay
-        document.getElementById("verifyOverlay").style.display = "grid";
-        document
-          .getElementById("verifyOverlay")
-          .setAttribute("aria-hidden", "false");
-        // start timer
-        if (timerId) clearInterval(timerId);
+
+        // mã 6 số giả lập
+        currentCode = Array.from({ length: 6 }, () => Math.floor(Math.random() * 10)).join("");
+        expireAt = Date.now() + 60_000;
+        console.log("[VERIFY] Code:", currentCode);
+        let left = 60;
+        const countdown = document.getElementById("countdown");
+        clearInterval(timerId);
         timerId = setInterval(() => {
-          const left = Math.max(0, Math.floor((expireAt - Date.now()) / 1000));
-          const s = left.toString().padStart(2, "0");
-          document.getElementById("countdown").textContent = "00:" + s;
-          if (left <= 0) {
-            clearInterval(timerId);
-            timerId = null;
-            const can = resendLeft > 0;
-            const btn = document.getElementById("btnResend");
-            btn.disabled = !can;
-            btn.textContent = can
-              ? "Gửi lại (" + resendLeft + ")"
-              : "Hết lượt gửi lại";
-          }
-        }, 250);
+          left--;
+          countdown.textContent = `00:${left.toString().padStart(2, "0")}`;
+          if (left <= 0) clearInterval(timerId);
+        }, 1000);
+        const btnResend = document.getElementById("btnResend");
+        btnResend.disabled = resendLeft <= 0;
+        document.getElementById("verifyInfo").textContent = `Mã đã gửi đến ${email}.`;
       }
-
       function closeVerify() {
-        document.getElementById("verifyOverlay").style.display = "none";
-        document
-          .getElementById("verifyOverlay")
-          .setAttribute("aria-hidden", "true");
-        if (timerId) clearInterval(timerId);
-        timerId = null;
+        const ov = document.getElementById("verifyOverlay");
+        ov.style.display = "none";
+        clearInterval(timerId);
       }
-
-      // focus flow for 6 inputs
-      document.getElementById("codeInputs").addEventListener("input", (e) => {
-        const t = e.target;
-        if (t.tagName !== "INPUT") return;
-        t.value = t.value.replace(/\D/g, "").slice(0, 1);
-        if (t.value && t.nextElementSibling) t.nextElementSibling.focus();
-      });
-      document.getElementById("codeInputs").addEventListener("keydown", (e) => {
-        if (
-          e.key === "Backspace" &&
-          !e.target.value &&
-          e.target.previousElementSibling
-        ) {
-          e.target.previousElementSibling.focus();
-        }
-      });
 
       // Confirm code
       document
@@ -485,13 +445,8 @@
           err.style.display = "block";
           return;
         }
-        if (!emailOk(email)) {
-          err.textContent = "Email không hợp lệ.";
-          err.style.display = "block";
-          return;
-        }
-        if (!validVNPhone(phone)) {
-          err.textContent = "SĐT phải 10 số và bắt đầu bằng 0.";
+        if (pass !== pass2) {
+          err.textContent = "Hai mật khẩu không trùng nhau.";
           err.style.display = "block";
           return;
         }
@@ -500,34 +455,18 @@
           err.style.display = "block";
           return;
         }
-        if (pass !== pass2) {
-          err.textContent = "Mật khẩu nhập lại không khớp.";
+        if (!emailOk(email)) {
+          err.textContent = "Email không hợp lệ.";
+          err.style.display = "block";
+          return;
+        }
+        if (!validVNPhone(phone)) {
+          err.textContent = "SĐT không hợp lệ (10 số, bắt đầu 0).";
           err.style.display = "block";
           return;
         }
 
-        const users = loadUsers();
-        if (users.some((u) => u.phone === phone)) {
-          err.textContent = "Số điện thoại đã được đăng ký.";
-          err.style.display = "block";
-          return;
-        }
-        if (users.some((u) => u.email === email)) {
-          err.textContent = "Email đã được đăng ký.";
-          err.style.display = "block";
-          return;
-        }
-
-        // prepare pending user and open verify overlay
-        pendingUser = {
-          name,
-          dob,
-          email,
-          phone,
-          password: pass,
-          createdAt: new Date().toISOString(),
-        };
-        resendLeft = 3;
+        pendingUser = { name, dob, email, phone, password: pass };
         openVerify(email);
       });
     </script>

@@ -264,6 +264,8 @@ export async function apiLogoutUser() {
   localStorage.removeItem(LS_SESSION);
   localStorage.removeItem(OLD_CLIENT_SESSION);
   localStorage.removeItem(OLD_LS_SESSION);
+  // Đồng bộ luồng Account: clear cờ đã xem profile khi logout qua API
+  try { localStorage.removeItem('vvv_has_seen_profile'); } catch {}
   return { ok: true };
 }
 

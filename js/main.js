@@ -401,7 +401,7 @@ function setupListeners() {
   });
   cartOverlay.addEventListener("click", closeCart);
 
-  // Account button: xem Profile lần đầu, click lần sau sẽ đăng xuất
+  // Account button: luôn mở trang Hồ sơ khi đang đăng nhập; nếu chưa đăng nhập thì chuyển Login
   accountBtn.addEventListener("click", async (e) => {
     e.preventDefault();
     const toLogin = "../client/login.html";
@@ -415,16 +415,10 @@ function setupListeners() {
         try { window.location.href = toLogin; } catch {}
         return;
       }
-      const visited = localStorage.getItem("vvv_has_seen_profile") === "1";
-      if (!visited) {
-        accountBtn.setAttribute("href", toProfile);
-        try { window.location.href = toProfile; } catch {}
-        return;
-      }
-      await apiLogoutUser();
-      localStorage.removeItem("vvv_has_seen_profile");
-      accountBtn.setAttribute("href", toLogin);
-      try { window.location.href = toLogin; } catch {}
+      // Đã đăng nhập: luôn mở Profile (không tự động logout theo lượt xem)
+      accountBtn.setAttribute("href", toProfile);
+      try { window.location.href = toProfile; } catch {}
+      return;
     } catch {
       // Fallback to login
       accountBtn.setAttribute("href", toLogin);

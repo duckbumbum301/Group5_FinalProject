@@ -67,6 +67,8 @@ function clearSession() {
     localStorage.removeItem(OLD_LS_SESSION);
     // Xóa thêm key rất cũ nếu còn
     localStorage.removeItem('vvv_session');
+    // Đảm bảo luồng Account: lần đăng nhập mới phải xem profile trước khi logout
+    localStorage.removeItem('vvv_has_seen_profile');
   } catch {}
 }
 
