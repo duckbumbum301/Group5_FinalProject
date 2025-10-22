@@ -531,17 +531,6 @@ function init() {
 init();
 
 // Enforce canonical origin for local dev: localhost:8080
-(function enforceCanonicalOrigin(){
-  try {
-    const canonicalHost = 'localhost';
-    const canonicalPort = '8080';
-    const h = location.hostname;
-    const p = location.port || (location.protocol === 'http:' ? '80' : '443');
-    if ((h === '127.0.0.1' || h === 'localhost') && (h !== canonicalHost || p !== canonicalPort)) {
-      const url = new URL(location.href);
-      url.hostname = canonicalHost;
-      url.port = canonicalPort;
-      try { location.replace(url.toString()); } catch { location.href = url.toString(); }
-    }
-  } catch {}
+(function relaxOrigin(){
+  // No-op: do not force redirect to specific host/port.
 })();

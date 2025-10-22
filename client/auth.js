@@ -142,20 +142,7 @@ window.vvvAuth = {
   go,
 };
 
-/* Enforce canonical origin for local dev: localhost:8080 */
-(function enforceCanonicalOrigin(){
-  try {
-    const canonicalHost = 'localhost';
-    const canonicalPort = '8080';
-    const h = location.hostname;
-    const p = location.port || (location.protocol === 'http:' ? '80' : '443');
-    // Only enforce for localhost/127.0.0.1 during dev
-    if ((h === '127.0.0.1' || h === 'localhost') && (h !== canonicalHost || p !== canonicalPort)) {
-      const url = new URL(location.href);
-      url.hostname = canonicalHost;
-      url.port = canonicalPort;
-      // Preserve path/search/hash
-      try { location.replace(url.toString()); } catch { location.href = url.toString(); }
-    }
-  } catch {}
+/* Relax: do not enforce localhost:8080; support any dev host/port */
+(function relaxOrigin(){
+  // No-op to avoid redirect loops or connection refused when server runs on other ports
 })();
