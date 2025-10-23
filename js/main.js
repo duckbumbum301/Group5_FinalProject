@@ -19,12 +19,13 @@ import {
   apiLoginUser,
   apiLogoutUser,
   apiCurrentUser,
+  apiUpdateProfile,
 } from "./api.js";
 // Lazy-load checkout/orders on demand
 
 import { closeMegaMenu, bindMegaMenu } from "./menu.js";
 import { createExtras } from "./extras.js";
-import { bindAuthModal } from "./auth-modal.js";
+import { bindAuthModal, openAuthModal, closeAuthModal } from "./auth-modal.js";
 
 // Toast helper (giữ nguyên)
 function ensureToastContainer() {
@@ -393,6 +394,27 @@ function setupListeners() {
     renderWithPagination();
   });
 
+  // Account dropdown toggle
+  accountMenuBtn?.addEventListener("click", (e) => {
+    e.preventDefault();
+    const isHidden = accountMenu?.hasAttribute("hidden");
+    if (accountMenu) accountMenu.hidden = !isHidden;
+    accountMenuBtn?.setAttribute("aria-expanded", String(isHidden));
+  });
+  document.addEventListener("click", (e) => {
+    if (!accountMenu || !accountMenuBtn) return;
+    const t = e.target;
+    if (accountMenu.contains(t) || accountMenuBtn.contains(t)) return;
+    accountMenu.hidden = true;
+    accountMenuBtn.setAttribute("aria-expanded", "false");
+  });
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && accountMenu && !accountMenu.hasAttribute("hidden")) {
+      accountMenu.hidden = true;
+      accountMenuBtn?.setAttribute("aria-expanded", "false");
+    }
+  });
+
   // Cart Drawer
   cartOpenBtn.addEventListener("click", openCart);
   cartCloseBtn.addEventListener("click", closeCart);
@@ -401,28 +423,31 @@ function setupListeners() {
   });
   cartOverlay.addEventListener("click", closeCart);
 
-  // Account button: luôn mở trang Hồ sơ khi đang đăng nhập; nếu chưa đăng nhập thì chuyển Login
+  // Account button: nếu chưa đăng nhập thì đi tới trang Đăng ký; nếu đã đăng nhập thì mở drawer Tài khoản
   accountBtn.addEventListener("click", async (e) => {
-    e.preventDefault();
-    const toLogin = "../client/login.html";
-    const toProfile = "../client/profile.html";
     try {
-      const s = JSON.parse(localStorage.getItem("vvv_session_v1") || "null");
-      const hasSession = !!(s && (s.id || s.phone || s.email));
-      if (!hasSession) {
-        localStorage.setItem("vvv_return_to", location.href);
-        accountBtn.setAttribute("href", toLogin);
-        try { window.location.href = toLogin; } catch {}
-        return;
+      const u = await apiCurrentUser();
+      if (u) {
+        e.preventDefault();
+        openAccountDrawer();
+      } else {
+        // Không ngăn chặn mặc định: để thẻ <a> tự điều hướng
       }
-      // Đã đăng nhập: luôn mở Profile (không tự động logout theo lượt xem)
-      accountBtn.setAttribute("href", toProfile);
-      try { window.location.href = toProfile; } catch {}
-      return;
     } catch {
-      // Fallback to login
-      accountBtn.setAttribute("href", toLogin);
-      try { window.location.href = toLogin; } catch {}
+      // Lỗi: coi như chưa đăng nhập, để thẻ <a> tự điều hướng
+    }
+  });
+  document.addEventListener("click", (e) => {
+    if (!accountMenu || !accountMenuBtn) return;
+    const t = e.target;
+    if (accountMenu.contains(t) || accountMenuBtn.contains(t)) return;
+    accountMenu.hidden = true;
+    accountMenuBtn.setAttribute("aria-expanded", "false");
+  });
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && accountMenu && !accountMenu.hasAttribute("hidden")) {
+      accountMenu.hidden = true;
+      accountMenuBtn?.setAttribute("aria-expanded", "false");
     }
   });
 
@@ -438,14 +463,98 @@ function setupListeners() {
     mod.openOrdersModal();
   });
 
-  // Auth UI (giữ như cũ nếu bạn đang dùng)
+  // Auto-open Orders on event (lazy-load)
+  document.addEventListener("orders:open", async () => {
+    const mod = await import("./orders.js");
+    mod.openOrdersModal();
+  });
+  // Auto-open Order Confirmation on event (lazy-load)
+  document.addEventListener("order:confirmed", async (e) => {
+    const mod = await import("./orders.js");
+    mod.openOrderConfirmModal(e.detail?.orderId);
+  });
+
+  // Auth UI: logout rồi điều hướng sang trang Đăng nhập riêng
   btnLogout?.addEventListener("click", async () => {
     await apiLogoutUser();
     await refreshCurrentUser();
+    closeAccountDrawer();
+    try { localStorage.setItem('vvv_return_to', '../html/index.html'); } catch {}
+    location.href = '../client/login.html';
   });
 
   // Auth Modal
   bindAuthModal();
+  // Tabs toggle for Auth modal
+  tabLogin?.addEventListener('click', (e) => { e.preventDefault(); openAuthModal('login'); });
+  tabRegister?.addEventListener('click', (e) => { e.preventDefault(); openAuthModal('register'); });
+  // Submit handlers for login/register
+  loginForm?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const fd = new FormData(loginForm);
+    const payload = {
+      email: String(fd.get('email') || ''),
+      phone: String(fd.get('phone') || ''),
+      password: String(fd.get('password') || ''),
+    };
+    if (loginMsg) loginMsg.textContent = 'Đang đăng nhập...';
+    try {
+      const res = await apiLoginUser(payload);
+      if (res?.ok) {
+        if (loginMsg) loginMsg.textContent = 'Đăng nhập thành công.';
+        await refreshCurrentUser();
+        closeAuthModal();
+        openAccountDrawer();
+      } else {
+        if (res?.reason === 'user_not_found') {
+          if (loginMsg) loginMsg.textContent = 'Không tìm thấy tài khoản — chuyển sang Đăng ký.';
+          openAuthModal('register');
+          if (registerForm) {
+            const rEmail = registerForm.querySelector('[name="email"]');
+            const rPhone = registerForm.querySelector('[name="phone"]');
+            const rPass = registerForm.querySelector('[name="password"]');
+            rEmail && (rEmail.value = payload.email || '');
+            rPhone && (rPhone.value = payload.phone || '');
+            rPass && (rPass.value = payload.password || '');
+            const rName = registerForm.querySelector('[name="name"]');
+            rName?.focus();
+          }
+          if (registerMsg) registerMsg.textContent = 'Vui lòng điền thông tin để tạo tài khoản.';
+        } else if (res?.reason === 'wrong_password') {
+          if (loginMsg) loginMsg.textContent = 'Mật khẩu không đúng.';
+        } else {
+          if (loginMsg) loginMsg.textContent = res?.message || 'Đăng nhập thất bại.';
+        }
+      }
+    } catch {
+      if (loginMsg) loginMsg.textContent = 'Có lỗi khi đăng nhập.';
+    }
+  });
+  registerForm?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const fd = new FormData(registerForm);
+    const payload = {
+      name: String(fd.get('name') || ''),
+      email: String(fd.get('email') || ''),
+      phone: String(fd.get('phone') || ''),
+      password: String(fd.get('password') || ''),
+      address: String(fd.get('address') || ''),
+    };
+    if (registerMsg) registerMsg.textContent = 'Đang đăng ký...';
+    try {
+      const res = await apiRegisterUser(payload);
+      if (res?.ok) {
+        if (registerMsg) registerMsg.textContent = 'Đăng ký thành công — đã đăng nhập.';
+        await refreshCurrentUser();
+        closeAuthModal();
+        openAccountDrawer();
+      } else {
+        if (registerMsg) registerMsg.textContent = res?.message || 'Đăng ký thất bại.';
+      }
+    } catch {
+      if (registerMsg) registerMsg.textContent = 'Có lỗi khi đăng ký.';
+    }
+  });
 
   // Recipes & Contact
   recipeAddAllBtn.addEventListener("click", addRecipeToCart);
@@ -534,3 +643,140 @@ init();
 (function relaxOrigin(){
   // No-op: do not force redirect to specific host/port.
 })();
+
+function openAccountDrawer() {
+  const modal = document.getElementById("accountModal");
+  const profilePanel = document.getElementById("accountProfilePanel");
+  const addressPanel = document.getElementById("accountAddressPanel");
+  const ordersPanel = document.getElementById("accountOrdersPanel");
+  const navProfile = document.getElementById("acctNavProfile");
+  const navAddress = document.getElementById("acctNavAddress");
+  const navOrders = document.getElementById("acctNavOrders");
+  const acctAddrCount = document.getElementById("acctAddrCount");
+  const acctAddrText = document.getElementById("acctAddrText");
+  const accountForm = document.getElementById("accountForm");
+
+  // --- Add resizer handle & drag-to-resize ---
+  const panelEl = modal?.querySelector('.drawer__panel');
+  if (panelEl) {
+    // restore width from previous session
+    try {
+      const savedW = parseInt(localStorage.getItem('vvv_account_drawer_w') || '0', 10);
+      if (savedW && savedW >= 360) {
+        panelEl.style.width = `${Math.min(savedW, Math.floor(window.innerWidth * 0.96))}px`;
+      }
+    } catch {}
+    let rs = modal.querySelector('#accountResizer');
+    if (!rs) {
+      rs = document.createElement('div');
+      rs.id = 'accountResizer';
+      rs.className = 'drawer__resizer';
+      panelEl.appendChild(rs);
+    }
+    let startX = 0;
+    let startW = 0;
+    let dragging = false;
+    const onMove = (e) => {
+      if (!dragging) return;
+      const dx = startX - e.clientX; // kéo sang trái => tăng width
+      const minW = 360;
+      const maxW = Math.floor(window.innerWidth * 0.96);
+      const newW = Math.max(minW, Math.min(maxW, startW + dx));
+      panelEl.style.width = `${newW}px`;
+    };
+    const onUp = () => {
+      if (!dragging) return;
+      dragging = false;
+      document.body.style.cursor = '';
+      document.removeEventListener('mousemove', onMove);
+      document.removeEventListener('mouseup', onUp);
+      try {
+        const w = panelEl.getBoundingClientRect().width;
+        localStorage.setItem('vvv_account_drawer_w', String(Math.round(w)));
+      } catch {}
+    };
+    rs.addEventListener('mousedown', (e) => {
+      dragging = true;
+      startX = e.clientX;
+      startW = panelEl.getBoundingClientRect().width;
+      document.body.style.cursor = 'ew-resize';
+      document.addEventListener('mousemove', onMove);
+      document.addEventListener('mouseup', onUp);
+      e.preventDefault();
+    });
+  }
+
+  function setActive(idx) {
+    [navProfile, navAddress, navOrders].forEach((b, i) => b && b.classList.toggle("active", i === idx));
+    [profilePanel, addressPanel, ordersPanel].forEach((p, i) => p && (p.hidden = i !== idx));
+  }
+
+  // Prefill profile/address from current session
+  apiCurrentUser().then((u) => {
+    try {
+      if (accountForm) {
+        const name = accountForm.querySelector("input[name='name']");
+        const email = accountForm.querySelector("input[name='email']");
+        const addr = accountForm.querySelector("textarea[name='address']");
+        if (name) name.value = u?.name || "";
+        if (email) email.value = u?.email || "";
+        if (addr) addr.value = u?.address || "";
+      }
+      if (acctAddrCount) acctAddrCount.textContent = u?.address ? "(1)" : "(0)";
+      if (acctAddrText) acctAddrText.textContent = u?.address || "Chưa có địa chỉ.";
+    } catch {}
+  });
+
+  // Bind nav (first click only; subsequent state kept by UI)
+  navProfile?.addEventListener("click", () => setActive(0), { once: true });
+  navAddress?.addEventListener("click", () => setActive(1), { once: true });
+  navOrders?.addEventListener("click", async () => {
+    const container = document.getElementById("accountOrdersBody") || ordersPanel;
+    if (container) container.textContent = "Đang tải đơn hàng...";
+    const mod = await import("./orders.js");
+    await mod.renderOrdersInto(container);
+    setActive(2);
+  }, { once: true });
+
+  document.getElementById("acctEditAddress")?.addEventListener("click", () => {
+    setActive(0);
+    try { accountForm?.querySelector("textarea[name='address']")?.focus(); } catch {}
+  }, { once: true });
+
+  document.getElementById("accountCloseBtn")?.addEventListener("click", closeAccountDrawer, { once: true });
+  document.getElementById("accountOverlay")?.addEventListener("click", closeAccountDrawer, { once: true });
+  document.addEventListener("keydown", escAccountOnce);
+
+  setActive(0);
+  modal.hidden = false;
+}
+function closeAccountDrawer() {
+  const m = document.getElementById("accountModal");
+  if (m) m.hidden = true;
+  document.removeEventListener("keydown", escAccountOnce);
+}
+function escAccountOnce(e) { if (e.key === "Escape") closeAccountDrawer(); }
+
+// Submit profile form: update local profile
+const accFormEl = document.getElementById("accountForm");
+const accMsgEl = document.getElementById("accountMsg");
+accFormEl?.addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const fd = new FormData(accFormEl);
+  const payload = {
+    name: String(fd.get("name") || ""),
+    email: String(fd.get("email") || ""),
+    address: String(fd.get("address") || ""),
+  };
+  try {
+    await apiUpdateProfile(payload);
+    if (accMsgEl) accMsgEl.textContent = "Đã lưu thông tin.";
+    // update address count/text in Address tab
+    const acctAddrCount = document.getElementById("acctAddrCount");
+    const acctAddrText = document.getElementById("acctAddrText");
+    if (acctAddrCount) acctAddrCount.textContent = payload.address ? "(1)" : "(0)";
+    if (acctAddrText) acctAddrText.textContent = payload.address || "Chưa có địa chỉ.";
+  } catch {
+    if (accMsgEl) accMsgEl.textContent = "Có lỗi khi lưu. Thử lại sau.";
+  }
+});

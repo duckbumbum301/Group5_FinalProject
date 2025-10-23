@@ -46,7 +46,7 @@ export function renderProducts(productsToRender, favoriteSet) {
     const catClass = catToThumb(p.cat);
     const favPressed = favoriteSet.has(p.id) ? 'true' : 'false';
     const thumbInner = p.image
-      ? `<img src="${p.image}" alt="${p.name}" style="width:100%;height:120px;object-fit:cover;border-radius:10px;" />`
+      ? `<img src="${p.image}" alt="${p.name}" loading="lazy" decoding="async" fetchpriority="low" width="300" height="120" style="width:100%;height:120px;object-fit:cover;border-radius:10px;" />`
       : `${p.emoji || '🛒'}`;
     return `
     <article class="card" data-id="${p.id}">

@@ -493,9 +493,7 @@
           >
             Tìm kiếm
           </button>
-          <!-- Nút ĐƠN HÀNG mới -->
-          <button class="btn" id="ordersBtn">Đơn hàng</button>
-          <a class="btn btn--icon" id="accountBtn" href="../client/login.html">Tài khoản</a>
+          <a class="btn btn--icon" id="accountBtn" href="../client/register.html">Tài khoản</a>
           <button
             class="btn btn--pri"
             id="cartOpenBtn"
@@ -703,53 +701,99 @@
       role="dialog"
       aria-modal="true"
       aria-label="Thông tin tài khoản"
+      aria-labelledby="accountTitle"
       hidden
     >
       <div class="drawer__panel">
         <div class="drawer__head">
-          <h3>Thông tin giao hàng</h3>
-          <button class="btn btn--icon" id="accountCloseBtn" aria-label="Đóng">
-            Đóng
-          </button>
+          <h3 id="accountTitle">Tài khoản</h3>
+          <button class="btn btn--icon" id="accountCloseBtn" aria-label="Đóng">Đóng</button>
         </div>
-        <form id="accountForm" class="contact" style="padding: 16px">
-          <input
-            class="input"
-            type="text"
-            name="name"
-            placeholder="Họ và tên"
-            required
-          />
-          <input
-            class="input"
-            type="email"
-            name="email"
-            placeholder="Email"
-            required
-          />
-          <textarea
-            class="input"
-            name="address"
-            rows="3"
-            placeholder="Địa chỉ giao hàng..."
-            required
-          ></textarea>
-          <button class="btn btn--pri" type="submit">Lưu thông tin</button>
-          <p class="muted" id="accountMsg" role="status" aria-live="polite"></p>
-        </form>
+        <div class="account-tabs">
+          <nav class="account-nav">
+            <button class="account-item active" id="acctNavProfile">
+              <span>🧑‍💼 Sửa thông tin cá nhân</span>
+              <span>›</span>
+            </button>
+            <button class="account-item" id="acctNavAddress">
+              <span>📍 Địa chỉ nhận hàng <span id="acctAddrCount" class="muted"></span></span>
+              <span>›</span>
+            </button>
+            <button class="account-item" id="acctNavOrders">
+              <span>🛍️ Đơn hàng từng mua</span>
+              <span>›</span>
+            </button>
+          </nav>
+          <div class="account-content">
+            <section id="accountProfilePanel" class="account-panel">
+              <form id="accountForm" class="contact" style="padding: 16px">
+                <input class="input" type="text" name="name" placeholder="Họ và tên" required />
+                <input class="input" type="email" name="email" placeholder="Email" required />
+                <textarea class="input" name="address" rows="3" placeholder="Địa chỉ giao hàng..." required></textarea>
+                <button class="btn btn--pri" type="submit">Lưu thông tin</button>
+                <p class="muted" id="accountMsg" role="status" aria-live="polite"></p>
+              </form>
+            </section>
+            <section id="accountAddressPanel" class="account-panel" hidden>
+              <div class="contact" style="padding: 16px">
+                <p class="muted">Địa chỉ mặc định:</p>
+                <p id="acctAddrText"></p>
+                <button class="btn btn--outline" id="acctEditAddress">Chỉnh sửa địa chỉ</button>
+              </div>
+            </section>
+            <section id="accountOrdersPanel" class="account-panel" hidden>
+              <div id="accountOrdersBody" class="orders-body" style="padding: 16px"></div>
+            </section>
+          </div>
+        </div>
+        <div class="drawer__foot">
+          <button class="btn btn--danger" id="btnLogout">Đăng xuất</button>
+        </div>
       </div>
       <div class="drawer__overlay" id="accountOverlay" tabindex="-1"></div>
     </aside>
 
     <!-- ====== ORDERS MODAL (mới) ====== -->
-    <section id="ordersModal" class="modal" hidden>
+    <section id="ordersModal" class="modal" hidden aria-labelledby="ordersTitle">
       <div id="ordersOverlay" class="modal__overlay"></div>
       <div class="modal__panel">
         <header class="modal__head">
-          <h3>Đơn hàng của tôi</h3>
+          <h3 id="ordersTitle">Đơn hàng của tôi</h3>
           <button id="ordersCloseBtn" class="btn btn--icon">✕</button>
         </header>
         <div id="ordersBody" class="orders-body"></div>
+      </div>
+    </section>
+
+    <!-- ====== AUTH MODAL ====== -->
+    <section id="authModal" class="modal" hidden aria-labelledby="authTitle">
+      <div id="authOverlay" class="modal__overlay"></div>
+      <div class="modal__panel">
+        <header class="modal__head">
+          <h3 id="authTitle">Tài khoản</h3>
+          <button id="authCloseBtn" class="btn btn--icon">✕</button>
+        </header>
+        <div class="modal__body" style="padding: 16px;">
+          <form id="registerForm" class="contact">
+            <h4 class="auth-title">Tạo tài khoản</h4>
+            <input class="input" type="text" name="name" placeholder="Họ và tên" required />
+            <input class="input" type="tel" name="phone" placeholder="Số điện thoại" required />
+            <input class="input" type="email" name="email" placeholder="Email" required />
+            <input class="input" type="password" name="password" placeholder="Mật khẩu" required />
+            <button class="btn btn--pri btn--full" type="submit">Tạo tài khoản</button>
+            <p class="muted" id="registerMsg" role="status" aria-live="polite"></p>
+            <p class="muted">Đã có tài khoản? <a href="../client/login.html">Đăng nhập</a></p>
+          </form>
+
+          <form id="loginForm" class="contact" hidden>
+            <h4 class="auth-title">Đăng nhập tài khoản</h4>
+            <input class="input" type="tel" name="phone" placeholder="Số điện thoại" required />
+            <input class="input" type="password" name="password" placeholder="Mật khẩu" required />
+            <button class="btn btn--pri btn--full" type="submit">Đăng nhập</button>
+            <p class="muted" id="loginMsg" role="status" aria-live="polite"></p>
+            <p class="muted">Chưa có tài khoản? <a href="../client/register.html">Đăng ký</a></p>
+          </form>
+        </div>
       </div>
     </section>
 

@@ -1,26 +1,38 @@
 // js/auth-modal.js — Auth Modal helpers
-export function openAuthModal(mode = 'login') {
+function setAuthHash(mode){
+  try{ const u=new URL(location.href); u.hash = `auth=${mode}`; history.replaceState(null,'',u.toString()); }
+  catch{ location.hash = `auth=${mode}`; }
+}
+function clearAuthHash(){
+  try{ const u=new URL(location.href); if((u.hash||'').startsWith('#auth=')){ u.hash=''; history.replaceState(null,'',u.toString()); } }
+  catch{ /* optional: location.hash='' */ }
+}
+function checkAuthHash(){
+  const h = location.hash || '';
+  if (h.includes('auth=login')) { openAuthModal('login'); return; }
+  if (h.includes('auth=register')) { openAuthModal('register'); return; }
+}
+
+export function openAuthModal(mode = 'register') {
   const authModal = document.getElementById('authModal');
-  const tabLogin = document.getElementById('tabLogin');
-  const tabRegister = document.getElementById('tabRegister');
   const loginForm = document.getElementById('loginForm');
   const registerForm = document.getElementById('registerForm');
   if (!authModal) return;
-  const showLogin = mode === 'login';
-  if (tabLogin && tabRegister) {
-    tabLogin.setAttribute('aria-selected', String(showLogin));
-    tabRegister.setAttribute('aria-selected', String(!showLogin));
-  }
-  if (loginForm && registerForm) {
-    loginForm.hidden = !showLogin;
-    registerForm.hidden = showLogin;
-  }
+  // Hiển thị theo mode: chỉ một form tại một thời điểm
+  if (loginForm) loginForm.hidden = mode !== 'login';
+  if (registerForm) registerForm.hidden = mode !== 'register';
   authModal.hidden = false;
+  setAuthHash(mode);
+  const target = mode === 'login'
+    ? (loginForm?.querySelector('input[name="phone"]') || loginForm?.querySelector('input'))
+    : (registerForm?.querySelector('input[name="name"]') || registerForm?.querySelector('input'));
+  target?.focus();
 }
 
 export function closeAuthModal() {
   const authModal = document.getElementById('authModal');
   if (authModal) authModal.hidden = true;
+  clearAuthHash();
 }
 
 export function bindAuthModal() {
@@ -35,20 +47,27 @@ export function bindAuthModal() {
     const item = e.target.closest('[data-action]');
     if (!item) return;
     const action = item.dataset.action;
-    if (action === 'login') {
-      e.preventDefault();
-      openAuthModal('login');
-    }
-    if (action === 'register') {
-      e.preventDefault();
-      openAuthModal('register');
-    }
+    if (action === 'login') { e.preventDefault(); location.href = '../client/login.html'; }
+    if (action === 'register') { e.preventDefault(); location.href = '../client/register.html'; }
+  });
+
+  // Switch-link ngay trong modal (nếu có), điều hướng sang trang riêng
+  authModal.addEventListener('click', (e) => {
+    const link = e.target.closest('a[data-action]');
+    if (!link) return;
+    const act = link.dataset.action;
+    if (act === 'switch-login') { e.preventDefault(); location.href = '../client/login.html'; }
+    if (act === 'switch-register') { e.preventDefault(); location.href = '../client/register.html'; }
   });
 
   const onClose = (e) => { e.preventDefault?.(); closeAuthModal(); };
   authOverlay?.addEventListener('click', onClose);
   authCloseBtn?.addEventListener('click', onClose);
   authModal.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeAuthModal(); });
+
+  // Hash routing cho auth (href chuyển đúng mục đăng nhập/đăng ký)
+  window.addEventListener('hashchange', checkAuthHash);
+  checkAuthHash();
 
   authModal.setAttribute('data-bound', 'true');
 }

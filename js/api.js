@@ -106,14 +106,37 @@ export function calcShippingFee(addressText, subtotal) {
   return fee;
 }
 
+// Helper: Sinh mã đơn hàng chuẩn thời gian + random (ORD-YYYYMMDD-HHmmss-RAND)
+function genOrderId() {
+  const now = new Date();
+  const ymd = now.toISOString().slice(0, 10).replace(/-/g, "");
+  const hms = `${String(now.getHours()).padStart(2, "0")}${String(
+    now.getMinutes()
+  ).padStart(2, "0")}${String(now.getSeconds()).padStart(2, "0")}`;
+  const rand = Math.random().toString(36).slice(2, 8).toUpperCase();
+  return `ORD-${ymd}-${hms}-${rand}`;
+}
+
 // ========= ORDERS =========
 export async function apiCreateOrder(orderPayload) {
   const orders = lsGet(LS_ORDERS, []);
-  const id = Date.now().toString();
+  const id = genOrderId();
+  const createdAt = new Date().toISOString();
+  const tracking = [
+    { code: "placed", label: "Đã đặt hàng", at: createdAt },
+    { code: "preparing", label: "Đang chuẩn bị", at: null },
+    { code: "ready", label: "Sẵn sàng giao", at: null },
+    { code: "pickup", label: "Shipper đã nhận", at: null },
+    { code: "delivering", label: "Đang giao", at: null },
+    { code: "delivered", label: "Giao thành công", at: null },
+  ];
   const newOrder = {
     id,
     ...orderPayload,
-    created_at: new Date().toISOString(),
+    created_at: createdAt,
+    tracking,
+    payment_status: "pending", // chờ thanh toán hoặc COD
+    delivery_status: "placed",
   };
   orders.push(newOrder);
   lsSet(LS_ORDERS, orders);
@@ -205,15 +228,19 @@ export async function apiLoginUser({ email, phone, password }) {
   const e = (email || "").trim().toLowerCase();
   const p = (phone || "").replace(/\D/g, "");
   const pw = String(password || "");
-  const u = users.find((x) =>
-    ((e && (x.email || "").toLowerCase() === e) || (p && (x.phone || "") === p)) &&
-    x.password === pw
+  const candidate = users.find(
+    (x) => (e && (x.email || "").toLowerCase() === e) || (p && (x.phone || "") === p)
   );
-  if (!u) return { ok: false, message: "Sai SĐT/email hoặc mật khẩu." };
-  lsSet(LS_SESSION, { id: u.id, email: u.email, phone: u.phone, name: u.name });
+  if (!candidate) {
+    return { ok: false, reason: "user_not_found", message: "Không tìm thấy tài khoản. Vui lòng đăng ký." };
+  }
+  if (candidate.password !== pw) {
+    return { ok: false, reason: "wrong_password", message: "Mật khẩu không đúng." };
+  }
+  lsSet(LS_SESSION, { id: candidate.id, email: candidate.email, phone: candidate.phone, name: candidate.name });
   return {
     ok: true,
-    user: { id: u.id, name: u.name, email: u.email, phone: u.phone, address: u.address },
+    user: { id: candidate.id, name: candidate.name, email: candidate.email, phone: candidate.phone, address: candidate.address },
   };
 }
 

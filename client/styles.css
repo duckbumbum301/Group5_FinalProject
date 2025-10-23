@@ -315,3 +315,44 @@ select:focus {
 .pw-toggle[aria-pressed="true"] {
   color: #22c55e;
 }
+
+/* Fresh Green theme overrides */
+.theme-green {
+  --bg: #d6f7e3; /* đậm hơn xíu so với trước */
+  --bg-grad: radial-gradient(1200px 600px at 10% 0%, #b6f2c7 0%, transparent 60%),
+              radial-gradient(900px 500px at 85% 20%, #91e7b0 0%, transparent 65%),
+              radial-gradient(900px 600px at 50% 100%, #a9f0c1 0%, transparent 70%),
+              linear-gradient(180deg, #d9ffe8 0%, #c7f3d6 60%, #c7f3d6 100%);
+  --panel: #ffffff;
+  --panel-2: #f6fff9;
+  --soft: #6b7280; /* chữ phụ xám dịu mắt */
+  --text: #1f2937; /* chữ chính thiên xám đậm, dễ đọc */
+  --border: #cfe8d7;
+  --ring: #4ade8055;
+  --shadow: 0 12px 34px rgba(28, 103, 66, 0.18);
+}
+.theme-green .container { background: var(--panel); border: 1px solid var(--border); box-shadow: var(--shadow); }
+.theme-green .btn-primary { color: #ffffff; } /* chữ trắng trên nút xanh */
+.theme-green .btn-ghost { background: var(--panel-2); color: var(--text); border: 1px solid var(--border); }
+.theme-green input, .theme-green select { background: #ffffff; color: var(--text); border-color: var(--border); }
+.theme-green input::placeholder { color: #6b7280aa; }
+.theme-green .alert { background: #fff7f7; color: #8b1616; border-left-color: #ff9aa2; }
+.theme-green .notice { background: #f4fffb; color: #065f46; border-left-color: #b2f5ea; }
+.theme-green .topbar { background: #ffffff; border-bottom: 1px solid var(--border); }
+.theme-green .card { background: #ffffff; }
+.theme-green .table th { background: #f6fff9; color: var(--text); }
+ .theme-green .form-table td:first-child { color: #111827; }
+
+/* ========== Mở rộng khu vực hiển thị ở trang hồ sơ ========== */
+.page--wide { max-width: min(1280px, 95vw); }
+
+/* Thẻ đơn hàng hiển thị rõ ràng hơn */
+.order-card {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 12px;
+  margin-top: 12px;
+}
+.order-head { display: flex; justify-content: space-between; gap: 8px; }
+.order-total { font-weight: 700; }

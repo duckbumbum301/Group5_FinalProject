@@ -7,7 +7,6 @@ import {
   apiApplyVoucher,
   apiCreateOrder,
   apiCurrentUser,
-  apiUpdateProfile,
   apiGetProductById,
 } from './api.js';
 
@@ -231,7 +230,7 @@ export async function openCheckoutModal() {
 
     clearCart();
     closeCheckoutModal();
-    document.dispatchEvent(new Event('orders:open'));
+    document.dispatchEvent(new CustomEvent('order:confirmed', { detail: { orderId: newOrder.id } }));
   };
 
   el.hidden = false;
@@ -268,6 +267,10 @@ function ensureAddressPicker(){
           </div>
           <div id="apSuggests" class="ap-suggests"></div>
           <div id="apMap" class="ap-map" aria-label="Bản đồ chọn địa chỉ"></div>
+          <div id="apPicked" class="ap-picked" style="display:none">
+          <div class="label">Địa chỉ đã chọn</div>
+          <div id="apPickedAddr" class="addr"></div>
+          </div>
           <div class="ap-foot">
             <button class="btn btn--outline" id="apAdjust">Sửa vị trí</button>
             <button class="btn btn--pri" id="apConfirm">Hoàn tất</button>
@@ -311,6 +314,18 @@ async function reverseGeocode(lat,lng){
 }
 
 let apState = { map:null, marker:null, adjusting:false, lat:null, lng:null, address:'' };
+function setPickedText(addr){
+  const wrap = document.getElementById('apPicked');
+  const addrEl = document.getElementById('apPickedAddr');
+  if(!wrap || !addrEl) return;
+  if(addr && addr.trim()){
+    addrEl.textContent = addr;
+    wrap.style.display = 'block';
+  }else{
+    addrEl.textContent = '';
+    wrap.style.display = 'none';
+  }
+}
 
 export async function openAddressPicker(targetForm){
   await loadLeaflet();
@@ -321,6 +336,7 @@ export async function openAddressPicker(targetForm){
   const btnAdjust = document.getElementById('apAdjust');
   const btnConfirm = document.getElementById('apConfirm');
   const btnLocate = document.getElementById('apLocate');
+  sugEl.style.display = 'none';
 
   if(!apState.map){
     apState.map = L.map(mapEl, { zoomControl:true }).setView([10.776,106.700], 13);
@@ -349,6 +365,7 @@ export async function openAddressPicker(targetForm){
   async function setAddressFromLatLng(lat,lng){
     const info = await reverseGeocode(lat,lng).catch(()=>null);
     if(info && info.display_name){ sEl.value = info.display_name; apState.address = info.display_name; }
+    setPickedText(apState.address||'');
   }
 
   if(apState.lat && apState.lng){ setMarker(apState.lat, apState.lng); }
@@ -361,23 +378,33 @@ export async function openAddressPicker(targetForm){
   } else {
     apState.map.setView([10.776,106.700], 13);
   }
+  setPickedText(apState.address||'');
 
   // search
   let searchTimer=null;
   sEl.oninput = ()=>{
     clearTimeout(searchTimer);
     const q = sEl.value.trim();
+    setPickedText(q);
+    if(!q){
+      sugEl.innerHTML = '';
+      sugEl.style.display = 'none';
+      return;
+    }
     searchTimer = setTimeout(async ()=>{
       const list = await geocode(q);
       sugEl.innerHTML = list.map(item=>`<button class="sug" data-lat="${item.lat}" data-lng="${item.lon}">${item.display_name}</button>`).join('') || '';
+      sugEl.style.display = list.length ? 'grid' : 'none';
       [...sugEl.querySelectorAll('.sug')].forEach(btn=>{
         btn.onclick = ()=>{
           const lat = parseFloat(btn.dataset.lat), lng = parseFloat(btn.dataset.lng);
-          setMarker(lat,lng); apState.address = btn.textContent;
+          setMarker(lat,lng); apState.address = btn.textContent; setPickedText(apState.address);
+          sugEl.style.display = 'none';
         };
       });
     }, 300);
   };
+  sEl.onblur = ()=>{ setTimeout(()=>{ sugEl.style.display = 'none'; }, 200); };
 
   // adjust mode
   btnAdjust.onclick = ()=>{
@@ -400,6 +427,8 @@ export async function openAddressPicker(targetForm){
 
   // confirm
   btnConfirm.onclick = ()=>{
+
+    if(!apState.address && sEl.value.trim()) apState.address = sEl.value.trim();
     if(apState.address){ targetForm.elements.address.value = apState.address; }
     if(apState.lat && apState.lng){ targetForm.elements.lat.value = String(apState.lat); targetForm.elements.lng.value = String(apState.lng); }
     closeAddressPicker();
