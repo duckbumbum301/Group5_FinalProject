@@ -846,6 +846,35 @@ select.input, input[type="range"]{padding:10px;height:auto}
   overflow-y:auto;
   padding-right:8px; /* tránh dính sát khi xuất hiện scrollbar */
 }
+.orders-card__actions a { color: var(--pri, #16a34a); font-weight: 600; text-decoration: none; }
+.orders-card__actions a:hover { text-decoration: underline; }
+.orders-card__thumbs { display: flex; gap: 6px; margin-top: 8px; align-items: center; }
+.orders-card__thumb { width: 40px; height: 40px; border-radius: 8px; border: 1px solid var(--border-color, #e8e8e8); object-fit: cover; background: #f9fafb; display: inline-block; overflow: hidden; }
+.orders-card__thumb.more { display: flex; align-items: center; justify-content: center; font-size: 12px; color: #666; }
+.orders-card__ops { display: flex; gap: 8px; flex-wrap: wrap; }
+.btn--link { background: none; border: none; color: #2563eb; padding: 0; cursor: pointer; font-weight: 600; }
+
+#orderConfirmModal #ocBody{ display:grid; gap:12px; }
+#orderConfirmModal .order-head{ display:flex; align-items:center; justify-content:space-between; }
+#orderConfirmModal .oc-items{ display:grid; gap:8px; }
+#orderConfirmModal .oc-item{ display:flex; align-items:center; justify-content:space-between; gap:10px; border:1px solid var(--border-color,#e8e8e8); border-radius:10px; padding:8px; background:#fff; }
+#orderConfirmModal .oc-thumb{ width:52px; height:52px; border-radius:10px; border:1px solid var(--border-color,#e8e8e8); object-fit:cover; display:flex; align-items:center; justify-content:center; background:#f9fafb; overflow:hidden; }
+#orderConfirmModal .oc-item__main{ flex:1; }
+#orderConfirmModal .oc-name{ font-weight:600; }
+#orderConfirmModal .oc-item__meta{ text-align:right; min-width:110px; }
+#orderConfirmModal .oc-line{ font-weight:700; }
+#orderConfirmModal .oc-pay{ background:#f9fafb; border:1px solid var(--border-color,#e8e8e8); border-radius:12px; padding:12px; }
+#orderConfirmModal .oc-section-title{ font-size:16px; font-weight:700; margin-bottom:8px; }
+#orderConfirmModal .oc-row{ display:flex; align-items:center; justify-content:space-between; padding:4px 0; }
+#orderConfirmModal .oc-row.oc-total{ font-weight:700; }
+
+.timeline .step{ display:inline-flex; align-items:flex-start; gap:8px; background:#fff; border:1px solid var(--border-color,#e8e8e8); border-radius:10px; padding:8px 10px; margin:4px 4px 0 0; }
+.timeline .step.done{ border-color:var(--primary,#16a34a); box-shadow:0 0 0 1px rgba(22,163,74,0.08); }
+.timeline .dot{ width:10px; height:10px; border-radius:999px; background:var(--primary,#16a34a); margin-top:2px; }
+.timeline .label{ font-weight:600; }
+.timeline .label .time{ font-size:12px; color:#666; }
+
+
 /* === FIX HÌNH SẢN PHẨM FIT KHUNG === */
 .card {
   display: flex;
@@ -1223,74 +1252,5 @@ select.input, input[type="range"]{padding:10px;height:auto}
 }
 .toast .toast-close{
   background:transparent;border:0;color:rgba(255,255,255,0.8);cursor:pointer;margin-left:8px;font-weight:700;padding:0;
-}
-/* === Checkout scoped styles === */
-#checkoutModal .co-panel{ width:min(720px,96vw); }
-#checkoutModal .co-form{ display:grid; gap:16px; }
-#checkoutModal .co-grid{ display:grid; gap:12px; }
-#checkoutModal .co-grid--1{ grid-template-columns:1fr; }
-#checkoutModal .co-grid--2{ grid-template-columns:1fr 1fr; }
-@media (max-width:640px){
-  #checkoutModal .co-grid--2{ grid-template-columns:1fr; }
-}
-#checkoutModal .co-field label{ display:block; font-size:13px; color:#6b7280; margin-bottom:6px; }
-#checkoutModal .voucher-row{ display:flex; gap:8px; }
-.btn--outline{ background:#f3f4f6; }
-.btn--outline:hover{ filter:brightness(.98); }
-.btn--full{ width:100%; justify-content:center; }
-
-#checkoutModal .co-summary{
-  background:#f9fafb;
-  border:1px solid var(--border);
-  border-radius:12px;
-  padding:12px;
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:8px 12px;
-}
-#checkoutModal #coVoucherMsg.ok{ color:var(--green); }
-#checkoutModal #coVoucherMsg.err{ color:#dc2626; }
-
-#checkoutModal .co-summary .row{ display:flex; justify-content:space-between; }
-#checkoutModal .co-summary .total-row{ display:flex; justify-content:space-between; grid-column:1 / -1; }
-#checkoutModal .co-summary .total{ color:var(--green); font-weight:700; }
-#checkoutModal .co-actions{ position:sticky; bottom:0; background:var(--white); padding-top:8px; padding-bottom:8px; border-top:1px solid var(--border); }
-
-
-.pm-body{ display:grid; grid-template-columns:120px 1fr; gap:12px; }
-.pm-thumb{ width:120px; height:120px; border-radius:12px; display:flex; align-items:center; justify-content:center; font-size:42px; background:#f3f4f6; }
-.pm-name{ font-size:18px; font-weight:600; }
-.pm-price{ margin:4px 0 8px; color:#16a34a; font-weight:600; }
-.pm-desc{ color:#555; }
-.pm-qty input{ width:90px; margin-left:6px; }
-/* === Modal (Product Detail, Checkout) === */
-.modal[hidden]{ display:none; }
-.modal{
-  position:fixed; inset:0; z-index:120; /* cao hơn drawer (60) & toast (120) nếu cần */
-  display:flex; align-items:center; justify-content:center;
-}
-.modal__overlay{
-  position:absolute; inset:0; background:rgba(0,0,0,.35);
-}
-.modal__panel{
-  position:relative; z-index:1;
-  width:min(640px, 94vw);
-  background:var(--white);
-  border:1px solid var(--border);
-  border-radius:var(--radius);
-  box-shadow:var(--shadow);
-  padding:16px;
-  max-height:90vh; overflow:auto;
-}
-.modal__head{
-  display:flex; align-items:center; justify-content:space-between;
-  margin-bottom:12px; border-bottom:1px solid var(--border); padding-bottom:8px;
-}
-
-/* Mega Menu scroll nếu nội dung dài */
-.mega-menu__content{
-  max-height:70vh;
-  overflow-y:auto;
-  padding-right:8px; /* tránh dính sát khi xuất hiện scrollbar */
 }
 

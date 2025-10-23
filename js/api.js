@@ -146,6 +146,20 @@ export async function apiListOrders() {
   return lsGet(LS_ORDERS, []);
 }
 
+export async function apiCancelOrder(orderId) {
+  const orders = lsGet(LS_ORDERS, []);
+  const idx = orders.findIndex((o) => o.id === orderId);
+  if (idx === -1) return null;
+  const now = new Date().toISOString();
+  const o = orders[idx];
+  o.delivery_status = 'cancelled';
+  o.tracking = Array.isArray(o.tracking) ? o.tracking.slice() : [];
+  const has = o.tracking.some((s) => s.code === 'cancelled');
+  if (!has) o.tracking.push({ code: 'cancelled', label: 'Đã hủy đơn', at: now });
+  lsSet(LS_ORDERS, orders);
+  return o;
+}
+
 // ========= AUTH / USERS =========
 function getUsers() {
   try {
