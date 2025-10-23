@@ -23,9 +23,7 @@
   <body>
     <header class="header">
       <div class="container header__row">
-        <a href="#" class="logo" aria-label="Trang chủ Vựa Vui Vẻ"
-          >Vựa Vui Vẻ</a
-        >
+        <a href="#" class="logo" aria-label="Trang chủ Vựa Vui Vẻ"><img src="../images/brand/LogoVVV.png" alt="Vựa Vui Vẻ" class="logo__img" /></a>
         <nav class="nav" aria-label="Điều hướng chính">
           <a href="#home">Trang chủ</a>
           <div class="nav-item nav-item--dropdown">
@@ -512,6 +510,7 @@
             type="search"
             placeholder="Tìm: bí đỏ, rau muống, táo..."
             aria-label="Tìm kiếm sản phẩm"
+            autocomplete="on"
           />
         </div>
       </div>
@@ -636,6 +635,7 @@
               type="text"
               name="name"
               placeholder="Họ và tên"
+              autocomplete="name"
               required
             />
             <input
@@ -643,6 +643,7 @@
               type="email"
               name="email"
               placeholder="Email"
+              autocomplete="email"
               required
             />
             <textarea
@@ -727,9 +728,9 @@
           <div class="account-content">
             <section id="accountProfilePanel" class="account-panel">
               <form id="accountForm" class="contact" style="padding: 16px">
-                <input class="input" type="text" name="name" placeholder="Họ và tên" required />
-                <input class="input" type="email" name="email" placeholder="Email" required />
-                <textarea class="input" name="address" rows="3" placeholder="Địa chỉ giao hàng..." required></textarea>
+                <input class="input" type="text" name="name" placeholder="Họ và tên" autocomplete="name" required />
+                <input class="input" type="email" name="email" placeholder="Email" autocomplete="email" required />
+                <textarea class="input" name="address" rows="3" placeholder="Địa chỉ giao hàng..." autocomplete="street-address" required></textarea>
                 <button class="btn btn--pri" type="submit">Lưu thông tin</button>
                 <p class="muted" id="accountMsg" role="status" aria-live="polite"></p>
               </form>
@@ -776,10 +777,10 @@
         <div class="modal__body" style="padding: 16px;">
           <form id="registerForm" class="contact">
             <h4 class="auth-title">Tạo tài khoản</h4>
-            <input class="input" type="text" name="name" placeholder="Họ và tên" required />
-            <input class="input" type="tel" name="phone" placeholder="Số điện thoại" required />
-            <input class="input" type="email" name="email" placeholder="Email" required />
-            <input class="input" type="password" name="password" placeholder="Mật khẩu" required />
+            <input class="input" type="text" name="name" placeholder="Họ và tên" autocomplete="name" required />
+            <input class="input" type="tel" name="phone" placeholder="Số điện thoại" autocomplete="tel" required />
+            <input class="input" type="email" name="email" placeholder="Email" autocomplete="email" required />
+            <input class="input" type="password" name="password" placeholder="Mật khẩu" autocomplete="new-password" required />
             <button class="btn btn--pri btn--full" type="submit">Tạo tài khoản</button>
             <p class="muted" id="registerMsg" role="status" aria-live="polite"></p>
             <p class="muted">Đã có tài khoản? <a href="../client/login.html">Đăng nhập</a></p>
@@ -787,8 +788,8 @@
 
           <form id="loginForm" class="contact" hidden>
             <h4 class="auth-title">Đăng nhập tài khoản</h4>
-            <input class="input" type="tel" name="phone" placeholder="Số điện thoại" required />
-            <input class="input" type="password" name="password" placeholder="Mật khẩu" required />
+            <input class="input" type="tel" name="phone" placeholder="Số điện thoại" autocomplete="username" required />
+            <input class="input" type="password" name="password" placeholder="Mật khẩu" autocomplete="current-password" required />
             <button class="btn btn--pri btn--full" type="submit">Đăng nhập</button>
             <p class="muted" id="loginMsg" role="status" aria-live="polite"></p>
             <p class="muted">Chưa có tài khoản? <a href="../client/register.html">Đăng ký</a></p>

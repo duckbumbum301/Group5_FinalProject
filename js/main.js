@@ -480,7 +480,7 @@ function setupListeners() {
     await refreshCurrentUser();
     closeAccountDrawer();
     try { localStorage.setItem('vvv_return_to', '../html/index.html'); } catch {}
-    location.href = '../client/login.html';
+    location.href = new URL('../client/login.html', location.href).toString();
   });
 
   // Auth Modal

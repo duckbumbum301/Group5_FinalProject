@@ -18,11 +18,13 @@ img{max-width:100%;display:block}
 /* Header */
 .header{position:sticky;top:0;z-index:50;background:var(--white);box-shadow:var(--shadow)}
 .header__row{display:flex;align-items:center;justify-content:space-between;padding:14px 0}
-.logo{font-weight:800;font-size:22px;color:var(--green);letter-spacing:.4px}
-.nav{display:flex;gap:10px;flex-wrap:wrap}
-.nav a{padding:8px 12px;border-radius:10px}
+.logo{font-weight:800;font-size:22px;color:var(--green);letter-spacing:.4px;margin-right:12px}
+.logo__img{height:65px;width:auto;display:block}
+.nav{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.nav a{padding:8px 12px;border-radius:10px;font-size:16px}
 .nav a:hover,.nav a:focus{background:#edf9f1;outline:none}
-.actions{display:flex;gap:8px;align-items:center}
+.actions{display:flex;gap:8px;align-items:center;font-size:16px}
+.actions .btn{font-size:16px;font-weight:600}
 /* Account avatar & dropdown */
 .account{position:relative}
 .avatar-btn{display:inline-grid;place-items:center;width:40px;height:40px;border-radius:999px;border:1px solid var(--border);background:#fff;cursor:pointer}
@@ -34,7 +36,7 @@ img{max-width:100%;display:block}
 .dropdown__item.danger{color:#b91c1c}
 
 /* Buttons & badges */
-.btn{display:inline-flex;align-items:center;gap:8px;border:0;border-radius:12px;padding:10px 14px;cursor:pointer;transition:var(--trans);font-weight:600}
+.btn{display:inline-flex;align-items:center;gap:8px;border:0;border-radius:12px;padding:10px 14px;cursor:pointer;transition:var(--trans);font-weight:600;white-space:nowrap;line-height:1;min-height:42px}
 .btn--pri{background:var(--green);color:var(--white)}
 .btn--pri:hover{background:var(--green-600)}
 .btn--icon{background:#f3f4f6}
@@ -131,7 +133,7 @@ select.input, input[type="range"]{padding:10px;height:auto}
   background: none;
   border: none;
   cursor: pointer;
-  font-size: inherit;
+  font-size: 16px;
   color: inherit;
   text-decoration: none;
   transition: var(--trans);

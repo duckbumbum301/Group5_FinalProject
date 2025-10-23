@@ -13,7 +13,8 @@ const OLD_LS_SESSION = "client_session_v1";
 /* ---------- Helpers DOM & Điều hướng ---------- */
 const $ = (s, r = document) => r.querySelector(s);
 function go(href) {
-  location.href = href;
+  try { location.href = new URL(href, location.href).toString(); }
+  catch { location.href = href; }
 }
 
 /* ---------- Chuẩn hóa & validate ---------- */

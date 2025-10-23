@@ -47,8 +47,8 @@ export function bindAuthModal() {
     const item = e.target.closest('[data-action]');
     if (!item) return;
     const action = item.dataset.action;
-    if (action === 'login') { e.preventDefault(); location.href = '../client/login.html'; }
-    if (action === 'register') { e.preventDefault(); location.href = '../client/register.html'; }
+    if (action === 'login') { e.preventDefault(); location.href = new URL('../client/login.html', location.href).toString(); }
+    if (action === 'register') { e.preventDefault(); location.href = new URL('../client/register.html', location.href).toString(); }
   });
 
   // Switch-link ngay trong modal (nếu có), điều hướng sang trang riêng
@@ -56,8 +56,8 @@ export function bindAuthModal() {
     const link = e.target.closest('a[data-action]');
     if (!link) return;
     const act = link.dataset.action;
-    if (act === 'switch-login') { e.preventDefault(); location.href = '../client/login.html'; }
-    if (act === 'switch-register') { e.preventDefault(); location.href = '../client/register.html'; }
+    if (act === 'switch-login') { e.preventDefault(); location.href = new URL('../client/login.html', location.href).toString(); }
+    if (act === 'switch-register') { e.preventDefault(); location.href = new URL('../client/register.html', location.href).toString(); }
   });
 
   const onClose = (e) => { e.preventDefault?.(); closeAuthModal(); };

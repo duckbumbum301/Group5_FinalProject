@@ -28,12 +28,12 @@ function ensureCheckoutModal() {
         </header>
         <form class="form co-form" id="coForm">
           <div class="co-grid co-grid--1">
-            <input name="name" class="input" placeholder="Họ tên" required />
-            <input name="phone" class="input" placeholder="Số điện thoại" required />
+            <input name="name" class="input" placeholder="Họ tên" autocomplete="name" required />
+            <input name="phone" class="input" placeholder="Số điện thoại" autocomplete="tel" required />
             <div class="co-field">
               <label>Địa chỉ giao hàng</label>
               <div class="addr-row">
-                <textarea name="address" class="input" placeholder="Số nhà, tên đường, phường/xã, quận/huyện, tỉnh/thành" required></textarea>
+                <textarea name="address" class="input" placeholder="Số nhà, tên đường, phường/xã, quận/huyện, tỉnh/thành" autocomplete="street-address" required></textarea>
                 <button type="button" class="btn btn--outline" id="btnPickOnMap">Chọn trên bản đồ</button>
               </div>
               <input type="hidden" name="lat" />
@@ -87,7 +87,7 @@ export async function openCheckoutModal() {
   const cur = await apiCurrentUser();
   if (!cur) {
     localStorage.setItem('vvv_return_to', location.href);
-    location.href = '../client/login.html';
+    location.href = new URL('../client/login.html', location.href).toString();
     return;
   }
 
@@ -199,7 +199,7 @@ export async function openCheckoutModal() {
     if (!cur2) {
       alert('Phiên đăng nhập đã hết hạn. Vui lòng đăng nhập lại.');
       localStorage.setItem('vvv_return_to', location.href);
-      location.href = '../client/login.html';
+      location.href = new URL('../client/login.html', location.href).toString();
       return;
     }
 
