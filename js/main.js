@@ -113,6 +113,36 @@ const accountForm = $("#accountForm");
 const accountMsg = $("#accountMsg");
 const checkoutBtn = $("#checkoutBtn");
 
+// Account Drawer helpers
+function openAccountDrawer() {
+  if (!accountModal) return;
+  accountModal.removeAttribute('hidden');
+  // Bind one-off closers
+  accountCloseBtn && accountCloseBtn.addEventListener('click', closeAccountDrawer, { once: true });
+  accountOverlay && accountOverlay.addEventListener('click', closeAccountDrawer, { once: true });
+  // Prefill profile form from current user
+  (async () => {
+    try {
+      const u = await apiCurrentUser();
+      if (!u || !accountForm) return;
+      const f = accountForm;
+      f.elements.name && (f.elements.name.value = u.name || '');
+      f.elements.email && (f.elements.email.value = u.email || '');
+      f.elements.phone && (f.elements.phone.value = u.phone || '');
+      f.elements.address && (f.elements.address.value = u.address || '');
+    } catch {}
+  })();
+  // Ensure drawer UI wired and default section
+  initAccountDrawerUI();
+  ensureLatLngFields();
+  addressPanelRefresh();
+  setAccountSection('profile');
+}
+function closeAccountDrawer() {
+  if (!accountModal) return;
+  accountModal.setAttribute('hidden','');
+}
+
 // Auth UI refs
 const authBadge = document.getElementById("authBadge");
 const accountMenuBtn = document.getElementById("accountMenuBtn");
@@ -128,6 +158,51 @@ const registerForm = document.getElementById("registerForm");
 const loginMsg = document.getElementById("loginMsg");
 const registerMsg = document.getElementById("registerMsg");
 
+// Account Drawer UI refs
+const acctNavProfile = document.getElementById('acctNavProfile');
+const acctNavAddress = document.getElementById('acctNavAddress');
+const acctNavOrders = document.getElementById('acctNavOrders');
+const accountProfilePanel = document.getElementById('accountProfilePanel');
+const accountAddressPanel = document.getElementById('accountAddressPanel');
+const accountOrdersPanel = document.getElementById('accountOrdersPanel');
+const acctAddrCount = document.getElementById('acctAddrCount');
+const acctAddrText = document.getElementById('acctAddrText');
+const acctEditAddress = document.getElementById('acctEditAddress');
+const accountOrdersBody = document.getElementById('accountOrdersBody');
+
+function ensureLatLngFields(){
+  if(!accountForm) return;
+  if(!accountForm.elements.lat){ const inp = document.createElement('input'); inp.type='hidden'; inp.name='lat'; accountForm.appendChild(inp); }
+  if(!accountForm.elements.lng){ const inp = document.createElement('input'); inp.type='hidden'; inp.name='lng'; accountForm.appendChild(inp); }
+}
+function addressPanelRefresh(){
+  const addr = accountForm?.elements?.address?.value || '';
+  if (acctAddrText) acctAddrText.textContent = addr || 'Chưa có địa chỉ mặc định.';
+  if (acctAddrCount) acctAddrCount.textContent = addr ? '(1)' : '(0)';
+}
+async function setAccountSection(section){
+  [acctNavProfile, acctNavAddress, acctNavOrders].forEach(el=>el?.classList.remove('active'));
+  if(accountProfilePanel) accountProfilePanel.hidden = section !== 'profile';
+  if(accountAddressPanel) accountAddressPanel.hidden = section !== 'address';
+  if(accountOrdersPanel) accountOrdersPanel.hidden = section !== 'orders';
+  const nav = section==='profile'?acctNavProfile:section==='address'?acctNavAddress:acctNavOrders;
+  nav?.classList.add('active');
+  if(section==='orders' && accountOrdersBody){
+    const mod = await import('./orders.js');
+    await mod.renderOrdersInto(accountOrdersBody);
+  }
+  if(section==='address') addressPanelRefresh();
+}
+function initAccountDrawerUI(){
+  if(!accountModal) return;
+  if(accountModal.hasAttribute('data-bound')) return;
+  acctNavProfile?.addEventListener('click', (e)=>{ e.preventDefault(); setAccountSection('profile'); });
+  acctNavAddress?.addEventListener('click', (e)=>{ e.preventDefault(); setAccountSection('address'); });
+  acctNavOrders?.addEventListener('click', (e)=>{ e.preventDefault(); setAccountSection('orders'); });
+  acctEditAddress?.addEventListener('click', async (e)=>{ e.preventDefault(); ensureLatLngFields(); const mod = await import('./checkout.js'); await mod.openAddressPicker(accountForm); addressPanelRefresh(); });
+  accountForm?.addEventListener('input', (e)=>{ if(e.target?.name==='address') addressPanelRefresh(); });
+  accountModal.setAttribute('data-bound','true');
+}
 // NEW: Orders
 const ordersBtn = $("#ordersBtn");
 
@@ -468,31 +543,18 @@ function setupListeners() {
   });
   cartOverlay.addEventListener("click", closeCart);
 
-  // Account button: nếu chưa đăng nhập thì đi tới trang Đăng ký; nếu đã đăng nhập thì mở drawer Tài khoản
+  // Account button: nếu chưa đăng nhập thì điều hướng sang trang Đăng nhập riêng; nếu đã đăng nhập thì mở drawer Tài khoản
   accountBtn.addEventListener("click", async (e) => {
+    e.preventDefault();
     try {
       const u = await apiCurrentUser();
       if (u) {
-        e.preventDefault();
         openAccountDrawer();
       } else {
-        // Không ngăn chặn mặc định: để thẻ <a> tự điều hướng
+        location.href = new URL('../client/login.html', location.href).toString();
       }
     } catch {
-      // Lỗi: coi như chưa đăng nhập, để thẻ <a> tự điều hướng
-    }
-  });
-  document.addEventListener("click", (e) => {
-    if (!accountMenu || !accountMenuBtn) return;
-    const t = e.target;
-    if (accountMenu.contains(t) || accountMenuBtn.contains(t)) return;
-    accountMenu.hidden = true;
-    accountMenuBtn.setAttribute("aria-expanded", "false");
-  });
-  document.addEventListener("keydown", (e) => {
-    if (e.key === "Escape" && accountMenu && !accountMenu.hasAttribute("hidden")) {
-      accountMenu.hidden = true;
-      accountMenuBtn?.setAttribute("aria-expanded", "false");
+      location.href = new URL('../client/login.html', location.href).toString();
     }
   });
 
@@ -513,11 +575,7 @@ function setupListeners() {
     const mod = await import("./orders.js");
     mod.openOrdersModal();
   });
-  // Auto-open Order Confirmation on event (lazy-load)
-  document.addEventListener("order:confirmed", async (e) => {
-    const mod = await import("./orders.js");
-    mod.openOrderConfirmModal(e.detail?.orderId);
-  });
+
 
   // Auth UI: logout rồi điều hướng sang trang Đăng nhập riêng
   btnLogout?.addEventListener("click", async () => {
@@ -530,9 +588,9 @@ function setupListeners() {
 
   // Auth Modal
   bindAuthModal();
-  // Tabs toggle for Auth modal
-  tabLogin?.addEventListener('click', (e) => { e.preventDefault(); openAuthModal('login'); });
-  tabRegister?.addEventListener('click', (e) => { e.preventDefault(); openAuthModal('register'); });
+  // Tabs toggle: điều hướng sang trang riêng có background
+  tabLogin?.addEventListener('click', (e) => { e.preventDefault(); location.href = new URL('../client/login.html', location.href).toString(); });
+  tabRegister?.addEventListener('click', (e) => { e.preventDefault(); location.href = new URL('../client/register.html', location.href).toString(); });
   // Submit handlers for login/register
   loginForm?.addEventListener('submit', async (e) => {
     e.preventDefault();
@@ -552,26 +610,13 @@ function setupListeners() {
         clearCart();
         closeAuthModal();
         openAccountDrawer();
+      } else if (res?.reason === 'user_not_found') {
+        if (loginMsg) loginMsg.textContent = 'Không tìm thấy tài khoản — chuyển sang Đăng ký.';
+        location.href = new URL('../client/register.html', location.href).toString();
+      } else if (res?.reason === 'wrong_password') {
+        if (loginMsg) loginMsg.textContent = 'Mật khẩu không đúng.';
       } else {
-        if (res?.reason === 'user_not_found') {
-          if (loginMsg) loginMsg.textContent = 'Không tìm thấy tài khoản — chuyển sang Đăng ký.';
-          openAuthModal('register');
-          if (registerForm) {
-            const rEmail = registerForm.querySelector('[name="email"]');
-            const rPhone = registerForm.querySelector('[name="phone"]');
-            const rPass = registerForm.querySelector('[name="password"]');
-            rEmail && (rEmail.value = payload.email || '');
-            rPhone && (rPhone.value = payload.phone || '');
-            rPass && (rPass.value = payload.password || '');
-            const rName = registerForm.querySelector('[name="name"]');
-            rName?.focus();
-          }
-          if (registerMsg) registerMsg.textContent = 'Vui lòng điền thông tin để tạo tài khoản.';
-        } else if (res?.reason === 'wrong_password') {
-          if (loginMsg) loginMsg.textContent = 'Mật khẩu không đúng.';
-        } else {
-          if (loginMsg) loginMsg.textContent = res?.message || 'Đăng nhập thất bại.';
-        }
+        if (loginMsg) loginMsg.textContent = res?.message || 'Đăng nhập thất bại.';
       }
     } catch {
       if (loginMsg) loginMsg.textContent = 'Có lỗi khi đăng nhập.';
@@ -602,6 +647,30 @@ function setupListeners() {
       }
     } catch {
       if (registerMsg) registerMsg.textContent = 'Có lỗi khi đăng ký.';
+    }
+  });
+
+  // Account profile: submit để lưu thông tin
+  accountForm?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const fd = new FormData(accountForm);
+    const payload = {
+      name: String(fd.get('name') || ''),
+      email: String(fd.get('email') || ''),
+      phone: String(fd.get('phone') || ''),
+      address: String(fd.get('address') || ''),
+    };
+    if (accountMsg) accountMsg.textContent = 'Đang lưu...';
+    try {
+      const res = await apiUpdateProfile(payload);
+      if (res?.ok) {
+        if (accountMsg) accountMsg.textContent = 'Đã lưu thông tin.';
+        await refreshCurrentUser();
+      } else {
+        if (accountMsg) accountMsg.textContent = res?.message || 'Lưu thất bại.';
+      }
+    } catch {
+      if (accountMsg) accountMsg.textContent = 'Có lỗi khi lưu.';
     }
   });
 

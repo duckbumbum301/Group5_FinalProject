@@ -22,7 +22,7 @@ export function openAuthModal(mode = 'register') {
   if (loginForm) loginForm.hidden = mode !== 'login';
   if (registerForm) registerForm.hidden = mode !== 'register';
   authModal.hidden = false;
-  setAuthHash(mode);
+  // (bỏ) setAuthHash(mode) để tránh tự động mở lại khi quay về Trang chủ
   const target = mode === 'login'
     ? (loginForm?.querySelector('input[name="phone"]') || loginForm?.querySelector('input'))
     : (registerForm?.querySelector('input[name="name"]') || registerForm?.querySelector('input'));
@@ -65,9 +65,10 @@ export function bindAuthModal() {
   authCloseBtn?.addEventListener('click', onClose);
   authModal.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeAuthModal(); });
 
-  // Hash routing cho auth (href chuyển đúng mục đăng nhập/đăng ký)
-  window.addEventListener('hashchange', checkAuthHash);
-  checkAuthHash();
+  // (bỏ) Hash routing auto-open; chỉ giữ close để không lưu hash lại
+  try { clearAuthHash(); } catch {}
 
   authModal.setAttribute('data-bound', 'true');
 }
+
+// Vô hiệu Hash routing để tránh tự động mở Auth Modal khi quay lại Trang chủ.

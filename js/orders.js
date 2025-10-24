@@ -142,10 +142,7 @@ function escOrdersOnce(e) {
   if (e.key === 'Escape') closeOrdersModal();
 }
 
-// Auto open after checkout (if module was loaded already)
-document.addEventListener('orders:open', () => {
-  openOrdersModal();
-});
+// Auto-open Orders được xử lý ở main.js bằng lazy-load để đảm bảo module được nạp đúng lúc.
 
 // ====== Order Confirmation Modal ======
 function ensureOrderConfirmModal() {
