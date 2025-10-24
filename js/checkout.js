@@ -118,9 +118,13 @@ export async function openCheckoutModal() {
     const products = await Promise.all(ids.map((id) => apiGetProductById(id)));
     const map = {};
     for (const p of products) if (p && p.id) map[p.id] = p;
+
+    const { getFlashEffectivePrice } = await import('./utils.js');
+
     subtotal = entries.reduce((s, [pid, q]) => {
       const p = map[pid];
-      return s + (p ? p.price * q : 0);
+      const eff = p ? (getFlashEffectivePrice ? getFlashEffectivePrice(p) : p.price) : 0;
+      return s + eff * q;
     }, 0);
   }
   async function recalc() {

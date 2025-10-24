@@ -195,6 +195,10 @@ function toggleFav(pid, btn) {
   else favs.add(pid);
   if (btn) btn.setAttribute("aria-pressed", favs.has(pid) ? "true" : "false");
   localStorage.setItem(LS_FAV, JSON.stringify([...favs]));
+  // Phát sự kiện để các module khác (Flash Sale, Catalog khác) đồng bộ
+  try {
+    document.dispatchEvent(new CustomEvent('fav:changed', { detail: { pid, on: favs.has(pid) } }));
+  } catch {}
 }
 
 // ---------- Product Modal ----------
@@ -621,7 +625,13 @@ function setupListeners() {
       showToast(`${product?.name || "Sản phẩm"} đã được thêm vào giỏ hàng.`);
       addToCart(pid, 1);
     }
-    if (action === "fav") toggleFav(pid, btn);
+    if (action === "fav") { 
+      // Hiệu ứng rung tim
+      btn.classList.add("fav-anim");
+      btn.addEventListener("animationend", () => btn.classList.remove("fav-anim"), { once: true });
+      // Toggle fav + phát sự kiện
+      toggleFav(pid, btn);
+    }
   });
 
   // Cart events
@@ -689,151 +699,29 @@ init();
   // No-op: do not force redirect to specific host/port.
 })();
 
-function openAccountDrawer() {
-  const modal = document.getElementById("accountModal");
-  const profilePanel = document.getElementById("accountProfilePanel");
-  const addressPanel = document.getElementById("accountAddressPanel");
-  const ordersPanel = document.getElementById("accountOrdersPanel");
-  const navProfile = document.getElementById("acctNavProfile");
-  const navAddress = document.getElementById("acctNavAddress");
-  const navOrders = document.getElementById("acctNavOrders");
-  const acctAddrCount = document.getElementById("acctAddrCount");
-  const acctAddrText = document.getElementById("acctAddrText");
-  const accountForm = document.getElementById("accountForm");
-  // Prefetch module đơn hàng và cache lần render đầu
-  let ordersLoaded = false;
-  const ordersModPromise = import("./orders.js");
-
-  // --- Add resizer handle & drag-to-resize ---
-  const panelEl = modal?.querySelector('.drawer__panel');
-  if (panelEl) {
-    // restore width from previous session
-    try {
-      const savedW = parseInt(localStorage.getItem('vvv_account_drawer_w') || '0', 10);
-      if (savedW && savedW >= 360) {
-        panelEl.style.width = `${Math.min(savedW, Math.floor(window.innerWidth * 0.96))}px`;
-      }
-    } catch {}
-    let rs = modal.querySelector('#accountResizer');
-    if (!rs) {
-      rs = document.createElement('div');
-      rs.id = 'accountResizer';
-      rs.className = 'drawer__resizer';
-      panelEl.appendChild(rs);
-    }
-    let startX = 0;
-    let startW = 0;
-    let dragging = false;
-    const onMove = (e) => {
-      if (!dragging) return;
-      const dx = startX - e.clientX; // kéo sang trái => tăng width
-      const minW = 360;
-      const maxW = Math.floor(window.innerWidth * 0.96);
-      const newW = Math.max(minW, Math.min(maxW, startW + dx));
-      panelEl.style.width = `${newW}px`;
-    };
-    const onUp = () => {
-      if (!dragging) return;
-      dragging = false;
-      document.body.style.cursor = '';
-      document.removeEventListener('mousemove', onMove);
-      document.removeEventListener('mouseup', onUp);
-      try {
-        const w = panelEl.getBoundingClientRect().width;
-        localStorage.setItem('vvv_account_drawer_w', String(Math.round(w)));
-      } catch {}
-    };
-    rs.addEventListener('mousedown', (e) => {
-      dragging = true;
-      startX = e.clientX;
-      startW = panelEl.getBoundingClientRect().width;
-      document.body.style.cursor = 'ew-resize';
-      document.addEventListener('mousemove', onMove);
-      document.addEventListener('mouseup', onUp);
-      e.preventDefault();
+// Đồng bộ fav khi nhận sự kiện từ module khác
+document.addEventListener('fav:changed', () => {
+  try {
+    const favArr = JSON.parse(localStorage.getItem(LS_FAV) || '[]');
+    favs = new Set(favArr);
+  } catch {}
+  // Cập nhật trạng thái aria-pressed cho các nút ngay trên grid Catalog hiện tại
+  if (gridEl) {
+    gridEl.querySelectorAll('.card').forEach((card) => {
+      const pid = card?.dataset?.id;
+      const btn = card?.querySelector('.btn.fav');
+      if (btn && pid) btn.setAttribute('aria-pressed', favs.has(pid) ? 'true' : 'false');
     });
   }
-
-  function setActive(idx) {
-    [navProfile, navAddress, navOrders].forEach((b, i) => b && b.classList.toggle("active", i === idx));
-    [profilePanel, addressPanel, ordersPanel].forEach((p, i) => p && (p.hidden = i !== idx));
+  // Đồng bộ trạng thái fav trên lưới Flash Sale nếu đang hiển thị
+  const flashGridEl = document.getElementById('flashGrid');
+  if (flashGridEl) {
+    flashGridEl.querySelectorAll('.card').forEach((card) => {
+      const pid = card?.dataset?.id;
+      const btn = card?.querySelector('.btn.fav');
+      if (btn && pid) btn.setAttribute('aria-pressed', favs.has(pid) ? 'true' : 'false');
+    });
   }
-
-  // Prefill profile/address from current session
-  apiCurrentUser().then((u) => {
-    try {
-      if (accountForm) {
-        const name = accountForm.querySelector("input[name='name']");
-        const email = accountForm.querySelector("input[name='email']");
-        const phone = accountForm.querySelector("input[name='phone']");
-        const addr = accountForm.querySelector("textarea[name='address']");
-        if (name) name.value = u?.name || "";
-        if (email) email.value = u?.email || "";
-        if (phone) phone.value = u?.phone || "";
-        if (addr) addr.value = u?.address || "";
-      }
-      if (acctAddrCount) acctAddrCount.textContent = u?.address ? "(1)" : "(0)";
-      if (acctAddrText) acctAddrText.textContent = u?.address || "Chưa có địa chỉ.";
-    } catch {}
-  });
-
-  // Bind nav (first click only; subsequent state kept by UI)
-  navProfile?.addEventListener("click", () => setActive(0));
-  navAddress?.addEventListener("click", () => setActive(1));
-  navOrders?.addEventListener("click", async () => {
-    setActive(2);
-    if (!ordersLoaded) {
-      const container = document.getElementById("accountOrdersBody") || ordersPanel;
-      if (container) container.textContent = "Đang tải đơn hàng...";
-      const mod = await ordersModPromise;
-      await mod.renderOrdersInto(container);
-      ordersLoaded = true;
-    }
-  });
-  document.getElementById("acctEditAddress")?.addEventListener("click", () => {
-    setActive(0);
-    try { accountForm?.querySelector("textarea[name='address']")?.focus(); } catch {}
-  }, { once: true });
-
-  document.getElementById("accountCloseBtn")?.addEventListener("click", closeAccountDrawer, { once: true });
-  document.getElementById("accountOverlay")?.addEventListener("click", closeAccountDrawer, { once: true });
-  document.addEventListener("keydown", escAccountOnce);
-
-  setActive(0);
-  modal.hidden = false;
-}
-function closeAccountDrawer() {
-  const m = document.getElementById("accountModal");
-  if (m) m.hidden = true;
-  document.removeEventListener("keydown", escAccountOnce);
-}
-function escAccountOnce(e) { if (e.key === "Escape") closeAccountDrawer(); }
-
-// Submit profile form: update local profile
-const accFormEl = document.getElementById("accountForm");
-const accMsgEl = document.getElementById("accountMsg");
-accFormEl?.addEventListener("submit", async (e) => {
-  e.preventDefault();
-  const fd = new FormData(accFormEl);
-  const payload = {
-    name: String(fd.get("name") || ""),
-    email: String(fd.get("email") || ""),
-    phone: String(fd.get("phone") || ""),
-    address: String(fd.get("address") || ""),
-  };
-  try {
-    const res = await apiUpdateProfile(payload);
-    if (res?.ok) {
-      if (accMsgEl) accMsgEl.textContent = "Đã lưu thông tin.";
-      // update address count/text in Address tab
-      const acctAddrCount = document.getElementById("acctAddrCount");
-      const acctAddrText = document.getElementById("acctAddrText");
-      if (acctAddrCount) acctAddrCount.textContent = payload.address ? "(1)" : "(0)";
-      if (acctAddrText) acctAddrText.textContent = payload.address || "Chưa có địa chỉ.";
-    } else {
-      if (accMsgEl) accMsgEl.textContent = res?.message || "Có lỗi khi lưu.";
-    }
-  } catch {
-    if (accMsgEl) accMsgEl.textContent = "Có lỗi khi lưu. Thử lại sau.";
-  }
+  // Nếu đang bật lọc Yêu thích, re-render để phản ánh thay đổi
+  if (filters.favOnly) renderWithPagination();
 });

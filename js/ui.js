@@ -82,19 +82,37 @@ async function renderCart() {
     if (p && p.id) map[p.id] = p;
   }
 
+  const { getFlashEffectivePrice } = await import('./utils.js');
+
   const lines = entries
     .map(([pid, qty]) => {
       const p = map[pid];
-      return p
-        ? `\n      <div class="cart-item" data-id="${p.id}">\n        <div>\n          <strong>${p.name}</strong>\n          <div class="muted">${money(p.price)} • ${p.unit}</div>\n        </div>\n        <div class="qty">\n          <label for="qty-${p.id}" class="muted">SL:</label>\n          <input id="qty-${p.id}" type="number" min="1" step="1" value="${qty}" data-action="qty">\n        </div>\n        <button class="btn btn--icon remove-btn" data-action="remove" data-product-id="${p.id}">Xóa</button>\n      </div>\n    `
-        : '';
+      if (!p) return '';
+      const eff = getFlashEffectivePrice ? getFlashEffectivePrice(p) : p.price;
+      const isDiscount = eff !== p.price;
+      const priceHtml = isDiscount
+        ? `<span class="price price--sale">${money(eff)}</span> <span class="price price--orig">${money(p.price)}</span>`
+        : `${money(p.price)}`;
+      return `
+      <div class="cart-item" data-id="${p.id}">
+        <div>
+          <strong>${p.name}</strong>
+          <div class="muted">${priceHtml} • ${p.unit}</div>
+        </div>
+        <div class="qty">
+          <label for="qty-${p.id}" class="muted">SL:</label>
+          <input id="qty-${p.id}" type="number" min="0" value="${qty}" data-action="qty" />
+          <button class="btn btn--outline" data-action="remove">Xóa</button>
+        </div>
+      </div>`;
     })
     .join('');
   cartItemsEl.innerHTML = lines || `<p class="muted">Giỏ hàng đang trống.</p>`;
 
   const subtotal = entries.reduce((s, [pid, q]) => {
     const p = map[pid];
-    return s + (p ? p.price * q : 0);
+    const eff = p ? (getFlashEffectivePrice ? getFlashEffectivePrice(p) : p.price) : 0;
+    return s + eff * q;
   }, 0);
   cartSubtotalEl.textContent = money(subtotal);
 

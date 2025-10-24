@@ -1,8 +1,8 @@
 // js/flash.js — Trang Flash Sale random theo khung giờ 6–8h và 16–18h
 import { $, money } from './utils.js';
 import { apiListProducts, apiGetProductById } from './api.js';
-import { addToCart } from './cart.js';
-import { renderProductsInto } from './ui.js';
+import { addToCart, removeFromCart, updateCartQuantity } from './cart.js';
+import { renderProductsInto, openCart, closeCart } from './ui.js';
 
 // Cấu hình khung giờ
 const SLOTS = [
@@ -12,14 +12,14 @@ const SLOTS = [
 const LS_FAV = 'vvv_fav';
 const PICK_COUNT = 12; // số sp hiển thị mỗi khung giờ
 
-function todayKey(d = new Date()) {
-  const y = d.getFullYear();
-  const m = String(d.getMonth() + 1).padStart(2, '0');
-  const day = String(d.getDate()).padStart(2, '0');
-  return `${y}-${m}-${day}`;
-}
+// NEW: trạng thái slot hiện tại + id ticker để đồng bộ countdown theo tab
+let currentSlotKey = null;
+let tickerId = null;
+
 function toMinutes(h, m) { return h * 60 + m; }
-function minutesNow() { const d = new Date(); return d.getHours() * 60 + d.getMinutes(); }
+function minutesNow() { const d = new Date(); return toMinutes(d.getHours(), d.getMinutes()); }
+function todayKey(){ const d = new Date(); return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`; }
+
 function isNowInSlot(slot) { const now = minutesNow(); const s = toMinutes(slot.start.h, slot.start.m); const e = toMinutes(slot.end.h, slot.end.m); return now >= s && now < e; }
 function nextSlot(now = new Date()) {
   const mins = minutesNow();
@@ -83,6 +83,7 @@ function getSaleMapForSlot(slotKey, selectedProducts){
 }
 
 async function renderSlot(slotKey){
+  currentSlotKey = slotKey;
   const slot = slotByKey(slotKey);
   const labelEl = $('#slotLabel');
   const timeLeftEl = $('#timeLeft');
@@ -94,21 +95,46 @@ async function renderSlot(slotKey){
   const withSale = sel.map(p => ({ ...p, salePercent: saleMap[p.id] || 0 }));
   const gridEl = document.getElementById('flashGrid') || document.getElementById('productGrid');
   renderProductsInto(gridEl, withSale, favs);
-  // gắn sự kiện Add/Fav riêng cho trang này
-  gridEl.addEventListener('click', (e)=>{
+  // gắn sự kiện Add/Fav riêng cho trang này (đảm bảo chỉ gắn một lần)
+  if (gridEl._flashHandler) gridEl.removeEventListener('click', gridEl._flashHandler);
+  const onGridClick = (e) => {
     const btn = e.target.closest('[data-action]');
-    if(!btn) return;
+    if (!btn) return;
     const card = e.target.closest('.card');
     const pid = card?.dataset?.id;
-    if(!pid) return;
-    if(btn.dataset.action==='add'){ addToCart(pid, 1); }
-    if(btn.dataset.action==='fav'){
+    if (!pid) return;
+    const action = btn.dataset.action;
+    if (action === 'add') {
+      // Ngăn mọi handler khác chạy trên cùng target
+      e.preventDefault();
+      e.stopImmediatePropagation();
+      const inSlot = isNowInSlot(slot);
+      const prod = withSale.find(p => String(p.id) === String(pid));
+      if (!inSlot) {
+        const basePrice = prod?.price || 0;
+        const ok = window.confirm(`Hiện đang ngoài giờ Flash Sale.\nGiá mua sẽ là giá gốc: ${money(basePrice)}.\nBạn có muốn thêm sản phẩm vào giỏ hàng?`);
+        if (!ok) {
+          // Cancel -> đảm bảo xóa sản phẩm khỏi giỏ và đóng drawer
+          updateCartQuantity(pid, 0);
+          removeFromCart(pid);
+          closeCart();
+          return;
+        }
+      }
+      addToCart(pid, 1);
+      openCart();
+    }
+    if (action === 'fav') {
+      // Hiệu ứng rung tim
+      btn.classList.add('fav-anim');
+      btn.addEventListener('animationend', () => btn.classList.remove('fav-anim'), { once: true });
       const on = btn.getAttribute('aria-pressed') !== 'true';
       btn.setAttribute('aria-pressed', on ? 'true' : 'false');
       setFav(pid, on);
     }
-  }, { once: true });
-
+  };
+  gridEl._flashHandler = onGridClick;
+  gridEl.addEventListener('click', onGridClick);
   document.querySelectorAll('.pill').forEach(b=>b.classList.toggle('active', b.dataset.slot===slot.key));
   timeLeftEl.textContent = countdownText(slot);
 }
@@ -121,31 +147,35 @@ function setFav(pid, on){
   const set = getFavSet();
   if(on) set.add(pid); else set.delete(pid);
   localStorage.setItem(LS_FAV, JSON.stringify([...set]));
+  // Thông báo cho các module khác (Catalog) để đồng bộ
+  try {
+    document.dispatchEvent(new CustomEvent('fav:changed', { detail: { pid, on } }));
+  } catch {}
 }
 
-function startTicker(activeKey){
+function startTicker(){
   const timeLeftEl = $('#timeLeft');
-  const labelEl = $('#slotLabel');
-  let currentKey = activeKey;
   const tick = ()=>{
-    const slot = slotByKey(currentKey);
+    const key = currentSlotKey || (SLOTS.find(isNowInSlot)?.key || nextSlot().key);
+    const slot = slotByKey(key);
     timeLeftEl.textContent = countdownText(slot);
     // khi hết giờ -> switch sang slot tiếp theo
     const inSlot = isNowInSlot(slot);
     const now = minutesNow();
     const endM = toMinutes(slot.end.h, slot.end.m);
     if(inSlot && now >= endM){
-      currentKey = nextSlot().key;
-      renderSlot(currentKey);
+      currentSlotKey = nextSlot().key;
+      renderSlot(currentSlotKey);
     }
   };
-  setInterval(tick, 1000);
+  if (tickerId) clearInterval(tickerId);
+  tickerId = setInterval(tick, 1000);
 }
 
 async function init(){
   const active = SLOTS.find(isNowInSlot) || nextSlot();
   await renderSlot(active.key);
-  startTicker(active.key);
+  startTicker();
   // click tabs
   $('#tabMorning').addEventListener('click', ()=>renderSlot('morning'));
   $('#tabAfternoon').addEventListener('click', ()=>renderSlot('afternoon'));
