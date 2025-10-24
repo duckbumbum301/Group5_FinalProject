@@ -11,7 +11,7 @@
     <meta http-equiv="Expires" content="0" />
   </head>
   <body class="page-center theme-green">
-    <div class="container">
+    <div class="container container--right container--bare">
       <!-- Trang: Login -->
       <div class="row">
         <h1 align="center">Đăng nhập</h1>
@@ -76,6 +76,7 @@
     <script src="auth.js?v=flowfix1"></script>
     <script type="module">
       import { apiLoginUser } from "../js/api.js?v=flowfix1";
+      import { clearCart } from "../js/cart.js?v=flowfix1";
       /*  Chức năng: Hiển thị / Ẩn mật khẩu bằng checkbox */
       const showBox = document.getElementById("showPassword");
       const passInput = document.getElementById("liPass");
@@ -156,7 +157,10 @@
             setBusy(false);
             return;
           }
-          // API đã set session: quay lại trang trước nếu có, ngược lại về Front Store
+          // API đã set session: xóa giỏ của phiên cũ rồi quay lại
+          try {
+            clearCart();
+          } catch {}
           try {
             const ret = localStorage.getItem("vvv_return_to");
             if (ret) {

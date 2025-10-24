@@ -160,6 +160,22 @@ export async function apiCancelOrder(orderId) {
   return o;
 }
 
+// Thêm API Trả hàng: đánh dấu đơn là returned và thêm bước vào tracking
+export async function apiReturnOrder(orderId) {
+  const orders = lsGet(LS_ORDERS, []);
+  const idx = orders.findIndex((o) => o.id === orderId);
+  if (idx === -1) return null;
+  const now = new Date().toISOString();
+  const o = orders[idx];
+  o.delivery_status = 'returned';
+  o.tracking = Array.isArray(o.tracking) ? o.tracking.slice() : [];
+  const has = o.tracking.some((s) => s.code === 'returned');
+  if (!has) o.tracking.push({ code: 'returned', label: 'Đã trả hàng', at: now });
+  lsSet(LS_ORDERS, orders);
+  return o;
+}
+
+
 // ========= AUTH / USERS =========
 function getUsers() {
   try {
@@ -310,7 +326,7 @@ export async function apiLogoutUser() {
   return { ok: true };
 }
 
-export async function apiUpdateProfile({ name, address }) {
+export async function apiUpdateProfile({ name, address, phone, email }) {
   // Ưu tiên session mới
   const sRaw = localStorage.getItem(LS_SESSION);
   let s = null;
@@ -322,10 +338,29 @@ export async function apiUpdateProfile({ name, address }) {
   if (idx === -1 && s.email) idx = users.findIndex((x) => (x.email || "").toLowerCase() === String(s.email).toLowerCase());
   if (idx === -1 && s.phone) idx = users.findIndex((x) => (x.phone || "") === String(s.phone));
   if (idx === -1) return { ok: false, message: "Không tìm thấy người dùng." };
+
+  // Chuẩn hóa & kiểm tra trùng SĐT nếu có yêu cầu cập nhật
+  let newPhone = (phone ?? users[idx].phone) || "";
+  newPhone = String(newPhone).replace(/\D/g, "");
+  if (newPhone && newPhone !== (users[idx].phone || "")) {
+    const dupPhone = users.some((u, i) => i !== idx && (u.phone || "") === newPhone);
+    if (dupPhone) return { ok: false, message: "SĐT đã tồn tại." };
+  }
+
+  // Chuẩn hóa & kiểm tra trùng Email nếu có yêu cầu cập nhật
+  let newEmail = (email ?? users[idx].email) || "";
+  newEmail = String(newEmail).trim().toLowerCase();
+  if (newEmail && newEmail !== ((users[idx].email || "").toLowerCase())) {
+    const dupEmail = users.some((u, i) => i !== idx && (String(u.email || "").toLowerCase()) === newEmail);
+    if (dupEmail) return { ok: false, message: "Email đã tồn tại." };
+  }
+
   users[idx] = {
     ...users[idx],
     name: name || users[idx].name,
     address: address || users[idx].address,
+    phone: newPhone,
+    email: newEmail,
   };
   setUsers(users);
   lsSet(LS_SESSION, {

@@ -19,7 +19,7 @@ img{max-width:100%;display:block}
 .header{position:sticky;top:0;z-index:50;background:var(--white);box-shadow:var(--shadow)}
 .header__row{display:flex;align-items:center;justify-content:space-between;padding:14px 0}
 .logo{font-weight:800;font-size:22px;color:var(--green);letter-spacing:.4px;margin-right:12px}
-.logo__img{height:65px;width:auto;display:block}
+.logo__img{height:72px;width:auto;display:block}
 .nav{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
 .nav a{padding:8px 12px;border-radius:10px;font-size:16px}
 .nav a:hover,.nav a:focus{background:#edf9f1;outline:none}
@@ -867,6 +867,7 @@ select.input, input[type="range"]{padding:10px;height:auto}
 #orderConfirmModal .oc-section-title{ font-size:16px; font-weight:700; margin-bottom:8px; }
 #orderConfirmModal .oc-row{ display:flex; align-items:center; justify-content:space-between; padding:4px 0; }
 #orderConfirmModal .oc-row.oc-total{ font-weight:700; }
+#orderConfirmModal .co-actions{ display:flex; justify-content:flex-end; gap:10px; margin-top:12px; padding-top:8px; border-top:1px solid var(--border-color,#e8e8e8); }
 
 .timeline .step{ display:inline-flex; align-items:flex-start; gap:8px; background:#fff; border:1px solid var(--border-color,#e8e8e8); border-radius:10px; padding:8px 10px; margin:4px 4px 0 0; }
 .timeline .step.done{ border-color:var(--primary,#16a34a); box-shadow:0 0 0 1px rgba(22,163,74,0.08); }
@@ -1253,4 +1254,25 @@ select.input, input[type="range"]{padding:10px;height:auto}
 .toast .toast-close{
   background:transparent;border:0;color:rgba(255,255,255,0.8);cursor:pointer;margin-left:8px;font-weight:700;padding:0;
 }
+
+/* New inline searchbox in header */
+.searchbox{display:flex;align-items:center;gap:6px;padding:5px 8px;border:2px solid var(--primary,#16a34a);border-radius:999px;background:#fff;box-shadow:0 1px 2px rgba(0,0,0,.06);max-width:420px;flex:0 1 420px}
+.searchbox:focus-within{border-color:var(--green);box-shadow:0 0 0 3px rgba(22,163,74,0.12)}
+.searchbox__icon{color:#6b7280;margin-left:4px}
+.searchbox__input{flex:1;border:0;outline:none;font-size:14px;line-height:22px;padding:6px 4px;background:transparent}
+.searchbox__btn{border:0;background:transparent;color:#374151;width:30px;height:30px;border-radius:999px;display:inline-flex;align-items:center;justify-content:center;cursor:pointer}
+.searchbox__btn:hover{background:rgba(0,0,0,.06)}
+
+/* Flash Sale shared styles */
+.flash-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:18px 0}
+.flash-actions{display:flex;gap:8px;align-items:center}
+.flash-banner{background:linear-gradient(90deg,#eafff3,#ffffff);border:1px dashed #a7f3d0;border-radius:12px;padding:10px 14px;font-weight:700;color:#065f46}
+.pill.active{background:#16a34a;color:#fff;border-color:#16a34a}
+.countdown{color:#065f46;font-weight:600}
+
+/* Sale badge and price styles */
+.card .thumb{position:relative}
+.badge-sale{position:absolute;top:6px;left:6px;background:#ef4444;color:#fff;font-weight:700;font-size:12px;padding:2px 6px;border-radius:6px;box-shadow:0 1px 0 rgba(0,0,0,.15)}
+.price--sale{color:#0b3b2e;font-weight:800}
+.price--orig{color:#777;text-decoration:line-through;margin-left:6px;font-weight:500}
 

@@ -79,7 +79,7 @@
     </style>
   </head>
   <body class="page-center theme-green">
-    <div class="container container--wide">
+    <div class="container container--wide container--right container--bare">
       <!-- Trang: Register -->
       <div class="row" style="text-align: center">
         <h1 align="center">Tạo tài khoản</h1>
@@ -306,6 +306,7 @@
     <script src="auth.js?v=flowfix1"></script>
     <script type="module">
       import { apiRegisterUser } from "../js/api.js?v=flowfix1";
+      import { clearCart } from "../js/cart.js?v=flowfix1";
       /* ===========================
          Toggle con mắt hiện đại
          =========================== */
@@ -344,6 +345,9 @@
         const boxes = [...document.querySelectorAll("#codeInputs input")];
         ov.style.display = "grid";
         boxes.forEach((b) => (b.value = ""));
+        // clear thông báo cũ nếu có
+        const vm = document.getElementById("verifyMsg");
+        if (vm) { vm.textContent = ""; vm.style.display = "none"; }
 
         // mã 6 số giả lập
         currentCode = Array.from({ length: 6 }, () => Math.floor(Math.random() * 10)).join("");
@@ -365,7 +369,27 @@
         const ov = document.getElementById("verifyOverlay");
         ov.style.display = "none";
         clearInterval(timerId);
+        const vm = document.getElementById("verifyMsg");
+        if (vm) { vm.textContent = ""; vm.style.display = "none"; }
       }
+
+      // Cho phép click ra ngoài để đóng và chỉnh sửa lại email
+      document.getElementById("verifyOverlay").addEventListener("click", (e) => {
+        if (e.target && e.target.id === "verifyOverlay") {
+          closeVerify();
+          const emailInput = document.getElementById("reEmail");
+          if (emailInput) { emailInput.focus(); emailInput.select?.(); }
+        }
+      });
+      // ESC cũng đóng overlay để sửa email
+      document.addEventListener("keydown", (e) => {
+        const ov = document.getElementById("verifyOverlay");
+        if (e.key === "Escape" && ov && ov.style.display === "grid") {
+          closeVerify();
+          const emailInput = document.getElementById("reEmail");
+          if (emailInput) { emailInput.focus(); emailInput.select?.(); }
+        }
+      });
 
       // Confirm code
       document
@@ -410,6 +434,7 @@
               setSession({ ...(sess || {}), dob: pendingUser.dob });
             } catch {}
             closeVerify();
+            try { clearCart(); } catch {}
             alert("Xác minh thành công! Đăng ký hoàn tất.");
             go("login.html");
           } catch (err) {

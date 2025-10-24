@@ -23,9 +23,8 @@
   <body>
     <header class="header">
       <div class="container header__row">
-        <a href="#" class="logo" aria-label="Trang chủ Vựa Vui Vẻ"><img src="../images/brand/LogoVVV.png" alt="Vựa Vui Vẻ" class="logo__img" /></a>
+        <a href="/html/index.html" class="logo" aria-label="Trang chủ Vựa Vui Vẻ"><img src="../images/brand/LogoVVV1.jpg" alt="Vựa Vui Vẻ" class="logo__img" /></a>
         <nav class="nav" aria-label="Điều hướng chính">
-          <a href="#home">Trang chủ</a>
           <div class="nav-item nav-item--dropdown">
             <button
               class="nav-link nav-link--dropdown"
@@ -478,19 +477,23 @@
               </div>
             </div>
           </div>
+          <a href="#flashsale">Flash Sale</a>
           <a href="#recipes">Công thức</a>
           <a href="#about">Giới thiệu</a>
           <a href="#contact">Liên hệ</a>
         </nav>
         <div class="actions">
-          <button
-            class="btn btn--icon"
-            id="searchToggle"
-            aria-expanded="false"
-            aria-controls="searchbar"
-          >
-            Tìm kiếm
-          </button>
+          <div class="searchbox" role="search">
+            <input
+              id="searchInput"
+              class="searchbox__input"
+              type="search"
+              placeholder="Search"
+              aria-label="Tìm kiếm sản phẩm"
+              autocomplete="on"
+            />
+            <button class="searchbox__btn" aria-label="Tìm">🔍</button>
+          </div>
           <a class="btn btn--icon" id="accountBtn" href="../client/register.html">Tài khoản</a>
           <button
             class="btn btn--pri"
@@ -500,18 +503,6 @@
           >
             Giỏ hàng <span id="cartBadge" class="badge">0</span>
           </button>
-        </div>
-      </div>
-      <div id="searchbar" class="searchbar" hidden>
-        <div class="container searchbar__row">
-          <input
-            id="searchInput"
-            class="input"
-            type="search"
-            placeholder="Tìm: bí đỏ, rau muống, táo..."
-            aria-label="Tìm kiếm sản phẩm"
-            autocomplete="on"
-          />
         </div>
       </div>
     </header>
@@ -540,32 +531,43 @@
         </div>
       </section>
 
+      <section id="flashsale" class="section">
+        <div class="container">
+          <div class="title">
+            <h2>⚡ Flash Sale</h2>
+            <div class="flash-actions">
+              <button class="pill" id="tabMorning" data-slot="morning">06:00–08:00</button>
+              <button class="pill" id="tabAfternoon" data-slot="afternoon">16:00–18:00</button>
+            </div>
+          </div>
+          <div class="flash-banner">
+            Khung giờ đang xem: <span id="slotLabel">—</span>
+            <span class="muted">•</span>
+            Còn lại: <span id="timeLeft" class="countdown">—</span>
+          </div>
+          <div id="flashGrid" class="grid"></div>
+        </div>
+      </section>
+
       <section id="catalog" class="section">
         <div class="container">
           <div class="title">
             <h2>Sản phẩm</h2>
-            <label class="pill"
-              ><input type="checkbox" id="favOnly" /> Chỉ xem Yêu thích</label
-            >
+            <label class="pill"><input type="checkbox" id="favOnly" /> Chỉ xem Yêu thích</label>
+            <a class="btn btn--outline" href="#flashsale" style="margin-left:8px">⚡ Flash Sale</a>
           </div>
           <div class="controls">
             <label for="categoryFilter">Danh mục:</label>
             <select id="categoryFilter" class="input">
-              <option value="all">Tất cả</option>
-              <option value="meatfish">Thịt, Cá, Trứng, Hải Sản</option>
-              <option value="vegfruit">Rau, Củ, Nấm, Trái Cây</option>
-              <option value="cookingoil">Dầu Ăn, Nước Chấm, Gia Vị</option>
-              <option value="drink">Bia, Nước Giải Khát</option>
-              <option value="dry">Gạo, Bột, Đồ Khô</option>
-              <option value="noodle">Mì, Miến, Cháo, Phở</option>
-              <option value="milk">Sữa Các Loại</option>
-              <option value="icecream">Kem & Sữa Chua</option>
-              <option value="frozen">Thực Phẩm Đông Mát</option>
-              <option value="snack">Bánh Kẹo Các Loại</option>
-              <option value="personalcare">Chăm Sóc Cá Nhân</option>
-              <option value="cleaning">Vệ Sinh Nhà Cửa</option>
-              <option value="baby">Sản Phẩm Mẹ Và Bé</option>
-              <option value="household">Đồ Dùng Gia Đình</option>
+              <option value="all">Tất Cả</option>
+              <option value="veg">Rau Củ</option>
+              <option value="fruit">Trái Cây</option>
+              <option value="meat">Thịt Cá</option>
+              <option value="drink">Nước Giải Khát</option>
+              <option value="dry">Đồ Khô</option>
+              <option value="spice">Gia Vị</option>
+              <option value="household">Đồ Gia Dụng</option>
+              <option value="sweet">Đồ Ngọt</option>
             </select>
 
             <label for="sortSelect">Sắp xếp:</label>
@@ -730,6 +732,7 @@
               <form id="accountForm" class="contact" style="padding: 16px">
                 <input class="input" type="text" name="name" placeholder="Họ và tên" autocomplete="name" required />
                 <input class="input" type="email" name="email" placeholder="Email" autocomplete="email" required />
+                <input class="input" type="tel" name="phone" placeholder="Số điện thoại" autocomplete="tel" inputmode="numeric" pattern="\d{9,11}" title="Nhập 9–11 chữ số" />
                 <textarea class="input" name="address" rows="3" placeholder="Địa chỉ giao hàng..." autocomplete="street-address" required></textarea>
                 <button class="btn btn--pri" type="submit">Lưu thông tin</button>
                 <p class="muted" id="accountMsg" role="status" aria-live="polite"></p>
@@ -803,5 +806,6 @@
     </footer>
     <script src="../client/auth.js"></script>
     <script type="module" src="../js/main.js?v=flowfix1"></script>
+    <script type="module" src="../js/flash.js"></script>
   </body>
 </html>

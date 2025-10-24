@@ -45,6 +45,11 @@ body {
   background: var(--bg-grad), var(--bg);
 }
 
+/* Sử dụng nền ảnh riêng cho các trang auth (login/register/home) */
+body.page-center.theme-green {
+  background: url('../images/brand/DangKy_DangNhap.png') center / cover no-repeat fixed;
+}
+
 /* ========== Center layout cho các trang AUTH ========== */
 .page-center {
   min-height: 100dvh;
@@ -66,6 +71,20 @@ body {
 .container--wide {
   width: min(640px, 94vw);
 } /* dùng riêng cho đăng ký */
+
+/* Căn thẻ form sang phải màn hình trên trang auth */
+.container--right {
+  justify-self: end;
+  margin-right: 24px; /* dịch trái nhẹ để không sát mép */
+}
+
+/* Bỏ khung card: nền trong suốt, không viền, không shadow */
+.container--bare {
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+  backdrop-filter: none;
+}
 
 /* ========== Heading & text ========== */
 h1,
@@ -114,8 +133,8 @@ h2 {
   color: #02140a;
 }
 .btn-ghost {
-  background: #0f172a;
-  border: 1px solid var(--border);
+  background: transparent;
+  border: 0;
   color: var(--text);
 }
 .btn-danger {
@@ -326,24 +345,63 @@ select:focus {
   --panel: #ffffff;
   --panel-2: #f6fff9;
   --soft: #6b7280; /* chữ phụ xám dịu mắt */
-  --text: #1f2937; /* chữ chính thiên xám đậm, dễ đọc */
-  --border: #cfe8d7;
-  --ring: #4ade8055;
+  --text: #065f46; /* chữ chính xanh lá đậm */
+  --border: #cfe8d7; /* xanh lá nhạt cho đường viền */
+  --ring: #4ade8055; /* focus ring xanh nhạt */
   --shadow: 0 12px 34px rgba(28, 103, 66, 0.18);
 }
 .theme-green .container { background: var(--panel); border: 1px solid var(--border); box-shadow: var(--shadow); }
 .theme-green .btn-primary { color: #ffffff; } /* chữ trắng trên nút xanh */
 .theme-green .btn-ghost { background: var(--panel-2); color: var(--text); border: 1px solid var(--border); }
-.theme-green input, .theme-green select { background: #ffffff; color: var(--text); border-color: var(--border); }
+.theme-green input, .theme-green select { background: #ffffff; color: var(--text); border-color: #a7f3d0; }
 .theme-green input::placeholder { color: #6b7280aa; }
 .theme-green .alert { background: #fff7f7; color: #8b1616; border-left-color: #ff9aa2; }
 .theme-green .notice { background: #f4fffb; color: #065f46; border-left-color: #b2f5ea; }
 .theme-green .topbar { background: #ffffff; border-bottom: 1px solid var(--border); }
 .theme-green .card { background: #ffffff; }
 .theme-green .table th { background: #f6fff9; color: var(--text); }
- .theme-green .form-table td:first-child { color: #111827; }
+ .theme-green .form-table td:first-child { color: var(--text); }
 
-/* ========== Mở rộng khu vực hiển thị ở trang hồ sơ ========== */
+/* Override: Trang auth muốn bỏ khung hoàn toàn */
+ .page-center.theme-green .container.container--bare { background: transparent; border: 0; box-shadow: none; backdrop-filter: none; }
+ .page-center.theme-green .btn-ghost { background: transparent; border: 2px solid var(--text); }
+
+ /* Auth line edit: pill inputs với xanh lá nhạt */
+ .page-center.theme-green input,
+ .page-center.theme-green select {
+   background: #eafff3; /* nền xanh nhạt */
+   border: 2px solid #a7f3d0; /* viền xanh nhạt */
+   color: var(--text); /* chữ xanh đậm */
+   border-radius: 28px;
+   padding: 14px 16px;
+ }
+ .page-center.theme-green input::placeholder { color: #065f4688; }
+ .page-center.theme-green input:focus,
+ .page-center.theme-green select:focus { box-shadow: 0 0 0 3px var(--ring); }
+
+ /* Nhóm mật khẩu có icon eye: viền/nền áp dụng cho wrapper */
+ .page-center.theme-green .pw-wrap {
+   display: flex;
+   align-items: center;
+   gap: 8px;
+   background: #eafff3;
+   border: 2px solid #a7f3d0;
+   border-radius: 28px;
+   padding: 6px 10px 6px 12px;
+ }
+ .page-center.theme-green .pw-wrap input {
+   background: transparent;
+   border: 0;
+   padding: 10px 4px;
+ }
+ .page-center.theme-green .pw-wrap:focus-within {
+  box-shadow: 0 0 0 3px var(--ring);
+}
+/* Tránh khung lồng khung: bỏ ring trên input bên trong pw-wrap */
+.page-center.theme-green .pw-wrap input:focus { box-shadow: none !important; }
+.page-center.theme-green .pw-toggle { color: var(--text); }
+ 
+ /* ========== Mở rộng khu vực hiển thị ở trang hồ sơ ========== */
 .page--wide { max-width: min(1280px, 95vw); }
 
 /* Thẻ đơn hàng hiển thị rõ ràng hơn */

@@ -10,6 +10,7 @@ import {
   addToCart,
   removeFromCart,
   updateCartQuantity,
+  clearCart,
 } from "./cart.js";
 import { renderUI, renderProducts, openCart, closeCart } from "./ui.js";
 import {
@@ -308,7 +309,21 @@ function handleMegaMenuLinkClick(e) {
   filters.nameTokens = [];
   filters.cat = catAttr;
   filters.sub = subAttr;
-  if (catFilter) catFilter.value = filters.cat;
+  // Đồng bộ dropdown danh mục theo lựa chọn Mega Menu (9 mục)
+  if (catFilter) {
+    const selectValueFor = (cat /*, sub*/ ) => {
+      if (cat === 'veg') return 'veg';
+      if (cat === 'fruit') return 'fruit';
+      if (cat === 'meat') return 'meat';
+      if (cat === 'drink') return 'drink';
+      if (cat === 'dry') return 'dry';
+      if (cat === 'spice') return 'spice';
+      if (cat === 'household') return 'household';
+      if (cat === 'sweet') return 'sweet';
+      return 'all';
+    };
+    catFilter.value = selectValueFor(filters.cat);
+  }
   if (searchInput) searchInput.value = "";
   filters.q = "";
   filters.qNorm = "";
@@ -348,13 +363,24 @@ function setupInfiniteScroll() {
 }
 
 function setupListeners() {
+  // Xử lý click logo: cuộn mượt nếu đang ở Front Store
+  const logoEl = $(".logo");
+  // Không gắn handler cho logo; để <a> tự điều hướng và reload tự nhiên.
   // Search + Filters
-  searchToggle.addEventListener("click", () => {
-    const isHidden = searchbar.hasAttribute("hidden");
-    searchbar.hidden = !isHidden;
-    searchToggle.setAttribute("aria-expanded", String(isHidden));
-    if (isHidden) searchInput.focus();
-  });
+  // Ô tìm kiếm inline: không toggle, luôn hiển thị trong header
+  const searchBtn = document.querySelector('.searchbox__btn');
+  if (searchBtn) {
+    searchBtn.addEventListener('click', () => {
+      const q = (searchInput?.value || '').trim();
+      filters.q = q;
+      filters.qNorm = normalizeVN(q);
+      filters.nameOnly = false;
+      filters.nameTerm = '';
+      filters.nameTokens = [];
+      renderWithPagination();
+      document.getElementById('catalog')?.scrollIntoView({ behavior: 'smooth' });
+    });
+  }
   const dl = ensureDatalist("searchList", searchInput);
   dl.innerHTML = allProducts.slice(0, 50)
     .map((p) => `<option value="${p.name}"></option>`)
@@ -371,7 +397,22 @@ function setupListeners() {
     }, 200)
   );
   catFilter.addEventListener("change", (e) => {
-    filters.cat = e.target.value;
+    const val = e.target.value;
+    // Ánh xạ 9 giá trị dropdown sang (cat, sub)
+    const MAP = {
+      all: { cat: 'all', sub: 'all' },
+      veg: { cat: 'veg', sub: 'all' },
+      fruit: { cat: 'fruit', sub: 'all' },
+      meat: { cat: 'meat', sub: 'all' },
+      drink: { cat: 'drink', sub: 'all' },
+      dry: { cat: 'dry', sub: 'all' },
+      spice: { cat: 'spice', sub: 'all' },
+      household: { cat: 'household', sub: 'all' },
+      sweet: { cat: 'sweet', sub: 'all' },
+    };
+    const m = MAP[val] || { cat: 'all', sub: 'all' };
+    filters.cat = m.cat;
+    filters.sub = m.sub;
     filters.nameOnly = false;
     filters.nameTerm = "";
     filters.nameTokens = [];
@@ -503,6 +544,8 @@ function setupListeners() {
       if (res?.ok) {
         if (loginMsg) loginMsg.textContent = 'Đăng nhập thành công.';
         await refreshCurrentUser();
+        // Xóa giỏ hàng của phiên cũ để tránh lẫn dữ liệu giữa người dùng
+        clearCart();
         closeAuthModal();
         openAccountDrawer();
       } else {
@@ -546,6 +589,8 @@ function setupListeners() {
       if (res?.ok) {
         if (registerMsg) registerMsg.textContent = 'Đăng ký thành công — đã đăng nhập.';
         await refreshCurrentUser();
+        // Xóa giỏ hàng cũ sau khi tạo tài khoản và đăng nhập phiên mới
+        clearCart();
         closeAuthModal();
         openAccountDrawer();
       } else {
@@ -655,6 +700,9 @@ function openAccountDrawer() {
   const acctAddrCount = document.getElementById("acctAddrCount");
   const acctAddrText = document.getElementById("acctAddrText");
   const accountForm = document.getElementById("accountForm");
+  // Prefetch module đơn hàng và cache lần render đầu
+  let ordersLoaded = false;
+  const ordersModPromise = import("./orders.js");
 
   // --- Add resizer handle & drag-to-resize ---
   const panelEl = modal?.querySelector('.drawer__panel');
@@ -717,9 +765,11 @@ function openAccountDrawer() {
       if (accountForm) {
         const name = accountForm.querySelector("input[name='name']");
         const email = accountForm.querySelector("input[name='email']");
+        const phone = accountForm.querySelector("input[name='phone']");
         const addr = accountForm.querySelector("textarea[name='address']");
         if (name) name.value = u?.name || "";
         if (email) email.value = u?.email || "";
+        if (phone) phone.value = u?.phone || "";
         if (addr) addr.value = u?.address || "";
       }
       if (acctAddrCount) acctAddrCount.textContent = u?.address ? "(1)" : "(0)";
@@ -728,16 +778,18 @@ function openAccountDrawer() {
   });
 
   // Bind nav (first click only; subsequent state kept by UI)
-  navProfile?.addEventListener("click", () => setActive(0), { once: true });
-  navAddress?.addEventListener("click", () => setActive(1), { once: true });
+  navProfile?.addEventListener("click", () => setActive(0));
+  navAddress?.addEventListener("click", () => setActive(1));
   navOrders?.addEventListener("click", async () => {
-    const container = document.getElementById("accountOrdersBody") || ordersPanel;
-    if (container) container.textContent = "Đang tải đơn hàng...";
-    const mod = await import("./orders.js");
-    await mod.renderOrdersInto(container);
     setActive(2);
-  }, { once: true });
-
+    if (!ordersLoaded) {
+      const container = document.getElementById("accountOrdersBody") || ordersPanel;
+      if (container) container.textContent = "Đang tải đơn hàng...";
+      const mod = await ordersModPromise;
+      await mod.renderOrdersInto(container);
+      ordersLoaded = true;
+    }
+  });
   document.getElementById("acctEditAddress")?.addEventListener("click", () => {
     setActive(0);
     try { accountForm?.querySelector("textarea[name='address']")?.focus(); } catch {}
@@ -766,16 +818,21 @@ accFormEl?.addEventListener("submit", async (e) => {
   const payload = {
     name: String(fd.get("name") || ""),
     email: String(fd.get("email") || ""),
+    phone: String(fd.get("phone") || ""),
     address: String(fd.get("address") || ""),
   };
   try {
-    await apiUpdateProfile(payload);
-    if (accMsgEl) accMsgEl.textContent = "Đã lưu thông tin.";
-    // update address count/text in Address tab
-    const acctAddrCount = document.getElementById("acctAddrCount");
-    const acctAddrText = document.getElementById("acctAddrText");
-    if (acctAddrCount) acctAddrCount.textContent = payload.address ? "(1)" : "(0)";
-    if (acctAddrText) acctAddrText.textContent = payload.address || "Chưa có địa chỉ.";
+    const res = await apiUpdateProfile(payload);
+    if (res?.ok) {
+      if (accMsgEl) accMsgEl.textContent = "Đã lưu thông tin.";
+      // update address count/text in Address tab
+      const acctAddrCount = document.getElementById("acctAddrCount");
+      const acctAddrText = document.getElementById("acctAddrText");
+      if (acctAddrCount) acctAddrCount.textContent = payload.address ? "(1)" : "(0)";
+      if (acctAddrText) acctAddrText.textContent = payload.address || "Chưa có địa chỉ.";
+    } else {
+      if (accMsgEl) accMsgEl.textContent = res?.message || "Có lỗi khi lưu.";
+    }
   } catch {
     if (accMsgEl) accMsgEl.textContent = "Có lỗi khi lưu. Thử lại sau.";
   }

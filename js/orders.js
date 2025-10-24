@@ -1,6 +1,6 @@
 // js/orders.js — Tách logic Orders thành module
 import { money } from './utils.js';
-import { apiListOrders, apiGetProductById, apiCancelOrder } from './api.js';
+import { apiListOrders, apiGetProductById, apiReturnOrder, apiCurrentUser } from './api.js';
 import { addToCart } from './cart.js';
 import { openCart } from './ui.js';
 
@@ -61,10 +61,32 @@ function buildTimeline(order) {
     .join('')}</div>`;
 }
 
+function filterOrdersByUser(list, user) {
+  if (!user) return [];
+  const email = (user.email || '').toLowerCase();
+  const phone = user.phone || '';
+  return (list || []).filter((o) => {
+    const ue = (o.user?.email || '').toLowerCase();
+    const up = o.user?.phone || '';
+    return (email && ue && ue === email) || (phone && up && up === phone);
+  });
+}
+
 export async function openOrdersModal() {
   const modal = ensureOrdersModal();
   const body = document.getElementById('ordersBody');
-  const data = await apiListOrders();
+  const cur = await apiCurrentUser();
+  if (!cur) {
+    body.innerHTML = `<p class="muted">Bạn cần đăng nhập để xem đơn hàng.</p>`;
+    modal.hidden = false;
+    document.getElementById('ordersCloseBtn')?.addEventListener('click', closeOrdersModal, { once: true });
+    document.getElementById('ordersOverlay')?.addEventListener('click', closeOrdersModal, { once: true });
+    document.addEventListener('keydown', escOrdersOnce);
+    return;
+  }
+
+  const all = await apiListOrders();
+  const data = filterOrdersByUser(all, cur);
 
   if (!data || !data.length) {
     body.innerHTML = `<p class="muted">Bạn chưa có đơn hàng nào.</p>`;
@@ -77,8 +99,7 @@ export async function openOrdersModal() {
           const entries = Object.entries(o.items || {}).filter(([, q]) => q > 0);
           const ids = entries.map(([pid]) => pid);
           const products = await Promise.all(ids.map((id) => apiGetProductById(id)));
-          const map = {};
-          for (const p of products) if (p && p.id) map[p.id] = p;
+          const map = {}; for (const p of products) if (p && p.id) map[p.id] = p;
           const itemsHtml = entries
             .map(([pid, q]) => {
               const p = map[pid];
@@ -138,16 +159,9 @@ function ensureOrderConfirmModal() {
       <div id="ocOverlay" class="modal__overlay"></div>
       <div class="modal__panel">
         <header class="modal__head"><h3>Xác nhận đơn hàng</h3><button id="ocCloseBtn" class="btn btn--icon">✕</button></header>
-        <div id="ocBody"></div>
-        <div class="co-actions">
-          <button class="btn" id="ocViewOrders">Xem tất cả đơn</button>
-          <button class="btn btn--pri" id="ocDone">Đóng</button>
-        </div>
+        <div class="modal__body" id="ocBody"></div>
       </div>`;
     document.body.appendChild(m);
-    document.getElementById('ocCloseBtn')?.addEventListener('click', closeOrderConfirmModal);
-    document.getElementById('ocOverlay')?.addEventListener('click', closeOrderConfirmModal);
-    document.addEventListener('keydown', (e) => { if (!m.hidden && e.key === 'Escape') closeOrderConfirmModal(); });
   }
   return m;
 }
@@ -155,71 +169,34 @@ function ensureOrderConfirmModal() {
 export function openOrderConfirmModal(orderId) {
   const m = ensureOrderConfirmModal();
   const body = document.getElementById('ocBody');
-  apiListOrders().then((list) => {
-    const o = (list || []).find((x) => x.id === orderId) || list[list.length - 1];
-    if (!o) {
-      body.innerHTML = `<p class="muted">Không tìm thấy đơn hàng.</p>`;
-    } else {
-      const entries = Object.entries(o.items || {}).filter(([, q]) => q > 0);
-      const ids = entries.map(([pid]) => pid);
-      Promise.all(ids.map((id) => apiGetProductById(id))).then((products) => {
-        const map = {}; for (const p of products) if (p && p.id) map[p.id] = p;
-        const itemRows = entries.map(([pid, q]) => {
-          const p = map[pid] || {};
-          const price = p.price || 0;
-          const line = price * q;
-          const name = p.name || pid;
-          const unit = p.unit ? `/${p.unit}` : '';
-          const thumb = p.image
-            ? `<img src="${p.image}" alt="${name}" class="oc-thumb">`
-            : `<div class="oc-thumb">${p.emoji || '🧺'}</div>`;
-          return `
-            <div class="oc-item">
-              ${thumb}
-              <div class="oc-item__main">
-                <div class="oc-name">${name}</div>
-                <div class="muted">Giá bán: ${money(price)}${unit}</div>
-              </div>
-              <div class="oc-item__meta">
-                <div class="oc-line">${money(line)}</div>
-                <div class="muted">SL: ${q}</div>
-              </div>
-            </div>`;
-        }).join('');
-        const paid = o.payment_status === 'paid' ? (o.total || 0) : 0;
-        const remain = Math.max(0, (o.total || 0) - paid);
-        const pmText = o.payment === 'COD' ? 'Tiền mặt khi nhận hàng' : (o.payment || 'Khác');
-        body.innerHTML = `
-          <div class="order-head">
-            <div><strong>Mã đơn:</strong> ${o.id}</div>
-            <div class="muted">${fmtDate(o.created_at)}</div>
-          </div>
-          <div class="muted">Khung giờ: ${o.slot || '-'} · Trạng thái giao: ${currentDeliveryLabel(o)}</div>
-          <div class="oc-items">${itemRows}</div>
-          <div class="oc-pay">
-            <h4 class="oc-section-title">Thông tin thanh toán</h4>
-            <div class="oc-row"><div>Tiền hàng</div><div>${money(o.subtotal || 0)}</div></div>
-            <div class="oc-row"><div>Phí giao hàng, phụ phí</div><div>${money(o.shipping_fee || 0)}</div></div>
-            <div class="oc-row"><div>Thanh toán</div><div>${pmText}</div></div>
-            <div class="oc-row oc-total"><div>Tổng đơn</div><div>${money(o.total || 0)}</div></div>
-            <div class="oc-row"><div>Đã thanh toán</div><div>${money(paid)}</div></div>
-            <div class="oc-row"><div>Còn lại</div><div>${money(remain)}</div></div>
-          </div>
-          <div class="oc-track">${buildTimeline(o)}</div>
-        `;
-      });
-    }
-    document.getElementById('ocViewOrders')?.addEventListener('click', () => {
-      closeOrderConfirmModal();
-      openOrdersModal();
-    }, { once: true });
-    document.getElementById('ocDone')?.addEventListener('click', closeOrderConfirmModal, { once: true });
-    m.hidden = false;
-  });
+  body.innerHTML = '<p class="muted">Đang tải…</p>';
+  (async () => {
+    const list = await apiListOrders();
+    const ord = (list || []).find((x) => x.id === orderId);
+    if (!ord) { body.innerHTML = '<p class="alert">Không tìm thấy đơn hàng.</p>'; return; }
+    const entries = Object.entries(ord.items || {}).filter(([, q]) => q > 0);
+    const ids = entries.map(([pid]) => pid);
+    const products = await Promise.all(ids.map((id) => apiGetProductById(id)));
+    const map = {}; for (const p of products) if (p && p.id) map[p.id] = p;
+    const itemsHtml = entries.map(([pid, q]) => {
+      const p = map[pid];
+      return p ? `• ${p.name} × ${q}` : `• ${pid} × ${q}`;
+    }).join('<br>');
+    body.innerHTML = `
+      <div class="order-confirm">
+        <div><strong>Đơn hàng #${ord.id}</strong></div>
+        <div class="muted">Mua lúc: ${fmtDate(ord.created_at)}</div>
+        <div style="margin-top:8px;">${itemsHtml}</div>
+      </div>`;
+  })();
+  const onClose = () => { const m2 = ensureOrderConfirmModal(); m2.hidden = true; };
+  document.getElementById('ocOverlay')?.addEventListener('click', onClose, { once: true });
+  document.getElementById('ocCloseBtn')?.addEventListener('click', onClose, { once: true });
+  m.hidden = false;
 }
 export function closeOrderConfirmModal() {
-  const m = document.getElementById('orderConfirmModal');
-  if (m) m.hidden = true;
+  const m = ensureOrderConfirmModal();
+  m.hidden = true;
 }
 
 document.addEventListener('order:confirmed', (e) => {
@@ -227,10 +204,15 @@ document.addEventListener('order:confirmed', (e) => {
   openOrderConfirmModal(id);
 });
 
-
 export async function renderOrdersInto(containerEl) {
   if (!containerEl) return;
-  const data = await apiListOrders();
+  const cur = await apiCurrentUser();
+  if (!cur) {
+    containerEl.innerHTML = `<p class="muted">Bạn cần đăng nhập để xem đơn hàng.</p>`;
+    return;
+  }
+  const all = await apiListOrders();
+  const data = filterOrdersByUser(all, cur);
   if (!data || !data.length) {
     containerEl.innerHTML = `<p class="muted">Bạn chưa có đơn hàng nào.</p>`;
     return;
@@ -252,6 +234,11 @@ export async function renderOrdersInto(containerEl) {
         const moreCount = Math.max(0, entries.length - 5);
         const moreHtml = moreCount ? `<div class="orders-card__thumb more">+${moreCount}</div>` : '';
         const paidText = o.payment_status === 'paid' ? `<div class="muted">Đã thanh toán: ${money(o.total || 0)}</div>` : '';
+        // Xác định điều kiện cho phép trả hàng: đã giao thành công và chưa bị hủy/trả
+        const steps = computeDerivedTracking(o);
+        const deliveredDone = steps.some((s) => s.code === 'delivered' && s.at);
+        const hasReturnedOrCancelled = steps.some((s) => s.code === 'returned' || s.code === 'cancelled');
+        const returnable = deliveredDone && !hasReturnedOrCancelled;
         return `
           <div class="orders-card" data-id="${o.id}">
             <div class="orders-card__head">
@@ -269,7 +256,7 @@ export async function renderOrdersInto(containerEl) {
               </div>
               <div class="orders-card__ops">
                 <button class="btn btn--outline" data-action="reorder" data-id="${o.id}">Mua lại đơn</button>
-                <button class="btn btn--danger" data-action="cancel" data-id="${o.id}">Hủy đơn hàng</button>
+                <button class="btn btn--danger" data-action="return" data-id="${o.id}" ${returnable ? '' : 'disabled title="Chỉ trả hàng sau khi giao thành công"'}>Trả hàng</button>
               </div>
             </div>
           </div>`;
@@ -300,13 +287,14 @@ export async function renderOrdersInto(containerEl) {
         }
         return;
       }
-      const cancelBtn = e.target.closest('[data-action="cancel"]');
-      if (cancelBtn) {
+      const returnBtn = e.target.closest('[data-action="return"]');
+      if (returnBtn) {
         e.preventDefault();
-        const id = cancelBtn.getAttribute('data-id');
-        const ok = confirm('Bạn có chắc muốn hủy đơn này?');
+        if (returnBtn.hasAttribute('disabled')) return;
+        const id = returnBtn.getAttribute('data-id');
+        const ok = confirm('Bạn có chắc muốn trả hàng?');
         if (!ok) return;
-        await apiCancelOrder(id);
+        await apiReturnOrder(id);
         await renderOrdersInto(containerEl);
         return;
       }

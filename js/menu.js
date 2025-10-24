@@ -9,6 +9,7 @@ export function openMegaMenu() {
   const navItem = _navItem || document.querySelector('.nav-item--dropdown');
   if (!productsMegaMenu || !productsMenuToggle || !navItem) return;
   productsMegaMenu.removeAttribute('hidden');
+  // Hiển thị bằng CSS: aria-hidden="false"
   productsMegaMenu.setAttribute('aria-hidden', 'false');
   productsMenuToggle.setAttribute('aria-expanded', 'true');
   navItem.setAttribute('aria-expanded', 'true');
@@ -21,6 +22,8 @@ export function closeMegaMenu() {
   const productsMenuToggle = _productsMenuToggle || document.getElementById('productsMenuToggle');
   const navItem = _navItem || document.querySelector('.nav-item--dropdown');
   if (!productsMegaMenu || !productsMenuToggle || !navItem) return;
+  // Trả focus về toggle trước khi ẩn để tránh cảnh báo aria-hidden
+  productsMenuToggle.focus();
   productsMegaMenu.setAttribute('hidden', '');
   productsMegaMenu.setAttribute('aria-hidden', 'true');
   productsMenuToggle.setAttribute('aria-expanded', 'false');

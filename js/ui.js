@@ -41,19 +41,25 @@ export function renderProducts(productsToRender, favoriteSet) {
     cleaning:'thumb--household',
     baby:'thumb--household',
   }[cat] || 'thumb--veg');
-  
-  const cardHTML = p => {
+
+  const cardHTML = (p) => {
     const catClass = catToThumb(p.cat);
     const favPressed = favoriteSet.has(p.id) ? 'true' : 'false';
+    const isSale = Number.isFinite(p.salePercent) && p.salePercent > 0;
+    const salePrice = isSale ? p.price * (1 - p.salePercent / 100) : p.price;
     const thumbInner = p.image
       ? `<img src="${p.image}" alt="${p.name}" loading="lazy" decoding="async" fetchpriority="low" width="300" height="120" style="width:100%;height:120px;object-fit:cover;border-radius:10px;" />`
       : `${p.emoji || '🛒'}`;
+    const badgeHtml = isSale ? `<span class="badge-sale">-${Math.round(p.salePercent)}%</span>` : '';
+    const priceHtml = isSale
+      ? `<span class="price price--sale">${money(salePrice)}</span> <span class="price price--orig">${money(p.price)}</span>`
+      : `<span class="price">${money(p.price)}</span>`;
     return `
     <article class="card" data-id="${p.id}">
-      <div class="thumb ${catClass}" aria-hidden="true">${thumbInner}</div>
+      <div class="thumb ${catClass}" aria-hidden="true">${thumbInner}${badgeHtml}</div>
       <div class="name">${p.name}</div>
       <div class="meta">
-        <span class="price">${money(p.price)}</span>
+        ${priceHtml}
         <div class="kit">
           <button class="btn fav" aria-pressed="${favPressed}" data-action="fav">❤️</button>
           <button class="btn btn--pri" data-action="add">Thêm</button>
@@ -102,4 +108,42 @@ export function openCart() {
 }
 export function closeCart() { 
   cartDrawer.setAttribute('hidden',''); 
+}
+
+// Render products into a specific grid element (Flash Sale section)
+export function renderProductsInto(targetEl, productsToRender, favoriteSet) {
+  // Dùng cùng phong cách thẻ như renderProducts để thống nhất UI
+  const catToClass = (cat) => ({
+    veg:'thumb--veg', fruit:'thumb--fruit', meat:'thumb--meat', dry:'thumb--dry', drink:'thumb--drink',
+    spice:'thumb--spice', household:'thumb--household', sweet:'thumb--sweet',
+  }[cat] || 'thumb--veg');
+
+  const cards = productsToRender.map((p) => {
+    const isFav = favoriteSet?.has?.(p.id);
+    const isSale = Number.isFinite(p.salePercent) && p.salePercent > 0;
+    const salePrice = isSale ? Math.round(p.price * (100 - p.salePercent) / 100) : p.price;
+    const badgeHtml = isSale ? `<span class="badge-sale">-${Math.round(p.salePercent)}%</span>` : '';
+    const priceHtml = isSale
+      ? `<span class="price price--sale">${money(salePrice)}</span> <span class="price price--orig">${money(p.price)}</span>`
+      : `<span class="price">${money(p.price)}</span>`;
+    const catClass = catToClass(p.cat);
+    const thumbInner = p.image
+      ? `<img src="${p.image}" alt="${p.name}" loading="lazy" decoding="async" fetchpriority="low" width="300" height="120" style="width:100%;height:120px;object-fit:cover;border-radius:10px;" />`
+      : `${p.emoji || '🛒'}`;
+
+    return `
+      <article class="card" data-id="${p.id}">
+        <div class="thumb ${catClass}" aria-hidden="true">${thumbInner}${badgeHtml}</div>
+        <div class="name">${p.name}</div>
+        <div class="meta">
+          ${priceHtml}
+          <div class="kit">
+            <button class="btn fav" aria-pressed="${isFav ? 'true' : 'false'}" data-action="fav">❤️</button>
+            <button class="btn btn--pri" data-action="add">Thêm</button>
+          </div>
+        </div>
+      </article>`;
+  }).join('');
+
+  targetEl.innerHTML = cards || '<p class="muted">Không có sản phẩm trong khung giờ này.</p>';
 }
