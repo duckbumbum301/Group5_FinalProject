@@ -279,10 +279,7 @@ function printOrderDetails(ord) {
   w.focus();
   setTimeout(() => { try { w.print(); } catch (e) {} w.close(); }, 500);
 }
-document.addEventListener('order:confirmed', (e) => {
-  const id = e?.detail?.orderId;
-  openOrderConfirmModal(id);
-});
+
 
 export async function renderOrdersInto(containerEl) {
   if (!containerEl) return;

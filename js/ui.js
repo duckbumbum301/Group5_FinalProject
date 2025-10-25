@@ -1,6 +1,6 @@
 // js/ui.js (Quản lý việc hiển thị, cập nhật giao diện)
 
-import { $, money } from './utils.js';
+import { $, money, moneyCompact } from './utils.js';
 import { getCart } from './cart.js';
 import { apiGetProductById } from './api.js';
 
@@ -48,7 +48,7 @@ export function renderProducts(productsToRender, favoriteSet) {
     const isSale = Number.isFinite(p.salePercent) && p.salePercent > 0;
     const salePrice = isSale ? p.price * (1 - p.salePercent / 100) : p.price;
     const thumbInner = p.image
-      ? `<img src="${p.image}" alt="${p.name}" loading="lazy" decoding="async" fetchpriority="low" width="300" height="120" style="width:100%;height:120px;object-fit:cover;border-radius:10px;" />`
+      ? `<img src="${p.image}" alt="${p.name}" loading="lazy" decoding="async" fetchpriority="low" width="300" height="120" style="width:100%;height:120px;object-fit:cover;border-radius:10px;" onerror="this.onerror=null; this.src='../images/brand/LogoVVV.png';" />`
       : `${p.emoji || '🛒'}`;
     const badgeHtml = isSale ? `<span class="badge-sale">-${Math.round(p.salePercent)}%</span>` : '';
     const priceHtml = isSale
@@ -114,7 +114,7 @@ async function renderCart() {
     const eff = p ? (getFlashEffectivePrice ? getFlashEffectivePrice(p) : p.price) : 0;
     return s + eff * q;
   }, 0);
-  cartSubtotalEl.textContent = money(subtotal);
+  cartSubtotalEl.textContent = moneyCompact(subtotal);
 
   const count = entries.reduce((s, [, q]) => s + q, 0);
   cartBadge.textContent = count;
@@ -146,7 +146,7 @@ export function renderProductsInto(targetEl, productsToRender, favoriteSet) {
       : `<span class="price">${money(p.price)}</span>`;
     const catClass = catToClass(p.cat);
     const thumbInner = p.image
-      ? `<img src="${p.image}" alt="${p.name}" loading="lazy" decoding="async" fetchpriority="low" width="300" height="120" style="width:100%;height:120px;object-fit:cover;border-radius:10px;" />`
+      ? `<img src="${p.image}" alt="${p.name}" loading="lazy" decoding="async" fetchpriority="low" width="300" height="120" style="width:100%;height:120px;object-fit:cover;border-radius:10px;" onerror="this.onerror=null; this.src='../images/brand/LogoVVV.png';" />`
       : `${p.emoji || '🛒'}`;
 
     return `

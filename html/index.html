@@ -25,6 +25,7 @@
       <div class="container header__row">
         <a href="/html/index.html" class="logo" aria-label="Trang chủ Vựa Vui Vẻ"><img src="../images/brand/LogoVVV1.jpg" alt="Vựa Vui Vẻ" class="logo__img" /></a>
         <nav class="nav" aria-label="Điều hướng chính">
+          <a href="#home">Trang chủ</a>
           <div class="nav-item nav-item--dropdown">
             <button
               class="nav-link nav-link--dropdown"
@@ -479,7 +480,6 @@
           </div>
           <a href="#recipes">Công thức</a>
           <a href="#about">Giới thiệu</a>
-          <a href="#contact">Liên hệ</a>
         </nav>
         <div class="actions">
           <div class="searchbox" role="search">
@@ -627,43 +627,7 @@
         </div>
       </section>
 
-      <section id="contact" class="section">
-        <div class="container">
-          <div class="title"><h2>Liên hệ</h2></div>
-          <form id="contactForm" class="contact" novalidate>
-            <input
-              class="input"
-              type="text"
-              name="name"
-              placeholder="Họ và tên"
-              autocomplete="name"
-              required
-            />
-            <input
-              class="input"
-              type="email"
-              name="email"
-              placeholder="Email"
-              autocomplete="email"
-              required
-            />
-            <textarea
-              class="input"
-              name="message"
-              rows="4"
-              placeholder="Lời nhắn..."
-              required
-            ></textarea>
-            <button class="btn btn--pri" type="submit">Gửi</button>
-            <p
-              class="muted"
-              id="contactMsg"
-              role="status"
-              aria-live="polite"
-            ></p>
-          </form>
-        </div>
-      </section>
+      <!-- Section Liên hệ đã được bỏ theo yêu cầu -->
     </main>
 
     <aside
@@ -688,7 +652,7 @@
         <div id="cartItems" class="cart-list"></div>
         <div class="drawer__foot">
           <div class="total-row">
-            <span>Tạm tính</span><strong id="cartSubtotal">0₫</strong>
+            <span>Tạm tính:</span><strong id="cartSubtotal">0đ</strong>
           </div>
           <button class="btn btn--pri" id="checkoutBtn">Thanh toán</button>
         </div>
@@ -803,8 +767,57 @@
       </div>
     </section>
 
-    <footer class="footer">
-      <div class="container">© <span id="year"></span> Vựa Vui Vẻ</div>
+    <footer class="site-footer">
+      <div class="container">
+        <div class="sf-grid">
+          <div class="sf-cols">
+            <div class="sf-col">
+              <h4>Trang chủ</h4>
+              <ul>
+                <li><a href="#catalog">Sản phẩm</a></li>
+                <li><a href="#flashsale">Flash Sale</a></li>
+                <li><a href="#cart">Giỏ hàng</a></li>
+              </ul>
+            </div>
+            <div class="sf-col">
+              <h4>Về Vựa Vui Vẻ</h4>
+              <ul>
+                <li><a href="#about">Câu chuyện chúng tôi</a></li>
+                <li><a href="#values">Giá trị mang đến</a></li>
+                <li><a href="#mission">Sứ mệnh</a></li>
+              </ul>
+            </div>
+            <div class="sf-col">
+              <h4>Tài khoản</h4>
+              <ul>
+                <li><a href="../client/register.html">Đăng ký</a></li>
+                <li><a href="../client/login.html">Đăng nhập</a></li>
+              </ul>
+            </div>
+            <div class="sf-col">
+              <h4>Liên hệ</h4>
+              <ul>
+                <li>Hotline</li>
+                <li>Địa chỉ</li>
+              </ul>
+            </div>
+            <div class="sf-legal">Điều khoản dịch vụ | Chính sách giao hàng | Chính sách đổi trả</div>
+          </div>
+          <div class="sf-brand">
+            <img class="sf-logo" src="../images/brand/LogoVVV.png" alt="Vựa Vui Vẻ" />
+            <div class="sf-contact">
+              <div>Hotline: <span>012345678</span></div>
+              <div>Địa chỉ liên hệ: <span>Vựa Vui Vẻ</span></div>
+              <div>© <span id="year"></span> vựa vui vẻ</div>
+            </div>
+            <div class="sf-social">
+              <div class="sf-social__label">Theo dõi chúng tôi</div>
+              <a href="#" aria-label="Facebook" class="sf-social__btn">f</a>
+              <a href="#" aria-label="Instagram" class="sf-social__btn">IG</a>
+            </div>
+          </div>
+        </div>
+      </div>
     </footer>
     <script src="../client/auth.js"></script>
     <script type="module" src="../js/main.js?v=flowfix1"></script>

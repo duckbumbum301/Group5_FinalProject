@@ -605,6 +605,14 @@ function setupListeners() {
     mod.openOrdersModal();
   });
 
+  // NEW: Lazy-load orders confirm when checkout dispatches event
+  document.addEventListener("order:confirmed", async (e) => {
+    try {
+      const mod = await import("./orders.js");
+      const id = e?.detail?.orderId;
+      mod.openOrderConfirmModal(id);
+    } catch {}
+  });
 
   // Auth UI: logout rồi điều hướng sang trang Đăng nhập riêng
   btnLogout?.addEventListener("click", async () => {

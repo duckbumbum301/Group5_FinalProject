@@ -3,6 +3,7 @@
 export const $ = (sel, root = document) => root.querySelector(sel);
 export const $$ = (sel, root = document) => [...root.querySelectorAll(sel)];
 export const money = n => n.toLocaleString('vi-VN', { style: 'currency', currency: 'VND', maximumFractionDigits: 0 });
+export const moneyCompact = n => String(money(n)).replace(/\s*₫$/, 'đ');
 export const debounce = (fn, d=300) => { let t; return (...a)=>{ clearTimeout(t); t=setTimeout(()=>fn(...a), d); }; };
 
 // Bỏ dấu tiếng Việt để search xịn
