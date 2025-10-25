@@ -1,6 +1,7 @@
 // js/cart.js (Quản lý logic giỏ hàng)
 
 const LS_CART = 'vvv_cart';
+const LS_CART_USER_PREFIX = 'vvv_cart_user_';
 let cart = {}; // { productId: qty }
 
 // Tải giỏ hàng từ localStorage khi ứng dụng khởi động
@@ -67,4 +68,25 @@ export function clearCart() {
 export function getCart() 
 {
   return cart;
+}
+
+// Sao lưu giỏ hàng theo user (lưu vào localStorage riêng cho user)
+export function backupCartForUser(userId) {
+  if (!userId) return;
+  try {
+    const raw = localStorage.getItem(LS_CART) || '{}';
+    localStorage.setItem(`${LS_CART_USER_PREFIX}${userId}`, raw);
+  } catch {}
+}
+
+// Khôi phục giỏ hàng theo user (ghi đè vvv_cart và phát sự kiện cập nhật)
+export function restoreCartForUser(userId) {
+  if (!userId) return;
+  try {
+    const raw = localStorage.getItem(`${LS_CART_USER_PREFIX}${userId}`);
+    if (!raw) return;
+    localStorage.setItem(LS_CART, raw);
+    try { cart = JSON.parse(raw || '{}'); } catch { cart = {}; }
+    document.dispatchEvent(new CustomEvent('cart:changed', { detail: { cart } }));
+  } catch {}
 }

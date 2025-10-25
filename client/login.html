@@ -76,7 +76,7 @@
     <script src="auth.js?v=flowfix1"></script>
     <script type="module">
       import { apiLoginUser } from "../js/api.js?v=flowfix1";
-      import { clearCart } from "../js/cart.js?v=flowfix1";
+      import { restoreCartForUser } from "../js/cart.js?v=flowfix1";
       /*  Chức năng: Hiển thị / Ẩn mật khẩu bằng checkbox */
       const showBox = document.getElementById("showPassword");
       const passInput = document.getElementById("liPass");
@@ -168,9 +168,10 @@
             setBusy(false);
             return;
           }
-          // API đã set session: xóa giỏ của phiên cũ rồi quay lại
+          // Khôi phục giỏ của user sau khi API đã set session
           try {
-            clearCart();
+            const uid = res?.user?.id || res?.user?.phone || res?.user?.email;
+            if (uid) restoreCartForUser(uid);
           } catch {}
           try {
             const ret = localStorage.getItem("vvv_return_to");

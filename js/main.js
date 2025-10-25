@@ -12,6 +12,7 @@ import {
   updateCartQuantity,
   clearCart,
   getCart,
+  backupCartForUser,
 } from "./cart.js";
 import { renderUI, renderProducts, openCart, closeCart } from "./ui.js";
 import {
@@ -694,6 +695,15 @@ function setupListeners() {
 
   // Auth UI: logout rồi điều hướng sang trang Đăng nhập riêng
   btnLogout?.addEventListener("click", async () => {
+    try {
+      const cur = await apiCurrentUser();
+      if (cur?.id) {
+        // Sao lưu giỏ theo user trước khi xóa
+        backupCartForUser(cur.id);
+      }
+    } catch {}
+    // Xóa giỏ để đảm bảo trạng thái khi chưa đăng nhập là giỏ trống
+    clearCart();
     await apiLogoutUser();
     await refreshCurrentUser();
     closeAccountDrawer();
