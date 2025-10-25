@@ -531,6 +531,28 @@
         </div>
       </section>
 
+      <!-- Promo banners slider -->
+      <section id="promos" class="section" aria-label="Khuyến mãi nổi bật">
+        <div class="container">
+          <div class="promo-slider">
+             <div class="promo-slider__track" id="promoTrack">
+               <div class="promo-slider__slide"><img src="../images/brand/newuser.png" alt="Ưu đãi người mới" /></div>
+               <div class="promo-slider__slide"><img src="../images/brand/xmasbanner.png" alt="Ưu đãi Giáng sinh" /></div>
+               <div class="promo-slider__slide"><img src="../images/brand/haloweenvvv.png" alt="Ưu đãi Halloween" /></div>
+               <div class="promo-slider__slide"><img src="../images/brand/Banner.png" alt="Ưu đãi tuần này" /></div>
+             </div>
+             <button class="promo-slider__arrow prev" id="promoPrev" aria-label="Ảnh trước">‹</button>
+             <button class="promo-slider__arrow next" id="promoNext" aria-label="Ảnh sau">›</button>
+             <div class="promo-slider__dots" id="promoDots" role="tablist" aria-label="Chọn banner">
+               <button class="dot active" data-index="0" aria-label="Banner 1"></button>
+               <button class="dot" data-index="1" aria-label="Banner 2"></button>
+               <button class="dot" data-index="2" aria-label="Banner 3"></button>
+               <button class="dot" data-index="3" aria-label="Banner 4"></button>
+             </div>
+           </div>
+        </div>
+      </section>
+
       <section id="flashsale" class="section">
         <div class="container">
           <div class="title">
@@ -718,10 +740,6 @@
               <span>🧑‍💼 Sửa thông tin cá nhân</span>
               <span>›</span>
             </button>
-            <button class="account-item" id="acctNavAddress">
-              <span>📍 Địa chỉ nhận hàng <span id="acctAddrCount" class="muted"></span></span>
-              <span>›</span>
-            </button>
             <button class="account-item" id="acctNavOrders">
               <span>🛍️ Đơn hàng từng mua</span>
               <span>›</span>
@@ -731,19 +749,13 @@
             <section id="accountProfilePanel" class="account-panel">
               <form id="accountForm" class="contact" style="padding: 16px">
                 <input class="input" type="text" name="name" placeholder="Họ và tên" autocomplete="name" required />
-                <input class="input" type="email" name="email" placeholder="Email" autocomplete="email" required />
-                <input class="input" type="tel" name="phone" placeholder="Số điện thoại" autocomplete="tel" inputmode="numeric" pattern="\d{9,11}" title="Nhập 9–11 chữ số" />
+                <input class="input" type="email" name="email" placeholder="Email (không thay đổi sau đăng ký)" autocomplete="email" readonly aria-readonly="true" />
+                <input class="input" type="tel" name="phone" placeholder="Số điện thoại (không thay đổi sau đăng ký)" autocomplete="tel" inputmode="numeric" pattern="\d{9,11}" title="Nhập 9–11 chữ số" readonly aria-readonly="true" />
+                <p class="muted" id="acctAddrInline" role="status" aria-live="polite">Địa chỉ mặc định: </p>
                 <textarea class="input" name="address" rows="3" placeholder="Địa chỉ giao hàng..." autocomplete="street-address" required></textarea>
                 <button class="btn btn--pri" type="submit">Lưu thông tin</button>
                 <p class="muted" id="accountMsg" role="status" aria-live="polite"></p>
               </form>
-            </section>
-            <section id="accountAddressPanel" class="account-panel" hidden>
-              <div class="contact" style="padding: 16px">
-                <p class="muted">Địa chỉ mặc định:</p>
-                <p id="acctAddrText"></p>
-                <button class="btn btn--outline" id="acctEditAddress">Chỉnh sửa địa chỉ</button>
-              </div>
             </section>
             <section id="accountOrdersPanel" class="account-panel" hidden>
               <div id="accountOrdersBody" class="orders-body" style="padding: 16px"></div>

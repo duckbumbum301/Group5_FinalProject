@@ -155,7 +155,7 @@ function ensureOrderConfirmModal() {
     m.innerHTML = `
       <div id="ocOverlay" class="modal__overlay"></div>
       <div class="modal__panel">
-        <header class="modal__head"><h3>Xác nhận đơn hàng</h3><button id="ocCloseBtn" class="btn btn--icon">✕</button></header>
+        <header class="modal__head"><h3>Chi tiết đơn hàng</h3><div style="display:flex; gap:8px; align-items:center"><button id="ocPrintBtn" class="btn btn--outline">In/PDF</button><button id="ocCloseBtn" class="btn btn--icon">✕</button></div></header>
         <div class="modal__body" id="ocBody"></div>
       </div>`;
     document.body.appendChild(m);
@@ -169,22 +169,56 @@ export function openOrderConfirmModal(orderId) {
   body.innerHTML = '<p class="muted">Đang tải…</p>';
   (async () => {
     const list = await apiListOrders();
-    const ord = (list || []).find((x) => x.id === orderId);
+    const ord = (list || []).find((x) => x.id === orderId) || (list || [])[list.length - 1];
     if (!ord) { body.innerHTML = '<p class="alert">Không tìm thấy đơn hàng.</p>'; return; }
     const entries = Object.entries(ord.items || {}).filter(([, q]) => q > 0);
     const ids = entries.map(([pid]) => pid);
     const products = await Promise.all(ids.map((id) => apiGetProductById(id)));
     const map = {}; for (const p of products) if (p && p.id) map[p.id] = p;
-    const itemsHtml = entries.map(([pid, q]) => {
-      const p = map[pid];
-      return p ? `• ${p.name} × ${q}` : `• ${pid} × ${q}`;
-    }).join('<br>');
+    const itemRows = entries.map(([pid, q]) => {
+      const p = map[pid] || {};
+      const price = p.price || 0;
+      const line = price * q;
+      const name = p.name || pid;
+      const unit = p.unit ? `/${p.unit}` : '';
+      const thumb = p.image
+        ? `<img src="${p.image}" alt="${name}" class="oc-thumb">`
+        : `<div class="oc-thumb">${p.emoji || '🧺'}</div>`;
+      return `
+        <div class="oc-item">
+          ${thumb}
+          <div class="oc-item__main">
+            <div class="oc-name">${name}</div>
+            <div class="muted">Giá bán: ${money(price)}${unit}</div>
+          </div>
+          <div class="oc-item__meta">
+            <div class="oc-line">${money(line)}</div>
+            <div class="muted">SL: ${q}</div>
+          </div>
+        </div>`;
+    }).join('');
+    const paid = ord.payment_status === 'paid' ? (ord.total || 0) : 0;
+    const remain = Math.max(0, (ord.total || 0) - paid);
+    const pmText = ord.payment === 'COD' ? 'Tiền mặt khi nhận hàng' : (ord.payment || 'Khác');
     body.innerHTML = `
-      <div class="order-confirm">
-        <div><strong>Đơn hàng #${ord.id}</strong></div>
-        <div class="muted">Mua lúc: ${fmtDate(ord.created_at)}</div>
-        <div style="margin-top:8px;">${itemsHtml}</div>
-      </div>`;
+      <div class="order-head">
+        <div><strong>Mã đơn:</strong> ${ord.id}</div>
+        <div class="muted">${fmtDate(ord.created_at)}</div>
+      </div>
+      <div class="oc-items">${itemRows}</div>
+      <div class="oc-pay">
+        <h4 class="oc-section-title">Thông tin thanh toán</h4>
+        <div class="oc-row"><div>Tiền hàng</div><div>${money(ord.subtotal || 0)}</div></div>
+        <div class="oc-row"><div>Phí giao hàng, phụ phí</div><div>${money(ord.shipping_fee || 0)}</div></div>
+        <div class="oc-row"><div>Thanh toán</div><div>${pmText}</div></div>
+        <div class="oc-row oc-total"><div>Tổng đơn</div><div>${money(ord.total || 0)}</div></div>
+        <div class="oc-row"><div>Đã thanh toán</div><div>${money(paid)}</div></div>
+        <div class="oc-row"><div>Còn lại</div><div>${money(remain)}</div></div>
+      </div>
+      <div class="oc-track">${buildTimeline(ord)}</div>
+    `;
+    const printBtn = document.getElementById('ocPrintBtn');
+    if (printBtn) printBtn.onclick = () => printOrderDetails(ord);
   })();
   const onClose = () => { const m2 = ensureOrderConfirmModal(); m2.hidden = true; };
   document.getElementById('ocOverlay')?.addEventListener('click', onClose, { once: true });
@@ -196,6 +230,48 @@ export function closeOrderConfirmModal() {
   m.hidden = true;
 }
 
+function printOrderDetails(ord) {
+  const bodyEl = document.getElementById('ocBody');
+  const inner = bodyEl ? bodyEl.innerHTML : '';
+  const w = window.open('', '_blank');
+  if (!w) return;
+  w.document.write(`
+    <html>
+      <head>
+        <meta charset="utf-8" />
+        <title>Đơn hàng #${ord?.id || ''}</title>
+        <style>
+          * { box-sizing: border-box; }
+          body { font: 14px/1.6 Arial, Helvetica, sans-serif; color: #111; margin: 18px; background: #fff; }
+          .order-head { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 10px; }
+          .muted { color: #555; }
+          .oc-items { margin-top: 8px; }
+          .oc-item { display: flex; align-items: center; justify-content: space-between; gap: 12px; border: 1px solid #ddd; border-radius: 10px; padding: 10px; background: #fff; margin-top: 6px; }
+          .oc-thumb { width: 52px; height: 52px; border-radius: 10px; border: 1px solid #ddd; object-fit: cover; display: inline-block; }
+          .oc-item__main { flex: 1; }
+          .oc-name { font-weight: 600; }
+          .oc-item__meta { text-align: right; }
+          .oc-pay { margin-top: 12px; border: 1px solid #ddd; border-radius: 12px; padding: 12px; background: #fff; }
+          .oc-section-title { font-size: 16px; font-weight: 700; margin-bottom: 8px; }
+          .oc-row { display: flex; align-items: center; justify-content: space-between; padding: 4px 0; }
+          .oc-total { font-weight: 700; }
+          .timeline { margin-top: 12px; }
+          .timeline .step { display: inline-flex; align-items: flex-start; gap: 8px; border: 1px solid #ddd; border-radius: 10px; padding: 8px 10px; margin: 4px 6px 0 0; }
+          .timeline .dot { width: 10px; height: 10px; border-radius: 999px; background: #16a34a; margin-top: 2px; }
+          .timeline .label { font-weight: 600; }
+          .timeline .time { font-size: 12px; color: #666; }
+          @page { size: A4; margin: 12mm; }
+        </style>
+      </head>
+      <body>
+        ${inner}
+      </body>
+    </html>
+  `);
+  w.document.close();
+  w.focus();
+  setTimeout(() => { try { w.print(); } catch (e) {} w.close(); }, 500);
+}
 document.addEventListener('order:confirmed', (e) => {
   const id = e?.detail?.orderId;
   openOrderConfirmModal(id);

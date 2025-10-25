@@ -130,6 +130,7 @@ function openAccountDrawer() {
       f.elements.email && (f.elements.email.value = u.email || '');
       f.elements.phone && (f.elements.phone.value = u.phone || '');
       f.elements.address && (f.elements.address.value = u.address || '');
+      addressPanelRefresh();
     } catch {}
   })();
   // Ensure drawer UI wired and default section
@@ -167,6 +168,7 @@ const accountAddressPanel = document.getElementById('accountAddressPanel');
 const accountOrdersPanel = document.getElementById('accountOrdersPanel');
 const acctAddrCount = document.getElementById('acctAddrCount');
 const acctAddrText = document.getElementById('acctAddrText');
+const acctAddrInline = document.getElementById('acctAddrInline');
 const acctEditAddress = document.getElementById('acctEditAddress');
 const accountOrdersBody = document.getElementById('accountOrdersBody');
 
@@ -178,6 +180,7 @@ function ensureLatLngFields(){
 function addressPanelRefresh(){
   const addr = accountForm?.elements?.address?.value || '';
   if (acctAddrText) acctAddrText.textContent = addr || 'Chưa có địa chỉ mặc định.';
+  if (acctAddrInline) acctAddrInline.textContent = addr ? `Địa chỉ mặc định: ${addr}` : 'Chưa có địa chỉ mặc định.';
   if (acctAddrCount) acctAddrCount.textContent = addr ? '(1)' : '(0)';
 }
 async function setAccountSection(section){
@@ -660,17 +663,13 @@ function setupListeners() {
       phone: String(fd.get('phone') || ''),
       address: String(fd.get('address') || ''),
     };
-    if (accountMsg) accountMsg.textContent = 'Đang lưu...';
-    try {
-      const res = await apiUpdateProfile(payload);
-      if (res?.ok) {
-        if (accountMsg) accountMsg.textContent = 'Đã lưu thông tin.';
-        await refreshCurrentUser();
-      } else {
-        if (accountMsg) accountMsg.textContent = res?.message || 'Lưu thất bại.';
-      }
-    } catch {
-      if (accountMsg) accountMsg.textContent = 'Có lỗi khi lưu.';
+    accountMsg.textContent = 'Đang lưu...';
+    const res = await apiUpdateProfile(payload);
+    if (res.ok) {
+      accountMsg.textContent = 'Đã lưu thông tin.';
+      addressPanelRefresh();
+    } else {
+      accountMsg.textContent = res.error ?? 'Lưu thất bại, thử lại.';
     }
   });
 
@@ -724,6 +723,46 @@ function setupListeners() {
   });
 }
 
+// ---------- Promo Slider ----------
+function initPromoSlider(){
+   const track = document.getElementById('promoTrack');
+   const dotsWrap = document.getElementById('promoDots');
+   const prevBtn = document.getElementById('promoPrev');
+   const nextBtn = document.getElementById('promoNext');
+   const slider = track?.parentElement;
+   if (!track || !dotsWrap || !slider) return;
+   const slides = track.children;
+   const dots = Array.from(dotsWrap.querySelectorAll('.dot'));
+   let index = 0;
+   function apply(){
+    const w = slider.clientWidth || (track.scrollWidth / slides.length) || 0;
+    track.style.transform = `translateX(-${index * w}px)`;
+    dots.forEach((d,i)=> d.classList.toggle('active', i===index));
+  }
+   dots.forEach((d)=>{
+     d.addEventListener('click', ()=>{ index = +d.dataset.index; apply(); restartAuto(); });
+   });
+   prevBtn?.addEventListener('click', ()=>{ index = (index - 1 + slides.length) % slides.length; apply(); restartAuto(); });
+   nextBtn?.addEventListener('click', ()=>{ index = (index + 1) % slides.length; apply(); restartAuto(); });
+   let timer;
+   function startAuto(){ timer = setInterval(()=>{ index = (index + 1) % slides.length; apply(); }, 5000); }
+   function restartAuto(){ clearInterval(timer); startAuto(); }
+   slider.addEventListener('mouseenter', ()=> clearInterval(timer));
+   slider.addEventListener('mouseleave', ()=> startAuto());
+   window.addEventListener('resize', apply);
+   // Touch swipe
+   let startX = 0;
+   slider.addEventListener('touchstart', (e)=>{ startX = e.touches[0].clientX; });
+   slider.addEventListener('touchend', (e)=>{
+     const dx = e.changedTouches[0].clientX - startX;
+     if (Math.abs(dx) > 30) {
+       if (dx < 0) nextBtn?.click(); else prevBtn?.click();
+     }
+   });
+   startAuto();
+   apply();
+ }
+
 // ---------- Init ----------
 function init() {
   yearEl.textContent = new Date().getFullYear();
@@ -756,6 +795,7 @@ function init() {
     renderWithPagination();
   });
   renderUI();
+  initPromoSlider();
   refreshCurrentUser();
   document.addEventListener('cart:changed', () => {
     renderUI();

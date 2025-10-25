@@ -11,7 +11,7 @@
     <meta http-equiv="Expires" content="0" />
   </head>
   <body class="page-center theme-green">
-    <div class="container container--right container--bare">
+    <div class="container container--wide container--right container--bare">
       <!-- Trang: Login -->
       <div class="row">
         <h1 align="center">Đăng nhập</h1>
@@ -21,23 +21,23 @@
         </div>
       </div>
       <p class="muted">
-        Nhập <strong>SĐT</strong> và <strong>Mật khẩu</strong> để tiếp tục.
+        Nhập <strong>Tài khoản</strong> và <strong>Mật khẩu</strong> để tiếp tục.
       </p>
 
       <!-- Chức năng: Form đăng nhập -->
     <form id="formLogin" novalidate>
       <table class="form-table">
         <tr>
-          <td><label for="liPhone">Số điện thoại</label></td>
+          <td><label for="liAccount"><strong>Tài khoản</strong></label></td>
           <td>
             <input
-              id="liPhone"
-              name="phone"
-              type="tel"
-              inputmode="numeric"
+              id="liAccount"
+              name="account"
+              type="text"
+              inputmode="text"
               autocomplete="username"
               autofocus
-              placeholder="VD: 0912345678"
+              placeholder="VD: 0912345678 hoặc email@domain.com"
               required
             />
           </td>
@@ -101,14 +101,16 @@
         }
       })();
 
-      // Prefill SĐT lần đăng nhập trước + đặt focus hợp lý
+      // Prefill tài khoản lần đăng nhập trước + đặt focus hợp lý
       (function(){
-        const phoneInput = document.getElementById("liPhone");
+        const accountInput = document.getElementById("liAccount");
         try {
-          const lastPhone = localStorage.getItem("vvv_last_login_phone");
-          if (!getSession() && lastPhone && phoneInput && !phoneInput.value) phoneInput.value = lastPhone;
+          const lastAcc = localStorage.getItem("vvv_last_login_account")
+            || localStorage.getItem("vvv_last_login_phone")
+            || localStorage.getItem("vvv_last_login_email");
+          if (!getSession() && lastAcc && accountInput && !accountInput.value) accountInput.value = lastAcc;
         } catch {}
-        if (phoneInput && phoneInput.value) { passInput?.focus(); } else { phoneInput?.focus(); }
+        if (accountInput && accountInput.value) { passInput?.focus(); } else { accountInput?.focus(); }
       })();
 
       // Caps Lock hint
@@ -123,7 +125,7 @@
       document.getElementById("formLogin").addEventListener("submit", async (e) => {
         e.preventDefault();
         const f = new FormData(e.target);
-        const phone = normalizePhoneVN(f.get("phone"));
+        const accountRaw = (f.get("account") || "").toString().trim();
         const pass = (f.get("password") || "").toString();
 
         const msg = document.getElementById("loginMsg");
@@ -134,8 +136,13 @@
         if (btn && !btn.getAttribute("data-prev")) btn.setAttribute("data-prev", btn.textContent||"Đăng nhập");
         setBusy(true);
 
-        if (!validVNPhone(phone)) {
-          msg.textContent = "SĐT không hợp lệ (10 số, bắt đầu 0).";
+        const lowerAcc = accountRaw.toLowerCase();
+        const isEmail = emailOk(lowerAcc);
+        const normalizedPhone = normalizePhoneVN(accountRaw);
+        const isPhone = validVNPhone(normalizedPhone);
+
+        if (!isEmail && !isPhone) {
+          msg.textContent = "Vui lòng nhập email hợp lệ hoặc SĐT hợp lệ (10 số, bắt đầu 0).";
           msg.style.display = "block";
           setBusy(false);
           return;
@@ -148,9 +155,13 @@
         }
 
         try {
-          // Lưu SĐT để lần sau autofill
-          try { localStorage.setItem("vvv_last_login_phone", phone); } catch {}
-          const res = await apiLoginUser({ phone, password: pass });
+          // Lưu tài khoản để lần sau autofill
+          try {
+            localStorage.setItem("vvv_last_login_account", accountRaw);
+            if (isPhone) localStorage.setItem("vvv_last_login_phone", normalizedPhone);
+            if (isEmail) localStorage.setItem("vvv_last_login_email", lowerAcc);
+          } catch {}
+          const res = await apiLoginUser({ email: isEmail ? lowerAcc : "", phone: isPhone ? normalizedPhone : "", password: pass });
           if (!res?.ok) {
             msg.textContent = res?.message || "Đăng nhập thất bại.";
             msg.style.display = "block";
