@@ -53,6 +53,8 @@ export async function apiGetProductById(id) {
 export async function apiApplyVoucher(code, { subtotal, shippingFee }) {
   const c = (code || "").trim().toUpperCase();
   if (!c) return { ok: false, message: "Bạn chưa nhập mã." };
+
+  // FREESHIP: miễn phí vận chuyển
   if (c === "FREESHIP")
     return {
       ok: true,
@@ -60,6 +62,8 @@ export async function apiApplyVoucher(code, { subtotal, shippingFee }) {
       value: shippingFee,
       message: "Đã áp dụng freeship.",
     };
+
+  // GIAM10: giảm 10% tổng hàng
   if (c === "GIAM10")
     return {
       ok: true,
@@ -67,6 +71,31 @@ export async function apiApplyVoucher(code, { subtotal, shippingFee }) {
       value: 10,
       message: "Giảm 10% đơn hàng.",
     };
+
+  // VUA50: giảm 50% cho đơn đầu tiên của tài khoản (tối đa 500.000đ)
+  if (c === "VUA50") {
+    // Yêu cầu đăng nhập và kiểm tra lịch sử đơn
+    const cur = await apiCurrentUser();
+    if (!cur) return { ok: false, message: "Vui lòng đăng nhập để áp dụng mã người mới." };
+    const orders = lsGet(LS_ORDERS, []);
+    const hasAnyOrder = orders.some((o) => {
+      const u = o.user || {};
+      const samePhone = cur.phone && u.phone && String(u.phone) === String(cur.phone);
+      const sameId = (o.customer_id && cur.id && String(o.customer_id) === String(cur.id)) || false;
+      return samePhone || sameId;
+    });
+    if (hasAnyOrder) return { ok: false, message: "Mã VUA50 chỉ áp dụng cho đơn đầu tiên của tài khoản." };
+
+    const CAP = 500000; // tối đa 500.000đ
+    return {
+      ok: true,
+      type: "percent",
+      value: 50,
+      cap: CAP,
+      message: "Giảm 50% cho đơn đầu tiên (tối đa 500.000đ).",
+    };
+  }
+
   return { ok: false, message: "Mã không hợp lệ." };
 }
 

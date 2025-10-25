@@ -113,7 +113,10 @@ const accountOverlay = $("#accountOverlay");
 const accountCloseBtn = $("#accountCloseBtn");
 const accountForm = $("#accountForm");
 const accountMsg = $("#accountMsg");
+const authBadge = $("#authBadge");
 const checkoutBtn = $("#checkoutBtn");
+const clearCartBtn = $("#clearCartBtn");
+const cartSelectAll = $("#cartSelectAll");
 
 // Toggle trạng thái disabled cho nút Thanh toán theo giỏ hàng
 function updateCheckoutButtonState() {
@@ -125,39 +128,65 @@ function updateCheckoutButtonState() {
   checkoutBtn.title = shouldDisable ? 'Giỏ hàng trống' : '';
 }
 
-// Account Drawer helpers
-function openAccountDrawer() {
-  if (!accountModal) return;
-  accountModal.removeAttribute('hidden');
-  // Bind one-off closers
-  accountCloseBtn && accountCloseBtn.addEventListener('click', closeAccountDrawer, { once: true });
-  accountOverlay && accountOverlay.addEventListener('click', closeAccountDrawer, { once: true });
-  // Prefill profile form from current user
-  (async () => {
-    try {
-      const u = await apiCurrentUser();
-      if (!u || !accountForm) return;
-      const f = accountForm;
-      f.elements.name && (f.elements.name.value = u.name || '');
-      f.elements.email && (f.elements.email.value = u.email || '');
-      f.elements.phone && (f.elements.phone.value = u.phone || '');
-      f.elements.address && (f.elements.address.value = u.address || '');
-      addressPanelRefresh();
-    } catch {}
-  })();
-  // Ensure drawer UI wired and default section
-  initAccountDrawerUI();
-  ensureLatLngFields();
-  addressPanelRefresh();
-  setAccountSection('profile');
+// Persist lựa chọn thanh toán
+const LS_CART_SEL = 'vvv_cart_sel';
+const LS_CART_SEL_ALL = 'vvv_cart_sel_all';
+function getSelMap(){
+  try { return JSON.parse(localStorage.getItem(LS_CART_SEL) || '{}'); } catch { return {}; }
 }
-function closeAccountDrawer() {
-  if (!accountModal) return;
-  accountModal.setAttribute('hidden','');
+function setSelMap(map){
+  try { localStorage.setItem(LS_CART_SEL, JSON.stringify(map || {})); } catch {}
+}
+function getSelAll(){
+  try { return localStorage.getItem(LS_CART_SEL_ALL) || 'mixed'; } catch { return 'mixed'; }
+}
+function setSelAll(mode){
+  try { localStorage.setItem(LS_CART_SEL_ALL, mode || 'mixed'); } catch {}
+}
+function syncSelectionMapWithCart(){
+  const base = getCart();
+  const sel = getSelMap();
+  const pref = getSelAll();
+  let changed = false;
+  // mặc định chọn theo prefer nếu chưa có key
+  Object.entries(base).forEach(([pid,q])=>{
+    if (q>0 && !(pid in sel)) { sel[pid] = (pref === 'none') ? false : true; changed = true; }
+  });
+  // loại bỏ key không còn trong giỏ
+  Object.keys(sel).forEach((pid)=>{
+    if (!base[pid]) { delete sel[pid]; changed = true; }
+  });
+  if (changed) setSelMap(sel);
+  return sel;
+}
+function updateSelectAllState(){
+  if (!cartSelectAll) return;
+  const rows = Array.from(cartItems?.querySelectorAll('.cart-item') || []);
+  if (rows.length === 0) { cartSelectAll.checked = false; cartSelectAll.indeterminate = false; setSelAll('none'); return; }
+  const states = rows.map((row)=> !!row.querySelector('[data-action="sel"]')?.checked);
+  const all = states.every(Boolean);
+  const none = states.every((v)=> !v);
+  const mode = all ? 'all' : none ? 'none' : 'mixed';
+  cartSelectAll.indeterminate = mode === 'mixed';
+  cartSelectAll.checked = mode === 'all';
+  setSelAll(mode);
 }
 
-// Auth UI refs
-const authBadge = document.getElementById("authBadge");
+// Áp dụng prefer “Chọn tất cả” sau khi render
+function applySelectAllPreference(){
+  const pref = getSelAll();
+  if (!cartItems || pref === 'mixed') { updateSelectAllState(); return; }
+  const checked = pref === 'all';
+  const sel = getSelMap();
+  cartItems?.querySelectorAll('.cart-item').forEach((row)=>{
+    const pid = row?.dataset?.id;
+    const cb = row?.querySelector('[data-action="sel"]');
+    if (cb && pid) { cb.checked = checked; sel[pid] = checked; }
+  });
+  setSelMap(sel);
+  cartSelectAll.indeterminate = false;
+  cartSelectAll.checked = checked;
+}
 const accountMenuBtn = document.getElementById("accountMenuBtn");
 const accountMenu = document.getElementById("accountMenu");
 const btnLogout = document.getElementById("btnLogout");
@@ -199,6 +228,18 @@ function addressPanelRefresh(){
   if (acctAddrInline) acctAddrInline.textContent = addr ? `Địa chỉ mặc định: ${addr}` : 'Chưa có địa chỉ mặc định.';
   if (acctAddrCount) acctAddrCount.textContent = addr ? '(1)' : '(0)';
 }
+async function populateAccountForm(){
+  if(!accountForm) return;
+  try {
+    const u = await apiCurrentUser();
+    if (!u) return;
+    if (accountForm.elements.name) accountForm.elements.name.value = u.name || '';
+    if (accountForm.elements.email) accountForm.elements.email.value = u.email || '';
+    if (accountForm.elements.phone) accountForm.elements.phone.value = u.phone || '';
+    if (accountForm.elements.address) accountForm.elements.address.value = u.address || '';
+    addressPanelRefresh();
+  } catch {}
+}
 async function setAccountSection(section){
   [acctNavProfile, acctNavOrders, acctNavSecurity, acctNavAddress].forEach(el=>el?.classList.remove('active'));
   if(accountProfilePanel) accountProfilePanel.hidden = section !== 'profile';
@@ -226,6 +267,19 @@ function initAccountDrawerUI(){
   acctEditAddress?.addEventListener('click', async (e)=>{ e.preventDefault(); ensureLatLngFields(); const mod = await import('./checkout.js'); await mod.openAddressPicker(accountForm); addressPanelRefresh(); });
   accountForm?.addEventListener('input', (e)=>{ if(e.target?.name==='address') addressPanelRefresh(); });
   accountModal.setAttribute('data-bound','true');
+}
+function openAccountDrawer(){
+  if (!accountModal) return;
+  accountModal.removeAttribute('hidden');
+  // Ẩn dropdown tài khoản nếu đang mở
+  if (accountMenu) { accountMenu.hidden = true; accountMenuBtn?.setAttribute('aria-expanded','false'); }
+  initAccountDrawerUI();
+  setAccountSection('profile');
+  populateAccountForm();
+}
+function closeAccountDrawer(){
+  if (!accountModal) return;
+  accountModal.setAttribute('hidden','');
 }
 // NEW: Orders
 const ordersBtn = $("#ordersBtn");
@@ -403,6 +457,8 @@ async function refreshCurrentUser() {
 // ---------- Mega Menu (module) ----------
 // functions are imported from ./menu.js
 function handleMegaMenuLinkClick(e) {
+  e.preventDefault();
+  e.stopPropagation();
   const link = e.target.closest(".mega-menu__link");
   if (!link) return;
   const catAttr = link.getAttribute("data-category") || "all";
@@ -567,6 +623,11 @@ function setupListeners() {
   });
   cartOverlay.addEventListener("click", closeCart);
 
+  // Account Drawer
+  accountCloseBtn?.addEventListener('click', closeAccountDrawer);
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeAccountDrawer(); });
+  accountOverlay?.addEventListener('click', closeAccountDrawer);
+
   // Account button: nếu chưa đăng nhập thì điều hướng sang trang Đăng nhập riêng; nếu đã đăng nhập thì mở drawer Tài khoản
   accountBtn.addEventListener("click", async (e) => {
     e.preventDefault();
@@ -582,15 +643,32 @@ function setupListeners() {
     }
   });
 
-  // Checkout guard: chặn giỏ trống + ép đăng nhập trước khi mở modal
+  // Checkout guard: chỉ thanh toán các sản phẩm đã tick chọn
   checkoutBtn.addEventListener("click", async () => {
-    const entries = Object.entries(getCart()).filter(([, q]) => q > 0);
-    if (!entries.length) {
-      showToast("Giỏ hàng đang trống. Vui lòng thêm sản phẩm.");
+    const selected = [];
+    cartItems?.querySelectorAll(".cart-item").forEach((row) => {
+      const pid = row?.dataset?.id;
+      const sel = row?.querySelector('[data-action="sel"]');
+      const qtyInput = row?.querySelector('[data-action="qty"]');
+      const q = parseInt(String(qtyInput?.value || '0').replace(/\D/g,''), 10);
+      if (sel?.checked && pid && Number.isFinite(q) && q >= 1) selected.push([pid, q]);
+    });
+    if (!selected.length) {
+      showToast("Bạn chưa chọn sản phẩm nào để thanh toán.");
       return;
     }
     const mod = await import("./checkout.js");
-    mod.openCheckoutModal();
+    mod.openCheckoutModal({ items: Object.fromEntries(selected) });
+  });
+
+  // Clear cart — làm sạch giỏ hàng
+  clearCartBtn?.addEventListener("click", () => {
+    const entries = Object.entries(getCart()).filter(([, q]) => q > 0);
+    if (!entries.length) return;
+    clearCart();
+    try { localStorage.removeItem(LS_CART_SEL); } catch {}
+    showToast("Đã làm sạch giỏ hàng.");
+    updateSelectAllState();
   });
 
   // Orders (lazy-load)
@@ -768,14 +846,80 @@ function setupListeners() {
       if (pid) removeFromCart(pid);
     }
   });
+  // Ngăn nhập chữ trong ô SL
+  cartItems.addEventListener("keydown", (e) => {
+    const input = e.target.closest('[data-action="qty"]');
+    if (!input) return;
+    const allowed = ['Backspace','Delete','ArrowLeft','ArrowRight','Tab','Home','End'];
+    if (allowed.includes(e.key)) return;
+    if (/^[0-9]$/.test(e.key)) return;
+    e.preventDefault();
+  });
+  // Cập nhật số lượng: chỉ cập nhật khi giá trị hợp lệ (>=1)
   cartItems.addEventListener("input", (e) => {
     const qtyInput = e.target.closest('[data-action="qty"]');
-    if (qtyInput) {
-      const cartItem = qtyInput.closest(".cart-item");
-      const pid = cartItem?.dataset.id;
-      if (pid) updateCartQuantity(pid, qtyInput.value);
+    if (!qtyInput) return;
+    const cartItem = qtyInput.closest(".cart-item");
+    const pid = cartItem?.dataset.id;
+    if (!pid) return;
+    const sanitized = String(qtyInput.value || '').replace(/\D/g, '');
+    if (sanitized !== qtyInput.value) qtyInput.value = sanitized;
+    if (!sanitized) return; // chưa có số hợp lệ, không cập nhật giỏ
+    const val = parseInt(sanitized, 10);
+    if (Number.isFinite(val) && val >= 1) {
+      updateCartQuantity(pid, val);
     }
   });
+  // Chuẩn hóa khi rời ô: trống hoặc 0 -> 1
+  cartItems.addEventListener("blur", (e) => {
+    const qtyInput = e.target.closest('[data-action="qty"]');
+    if (!qtyInput) return;
+    const cartItem = qtyInput.closest(".cart-item");
+    const pid = cartItem?.dataset.id;
+    if (!pid) return;
+    let sanitized = String(qtyInput.value || '').replace(/\D/g, '');
+    let val = parseInt(sanitized || '1', 10);
+    if (!Number.isFinite(val) || val < 1) val = 1;
+    qtyInput.value = String(val);
+    updateCartQuantity(pid, val);
+  }, true);
+
+  // Toggle chọn mua từng dòng: lưu vào localStorage
+  cartItems.addEventListener("change", (e) => {
+    const selCb = e.target.closest('[data-action="sel"]');
+    if (!selCb) return;
+    const row = selCb.closest(".cart-item");
+    const pid = row?.dataset?.id;
+    if (!pid) return;
+    const sel = getSelMap();
+    sel[pid] = !!selCb.checked;
+    setSelMap(sel);
+    updateSelectAllState();
+    // Recalc subtotal ngay sau khi đổi chọn
+    renderUI();
+    updateCheckoutButtonState();
+  });
+
+  // Chọn tất cả
+  cartSelectAll?.addEventListener("change", () => {
+    const checked = !!cartSelectAll.checked;
+    const sel = getSelMap();
+    cartItems?.querySelectorAll(".cart-item").forEach((row) => {
+      const pid = row?.dataset?.id;
+      if (!pid) return;
+      const cb = row?.querySelector('[data-action="sel"]');
+      if (cb) cb.checked = checked;
+      sel[pid] = checked;
+    });
+    setSelMap(sel);
+    cartSelectAll.indeterminate = false;
+    setSelAll(checked ? 'all' : 'none');
+    updateSelectAllState();
+    // Recalc subtotal sau khi chọn tất cả
+    renderUI();
+    updateCheckoutButtonState();
+  });
+
 }
 
 // ---------- Promo Slider ----------
@@ -859,12 +1003,16 @@ function init() {
       .join("");
     renderWithPagination();
   });
+  syncSelectionMapWithCart();
   renderUI();
+  updateSelectAllState();
   initPromoSlider();
   refreshCurrentUser();
   document.addEventListener('cart:changed', () => {
+    syncSelectionMapWithCart();
     renderUI();
     updateCheckoutButtonState();
+    updateSelectAllState();
   });
 }
 init();

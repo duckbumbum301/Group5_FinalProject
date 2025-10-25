@@ -654,7 +654,14 @@
           <div class="total-row">
             <span>Tạm tính:</span><strong id="cartSubtotal">0đ</strong>
           </div>
-          <button class="btn btn--pri" id="checkoutBtn">Thanh toán</button>
+          <label class="muted" style="display:flex; align-items:center; gap:8px; margin:8px 0;">
+            <input type="checkbox" id="cartSelectAll" checked />
+            Chọn tất cả
+          </label>
+          <div class="cart-actions" style="display:flex; gap:8px; flex-wrap:wrap;">
+            <button class="btn btn--pri" id="checkoutBtn">Thanh toán</button>
+            <button class="btn btn--outline" id="clearCartBtn">Làm sạch giỏ hàng</button>
+          </div>
         </div>
       </div>
       <div class="drawer__overlay" id="cartOverlay" tabindex="-1"></div>

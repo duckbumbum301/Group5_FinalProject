@@ -1,6 +1,6 @@
 // js/checkout.js — Tách logic Checkout thành module
 import { $, money } from './utils.js';
-import { getCart, clearCart } from './cart.js';
+import { getCart, clearCart, removeFromCart } from './cart.js';
 import {
   apiListDeliverySlots,
   calcShippingFee,
@@ -48,7 +48,7 @@ function ensureCheckoutModal() {
             <div class="co-field">
               <label>Voucher</label>
               <div class="voucher-row">
-                <input name="voucher" class="input" placeholder="FREESHIP / GIAM10" />
+                <input name="voucher" class="input" placeholder="FREESHIP / GIAM10 / VUA50" />
                 <button type="button" class="btn btn--outline" id="coApplyVoucher">Áp dụng</button>
               </div>
               <p class="muted" id="coVoucherMsg" role="status" aria-live="polite"></p>
@@ -83,7 +83,7 @@ function ensureCheckoutModal() {
   return el;
 }
 
-export async function openCheckoutModal() {
+export async function openCheckoutModal(selected) {
   const cur = await apiCurrentUser();
   if (!cur) {
     localStorage.setItem('vvv_return_to', location.href);
@@ -111,9 +111,10 @@ export async function openCheckoutModal() {
   let shipping = 0;
   let discount = 0;
 
+  // Nếu có 'selected', chỉ tính theo các sản phẩm đã tick chọn
   async function computeSubtotal() {
-    const cart = getCart();
-    const entries = Object.entries(cart).filter(([, q]) => q > 0);
+    const base = selected?.items ?? getCart();
+    const entries = Object.entries(base).filter(([, q]) => q > 0);
     const ids = entries.map(([pid]) => pid);
     const products = await Promise.all(ids.map((id) => apiGetProductById(id)));
     const map = {};
@@ -133,8 +134,13 @@ export async function openCheckoutModal() {
     discount = 0;
     if (appliedVoucher) {
       if (appliedVoucher.type === 'ship') shipping = 0;
-      if (appliedVoucher.type === 'percent')
-        discount = Math.round((subtotal * appliedVoucher.value) / 100);
+      if (appliedVoucher.type === 'percent') {
+        const raw = Math.round((subtotal * appliedVoucher.value) / 100);
+        discount = appliedVoucher.cap ? Math.min(raw, appliedVoucher.cap) : raw;
+      }
+      if (appliedVoucher.type === 'fixed') {
+        discount = Math.min(appliedVoucher.value || 0, subtotal);
+      }
     }
     const total = Math.max(0, subtotal + shipping - discount);
     sumEl.innerHTML = `
@@ -176,7 +182,7 @@ export async function openCheckoutModal() {
     }
     msgEl.textContent = res.message;
     msgEl.className = 'muted ok';
-    appliedVoucher = { type: res.type, value: res.value };
+    appliedVoucher = { type: res.type, value: res.value, cap: res.cap };
     await recalc();
   };
 
@@ -207,10 +213,11 @@ export async function openCheckoutModal() {
       return;
     }
 
-    // Không cho đặt nếu giỏ hàng trống
-    const entries = Object.entries(getCart()).filter(([, q]) => q > 0);
+    // Không cho đặt nếu không có sản phẩm nào được chọn
+    const base = selected?.items ?? getCart();
+    const entries = Object.entries(base).filter(([, q]) => q > 0);
     if (!entries.length) {
-      alert('Giỏ hàng đang trống. Vui lòng thêm sản phẩm.');
+      alert('Bạn chưa chọn sản phẩm nào để thanh toán.');
       return;
     }
 
@@ -237,10 +244,16 @@ export async function openCheckoutModal() {
         shipping_fee: shipping,
         discount: discountNow,
         total: totalNow,
-        items: { ...getCart() },
+        items: { ...(selected?.items ?? getCart()) },
       });
 
-      clearCart();
+      // Chỉ xóa các sản phẩm đã chọn, giữ lại các món chưa chọn
+      if (selected?.items) {
+        Object.keys(selected.items).forEach((pid) => removeFromCart(pid));
+      } else {
+        clearCart();
+      }
+
       closeCheckoutModal();
       document.dispatchEvent(new CustomEvent('order:confirmed', { detail: { orderId: newOrder.id } }));
     } catch (err) {

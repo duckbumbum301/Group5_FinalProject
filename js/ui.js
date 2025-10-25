@@ -84,6 +84,10 @@ async function renderCart() {
 
   const { getFlashEffectivePrice } = await import('./utils.js');
 
+  // Lấy map lựa chọn đã lưu để render trạng thái checkbox
+  let selMap = {};
+  try { selMap = JSON.parse(localStorage.getItem('vvv_cart_sel') || '{}'); } catch {}
+
   const lines = entries
     .map(([pid, qty]) => {
       const p = map[pid];
@@ -93,6 +97,7 @@ async function renderCart() {
       const priceHtml = isDiscount
         ? `<span class="price price--sale">${money(eff)}</span> <span class="price price--orig">${money(p.price)}</span>`
         : `${money(p.price)}`;
+      const isSel = Object.prototype.hasOwnProperty.call(selMap, p.id) ? !!selMap[p.id] : true;
       return `
       <div class="cart-item" data-id="${p.id}">
         <div>
@@ -100,8 +105,9 @@ async function renderCart() {
           <div class="muted">${priceHtml} • ${p.unit}</div>
         </div>
         <div class="qty">
+          <input type="checkbox" data-action="sel" ${isSel ? 'checked' : ''} aria-label="Chọn mua" />
           <label for="qty-${p.id}" class="muted">SL:</label>
-          <input id="qty-${p.id}" type="number" min="0" value="${qty}" data-action="qty" />
+          <input id="qty-${p.id}" type="number" min="1" step="1" inputmode="numeric" pattern="[0-9]*" value="${qty}" data-action="qty" />
           <button class="btn btn--outline" data-action="remove">Xóa</button>
         </div>
       </div>`;
@@ -109,7 +115,10 @@ async function renderCart() {
     .join('');
   cartItemsEl.innerHTML = lines || `<p class="muted">Giỏ hàng đang trống.</p>`;
 
-  const subtotal = entries.reduce((s, [pid, q]) => {
+  const selectedEntries = entries.filter(([pid]) => {
+    return Object.prototype.hasOwnProperty.call(selMap, pid) ? !!selMap[pid] : true;
+  });
+  const subtotal = selectedEntries.reduce((s, [pid, q]) => {
     const p = map[pid];
     const eff = p ? (getFlashEffectivePrice ? getFlashEffectivePrice(p) : p.price) : 0;
     return s + eff * q;
