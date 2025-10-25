@@ -477,7 +477,6 @@
               </div>
             </div>
           </div>
-          <a href="#flashsale">Flash Sale</a>
           <a href="#recipes">Công thức</a>
           <a href="#about">Giới thiệu</a>
           <a href="#contact">Liên hệ</a>
@@ -508,38 +507,15 @@
     </header>
 
     <main id="home">
-      <section class="hero">
-        <div class="container hero__grid">
-          <div>
-            <h1>
-              Đi chợ online, <br />
-              tươi — nhanh — vui
-            </h1>
-            <p>
-              Giao nhanh trong ngày, hàng tươi mỗi sáng. Công thức nấu ăn gợi ý
-              và “thêm tất cả vào giỏ” chỉ 1 chạm.
-            </p>
-            <div class="promo-row">
-              <span class="promo">Miễn phí giao ≥ 299k</span>
-              <span class="promo">Giảm 15% Rau & Củ</span>
-              <span class="promo">Thịt/Cá tươi mới mỗi ngày</span>
-            </div>
-          </div>
-          <div class="illus">
-            <div class="illus__emoji" aria-hidden="true">🛒🥬🍊</div>
-          </div>
-        </div>
-      </section>
-
       <!-- Promo banners slider -->
       <section id="promos" class="section" aria-label="Khuyến mãi nổi bật">
         <div class="container">
           <div class="promo-slider">
              <div class="promo-slider__track" id="promoTrack">
-               <div class="promo-slider__slide"><img src="../images/brand/newuser.png" alt="Ưu đãi người mới" /></div>
-               <div class="promo-slider__slide"><img src="../images/brand/xmasbanner.png" alt="Ưu đãi Giáng sinh" /></div>
-               <div class="promo-slider__slide"><img src="../images/brand/haloweenvvv.png" alt="Ưu đãi Halloween" /></div>
                <div class="promo-slider__slide"><img src="../images/brand/Banner.png" alt="Ưu đãi tuần này" /></div>
+               <div class="promo-slider__slide"><img src="../images/brand/newuser.png" alt="Ưu đãi người mới" /></div>
+               <div class="promo-slider__slide"><img src="../images/brand/haloweenvvv.png" alt="Ưu đãi Halloween" /></div>
+               <div class="promo-slider__slide"><img src="../images/brand/xmasbanner.png" alt="Ưu đãi Giáng sinh" /></div>
              </div>
              <button class="promo-slider__arrow prev" id="promoPrev" aria-label="Ảnh trước">‹</button>
              <button class="promo-slider__arrow next" id="promoNext" aria-label="Ảnh sau">›</button>
@@ -553,10 +529,11 @@
         </div>
       </section>
 
+
       <section id="flashsale" class="section">
         <div class="container">
           <div class="title">
-            <h2>⚡ Flash Sale</h2>
+            <h2>Flash Sale</h2>
             <div class="flash-actions">
               <button class="pill" id="tabMorning" data-slot="morning">06:00–08:00</button>
               <button class="pill" id="tabAfternoon" data-slot="afternoon">16:00–18:00</button>
@@ -576,7 +553,7 @@
           <div class="title">
             <h2>Sản phẩm</h2>
             <label class="pill"><input type="checkbox" id="favOnly" /> Chỉ xem Yêu thích</label>
-            <a class="btn btn--outline" href="#flashsale" style="margin-left:8px">⚡ Flash Sale</a>
+
           </div>
           <div class="controls">
             <label for="categoryFilter">Danh mục:</label>
@@ -737,11 +714,15 @@
         <div class="account-tabs">
           <nav class="account-nav">
             <button class="account-item active" id="acctNavProfile">
-              <span>🧑‍💼 Sửa thông tin cá nhân</span>
+              <span>Sửa thông tin cá nhân</span>
               <span>›</span>
             </button>
             <button class="account-item" id="acctNavOrders">
-              <span>🛍️ Đơn hàng từng mua</span>
+              <span>Đơn hàng từng mua</span>
+              <span>›</span>
+            </button>
+            <button class="account-item" id="acctNavSecurity">
+              <span>Đổi mật khẩu</span>
               <span>›</span>
             </button>
           </nav>
@@ -759,6 +740,15 @@
             </section>
             <section id="accountOrdersPanel" class="account-panel" hidden>
               <div id="accountOrdersBody" class="orders-body" style="padding: 16px"></div>
+            </section>
+            <section id="accountPasswordPanel" class="account-panel" hidden>
+              <form id="changePasswordForm" class="contact" style="padding: 16px">
+                <input class="input" type="password" name="current" placeholder="Mật khẩu hiện tại" autocomplete="current-password" required />
+                <input class="input" type="password" name="new" placeholder="Mật khẩu mới" autocomplete="new-password" required />
+                <input class="input" type="password" name="confirm" placeholder="Xác nhận mật khẩu mới" autocomplete="new-password" required />
+                <button class="btn btn--pri" type="submit">Đổi mật khẩu</button>
+                <p class="muted" id="pwMsg" role="status" aria-live="polite"></p>
+              </form>
             </section>
           </div>
         </div>

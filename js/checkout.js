@@ -207,6 +207,13 @@ export async function openCheckoutModal() {
       return;
     }
 
+    // Không cho đặt nếu giỏ hàng trống
+    const entries = Object.entries(getCart()).filter(([, q]) => q > 0);
+    if (!entries.length) {
+      alert('Giỏ hàng đang trống. Vui lòng thêm sản phẩm.');
+      return;
+    }
+
     await recalc();
     const discountNow = parseInt(form.dataset.discount || '0', 10) || 0;
     const totalNow =
@@ -218,23 +225,30 @@ export async function openCheckoutModal() {
       await apiUpdateProfile({ name, address });
     } catch {}
 
-    const newOrder = await apiCreateOrder({
-      user,
-      slot,
-      voucher,
-      payment,
-      note,
-      status: 'Pending',
-      subtotal,
-      shipping_fee: shipping,
-      discount: discountNow,
-      total: totalNow,
-      items: { ...getCart() },
-    });
+    try {
+      const newOrder = await apiCreateOrder({
+        user,
+        slot,
+        voucher,
+        payment,
+        note,
+        status: 'Pending',
+        subtotal,
+        shipping_fee: shipping,
+        discount: discountNow,
+        total: totalNow,
+        items: { ...getCart() },
+      });
 
-    clearCart();
-    closeCheckoutModal();
-    document.dispatchEvent(new CustomEvent('order:confirmed', { detail: { orderId: newOrder.id } }));
+      clearCart();
+      closeCheckoutModal();
+      document.dispatchEvent(new CustomEvent('order:confirmed', { detail: { orderId: newOrder.id } }));
+    } catch (err) {
+      const msg = err && err.message === 'EMPTY_ORDER'
+        ? 'Giỏ hàng trống, không thể đặt đơn.'
+        : 'Không thể tạo đơn. Vui lòng thử lại.';
+      alert(msg);
+    }
   };
 
   el.hidden = false;
