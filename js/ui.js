@@ -48,7 +48,7 @@ export function renderProducts(productsToRender, favoriteSet) {
     const isSale = Number.isFinite(p.salePercent) && p.salePercent > 0;
     const salePrice = isSale ? p.price * (1 - p.salePercent / 100) : p.price;
     const thumbInner = p.image
-      ? `<img src="${p.image}" alt="${p.name}" loading="lazy" decoding="async" fetchpriority="low" width="300" height="120" style="width:100%;height:120px;object-fit:cover;border-radius:10px;" onerror="this.onerror=null; this.src='../images/brand/LogoVVV.png';" />`
+      ? `<img src="${p.image}" alt="${p.name}" loading="lazy" decoding="async" fetchpriority="low" style="width:100%;height:100%;object-fit:contain;border-radius:12px;" onerror="this.onerror=null; this.src='../images/brand/LogoVVV.png';" />`
       : `${p.emoji || '🛒'}`;
     const badgeHtml = isSale ? `<span class="badge-sale">-${Math.round(p.salePercent)}%</span>` : '';
     const priceHtml = isSale
@@ -146,7 +146,7 @@ export function renderProductsInto(targetEl, productsToRender, favoriteSet) {
       : `<span class="price">${money(p.price)}</span>`;
     const catClass = catToClass(p.cat);
     const thumbInner = p.image
-      ? `<img src="${p.image}" alt="${p.name}" loading="lazy" decoding="async" fetchpriority="low" width="300" height="120" style="width:100%;height:120px;object-fit:cover;border-radius:10px;" onerror="this.onerror=null; this.src='../images/brand/LogoVVV.png';" />`
+      ? `<img src="${p.image}" alt="${p.name}" loading="lazy" decoding="async" fetchpriority="low" style="width:100%;height:100%;object-fit:contain;border-radius:12px;" onerror="this.onerror=null; this.src='../images/brand/LogoVVV.png';" />`
       : `${p.emoji || '🛒'}`;
 
     return `

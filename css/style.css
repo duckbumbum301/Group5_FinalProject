@@ -80,7 +80,7 @@ select.input, input[type="range"]{padding:10px;height:auto}
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px}
 .card{background:var(--white);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:12px;display:flex;flex-direction:column;gap:10px;transition:var(--trans)}
 .card:hover{transform:translateY(-3px)}
-.thumb{border-radius:12px;display:grid;place-items:center;aspect-ratio:16/10;font-size:40px;font-weight:900;color:#fff}
+.thumb{border-radius:12px;display:grid;place-items:center;aspect-ratio:1/1;overflow:hidden;font-size:40px;font-weight:900;color:#fff}
 .thumb--veg{background:linear-gradient(120deg,#31cf7e,#16a34a)}
 .thumb--fruit{background:linear-gradient(120deg,#ffb74a,#ff7a18)}
 .thumb--meat{background:linear-gradient(120deg,#ff6b7a,#e11d48)}
@@ -89,8 +89,8 @@ select.input, input[type="range"]{padding:10px;height:auto}
 .thumb--spice{background:linear-gradient(120deg,#f59e0b,#d97706)}
 .thumb--household{background:linear-gradient(120deg,#8b5cf6,#7c3aed)}
 .thumb--sweet{background:linear-gradient(120deg,#ec4899,#db2777)}
-.name{font-weight:700}
-.meta{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.name{font-weight:700;text-align:center;line-height:1.3;min-height:3.2em;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.meta{display:flex;align-items:center;justify-content:center;gap:12px;text-align:center}
 .price{font-weight:800}
 .kit{display:flex;gap:8px}
 .kit .btn{padding:8px 10px}
@@ -643,6 +643,8 @@ select.input, input[type="range"]{padding:10px;height:auto}
 .flash-actions{display:flex;gap:8px;align-items:center}
 .flash-banner{background:linear-gradient(90deg,#eafff3,#ffffff);border:1px dashed #a7f3d0;border-radius:12px;padding:10px 14px;font-weight:700;color:#065f46;margin-bottom:16px}
 #flashGrid{gap:20px}
+#flashGrid .meta{gap:8px}
+#flashGrid .price--orig{margin-left:6px}
 .pill.active{background:#16a34a;color:#fff;border-color:#16a34a}
 .countdown{color:#065f46;font-weight:600}
 
