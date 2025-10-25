@@ -220,11 +220,18 @@ export function openOrderConfirmModal(orderId) {
     const printBtn = document.getElementById('ocPrintBtn');
     if (printBtn) printBtn.onclick = () => printOrderDetails(ord);
   })();
-  const onClose = () => { const m2 = ensureOrderConfirmModal(); m2.hidden = true; };
-  document.getElementById('ocOverlay')?.addEventListener('click', onClose, { once: true });
-  document.getElementById('ocCloseBtn')?.addEventListener('click', onClose, { once: true });
+  // Bind persistent close handlers once to ensure X works after printing
+  if (!m.hasAttribute('data-bound')) {
+    document.getElementById('ocOverlay')?.addEventListener('click', () => closeOrderConfirmModal());
+    document.getElementById('ocCloseBtn')?.addEventListener('click', () => closeOrderConfirmModal());
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && !m.hidden) closeOrderConfirmModal();
+    });
+    m.setAttribute('data-bound','true');
+  }
   m.hidden = false;
 }
+
 export function closeOrderConfirmModal() {
   const m = ensureOrderConfirmModal();
   m.hidden = true;
@@ -272,10 +279,7 @@ function printOrderDetails(ord) {
   w.focus();
   setTimeout(() => { try { w.print(); } catch (e) {} w.close(); }, 500);
 }
-document.addEventListener('order:confirmed', (e) => {
-  const id = e?.detail?.orderId;
-  openOrderConfirmModal(id);
-});
+
 
 export async function renderOrdersInto(containerEl) {
   if (!containerEl) return;

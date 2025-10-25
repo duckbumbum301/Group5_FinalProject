@@ -120,6 +120,15 @@ function genOrderId() {
 // ========= ORDERS =========
 export async function apiCreateOrder(orderPayload) {
   const orders = lsGet(LS_ORDERS, []);
+  // Validate: không cho tạo đơn nếu không có item hoặc tổng tiền = 0
+  const items = orderPayload?.items || {};
+  const hasItems = Object.values(items).some((q) => Number(q) > 0);
+  const subtotalNum = Number(orderPayload?.subtotal || 0);
+  const totalNum = Number(orderPayload?.total || 0);
+  if (!hasItems || subtotalNum <= 0 || totalNum <= 0) {
+    throw new Error('EMPTY_ORDER');
+  }
+
   const id = genOrderId();
   const createdAt = new Date().toISOString();
   const tracking = [
@@ -198,20 +207,23 @@ function setUsers(list) {
     if (idx === -1) {
       const testUser = {
         id: "seed-0906760495",
-        name: "Tài khoản Demo",
-        email: "",
+        name: "Nguyễn Chí Đức",
+        email: "ilovetranduythanh@gmail.com",
         phone: "0906760495",
-        password: "123123",
-        address: "",
+        password: "10diem10diem",
+        address: "669 Đỗ Mười, khu phố 13, phường Linh Xuân, TP.HCM",
       };
       users.push(testUser);
       setUsers(users);
     } else {
-      // Cập nhật mật khẩu & tên để đảm bảo đăng nhập ổn định
+      // Cập nhật để đảm bảo tài khoản mặc định luôn đúng thông tin yêu cầu
       users[idx] = {
         ...users[idx],
-        name: users[idx].name || "Tài khoản Demo",
-        password: "123123",
+        name: "Nguyễn Chí Đức",
+        email: "ilovetranduythanh@gmail.com",
+        phone: "0906760495",
+        password: "10diem10diem",
+        address: "669 Đỗ Mười, khu phố 13, phường Linh Xuân, TP.HCM",
       };
       setUsers(users);
     }
@@ -379,4 +391,30 @@ export async function apiUpdateProfile({ name, address, phone, email }) {
       address: users[idx].address,
     },
   };
+}
+
+export async function apiChangePassword({ oldPassword, newPassword }) {
+  // Đảm bảo đang đăng nhập
+  let s = null;
+  try { s = JSON.parse(localStorage.getItem(LS_SESSION) || "null"); } catch {}
+  if (!s) return { ok: false, message: "Chưa đăng nhập." };
+
+  const users = getUsers();
+  let idx = -1;
+  if (s.id) idx = users.findIndex((x) => x.id === s.id);
+  if (idx === -1 && s.email) idx = users.findIndex((x) => (x.email || "").toLowerCase() === String(s.email).toLowerCase());
+  if (idx === -1 && s.phone) idx = users.findIndex((x) => (x.phone || "") === String(s.phone));
+  if (idx === -1) return { ok: false, message: "Không tìm thấy người dùng." };
+
+  const curPw = String(oldPassword || "");
+  const newPw = String(newPassword || "");
+  if (!curPw) return { ok: false, message: "Vui lòng nhập mật khẩu hiện tại." };
+  if (users[idx].password !== curPw) return { ok: false, reason: "wrong_old_password", message: "Mật khẩu hiện tại không đúng." };
+  if (!newPw || newPw.length < 6) return { ok: false, reason: "weak_password", message: "Mật khẩu mới phải ≥ 6 ký tự." };
+  if (newPw === curPw) return { ok: false, message: "Mật khẩu mới không được trùng mật khẩu hiện tại." };
+
+  users[idx] = { ...users[idx], password: newPw };
+  setUsers(users);
+  // Không cần cập nhật session vì phiên không lưu password
+  return { ok: true };
 }

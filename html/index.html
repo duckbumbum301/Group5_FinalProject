@@ -25,6 +25,7 @@
       <div class="container header__row">
         <a href="/html/index.html" class="logo" aria-label="Trang chủ Vựa Vui Vẻ"><img src="../images/brand/LogoVVV1.jpg" alt="Vựa Vui Vẻ" class="logo__img" /></a>
         <nav class="nav" aria-label="Điều hướng chính">
+          <a href="#home">Trang chủ</a>
           <div class="nav-item nav-item--dropdown">
             <button
               class="nav-link nav-link--dropdown"
@@ -477,10 +478,8 @@
               </div>
             </div>
           </div>
-          <a href="#flashsale">Flash Sale</a>
           <a href="#recipes">Công thức</a>
           <a href="#about">Giới thiệu</a>
-          <a href="#contact">Liên hệ</a>
         </nav>
         <div class="actions">
           <div class="searchbox" role="search">
@@ -508,38 +507,15 @@
     </header>
 
     <main id="home">
-      <section class="hero">
-        <div class="container hero__grid">
-          <div>
-            <h1>
-              Đi chợ online, <br />
-              tươi — nhanh — vui
-            </h1>
-            <p>
-              Giao nhanh trong ngày, hàng tươi mỗi sáng. Công thức nấu ăn gợi ý
-              và “thêm tất cả vào giỏ” chỉ 1 chạm.
-            </p>
-            <div class="promo-row">
-              <span class="promo">Miễn phí giao ≥ 299k</span>
-              <span class="promo">Giảm 15% Rau & Củ</span>
-              <span class="promo">Thịt/Cá tươi mới mỗi ngày</span>
-            </div>
-          </div>
-          <div class="illus">
-            <div class="illus__emoji" aria-hidden="true">🛒🥬🍊</div>
-          </div>
-        </div>
-      </section>
-
       <!-- Promo banners slider -->
       <section id="promos" class="section" aria-label="Khuyến mãi nổi bật">
         <div class="container">
           <div class="promo-slider">
              <div class="promo-slider__track" id="promoTrack">
-               <div class="promo-slider__slide"><img src="../images/brand/newuser.png" alt="Ưu đãi người mới" /></div>
-               <div class="promo-slider__slide"><img src="../images/brand/xmasbanner.png" alt="Ưu đãi Giáng sinh" /></div>
-               <div class="promo-slider__slide"><img src="../images/brand/haloweenvvv.png" alt="Ưu đãi Halloween" /></div>
                <div class="promo-slider__slide"><img src="../images/brand/Banner.png" alt="Ưu đãi tuần này" /></div>
+               <div class="promo-slider__slide"><img src="../images/brand/newuser.png" alt="Ưu đãi người mới" /></div>
+               <div class="promo-slider__slide"><img src="../images/brand/haloweenvvv.png" alt="Ưu đãi Halloween" /></div>
+               <div class="promo-slider__slide"><img src="../images/brand/xmasbanner.png" alt="Ưu đãi Giáng sinh" /></div>
              </div>
              <button class="promo-slider__arrow prev" id="promoPrev" aria-label="Ảnh trước">‹</button>
              <button class="promo-slider__arrow next" id="promoNext" aria-label="Ảnh sau">›</button>
@@ -553,10 +529,11 @@
         </div>
       </section>
 
+
       <section id="flashsale" class="section">
         <div class="container">
           <div class="title">
-            <h2>⚡ Flash Sale</h2>
+            <h2>Flash Sale</h2>
             <div class="flash-actions">
               <button class="pill" id="tabMorning" data-slot="morning">06:00–08:00</button>
               <button class="pill" id="tabAfternoon" data-slot="afternoon">16:00–18:00</button>
@@ -576,7 +553,7 @@
           <div class="title">
             <h2>Sản phẩm</h2>
             <label class="pill"><input type="checkbox" id="favOnly" /> Chỉ xem Yêu thích</label>
-            <a class="btn btn--outline" href="#flashsale" style="margin-left:8px">⚡ Flash Sale</a>
+
           </div>
           <div class="controls">
             <label for="categoryFilter">Danh mục:</label>
@@ -650,43 +627,7 @@
         </div>
       </section>
 
-      <section id="contact" class="section">
-        <div class="container">
-          <div class="title"><h2>Liên hệ</h2></div>
-          <form id="contactForm" class="contact" novalidate>
-            <input
-              class="input"
-              type="text"
-              name="name"
-              placeholder="Họ và tên"
-              autocomplete="name"
-              required
-            />
-            <input
-              class="input"
-              type="email"
-              name="email"
-              placeholder="Email"
-              autocomplete="email"
-              required
-            />
-            <textarea
-              class="input"
-              name="message"
-              rows="4"
-              placeholder="Lời nhắn..."
-              required
-            ></textarea>
-            <button class="btn btn--pri" type="submit">Gửi</button>
-            <p
-              class="muted"
-              id="contactMsg"
-              role="status"
-              aria-live="polite"
-            ></p>
-          </form>
-        </div>
-      </section>
+      <!-- Section Liên hệ đã được bỏ theo yêu cầu -->
     </main>
 
     <aside
@@ -711,7 +652,7 @@
         <div id="cartItems" class="cart-list"></div>
         <div class="drawer__foot">
           <div class="total-row">
-            <span>Tạm tính</span><strong id="cartSubtotal">0₫</strong>
+            <span>Tạm tính:</span><strong id="cartSubtotal">0đ</strong>
           </div>
           <button class="btn btn--pri" id="checkoutBtn">Thanh toán</button>
         </div>
@@ -737,11 +678,15 @@
         <div class="account-tabs">
           <nav class="account-nav">
             <button class="account-item active" id="acctNavProfile">
-              <span>🧑‍💼 Sửa thông tin cá nhân</span>
+              <span>Sửa thông tin cá nhân</span>
               <span>›</span>
             </button>
             <button class="account-item" id="acctNavOrders">
-              <span>🛍️ Đơn hàng từng mua</span>
+              <span>Đơn hàng từng mua</span>
+              <span>›</span>
+            </button>
+            <button class="account-item" id="acctNavSecurity">
+              <span>Đổi mật khẩu</span>
               <span>›</span>
             </button>
           </nav>
@@ -759,6 +704,15 @@
             </section>
             <section id="accountOrdersPanel" class="account-panel" hidden>
               <div id="accountOrdersBody" class="orders-body" style="padding: 16px"></div>
+            </section>
+            <section id="accountPasswordPanel" class="account-panel" hidden>
+              <form id="changePasswordForm" class="contact" style="padding: 16px">
+                <input class="input" type="password" name="current" placeholder="Mật khẩu hiện tại" autocomplete="current-password" required />
+                <input class="input" type="password" name="new" placeholder="Mật khẩu mới" autocomplete="new-password" required />
+                <input class="input" type="password" name="confirm" placeholder="Xác nhận mật khẩu mới" autocomplete="new-password" required />
+                <button class="btn btn--pri" type="submit">Đổi mật khẩu</button>
+                <p class="muted" id="pwMsg" role="status" aria-live="polite"></p>
+              </form>
             </section>
           </div>
         </div>
@@ -813,8 +767,57 @@
       </div>
     </section>
 
-    <footer class="footer">
-      <div class="container">© <span id="year"></span> Vựa Vui Vẻ</div>
+    <footer class="site-footer">
+      <div class="container">
+        <div class="sf-grid">
+          <div class="sf-cols">
+            <div class="sf-col">
+              <h4>Trang chủ</h4>
+              <ul>
+                <li><a href="#catalog">Sản phẩm</a></li>
+                <li><a href="#flashsale">Flash Sale</a></li>
+                <li><a href="#cart">Giỏ hàng</a></li>
+              </ul>
+            </div>
+            <div class="sf-col">
+              <h4>Về Vựa Vui Vẻ</h4>
+              <ul>
+                <li><a href="#about">Câu chuyện chúng tôi</a></li>
+                <li><a href="#values">Giá trị mang đến</a></li>
+                <li><a href="#mission">Sứ mệnh</a></li>
+              </ul>
+            </div>
+            <div class="sf-col">
+              <h4>Tài khoản</h4>
+              <ul>
+                <li><a href="../client/register.html">Đăng ký</a></li>
+                <li><a href="../client/login.html">Đăng nhập</a></li>
+              </ul>
+            </div>
+            <div class="sf-col">
+              <h4>Liên hệ</h4>
+              <ul>
+                <li>Hotline</li>
+                <li>Địa chỉ</li>
+              </ul>
+            </div>
+            <div class="sf-legal">Điều khoản dịch vụ | Chính sách giao hàng | Chính sách đổi trả</div>
+          </div>
+          <div class="sf-brand">
+            <img class="sf-logo" src="../images/brand/LogoVVV.png" alt="Vựa Vui Vẻ" />
+            <div class="sf-contact">
+              <div>Hotline: <span>012345678</span></div>
+              <div>Địa chỉ liên hệ: <span>Vựa Vui Vẻ</span></div>
+              <div>© <span id="year"></span> vựa vui vẻ</div>
+            </div>
+            <div class="sf-social">
+              <div class="sf-social__label">Theo dõi chúng tôi</div>
+              <a href="#" aria-label="Facebook" class="sf-social__btn">f</a>
+              <a href="#" aria-label="Instagram" class="sf-social__btn">IG</a>
+            </div>
+          </div>
+        </div>
+      </div>
     </footer>
     <script src="../client/auth.js"></script>
     <script type="module" src="../js/main.js?v=flowfix1"></script>

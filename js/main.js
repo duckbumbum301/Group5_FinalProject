@@ -11,6 +11,7 @@ import {
   removeFromCart,
   updateCartQuantity,
   clearCart,
+  getCart,
 } from "./cart.js";
 import { renderUI, renderProducts, openCart, closeCart } from "./ui.js";
 import {
@@ -21,6 +22,7 @@ import {
   apiLogoutUser,
   apiCurrentUser,
   apiUpdateProfile,
+  apiChangePassword,
 } from "./api.js";
 // Lazy-load checkout/orders on demand
 
@@ -113,6 +115,16 @@ const accountForm = $("#accountForm");
 const accountMsg = $("#accountMsg");
 const checkoutBtn = $("#checkoutBtn");
 
+// Toggle trạng thái disabled cho nút Thanh toán theo giỏ hàng
+function updateCheckoutButtonState() {
+  if (!checkoutBtn) return;
+  const entries = Object.entries(getCart()).filter(([, q]) => q > 0);
+  const shouldDisable = entries.length === 0;
+  checkoutBtn.disabled = shouldDisable;
+  checkoutBtn.setAttribute('aria-disabled', shouldDisable ? 'true' : 'false');
+  checkoutBtn.title = shouldDisable ? 'Giỏ hàng trống' : '';
+}
+
 // Account Drawer helpers
 function openAccountDrawer() {
   if (!accountModal) return;
@@ -163,14 +175,18 @@ const registerMsg = document.getElementById("registerMsg");
 const acctNavProfile = document.getElementById('acctNavProfile');
 const acctNavAddress = document.getElementById('acctNavAddress');
 const acctNavOrders = document.getElementById('acctNavOrders');
+const acctNavSecurity = document.getElementById('acctNavSecurity');
 const accountProfilePanel = document.getElementById('accountProfilePanel');
 const accountAddressPanel = document.getElementById('accountAddressPanel');
 const accountOrdersPanel = document.getElementById('accountOrdersPanel');
+const accountPasswordPanel = document.getElementById('accountPasswordPanel');
 const acctAddrCount = document.getElementById('acctAddrCount');
 const acctAddrText = document.getElementById('acctAddrText');
 const acctAddrInline = document.getElementById('acctAddrInline');
 const acctEditAddress = document.getElementById('acctEditAddress');
 const accountOrdersBody = document.getElementById('accountOrdersBody');
+const changePasswordForm = document.getElementById('changePasswordForm');
+const pwMsg = document.getElementById('pwMsg');
 
 function ensureLatLngFields(){
   if(!accountForm) return;
@@ -184,11 +200,15 @@ function addressPanelRefresh(){
   if (acctAddrCount) acctAddrCount.textContent = addr ? '(1)' : '(0)';
 }
 async function setAccountSection(section){
-  [acctNavProfile, acctNavAddress, acctNavOrders].forEach(el=>el?.classList.remove('active'));
+  [acctNavProfile, acctNavOrders, acctNavSecurity, acctNavAddress].forEach(el=>el?.classList.remove('active'));
   if(accountProfilePanel) accountProfilePanel.hidden = section !== 'profile';
-  if(accountAddressPanel) accountAddressPanel.hidden = section !== 'address';
   if(accountOrdersPanel) accountOrdersPanel.hidden = section !== 'orders';
-  const nav = section==='profile'?acctNavProfile:section==='address'?acctNavAddress:acctNavOrders;
+  if(accountPasswordPanel) accountPasswordPanel.hidden = section !== 'password';
+  if(accountAddressPanel) accountAddressPanel.hidden = section !== 'address';
+  const nav = section==='profile'?acctNavProfile
+            : section==='orders'?acctNavOrders
+            : section==='password'?acctNavSecurity
+            : acctNavAddress;
   nav?.classList.add('active');
   if(section==='orders' && accountOrdersBody){
     const mod = await import('./orders.js');
@@ -200,8 +220,9 @@ function initAccountDrawerUI(){
   if(!accountModal) return;
   if(accountModal.hasAttribute('data-bound')) return;
   acctNavProfile?.addEventListener('click', (e)=>{ e.preventDefault(); setAccountSection('profile'); });
-  acctNavAddress?.addEventListener('click', (e)=>{ e.preventDefault(); setAccountSection('address'); });
   acctNavOrders?.addEventListener('click', (e)=>{ e.preventDefault(); setAccountSection('orders'); });
+  acctNavSecurity?.addEventListener('click', (e)=>{ e.preventDefault(); setAccountSection('password'); });
+  acctNavAddress?.addEventListener('click', (e)=>{ e.preventDefault(); setAccountSection('address'); });
   acctEditAddress?.addEventListener('click', async (e)=>{ e.preventDefault(); ensureLatLngFields(); const mod = await import('./checkout.js'); await mod.openAddressPicker(accountForm); addressPanelRefresh(); });
   accountForm?.addEventListener('input', (e)=>{ if(e.target?.name==='address') addressPanelRefresh(); });
   accountModal.setAttribute('data-bound','true');
@@ -561,8 +582,13 @@ function setupListeners() {
     }
   });
 
-  // Checkout guard: ép đăng nhập trước khi mở modal (lazy-load)
+  // Checkout guard: chặn giỏ trống + ép đăng nhập trước khi mở modal
   checkoutBtn.addEventListener("click", async () => {
+    const entries = Object.entries(getCart()).filter(([, q]) => q > 0);
+    if (!entries.length) {
+      showToast("Giỏ hàng đang trống. Vui lòng thêm sản phẩm.");
+      return;
+    }
     const mod = await import("./checkout.js");
     mod.openCheckoutModal();
   });
@@ -579,6 +605,14 @@ function setupListeners() {
     mod.openOrdersModal();
   });
 
+  // NEW: Lazy-load orders confirm when checkout dispatches event
+  document.addEventListener("order:confirmed", async (e) => {
+    try {
+      const mod = await import("./orders.js");
+      const id = e?.detail?.orderId;
+      mod.openOrderConfirmModal(id);
+    } catch {}
+  });
 
   // Auth UI: logout rồi điều hướng sang trang Đăng nhập riêng
   btnLogout?.addEventListener("click", async () => {
@@ -673,6 +707,27 @@ function setupListeners() {
     }
   });
 
+  // Change password: submit để đổi mật khẩu hiện tại
+  changePasswordForm?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const fd = new FormData(changePasswordForm);
+    const cur = String(fd.get('current') || '');
+    const nw = String(fd.get('new') || '');
+    const cf = String(fd.get('confirm') || '');
+    if (pwMsg) pwMsg.textContent = '';
+    if (!cur) { if (pwMsg) pwMsg.textContent = 'Vui lòng nhập mật khẩu hiện tại.'; return; }
+    if (nw.length < 6) { if (pwMsg) pwMsg.textContent = 'Mật khẩu mới tối thiểu 6 ký tự.'; return; }
+    if (nw !== cf) { if (pwMsg) pwMsg.textContent = 'Xác nhận mật khẩu chưa khớp.'; return; }
+    if (pwMsg) pwMsg.textContent = 'Đang đổi mật khẩu...';
+    const res = await apiChangePassword({ oldPassword: cur, newPassword: nw });
+    if (res?.ok) {
+      if (pwMsg) pwMsg.textContent = 'Đổi mật khẩu thành công.';
+      try { changePasswordForm.reset(); } catch {}
+    } else {
+      if (pwMsg) pwMsg.textContent = res?.message || 'Đổi mật khẩu thất bại.';
+    }
+  });
+
   // Recipes & Contact
   recipeAddAllBtn.addEventListener("click", addRecipeToCart);
   contactForm?.addEventListener("submit", onSubmitContact);
@@ -745,10 +800,19 @@ function initPromoSlider(){
    prevBtn?.addEventListener('click', ()=>{ index = (index - 1 + slides.length) % slides.length; apply(); restartAuto(); });
    nextBtn?.addEventListener('click', ()=>{ index = (index + 1) % slides.length; apply(); restartAuto(); });
    let timer;
-   function startAuto(){ timer = setInterval(()=>{ index = (index + 1) % slides.length; apply(); }, 5000); }
+   function startAuto(){ timer = setInterval(()=>{ index = (index + 1) % slides.length; apply(); }, 4000); }
    function restartAuto(){ clearInterval(timer); startAuto(); }
+   // Pause on hover
    slider.addEventListener('mouseenter', ()=> clearInterval(timer));
    slider.addEventListener('mouseleave', ()=> startAuto());
+   // Keyboard navigation
+   slider.setAttribute('tabindex','0');
+   document.addEventListener('keydown', (e)=>{
+     const tag = e.target?.tagName;
+     if (tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT') return;
+     if (e.key === 'ArrowLeft') { prevBtn?.click(); }
+     else if (e.key === 'ArrowRight') { nextBtn?.click(); }
+   });
    window.addEventListener('resize', apply);
    // Touch swipe
    let startX = 0;
@@ -767,6 +831,7 @@ function initPromoSlider(){
 function init() {
   yearEl.textContent = new Date().getFullYear();
   loadCart();
+  updateCheckoutButtonState();
   try {
     const favArr = JSON.parse(localStorage.getItem(LS_FAV) || "[]");
     favs = new Set(favArr);
@@ -799,6 +864,7 @@ function init() {
   refreshCurrentUser();
   document.addEventListener('cart:changed', () => {
     renderUI();
+    updateCheckoutButtonState();
   });
 }
 init();
