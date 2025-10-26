@@ -106,6 +106,7 @@ const cartItems = $("#cartItems");
 const recipeInput = $("#recipeInput");
 const recipeList = $("#recipeList");
 const recipeAddAllBtn = $("#recipeAddAllBtn");
+const recipeSearchBtn = $("#recipeSearchBtn");
 const contactForm = $("#contactForm");
 const contactMsg = $("#contactMsg");
 const accountBtn = $("#accountBtn");
@@ -496,7 +497,7 @@ function handleMegaMenuLinkClick(e) {
 // handlers are imported from ./extras.js
 
 // ---------- Extras setup ----------
-const { addRecipeToCart, onSubmitContact } = createExtras({
+const { addRecipeToCart, onSubmitContact, showRecipeProducts } = createExtras({
   getAllProducts: () => allProducts,
   addToCart,
   openCart,
@@ -818,6 +819,7 @@ function setupListeners() {
 
   // Recipes & Contact
   recipeAddAllBtn.addEventListener("click", addRecipeToCart);
+  if (recipeSearchBtn) recipeSearchBtn.addEventListener("click", showRecipeProducts);
   contactForm?.addEventListener("submit", onSubmitContact);
 
   // Mega Menu (moved wiring to module)
