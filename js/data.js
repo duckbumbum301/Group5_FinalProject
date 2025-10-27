@@ -332,4 +332,227 @@ export const RECIPES = [
       { match: 'Muối', qty: 1 },
     ],
   },
+
+  // --- Bổ sung nhiều công thức ---
+  {
+    name: 'Canh chua cá basa',
+    items: [
+      { match: 'Cá basa', qty: 1 },
+      { match: 'Cà chua', qty: 1 },
+      { match: 'Ngò Gai', qty: 1 },
+      { match: 'Muối', qty: 1 },
+      { match: 'Nước mắm', qty: 1 },
+    ],
+  },
+  {
+    name: 'Canh rau mồng tơi',
+    items: [
+      { match: 'Rau mồng tơi', qty: 1 },
+      { match: 'Hành lá', qty: 1 },
+      { match: 'Muối', qty: 1 },
+    ],
+  },
+  {
+    name: 'Khoai tây xào thịt heo',
+    items: [
+      { match: 'Khoai tây', qty: 1 },
+      { match: 'Thịt heo', qty: 1 },
+      { match: 'Hành lá', qty: 1 },
+      { match: 'Dầu ăn', qty: 1 },
+      { match: 'Muối', qty: 1 },
+    ],
+  },
+  {
+    name: 'Cà rốt xào nấm rơm',
+    items: [
+      { match: 'Cà rốt', qty: 1 },
+      { match: 'Nấm rơm', qty: 1 },
+      { match: 'Dầu ăn', qty: 1 },
+      { match: 'Muối', qty: 1 },
+    ],
+  },
+  {
+    name: 'Cải ngọt xào',
+    items: [
+      { match: 'Cải ngọt', qty: 1 },
+      { match: 'Nước tương', qty: 1 },
+      { match: 'Dầu ăn', qty: 1 },
+      { match: 'Muối', qty: 1 },
+    ],
+  },
+  {
+    name: 'Canh bí xanh thịt heo',
+    items: [
+      { match: 'Bí xanh', qty: 1 },
+      { match: 'Thịt heo', qty: 1 },
+      { match: 'Hành lá', qty: 1 },
+      { match: 'Muối', qty: 1 },
+    ],
+  },
+  {
+    name: 'Canh bầu nấu thịt heo',
+    items: [
+      { match: 'Bầu sao', qty: 1 },
+      { match: 'Thịt heo', qty: 1 },
+      { match: 'Hành lá', qty: 1 },
+      { match: 'Muối', qty: 1 },
+    ],
+  },
+  {
+    name: 'Ức gà áp chảo',
+    items: [
+      { match: 'Ức gà phi lê', qty: 1 },
+      { match: 'Muối', qty: 1 },
+      { match: 'Dầu ăn', qty: 1 },
+    ],
+  },
+  {
+    name: 'Nấm kim châm xào ức gà',
+    items: [
+      { match: 'Nấm kim châm', qty: 1 },
+      { match: 'Ức gà phi lê', qty: 1 },
+      { match: 'Dầu ăn', qty: 1 },
+      { match: 'Muối', qty: 1 },
+    ],
+  },
+  {
+    name: 'Đùi gà chiên nước mắm',
+    items: [
+      { match: 'Đùi gà ta', qty: 1 },
+      { match: 'Nước mắm', qty: 1 },
+      { match: 'Dầu ăn', qty: 1 },
+    ],
+  },
+  {
+    name: 'Cá hồi áp chảo',
+    items: [
+      { match: 'Cá hồi', qty: 1 },
+      { match: 'Muối', qty: 1 },
+      { match: 'Dầu ăn', qty: 1 },
+    ],
+  },
+  {
+    name: 'Cá basa chiên giòn',
+    items: [
+      { match: 'Cá basa', qty: 1 },
+      { match: 'Bột bánh rán', qty: 1 },
+      { match: 'Dầu ăn', qty: 1 },
+      { match: 'Muối', qty: 1 },
+    ],
+  },
+  {
+    name: 'Bắp bò hầm cà rốt',
+    items: [
+      { match: 'Bắp bò', qty: 1 },
+      { match: 'Cà rốt', qty: 1 },
+      { match: 'Hành lá', qty: 1 },
+      { match: 'Muối', qty: 1 },
+    ],
+  },
+  {
+    name: 'Nạm bò xào cải ngồng',
+    items: [
+      { match: 'Nạm bò', qty: 1 },
+      { match: 'Cải ngồng', qty: 1 },
+      { match: 'Dầu ăn', qty: 1 },
+      { match: 'Muối', qty: 1 },
+    ],
+  },
+  {
+    name: 'Cải thìa xào nấm',
+    items: [
+      { match: 'Cải thìa', qty: 1 },
+      { match: 'Nấm rơm', qty: 1 },
+      { match: 'Dầu ăn', qty: 1 },
+      { match: 'Muối', qty: 1 },
+    ],
+  },
+  {
+    name: 'Bạch tuộc xào rau củ',
+    items: [
+      { match: 'Bạch tuộc', qty: 1 },
+      { match: 'Cà rốt', qty: 1 },
+      { match: 'Cải ngọt', qty: 1 },
+      { match: 'Dầu ăn', qty: 1 },
+      { match: 'Muối', qty: 1 },
+    ],
+  },
+  {
+    name: 'Mực xào hành hẹ',
+    items: [
+      { match: 'Râu mực', qty: 1 },
+      { match: 'Hành lá', qty: 1 },
+      { match: 'Hẹ Lá', qty: 1 },
+      { match: 'Dầu ăn', qty: 1 },
+      { match: 'Muối', qty: 1 },
+    ],
+  },
+  {
+    name: 'Rau muống luộc chấm mắm',
+    items: [
+      { match: 'Rau muống', qty: 1 },
+      { match: 'Nước mắm', qty: 1 },
+    ],
+  },
+  {
+    name: 'Salad xà lách cà chua',
+    items: [
+      { match: 'Xà lách', qty: 1 },
+      { match: 'Cà chua', qty: 1 },
+      { match: 'Dầu ăn', qty: 1 },
+      { match: 'Muối', qty: 1 },
+    ],
+  },
+  {
+    name: 'Cải bẹ xanh xào nước tương',
+    items: [
+      { match: 'Cải bẹ xanh', qty: 1 },
+      { match: 'Nước tương', qty: 1 },
+      { match: 'Dầu ăn', qty: 1 },
+    ],
+  },
+  {
+    name: 'Bún thịt heo trộn mắm',
+    items: [
+      { match: 'Bún khô', qty: 1 },
+      { match: 'Thịt heo', qty: 1 },
+      { match: 'Nước mắm', qty: 1 },
+      { match: 'Hành lá', qty: 1 },
+    ],
+  },
+  {
+    name: 'Mì xào rau củ',
+    items: [
+      { match: 'Mì Hảo Hảo', qty: 1 },
+      { match: 'Cà rốt', qty: 1 },
+      { match: 'Rau muống', qty: 1 },
+      { match: 'Dầu ăn', qty: 1 },
+      { match: 'Muối', qty: 1 },
+    ],
+  },
+  {
+    name: 'Cơm ST25 với cá kho',
+    items: [
+      { match: 'Gạo ST25', qty: 1 },
+      { match: 'Cá basa', qty: 1 },
+      { match: 'Nước mắm', qty: 1 },
+    ],
+  },
+  {
+    name: 'Cơm rong biển đơn giản',
+    items: [
+      { match: 'Gạo ST25', qty: 1 },
+      { match: 'Rong biển', qty: 1 },
+      { match: 'Muối', qty: 1 },
+    ],
+  },
+  {
+    name: 'Canh cải bẹ dún thịt heo',
+    items: [
+      { match: 'Cải bẹ dún', qty: 1 },
+      { match: 'Thịt heo', qty: 1 },
+      { match: 'Hành lá', qty: 1 },
+      { match: 'Muối', qty: 1 },
+    ],
+  },
 ];

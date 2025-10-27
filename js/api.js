@@ -213,6 +213,17 @@ export async function apiReturnOrder(orderId) {
   return o;
 }
 
+// Đánh dấu đơn đã thanh toán (giả lập online)
+export async function apiMarkOrderPaid(orderId) {
+  const orders = lsGet(LS_ORDERS, []);
+  const idx = orders.findIndex((o) => o.id === orderId);
+  if (idx === -1) return null;
+  const o = orders[idx];
+  o.payment_status = 'paid';
+  lsSet(LS_ORDERS, orders);
+  return o;
+}
+
 
 // ========= AUTH / USERS =========
 function getUsers() {
