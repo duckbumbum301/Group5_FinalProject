@@ -15,7 +15,6 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="../css/style.css" />
-    <!-- Cache busting + no-cache for go live -->
     <meta
       http-equiv="Cache-Control"
       content="no-cache, no-store, must-revalidate"
@@ -30,17 +29,21 @@
           href="/html/index.html"
           class="logo"
           aria-label="Trang chủ Vựa Vui Vẻ"
-          ><img
+        >
+          <img
             src="../images/brand/LogoVVV1.jpg"
             alt="Vựa Vui Vẻ"
             class="logo__img"
-        /></a>
+          />
+        </a>
         <nav class="nav" aria-label="Điều hướng chính">
+          <a href="index.html">Trang chủ</a>
           <a href="index.html#products">Sản phẩm</a>
           <a href="recipes.html">Công thức</a>
           <a href="aboutus.html">Giới thiệu</a>
         </nav>
-        <div class="searchbox" role="search">
+        <div class="actions">
+          <div class="searchbox" role="search">
             <input
               id="searchInput"
               class="searchbox__input"
@@ -49,14 +52,8 @@
               aria-label="Tìm kiếm sản phẩm"
               autocomplete="on"
             />
-            <button class="searchbox__btn" aria-label="Tìm">
-              <svg class="searchbox__icon" width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                <circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="2" />
-                <line x1="16.65" y1="16.65" x2="21" y2="21" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
-              </svg>
-            </button>
-        </div>
-        <div class="actions">
+            <button class="searchbox__btn" aria-label="Tìm">🔍</button>
+          </div>
           <a
             class="btn btn--icon"
             id="accountBtn"
@@ -77,22 +74,64 @@
 
     <main>
       <!-- Hero Section with Image/Video -->
-      <section class="section" style="padding: 0; background: linear-gradient(135deg, #d7fbe8 0%, #fef9ee 100%);">
+      <section
+        class="section"
+        style="
+          padding: 0;
+          background: linear-gradient(135deg, #d7fbe8 0%, #fef9ee 100%);
+        "
+      >
         <div class="container">
-          <div style="padding: 80px 20px; text-align: center; max-width: 1000px; margin: 0 auto;">
-            <h1 style="font-size: 56px; font-weight: 800; color: #065f46; margin: 0 0 24px; line-height: 1.2;">
+          <div
+            style="
+              padding: 80px 20px;
+              text-align: center;
+              max-width: 1000px;
+              margin: 0 auto;
+            "
+          >
+            <h1
+              style="
+                font-size: 56px;
+                font-weight: 800;
+                color: #065f46;
+                margin: 0 0 24px;
+                line-height: 1.2;
+              "
+            >
               Trợ lý Công thức Nấu ăn
             </h1>
-            <p style="font-size: 24px; color: #333; margin: 0 0 40px; line-height: 1.6;">
-              Tìm công thức yêu thích và thêm tất cả nguyên liệu vào giỏ hàng chỉ với một cú nhấp chuột
+            <p
+              style="
+                font-size: 24px;
+                color: #333;
+                margin: 0 0 40px;
+                line-height: 1.6;
+              "
+            >
+              Tìm công thức yêu thích và thêm tất cả nguyên liệu vào giỏ hàng
+              chỉ với một cú nhấp chuột
             </p>
-            
+
             <!-- [HERO IMAGE/VIDEO PLACEHOLDER - Chèn hình ảnh hoặc video nấu ăn tại đây] -->
-            <div style="border-radius: 20px; overflow: hidden; box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15); margin: 0 auto 40px; max-width: 900px;">
+            <div
+              style="
+                border-radius: 20px;
+                overflow: hidden;
+                box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+                margin: 0 auto 40px;
+                max-width: 900px;
+              "
+            >
               <!-- Thay thế div này bằng video thực tế -->
-              <div style="width: 100%; padding-top: 56.25%; position: relative; background: linear-gradient(135deg, #31cf7e 0%, #ff7a18 100%); display: flex; align-items: center; justify-content: center;">
-                <span style="position: absolute; font-size: 48px;">👨‍🍳</span>
-              </div>
+              <video
+                autoplay
+                muted
+                loop
+                style="width: 100%; height: auto; display: block"
+              >
+                <source src="../vid/introVuavuive.mp4" type="video/mp4" />
+              </video>
               <!-- Video tag example:
               <video autoplay muted loop style="width: 100%; height: auto; display: block;">
                 <source src="../vid/cooking-demo.mp4" type="video/mp4" />
@@ -104,31 +143,75 @@
       </section>
 
       <!-- Main Recipe Assistant -->
-      <section class="section" style="background: #f9fafb;">
+      <section class="section" style="background: #f9fafb">
         <div class="container">
-          <div style="max-width: 900px; margin: 0 auto;">
-            <div class="title" style="margin-bottom: 32px;">
-              <h2 style="font-size: 36px; font-weight: 800; color: #065f46; margin: 0; text-align: center;">
+          <div style="max-width: 900px; margin: 0 auto">
+            <div class="title" style="margin-bottom: 32px">
+              <h2
+                style="
+                  font-size: 36px;
+                  font-weight: 800;
+                  color: #065f46;
+                  margin: 0;
+                  text-align: center;
+                "
+              >
                 Tìm món ăn của bạn
               </h2>
             </div>
-            
-            <div style="background: white; border-radius: 24px; box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08); padding: 40px; margin-bottom: 24px;">
-              <div class="recipe-row" style="display: flex; gap: 12px; flex-wrap: wrap; align-items: flex-start; margin-bottom: 20px;">
+
+            <div
+              style="
+                background: white;
+                border-radius: 24px;
+                box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+                padding: 40px;
+                margin-bottom: 24px;
+              "
+            >
+              <div
+                class="recipe-row"
+                style="
+                  display: flex;
+                  gap: 12px;
+                  flex-wrap: wrap;
+                  align-items: flex-start;
+                  margin-bottom: 20px;
+                "
+              >
                 <input
                   id="recipeInput"
                   class="input"
                   list="recipeList"
                   placeholder="Nhập món: canh bí đỏ, canh chua cá, rau muống xào..."
                   aria-label="Tên món ăn"
-                  style="flex: 1; min-width: 250px; font-size: 18px; padding: 16px; border: 2px solid #d1fae5; border-radius: 16px;"
+                  style="
+                    flex: 1;
+                    min-width: 250px;
+                    font-size: 18px;
+                    padding: 16px;
+                    border: 2px solid #d1fae5;
+                    border-radius: 16px;
+                  "
                 />
                 <datalist id="recipeList"></datalist>
-                <button class="btn btn--pri" id="recipeAddAllBtn" style="font-size: 18px; padding: 16px 32px; border-radius: 16px; white-space: nowrap;">
+                <button
+                  class="btn btn--pri"
+                  id="recipeAddAllBtn"
+                  style="
+                    font-size: 18px;
+                    padding: 16px 32px;
+                    border-radius: 16px;
+                    white-space: nowrap;
+                  "
+                >
                   Thêm tất cả nguyên liệu vào giỏ
                 </button>
               </div>
-              <p class="muted" style="text-align: center; font-size: 16px; margin: 0;">
+              <p
+                class="muted"
+                style="text-align: center; font-size: 16px; margin: 0"
+              >
                 💡 Mẹo: Chọn món trong gợi ý để đúng với công thức dữ liệu mẫu
               </p>
             </div>
@@ -139,46 +222,172 @@
       <!-- How It Works -->
       <section class="section">
         <div class="container">
-          <div style="text-align: center; margin-bottom: 60px;">
-            <h2 style="font-size: 36px; font-weight: 800; color: #065f46; margin: 0 0 16px;">
+          <div style="text-align: center; margin-bottom: 60px">
+            <h2
+              style="
+                font-size: 36px;
+                font-weight: 800;
+                color: #065f46;
+                margin: 0 0 16px;
+              "
+            >
               Cách sử dụng
             </h2>
-            <p style="font-size: 18px; color: #666; max-width: 700px; margin: 0 auto;">
-              Chỉ 3 bước đơn giản để có đầy đủ nguyên liệu cho bữa ăn ngon của bạn
+            <p
+              style="
+                font-size: 18px;
+                color: #666;
+                max-width: 700px;
+                margin: 0 auto;
+              "
+            >
+              Chỉ 3 bước đơn giản để có đầy đủ nguyên liệu cho bữa ăn ngon của
+              bạn
             </p>
           </div>
 
-          <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; max-width: 1200px; margin: 0 auto;">
-            <div style="text-align: center; padding: 32px 24px; background: white; border-radius: 20px; box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);">
-              <div style="width: 80px; height: 80px; background: linear-gradient(135deg, #31cf7e, #16a34a); border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 36px; margin-bottom: 20px;">
+          <div
+            style="
+              display: grid;
+              grid-template-columns: repeat(3, 1fr);
+              gap: 32px;
+              max-width: 1200px;
+              margin: 0 auto;
+            "
+          >
+            <div
+              style="
+                text-align: center;
+                padding: 32px 24px;
+                background: white;
+                border-radius: 20px;
+                box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+              "
+            >
+              <div
+                style="
+                  width: 80px;
+                  height: 80px;
+                  background: linear-gradient(135deg, #31cf7e, #16a34a);
+                  border-radius: 50%;
+                  display: inline-flex;
+                  align-items: center;
+                  justify-content: center;
+                  font-size: 36px;
+                  margin-bottom: 20px;
+                "
+              >
                 🔍
               </div>
-              <h3 style="font-size: 20px; font-weight: 700; color: #065f46; margin: 0 0 12px;">
+              <h3
+                style="
+                  font-size: 20px;
+                  font-weight: 700;
+                  color: #065f46;
+                  margin: 0 0 12px;
+                "
+              >
                 Bước 1: Chọn món
               </h3>
-              <p style="font-size: 16px; color: #666; line-height: 1.6; margin: 0;">
+              <p
+                style="
+                  font-size: 16px;
+                  color: #666;
+                  line-height: 1.6;
+                  margin: 0;
+                "
+              >
                 Gõ tên món ăn bạn muốn nấu hoặc chọn từ danh sách gợi ý
               </p>
             </div>
-            <div style="text-align: center; padding: 32px 24px; background: white; border-radius: 20px; box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);">
-              <div style="width: 80px; height: 80px; background: linear-gradient(135deg, #31cf7e, #16a34a); border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 36px; margin-bottom: 20px;">
+            <div
+              style="
+                text-align: center;
+                padding: 32px 24px;
+                background: white;
+                border-radius: 20px;
+                box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+              "
+            >
+              <div
+                style="
+                  width: 80px;
+                  height: 80px;
+                  background: linear-gradient(135deg, #31cf7e, #16a34a);
+                  border-radius: 50%;
+                  display: inline-flex;
+                  align-items: center;
+                  justify-content: center;
+                  font-size: 36px;
+                  margin-bottom: 20px;
+                "
+              >
                 🛒
               </div>
-              <h3 style="font-size: 20px; font-weight: 700; color: #065f46; margin: 0 0 12px;">
+              <h3
+                style="
+                  font-size: 20px;
+                  font-weight: 700;
+                  color: #065f46;
+                  margin: 0 0 12px;
+                "
+              >
                 Bước 2: Thêm vào giỏ
               </h3>
-              <p style="font-size: 16px; color: #666; line-height: 1.6; margin: 0;">
-                Nhấn nút để tự động thêm tất cả nguyên liệu cần thiết vào giỏ hàng
+              <p
+                style="
+                  font-size: 16px;
+                  color: #666;
+                  line-height: 1.6;
+                  margin: 0;
+                "
+              >
+                Nhấn nút để tự động thêm tất cả nguyên liệu cần thiết vào giỏ
+                hàng
               </p>
             </div>
-            <div style="text-align: center; padding: 32px 24px; background: white; border-radius: 20px; box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);">
-              <div style="width: 80px; height: 80px; background: linear-gradient(135deg, #31cf7e, #16a34a); border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 36px; margin-bottom: 20px;">
+            <div
+              style="
+                text-align: center;
+                padding: 32px 24px;
+                background: white;
+                border-radius: 20px;
+                box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+              "
+            >
+              <div
+                style="
+                  width: 80px;
+                  height: 80px;
+                  background: linear-gradient(135deg, #31cf7e, #16a34a);
+                  border-radius: 50%;
+                  display: inline-flex;
+                  align-items: center;
+                  justify-content: center;
+                  font-size: 36px;
+                  margin-bottom: 20px;
+                "
+              >
                 ✨
               </div>
-              <h3 style="font-size: 20px; font-weight: 700; color: #065f46; margin: 0 0 12px;">
+              <h3
+                style="
+                  font-size: 20px;
+                  font-weight: 700;
+                  color: #065f46;
+                  margin: 0 0 12px;
+                "
+              >
                 Bước 3: Thanh toán
               </h3>
-              <p style="font-size: 16px; color: #666; line-height: 1.6; margin: 0;">
+              <p
+                style="
+                  font-size: 16px;
+                  color: #666;
+                  line-height: 1.6;
+                  margin: 0;
+                "
+              >
                 Tiến hành thanh toán và nhận ngay nguyên liệu tươi ngon tại nhà
               </p>
             </div>
@@ -186,99 +395,80 @@
         </div>
       </section>
 
-      <!-- Featured Recipes -->
-      <section class="section" style="background: linear-gradient(135deg, #f0f9f4 0%, #ffffff 100%);">
+      <!-- All Recipes Grid -->
+      <section
+        class="section"
+        style="background: linear-gradient(135deg, #f0f9f4 0%, #ffffff 100%)"
+        id="allRecipesSection"
+      >
         <div class="container">
-          <div style="text-align: center; margin-bottom: 60px;">
-            <h2 style="font-size: 36px; font-weight: 800; color: #065f46; margin: 0 0 16px;">
-              Công thức nổi bật
+          <div style="text-align: center; margin-bottom: 60px">
+            <h2
+              style="
+                font-size: 36px;
+                font-weight: 800;
+                color: #065f46;
+                margin: 0 0 16px;
+              "
+            >
+              Tất cả công thức nấu ăn
             </h2>
-            <p style="font-size: 18px; color: #666; max-width: 700px; margin: 0 auto;">
-              Những món ăn phổ biến được người dùng yêu thích nhất
+            <p
+              style="
+                font-size: 18px;
+                color: #666;
+                max-width: 700px;
+                margin: 0 auto;
+              "
+            >
+              Khám phá hơn 50 công thức món ăn ngon, đa dạng và dễ làm
             </p>
           </div>
 
-          <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; max-width: 1200px; margin: 0 auto;">
-            <!-- Recipe Card 1 -->
-            <div style="background: white; border-radius: 20px; overflow: hidden; box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08); transition: transform 0.3s ease; cursor: pointer;" 
-                 onmouseover="this.style.transform='translateY(-8px)'" 
-                 onmouseout="this.style.transform='translateY(0)'">
-              <!-- [IMAGE PLACEHOLDER - Chèn hình ảnh món ăn] -->
-              <div style="width: 100%; padding-top: 60%; background: linear-gradient(135deg, #ff7a18 0%, #ffd3a8 100%); position: relative;">
-                <span style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 48px;">🥘</span>
-              </div>
-              <!-- Image example:
-              <img src="../images/recipes/canh-bi-do.jpg" alt="Canh bí đỏ" style="width: 100%; height: auto; display: block;" />
-              -->
-              <div style="padding: 24px;">
-                <h3 style="font-size: 22px; font-weight: 700; color: #065f46; margin: 0 0 16px;">
-                  Canh bí đỏ
-                </h3>
-                <div style="display: flex; flex-wrap: wrap; gap: 8px;">
-                  <span style="background: #f0f9f4; color: #065f46; padding: 6px 12px; border-radius: 12px; font-size: 14px; font-weight: 600;">
-                    🥬 Bí đỏ
-                  </span>
-                  <span style="background: #f0f9f4; color: #065f46; padding: 6px 12px; border-radius: 12px; font-size: 14px; font-weight: 600;">
-                    🥩 Thịt heo
-                  </span>
-                  <span style="background: #f0f9f4; color: #065f46; padding: 6px 12px; border-radius: 12px; font-size: 14px; font-weight: 600;">
-                    🌿 Hành lá
-                  </span>
-                </div>
-              </div>
-            </div>
+          <!-- Recipe Grid Container -->
+          <div
+            id="recipeGrid"
+            style="
+              display: grid;
+              grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+              gap: 32px;
+              max-width: 1200px;
+              margin: 0 auto 40px;
+            "
+          ></div>
 
-            <!-- Recipe Card 2 -->
-            <div style="background: white; border-radius: 20px; overflow: hidden; box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08); transition: transform 0.3s ease; cursor: pointer;"
-                 onmouseover="this.style.transform='translateY(-8px)'" 
-                 onmouseout="this.style.transform='translateY(0)'">
-              <!-- [IMAGE PLACEHOLDER - Chèn hình ảnh món ăn] -->
-              <div style="width: 100%; padding-top: 60%; background: linear-gradient(135deg, #2563eb 0%, #93c5fd 100%); position: relative;">
-                <span style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 48px;">🐟</span>
-              </div>
-              <div style="padding: 24px;">
-                <h3 style="font-size: 22px; font-weight: 700; color: #065f46; margin: 0 0 16px;">
-                  Cá kho tộ
-                </h3>
-                <div style="display: flex; flex-wrap: wrap; gap: 8px;">
-                  <span style="background: #f0f9f4; color: #065f46; padding: 6px 12px; border-radius: 12px; font-size: 14px; font-weight: 600;">
-                    🐟 Cá basa
-                  </span>
-                  <span style="background: #f0f9f4; color: #065f46; padding: 6px 12px; border-radius: 12px; font-size: 14px; font-weight: 600;">
-                    🧂 Nước mắm
-                  </span>
-                  <span style="background: #f0f9f4; color: #065f46; padding: 6px 12px; border-radius: 12px; font-size: 14px; font-weight: 600;">
-                    🍯 Gia vị
-                  </span>
-                </div>
-              </div>
-            </div>
+          <!-- Pagination Controls -->
+          <div
+            style="
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              gap: 16px;
+              flex-wrap: wrap;
+            "
+          >
+            <button
+              id="prevPageBtn"
+              class="btn btn--outline"
+              style="min-width: 120px"
+            >
+              ← Trang trước
+            </button>
 
-            <!-- Recipe Card 3 -->
-            <div style="background: white; border-radius: 20px; overflow: hidden; box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08); transition: transform 0.3s ease; cursor: pointer;"
-                 onmouseover="this.style.transform='translateY(-8px)'" 
-                 onmouseout="this.style.transform='translateY(0)'">
-              <!-- [IMAGE PLACEHOLDER - Chèn hình ảnh món ăn] -->
-              <div style="width: 100%; padding-top: 60%; background: linear-gradient(135deg, #16a34a 0%, #86efac 100%); position: relative;">
-                <span style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 48px;">🥗</span>
-              </div>
-              <div style="padding: 24px;">
-                <h3 style="font-size: 22px; font-weight: 700; color: #065f46; margin: 0 0 16px;">
-                  Rau muống xào tỏi
-                </h3>
-                <div style="display: flex; flex-wrap: wrap; gap: 8px;">
-                  <span style="background: #f0f9f4; color: #065f46; padding: 6px 12px; border-radius: 12px; font-size: 14px; font-weight: 600;">
-                    🥬 Rau muống
-                  </span>
-                  <span style="background: #f0f9f4; color: #065f46; padding: 6px 12px; border-radius: 12px; font-size: 14px; font-weight: 600;">
-                    🧄 Tỏi
-                  </span>
-                  <span style="background: #f0f9f4; color: #065f46; padding: 6px 12px; border-radius: 12px; font-size: 14px; font-weight: 600;">
-                    🥄 Dầu ăn
-                  </span>
-                </div>
-              </div>
-            </div>
+            <div id="pageNumbers" style="display: flex; gap: 8px"></div>
+
+            <button
+              id="nextPageBtn"
+              class="btn btn--outline"
+              style="min-width: 120px"
+            >
+              Trang sau →
+            </button>
+
+            <p
+              id="pageInfo"
+              style="margin: 0 0 0 16px; color: #6b7280; font-size: 14px"
+            ></p>
           </div>
         </div>
       </section>
@@ -286,63 +476,149 @@
       <!-- Benefits Section -->
       <section class="section">
         <div class="container">
-          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; max-width: 1200px; margin: 0 auto;">
+          <div
+            style="
+              display: grid;
+              grid-template-columns: 1fr 1fr;
+              gap: 60px;
+              align-items: center;
+              max-width: 1200px;
+              margin: 0 auto;
+            "
+          >
             <div>
-              <!-- [IMAGE/VIDEO PLACEHOLDER - Chèn hình ảnh hoặc video quy trình nấu ăn] -->
-              <div style="border-radius: 20px; overflow: hidden; box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15); aspect-ratio: 4/3; background: linear-gradient(135deg, #d7fbe8 0%, #fef9ee 100%); display: flex; align-items: center; justify-content: center;">
-                <span style="font-size: 80px;">🎯</span>
+              <div
+                style="
+                  border-radius: 20px;
+                  overflow: hidden;
+                  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
+                  aspect-ratio: 4/3;
+                "
+              >
+                <video
+                  autoplay
+                  muted
+                  loop
+                  style="
+                    width: 100%;
+                    height: 100%;
+                    display: block;
+                    object-fit: cover;
+                  "
+                >
+                  <source src="../vid/introVuavuive.mp4" type="video/mp4" />
+                  <!-- Fallback content -->
+                  <img
+                    src="../images/brand/haloweenvvv.png"
+                    alt="Cooking Process"
+                    style="width: 100%; height: 100%; object-fit: cover"
+                  />
+                </video>
               </div>
-              <!-- Video example:
-              <video autoplay muted loop style="width: 100%; height: auto; display: block; border-radius: 20px; box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);">
-                <source src="../vid/cooking-process.mp4" type="video/mp4" />
-              </video>
-              -->
             </div>
             <div>
-              <h2 style="font-size: 36px; font-weight: 800; color: #065f46; margin: 0 0 24px;">
+              <h2
+                style="
+                  font-size: 36px;
+                  font-weight: 800;
+                  color: #065f46;
+                  margin: 0 0 24px;
+                "
+              >
                 Tiết kiệm thời gian và công sức
               </h2>
-              <p style="font-size: 18px; line-height: 1.8; color: #333; margin-bottom: 20px;">
-                Không cần phải lên danh sách nguyên liệu thủ công hay mất thời gian suy nghĩ về những gì cần mua.
+              <p
+                style="
+                  font-size: 18px;
+                  line-height: 1.8;
+                  color: #333;
+                  margin-bottom: 20px;
+                "
+              >
+                Không cần phải lên danh sách nguyên liệu thủ công hay mất thời
+                gian suy nghĩ về những gì cần mua.
               </p>
-              <p style="font-size: 18px; line-height: 1.8; color: #333; margin-bottom: 20px;">
-                Chỉ với một cú nhấp chuột, tất cả nguyên liệu cần thiết sẽ được thêm vào giỏ hàng của bạn ngay lập tức.
+              <p
+                style="
+                  font-size: 18px;
+                  line-height: 1.8;
+                  color: #333;
+                  margin-bottom: 20px;
+                "
+              >
+                Chỉ với một cú nhấp chuột, tất cả nguyên liệu cần thiết sẽ được
+                thêm vào giỏ hàng của bạn ngay lập tức.
               </p>
-              <p style="font-size: 18px; line-height: 1.8; color: #333; margin: 0;">
-                Nhận giao hàng tận nơi và bắt đầu nấu những món ăn ngon nhất cho gia đình.
+              <p
+                style="
+                  font-size: 18px;
+                  line-height: 1.8;
+                  color: #333;
+                  margin: 0;
+                "
+              >
+                Nhận giao hàng tận nơi và bắt đầu nấu những món ăn ngon nhất cho
+                gia đình.
               </p>
             </div>
           </div>
         </div>
       </section>
-
       <!-- CTA Section -->
-      <section class="section" style="background: linear-gradient(135deg, #065f46 0%, #16a34a 100%); color: white; text-align: center;">
-        <div class="container" style="max-width: 800px;">
-          <h2 style="font-size: 42px; font-weight: 800; margin: 0 0 24px;">
+      <section
+        class="section"
+        style="
+          background: linear-gradient(135deg, #065f46 0%, #16a34a 100%);
+          color: white;
+          text-align: center;
+        "
+      >
+        <div class="container" style="max-width: 800px">
+          <h2 style="font-size: 42px; font-weight: 800; margin: 0 0 24px">
             Sẵn sàng bắt đầu nấu ăn?
           </h2>
-          <p style="font-size: 20px; margin: 0 0 40px; opacity: 0.95;">
+          <p style="font-size: 20px; margin: 0 0 40px; opacity: 0.95">
             Tìm món ăn bạn muốn và để chúng tôi chuẩn bị nguyên liệu cho bạn
           </p>
-          <div style="display: flex; gap: 20px; justify-content: center; flex-wrap: wrap;">
+          <div
+            style="
+              display: flex;
+              gap: 20px;
+              justify-content: center;
+              flex-wrap: wrap;
+            "
+          >
             <a
               href="#recipeInput"
               class="btn btn--pri"
-              style="background: white; color: #065f46; min-width: 200px; font-size: 18px; padding: 16px 32px;"
-              >Thử ngay</a
+              style="
+                background: white;
+                color: #065f46;
+                min-width: 200px;
+                font-size: 18px;
+                padding: 16px 32px;
+              "
             >
+              Thử ngay
+            </a>
             <a
               href="index.html"
               class="btn"
-              style="background: rgba(255, 255, 255, 0.2); color: white; border: 2px solid white; min-width: 200px; font-size: 18px; padding: 16px 32px;"
-              >Xem sản phẩm</a
+              style="
+                background: rgba(255, 255, 255, 0.2);
+                color: white;
+                border: 2px solid white;
+                min-width: 200px;
+                font-size: 18px;
+                padding: 16px 32px;
+              "
             >
+              Xem sản phẩm
+            </a>
           </div>
         </div>
       </section>
     </main>
-
     <footer class="site-footer">
       <div class="container">
         <div class="sf-grid">
@@ -351,7 +627,6 @@
               <h4>Trang chủ</h4>
               <ul>
                 <li><a href="index.html#catalog">Sản phẩm</a></li>
-                <li><a href="index.html#flashsale">Flash Sale</a></li>
                 <li><a href="index.html#cart">Giỏ hàng</a></li>
               </ul>
             </div>
@@ -401,7 +676,6 @@
         </div>
       </div>
     </footer>
-
     <!-- Cart Drawer -->
     <aside
       id="cartDrawer"
@@ -427,19 +701,26 @@
           <div class="total-row">
             <span>Tạm tính:</span><strong id="cartSubtotal">0đ</strong>
           </div>
-          <label class="muted" style="display:flex; align-items:center; gap:8px; margin:8px 0;">
+          <label
+            class="muted"
+            style="display: flex; align-items: center; gap: 8px; margin: 8px 0"
+          >
             <input type="checkbox" id="cartSelectAll" checked />
             Chọn tất cả
           </label>
-          <div class="cart-actions" style="display:flex; gap:8px; flex-wrap:wrap;">
+          <div
+            class="cart-actions"
+            style="display: flex; gap: 8px; flex-wrap: wrap"
+          >
             <button class="btn btn--pri" id="checkoutBtn">Thanh toán</button>
-            <button class="btn btn--outline" id="clearCartBtn">Làm sạch giỏ hàng</button>
+            <button class="btn btn--outline" id="clearCartBtn">
+              Làm sạch giỏ hàng
+            </button>
           </div>
         </div>
       </div>
       <div class="drawer__overlay" id="cartOverlay" tabindex="-1"></div>
     </aside>
-
     <!-- Account Modal -->
     <aside
       id="accountModal"
@@ -453,7 +734,9 @@
       <div class="drawer__panel">
         <div class="drawer__head">
           <h3 id="accountTitle">Tài khoản</h3>
-          <button class="btn btn--icon" id="accountCloseBtn" aria-label="Đóng">Đóng</button>
+          <button class="btn btn--icon" id="accountCloseBtn" aria-label="Đóng">
+            Đóng
+          </button>
         </div>
         <div class="account-tabs">
           <nav class="account-nav">
@@ -473,25 +756,106 @@
           <div class="account-content">
             <section id="accountProfilePanel" class="account-panel">
               <form id="accountForm" class="contact" style="padding: 16px">
-                <input class="input" type="text" name="name" placeholder="Họ và tên" autocomplete="name" required />
-                <input class="input" type="email" name="email" placeholder="Email (không thay đổi sau đăng ký)" autocomplete="email" readonly aria-readonly="true" />
-                <input class="input" type="tel" name="phone" placeholder="Số điện thoại (không thay đổi sau đăng ký)" autocomplete="tel" inputmode="numeric" pattern="\d{9,11}" title="Nhập 9–11 chữ số" readonly aria-readonly="true" />
-                <p class="muted" id="acctAddrInline" role="status" aria-live="polite">Địa chỉ mặc định: </p>
-                <textarea class="input" name="address" rows="3" placeholder="Địa chỉ giao hàng..." autocomplete="street-address" required></textarea>
-                <button class="btn btn--pri" type="submit">Lưu thông tin</button>
-                <p class="muted" id="accountMsg" role="status" aria-live="polite"></p>
+                <input
+                  class="input"
+                  type="text"
+                  name="name"
+                  placeholder="Họ và tên"
+                  autocomplete="name"
+                  required
+                />
+                <input
+                  class="input"
+                  type="email"
+                  name="email"
+                  placeholder="Email (không thay đổi sau đăng ký)"
+                  autocomplete="email"
+                  readonly
+                  aria-readonly="true"
+                />
+                <input
+                  class="input"
+                  type="tel"
+                  name="phone"
+                  placeholder="Số điện thoại (không thay đổi sau đăng ký)"
+                  autocomplete="tel"
+                  inputmode="numeric"
+                  pattern="\d{9,11}"
+                  title="Nhập 9–11 chữ số"
+                  readonly
+                  aria-readonly="true"
+                />
+                <p
+                  class="muted"
+                  id="acctAddrInline"
+                  role="status"
+                  aria-live="polite"
+                >
+                  Địa chỉ mặc định:
+                </p>
+                <textarea
+                  class="input"
+                  name="address"
+                  rows="3"
+                  placeholder="Địa chỉ giao hàng..."
+                  autocomplete="street-address"
+                  required
+                ></textarea>
+                <button class="btn btn--pri" type="submit">
+                  Lưu thông tin
+                </button>
+                <p
+                  class="muted"
+                  id="accountMsg"
+                  role="status"
+                  aria-live="polite"
+                ></p>
               </form>
             </section>
             <section id="accountOrdersPanel" class="account-panel" hidden>
-              <div id="accountOrdersBody" class="orders-body" style="padding: 16px"></div>
+              <div
+                id="accountOrdersBody"
+                class="orders-body"
+                style="padding: 16px"
+              ></div>
             </section>
             <section id="accountPasswordPanel" class="account-panel" hidden>
-              <form id="changePasswordForm" class="contact" style="padding: 16px">
-                <input class="input" type="password" name="current" placeholder="Mật khẩu hiện tại" autocomplete="current-password" required />
-                <input class="input" type="password" name="new" placeholder="Mật khẩu mới" autocomplete="new-password" required />
-                <input class="input" type="password" name="confirm" placeholder="Xác nhận mật khẩu mới" autocomplete="new-password" required />
+              <form
+                id="changePasswordForm"
+                class="contact"
+                style="padding: 16px"
+              >
+                <input
+                  class="input"
+                  type="password"
+                  name="current"
+                  placeholder="Mật khẩu hiện tại"
+                  autocomplete="current-password"
+                  required
+                />
+                <input
+                  class="input"
+                  type="password"
+                  name="new"
+                  placeholder="Mật khẩu mới"
+                  autocomplete="new-password"
+                  required
+                />
+                <input
+                  class="input"
+                  type="password"
+                  name="confirm"
+                  placeholder="Xác nhận mật khẩu mới"
+                  autocomplete="new-password"
+                  required
+                />
                 <button class="btn btn--pri" type="submit">Đổi mật khẩu</button>
-                <p class="muted" id="pwMsg" role="status" aria-live="polite"></p>
+                <p
+                  class="muted"
+                  id="pwMsg"
+                  role="status"
+                  aria-live="polite"
+                ></p>
               </form>
             </section>
           </div>
@@ -502,27 +866,217 @@
       </div>
       <div class="drawer__overlay" id="accountOverlay" tabindex="-1"></div>
     </aside>
-
     <!-- Hidden elements required by main.js -->
-    <div id="year" style="display: none;"></div>
-    <div id="priceValue" style="display: none;"></div>
-    <div id="productGrid" style="display: none;"></div>
-    <div id="priceRange" style="display: none;"></div>
-    <div id="searchToggle" style="display: none;"></div>
-    <div id="searchbar" style="display: none;"></div>
-    <div id="sortSelect" style="display: none;"></div>
-    <div id="categoryFilter" style="display: none;"></div>
-    <div id="favOnly" style="display: none;"></div>
-    <div id="contactForm" style="display: none;"></div>
-    <div id="contactMsg" style="display: none;"></div>
-    <div id="authBadge" style="display: none;"></div>
+    <div id="year" style="display: none"></div>
+    <div id="priceValue" style="display: none"></div>
+    <div id="productGrid" style="display: none"></div>
+    <div id="priceRange" style="display: none"></div>
+    <div id="searchToggle" style="display: none"></div>
+    <div id="searchbar" style="display: none"></div>
+    <div id="sortSelect" style="display: none"></div>
+    <div id="categoryFilter" style="display: none"></div>
+    <div id="favOnly" style="display: none"></div>
+    <div id="contactForm" style="display: none"></div>
+    <div id="contactMsg" style="display: none"></div>
+    <div id="authBadge" style="display: none"></div>
 
     <script src="../client/auth.js"></script>
     <script type="module" src="../js/main.js?v=recipes"></script>
-    <script type="module" src="../js/flash.js"></script>
-    <script>
-      document.getElementById("year").textContent = new Date().getFullYear();
+    <!-- Scripts -->
+    <script src="../js/cart.js"></script>
+    <script src="../js/main.js"></script>
+    <script type="module">
+      import { RECIPES } from "../js/data.js";
+      let currentPage = 1;
+      const recipesPerPage = 9;
+
+      function renderRecipeCard(recipe) {
+        const ingredients = recipe.items
+          .map(
+            (item) =>
+              `<span style="background: #f0f9f4; color: #065f46; padding: 6px 12px; border-radius: 12px; font-size: 14px; font-weight: 600;">${item.match}</span>`
+          )
+          .join("");
+
+        return `
+          <div class="recipe-card" data-recipe-name="${recipe.name.replace(
+            /"/g,
+            "&quot;"
+          )}" 
+               style="background: white; border-radius: 20px; overflow: hidden; box-shadow: 0 8px 24px rgba(0,0,0,0.08); transition: transform 0.3s ease; cursor: pointer;" 
+               onmouseover="this.style.transform='translateY(-8px)'" 
+               onmouseout="this.style.transform='translateY(0)'">
+            <div style="position: relative; padding-top: 66.67%; overflow: hidden;">
+              <img src="${recipe.image}" 
+                   alt="${recipe.name}" 
+                   style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover;"
+                   onerror="this.src='../images/brand/LogoVVV1.jpg';"
+              />
+            </div>
+            <div style="padding: 24px;">
+              <h3 style="font-size: 22px; font-weight: 700; color: #065f46; margin: 0 0 16px;">${
+                recipe.name
+              }</h3>
+              <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+                ${ingredients}
+              </div>
+              <button class="btn btn--pri add-recipe-btn" style="width: 100%; margin-top: 16px; padding: 12px;">
+                Thêm vào giỏ
+              </button>
+            </div>
+          </div>
+        `;
+      }
+
+      function renderPage(page) {
+        const recipeGrid = document.getElementById("recipeGrid");
+        if (!recipeGrid) return;
+
+        const startIndex = (page - 1) * recipesPerPage;
+        const endIndex = startIndex + recipesPerPage;
+        const recipesToShow = RECIPES.slice(startIndex, endIndex);
+
+        recipeGrid.innerHTML = recipesToShow
+          .map((recipe) => renderRecipeCard(recipe))
+          .join("");
+      }
+
+      function renderPagination() {
+        const totalPages = Math.ceil(RECIPES.length / recipesPerPage);
+        const pageNumbers = document.getElementById("pageNumbers");
+        const pageInfo = document.getElementById("pageInfo");
+        const prevBtn = document.getElementById("prevPageBtn");
+        const nextBtn = document.getElementById("nextPageBtn");
+
+        if (!pageNumbers) return;
+
+        // Update page info
+        if (pageInfo) {
+          pageInfo.textContent = `Trang ${currentPage} của ${totalPages}`;
+        }
+
+        // Update navigation buttons
+        if (prevBtn) {
+          prevBtn.disabled = currentPage === 1;
+          prevBtn.style.opacity = currentPage === 1 ? "0.5" : "1";
+          prevBtn.style.cursor = currentPage === 1 ? "not-allowed" : "pointer";
+        }
+
+        if (nextBtn) {
+          nextBtn.disabled = currentPage === totalPages;
+          nextBtn.style.opacity = currentPage === totalPages ? "0.5" : "1";
+          nextBtn.style.cursor =
+            currentPage === totalPages ? "not-allowed" : "pointer";
+        }
+
+        // Render page number buttons
+        let html = "";
+        const maxVisiblePages = 5;
+        let startPage = Math.max(
+          1,
+          currentPage - Math.floor(maxVisiblePages / 2)
+        );
+        let endPage = Math.min(totalPages, startPage + maxVisiblePages - 1);
+
+        if (endPage - startPage < maxVisiblePages - 1) {
+          startPage = Math.max(1, endPage - maxVisiblePages + 1);
+        }
+
+        for (let i = startPage; i <= endPage; i++) {
+          const btnClass =
+            i === currentPage ? "btn btn--pri" : "btn btn--outline";
+          html += `<button class="${btnClass}" data-page="${i}">${i}</button>`;
+        }
+
+        pageNumbers.innerHTML = html;
+      }
+
+      function goToPage(page) {
+        currentPage = page;
+        renderPage(currentPage);
+        renderPagination();
+
+        // Scroll to top of recipes section
+        const section = document.getElementById("allRecipesSection");
+        if (section) {
+          window.scrollTo({ top: section.offsetTop - 80, behavior: "smooth" });
+        }
+      }
+
+      window.selectRecipe = function (recipeName) {
+        const input = document.getElementById("recipeInput");
+        if (input) {
+          input.value = recipeName;
+          // Trigger add to cart
+          const event = new Event("input", { bubbles: true });
+          input.dispatchEvent(event);
+        }
+      };
+
+      // Initialize
+      document.addEventListener("DOMContentLoaded", () => {
+        renderPage(currentPage);
+        renderPagination();
+
+        // Add event listeners for pagination controls
+        const prevBtn = document.getElementById("prevPageBtn");
+        const nextBtn = document.getElementById("nextPageBtn");
+        const pageNumbers = document.getElementById("pageNumbers");
+
+        if (prevBtn) {
+          prevBtn.addEventListener("click", () => {
+            if (currentPage > 1) goToPage(currentPage - 1);
+          });
+        }
+
+        if (nextBtn) {
+          nextBtn.addEventListener("click", () => {
+            const totalPages = Math.ceil(RECIPES.length / recipesPerPage);
+            if (currentPage < totalPages) goToPage(currentPage + 1);
+          });
+        }
+
+        // Add event delegation for page number buttons
+        if (pageNumbers) {
+          pageNumbers.addEventListener("click", (e) => {
+            const btn = e.target.closest("button[data-page]");
+            if (btn) {
+              const page = parseInt(btn.getAttribute("data-page"));
+              if (page && page !== currentPage) {
+                goToPage(page);
+              }
+            }
+          });
+        }
+
+        // Add event delegation for recipe cards
+        const recipeGrid = document.getElementById("recipeGrid");
+        if (recipeGrid) {
+          recipeGrid.addEventListener("click", (e) => {
+            // Handle "Add to Cart" button clicks
+            if (e.target.classList.contains("add-recipe-btn")) {
+              e.stopPropagation();
+              const card = e.target.closest(".recipe-card");
+              const recipeName = card.getAttribute("data-recipe-name");
+              if (recipeName) {
+                selectRecipe(recipeName);
+              }
+            }
+
+            // Handle card clicks to select recipe
+            if (e.target.closest(".recipe-card")) {
+              const card = e.target.closest(".recipe-card");
+              const recipeName = card.getAttribute("data-recipe-name");
+              if (
+                recipeName &&
+                !e.target.classList.contains("add-recipe-btn")
+              ) {
+                selectRecipe(recipeName);
+              }
+            }
+          });
+        }
+      });
     </script>
   </body>
 </html>
-
