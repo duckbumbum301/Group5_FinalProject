@@ -3,7 +3,7 @@
 // - Nút “Tài khoản” link với phần client và lưu trang hiện tại để quay lại
 // - Sau khi thanh toán: clear giỏ + mở modal “Đơn Hàng”
 
-import { $, money, debounce, normalizeVN, ensureDatalist } from "./utils.js";
+import { $, money, debounce, normalizeVN, ensureDatalist, getFlashEffectivePrice } from "./utils.js";
 import { RECIPES } from "./data.js";
 import {
   loadCart,
@@ -365,7 +365,7 @@ function ensureProductModal() {
     el.id = "productModal";
     el.className = "modal";
     el.hidden = true;
-    el.innerHTML = `<div class="modal__overlay" id="productOverlay"></div><div class="modal__panel"><header class="modal__head"><h3 id="pmTitle">Chi tiết sản phẩm</h3><button class="btn btn--icon" id="pmClose">✕</button></header><div class="pm-body"><div class="pm-thumb" id="pmThumb">🛒</div><div class="pm-info"><div class="pm-name" id="pmName"></div><div class="pm-price" id="pmPrice"></div><p class="pm-desc" id="pmDesc"></p><label class="pm-qty">SL: <input id="pmQty" type="number" min="1" step="1" value="1" /></label><button class="btn btn--pri" id="pmAdd">Thêm vào giỏ</button></div></div></div>`;
+    el.innerHTML = `<div class="modal__overlay" id="productOverlay"></div><div class="modal__panel"><header class="modal__head"><h3 id="pmTitle">Chi tiết sản phẩm</h3><button class="btn btn--icon" id="pmClose">✕</button></header><div class="pm-body"><div class="pm-thumb" id="pmThumb">🛒</div><div class="pm-info"><div class="pm-name" id="pmName"></div><div class="rating pm-rating" id="pmRating" aria-label="Đánh giá"></div><div class="pm-price" id="pmPrice"></div><p class="pm-desc" id="pmDesc"></p><label class="pm-qty">SL: <input id="pmQty" type="number" min="1" step="1" value="1" /></label><button class="btn btn--pri" id="pmAdd">Thêm vào giỏ</button></div></div></div>`;
     document.body.appendChild(el);
     $("#pmClose", el).addEventListener("click", closeProductModal);
     $("#productOverlay", el).addEventListener("click", closeProductModal);
@@ -376,13 +376,24 @@ function ensureProductModal() {
   return el;
 }
 let currentProductId = null;
-async function openProductModal(productId) {
+export async function openProductModal(productId, opts = {}) {
   const modal = ensureProductModal();
   const p = await apiGetProductById(productId);
   if (!p) return;
   currentProductId = p.id;
   $("#pmName", modal).textContent = p.name;
-  $("#pmPrice", modal).textContent = money(p.price) + " • " + p.unit;
+  // Sao đánh giá: lưu/đọc từ localStorage (vvv_rating) giống ui.js
+  let ratingMap = {};
+  try { ratingMap = JSON.parse(localStorage.getItem('vvv_rating') || '{}'); } catch {}
+  if (!ratingMap[p.id]) {
+    ratingMap[p.id] = Math.max(1, Math.min(5, Math.floor(Math.random() * 5) + 1));
+    try { localStorage.setItem('vvv_rating', JSON.stringify(ratingMap)); } catch {}
+  }
+  const stars = Array.from({ length: 5 }, (_, i) => i < (ratingMap[p.id] || 1) ? '★' : '☆').join('');
+  $("#pmRating", modal).textContent = stars;
+  const pctFromCtx = typeof opts.salePercent === 'number' ? opts.salePercent : 0;
+  const eff = pctFromCtx > 0 ? Math.round(p.price * (100 - pctFromCtx) / 100) : (getFlashEffectivePrice ? getFlashEffectivePrice(p) : p.price);
+  $("#pmPrice", modal).textContent = money(eff) + " • " + p.unit;
   $("#pmDesc", modal).textContent =
     "Sản phẩm tươi ngon, giao nhanh trong ngày. (Mô tả demo)";
   const pmThumb = $("#pmThumb", modal);
@@ -590,11 +601,21 @@ function setupListeners() {
     filters.nameTokens = [];
     renderWithPagination();
   });
+  const updatePriceRangeFill = () => {
+    const min = +priceRange.min || 0;
+    const max = +priceRange.max || 100;
+    const val = +priceRange.value || min;
+    const pct = Math.round(((val - min) / (max - min)) * 100);
+    priceRange.style.setProperty('--progress', pct + '%');
+  };
   priceRange.addEventListener("input", (e) => {
     filters.priceMax = +e.target.value;
     priceValue.textContent = `≤ ${money(filters.priceMax)}`;
+    updatePriceRangeFill();
     renderWithPagination();
   });
+  // init gradient fill based on initial value
+  updatePriceRangeFill();
 
   // Account dropdown toggle
   accountMenuBtn?.addEventListener("click", (e) => {
@@ -838,11 +859,17 @@ function setupListeners() {
       showToast(`${product?.name || "Sản phẩm"} đã được thêm vào giỏ hàng.`);
       addToCart(pid, 1);
     }
-    if (action === "fav") { 
+    if (action === "fav") {
+      // Ngăn các handler khác bắt sự kiện để đảm bảo click tim luôn hoạt động (giống Flash Sale)
+      e.preventDefault();
+      e.stopImmediatePropagation();
       // Hiệu ứng rung tim
       btn.classList.add("fav-anim");
       btn.addEventListener("animationend", () => btn.classList.remove("fav-anim"), { once: true });
-      // Toggle fav + phát sự kiện
+      // Đồng bộ trạng thái aria-pressed trước khi lưu
+      const on = btn.getAttribute("aria-pressed") !== "true";
+      btn.setAttribute("aria-pressed", on ? "true" : "false");
+      // Toggle fav + phát sự kiện đồng bộ
       toggleFav(pid, btn);
     }
   });

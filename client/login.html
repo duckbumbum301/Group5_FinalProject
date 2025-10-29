@@ -15,10 +15,6 @@
       <!-- Trang: Login -->
       <div class="row">
         <h1 align="center">Đăng nhập</h1>
-        <div style="text-align: center; margin-top: 10px">
-          <a class="btn btn-ghost right" href="index.html">Trang chủ</a>
-          <a class="btn btn-ghost right" href="register.html">Chưa có tài khoản? Đăng ký</a>
-        </div>
       </div>
       <p class="muted">
         Nhập <strong>Tài khoản</strong> và <strong>Mật khẩu</strong> để tiếp tục.
@@ -28,7 +24,7 @@
     <form id="formLogin" novalidate>
       <table class="form-table">
         <tr>
-          <td><label for="liAccount"><strong>Tài khoản</strong></label></td>
+          <td><label for="liAccount">Tài khoản</label></td>
           <td>
             <input
               id="liAccount"
@@ -64,8 +60,13 @@
         </tr>
       </table>
 
-      <div class="row" style="text-align: right; margin-top: 10px">
-        <button class="btn btn-primary">Đăng nhập</button>
+      <div class="nav-actions" aria-label="điều hướng">
+        <a class="btn btn-ghost" href="index.html">Trang chủ</a>
+        <a class="btn btn-ghost" href="register.html">Chưa có tài khoản? Đăng ký</a>
+      </div>
+
+      <div class="login-actions">
+        <button class="btn btn-primary" type="submit">Đăng nhập</button>
       </div>
 
       <p id="loginMsg" class="alert" style="display: none"></p>

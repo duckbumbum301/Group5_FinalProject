@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&display=swap');
 :root{
   --bg:#f6fbf8; --panel:#ffffff; --muted:#5b6b63; --text:#0b1f17;
   --green:#16a34a; --green-2:#0f7a38; --red:#dc2626; --amber:#d97706;
@@ -5,7 +6,7 @@
 }
 *{box-sizing:border-box}
 html,body{height:100%}
-body{margin:0; font:14px/1.5 system-ui, -apple-system, Segoe UI, Roboto, sans-serif; color:var(--text); background:linear-gradient(180deg,#ffffff,#f2faf5);} 
+body{margin:0; font:14px/1.5 'Montserrat', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif; color:var(--text); background:linear-gradient(180deg,#ffffff,#f2faf5);} 
 a{color:inherit; text-decoration:none}
 .muted{color:var(--muted)} .small{font-size:12px}
 

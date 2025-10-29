@@ -2,7 +2,37 @@
 import { $, money } from './utils.js';
 import { apiListProducts, apiGetProductById } from './api.js';
 import { addToCart, removeFromCart, updateCartQuantity } from './cart.js';
-import { renderProductsInto, openCart, closeCart } from './ui.js';
+import { renderProductsInto, closeCart } from './ui.js';
+import { openProductModal } from './main.js';
+
+// Toast helper (đồng bộ với main.js)
+function ensureToastContainer() {
+  let c = document.getElementById('toastContainer');
+  if (!c) {
+    c = document.createElement('div');
+    c.id = 'toastContainer';
+    c.className = 'toast-container';
+    document.body.appendChild(c);
+  }
+  return c;
+}
+function showToast(message, duration = 2500) {
+  const container = ensureToastContainer();
+  const t = document.createElement('div');
+  t.className = 'toast';
+  t.innerHTML = `<span class="toast-message">${message}</span><button class="toast-close" aria-label="Close">×</button>`;
+  container.appendChild(t);
+  requestAnimationFrame(() => t.classList.add('show'));
+  const remove = () => {
+    t.classList.remove('show');
+    t.addEventListener('transitionend', () => t.remove(), { once: true });
+  };
+  const timer = setTimeout(remove, duration);
+  t.querySelector('.toast-close').addEventListener('click', () => {
+    clearTimeout(timer);
+    remove();
+  });
+}
 
 // Cấu hình khung giờ
 const SLOTS = [
@@ -99,10 +129,18 @@ async function renderSlot(slotKey){
   if (gridEl._flashHandler) gridEl.removeEventListener('click', gridEl._flashHandler);
   const onGridClick = (e) => {
     const btn = e.target.closest('[data-action]');
-    if (!btn) return;
     const card = e.target.closest('.card');
     const pid = card?.dataset?.id;
-    if (!pid) return;
+    if (!card || !pid) return;
+    // Nếu click vào khoảng trống của card (không phải nút) -> mở modal chi tiết
+    if (!btn) {
+      e.preventDefault();
+      e.stopPropagation();
+      const prod = withSale.find(p => String(p.id) === String(pid));
+      const pct = prod?.salePercent || 0;
+      openProductModal(pid, { salePercent: pct });
+      return;
+    }
     const action = btn.dataset.action;
     if (action === 'add') {
       // Ngăn mọi handler khác chạy trên cùng target
@@ -122,7 +160,7 @@ async function renderSlot(slotKey){
         }
       }
       addToCart(pid, 1);
-      openCart();
+      showToast(`${prod?.name || 'Sản phẩm'} đã được thêm vào giỏ hàng.`);
     }
     if (action === 'fav') {
       // Hiệu ứng rung tim

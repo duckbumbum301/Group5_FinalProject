@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&display=swap');
 /* ==========================================================================
    VỰA VUI VẺ — CLIENT UI
    Tập trung cho 3 trang auth (index, login, register) + 1 trang profile
@@ -40,7 +41,7 @@ body {
 body {
   margin: 0;
   color: var(--text);
-  font: 15px/1.6 Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial,
+  font: 15px/1.6 'Montserrat', system-ui, -apple-system, 'Segoe UI', Roboto, Arial,
     sans-serif;
   background: var(--bg-grad), var(--bg);
 }
@@ -334,9 +335,16 @@ select:focus {
 .pw-toggle[aria-pressed="true"] {
   color: #22c55e;
 }
+/* Hiển thị đúng icon mắt: mặc định hiện eye, khi active hiện eye-off */
+.pw-toggle .icon-eye-off { display: none; }
+.pw-toggle.active { color: #22c55e; }
+.pw-toggle.active .icon-eye { display: none; }
+.pw-toggle.active .icon-eye-off { display: block; }
 
 /* Fresh Green theme overrides */
 .theme-green {
+  --primary: #4c9f3f; /* xanh chính theo yêu cầu */
+  --primary-2: #2f7f31; /* xanh đậm hơn để tạo gradient */
   --bg: #d6f7e3; /* đậm hơn xíu so với trước */
   --bg-grad: radial-gradient(1200px 600px at 10% 0%, #b6f2c7 0%, transparent 60%),
               radial-gradient(900px 500px at 85% 20%, #91e7b0 0%, transparent 65%),
@@ -365,6 +373,8 @@ select:focus {
 /* Override: Trang auth muốn bỏ khung hoàn toàn */
  .page-center.theme-green .container.container--bare { background: transparent; border: 0; box-shadow: none; backdrop-filter: none; }
  .page-center.theme-green .btn-ghost { background: transparent; border: 2px solid var(--text); }
+  /* Thu nhỏ chiều cao nút ghost trên trang auth */
+  .page-center.theme-green .btn-ghost { padding: 10px 18px; border-radius: 20px; }
 
  /* Auth line edit: pill inputs với xanh lá nhạt */
  .page-center.theme-green input,
@@ -400,7 +410,31 @@ select:focus {
 /* Tránh khung lồng khung: bỏ ring trên input bên trong pw-wrap */
 .page-center.theme-green .pw-wrap input:focus { box-shadow: none !important; }
 .page-center.theme-green .pw-toggle { color: var(--text); }
- 
+
+/* ===== Register: Submit button full-width dưới cùng ===== */
+#formRegister .register-actions { margin-top: 12px; }
+#formRegister .register-actions .btn-primary {
+  width: 100%;
+  padding: 16px 18px;
+  border-radius: 28px;
+  font-size: 18px;
+}
+@media (max-width: 420px) {
+  #formRegister .register-actions .btn-primary { padding: 14px 16px; font-size: 16px; }
+}
+
+/* ===== Login: Submit button full-width dưới cùng ===== */
+#formLogin .login-actions { margin-top: 12px; }
+#formLogin .login-actions .btn-primary {
+  width: 100%;
+  padding: 16px 18px;
+  border-radius: 28px;
+  font-size: 18px;
+}
+@media (max-width: 420px) {
+  #formLogin .login-actions .btn-primary { padding: 14px 16px; font-size: 16px; }
+}
+
  /* ========== Mở rộng khu vực hiển thị ở trang hồ sơ ========== */
 .page--wide { max-width: min(1280px, 95vw); }
 
@@ -414,3 +448,28 @@ select:focus {
 }
 .order-head { display: flex; justify-content: space-between; gap: 8px; }
 .order-total { font-weight: 700; }
+.nav-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin: 12px 0 10px;
+}
+/* Nav actions: bỏ khung, dùng chữ gradient xanh để rõ là nút bấm */
+.page-center.theme-green .nav-actions a {
+  display: inline-flex;
+  align-items: center;
+  border: 0;
+  padding: 6px 10px;
+  border-radius: 0;
+  background: transparent;
+  text-decoration: none;
+  font-weight: 800;
+  cursor: pointer;
+  color: transparent;
+  background-image: linear-gradient(90deg, var(--primary), var(--primary-2));
+  -webkit-background-clip: text;
+  background-clip: text;
+  box-shadow: none;
+}
+.page-center.theme-green .nav-actions a:hover { filter: brightness(1.06); }

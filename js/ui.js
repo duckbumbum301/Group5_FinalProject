@@ -54,16 +54,26 @@ export function renderProducts(productsToRender, favoriteSet) {
     const priceHtml = isSale
       ? `<span class="price price--sale">${money(salePrice)}</span> <span class="price price--orig">${money(p.price)}</span>`
       : `<span class="price">${money(p.price)}</span>`;
+
+    // Rating: lấy từ localStorage nếu có, ngược lại random 1–5 và lưu lại
+    let ratingMap = {};
+    try { ratingMap = JSON.parse(localStorage.getItem('vvv_rating') || '{}'); } catch {}
+    if (!ratingMap[p.id]) {
+      ratingMap[p.id] = Math.max(1, Math.min(5, Math.floor(Math.random() * 5) + 1));
+      try { localStorage.setItem('vvv_rating', JSON.stringify(ratingMap)); } catch {}
+    }
+    const stars = Array.from({ length: 5 }, (_, i) => i < (ratingMap[p.id] || 1) ? '★' : '☆').join('');
     return `
     <article class="card" data-id="${p.id}">
       <div class="thumb ${catClass}" aria-hidden="true">${thumbInner}${badgeHtml}</div>
+      <div class="rating" aria-label="Đánh giá">${stars}</div>
       <div class="name">${p.name}</div>
       <div class="meta">
-        ${priceHtml}
-        <div class="kit">
-          <button class="btn fav" aria-pressed="${favPressed}" data-action="fav">❤️</button>
-          <button class="btn btn--pri" data-action="add">Thêm</button>
-        </div>
+        <div class="pricegroup">${priceHtml}</div>
+        <button class="btn btn--fav fav" aria-pressed="${favPressed}" data-action="fav" aria-label="Yêu thích"><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5c0-2.62 2.13-4.75 4.75-4.75 1.77 0 3.39.91 4.25 2.31.86-1.4 2.48-2.31 4.25-2.31 2.62 0 4.75 2.13 4.75 4.75 0 3.78-3.4 6.86-8.55 11.54z"/></svg></button>
+      </div>
+      <div class="card__foot">
+        <button class="btn btn--cart" data-action="add" aria-label="Thêm vào giỏ">Thêm vào giỏ</button>
       </div>
     </article>`;
   };
@@ -158,16 +168,26 @@ export function renderProductsInto(targetEl, productsToRender, favoriteSet) {
       ? `<img src="${p.image}" alt="${p.name}" loading="lazy" decoding="async" fetchpriority="low" style="width:100%;height:100%;object-fit:contain;border-radius:12px;" onerror="this.onerror=null; this.src='../images/brand/LogoVVV.png';" />`
       : `${p.emoji || '🛒'}`;
 
+    // Rating ổn định theo product id
+    let ratingMap = {};
+    try { ratingMap = JSON.parse(localStorage.getItem('vvv_rating') || '{}'); } catch {}
+    if (!ratingMap[p.id]) {
+      ratingMap[p.id] = Math.max(1, Math.min(5, Math.floor(Math.random() * 5) + 1));
+      try { localStorage.setItem('vvv_rating', JSON.stringify(ratingMap)); } catch {}
+    }
+    const stars = Array.from({ length: 5 }, (_, i) => i < (ratingMap[p.id] || 1) ? '★' : '☆').join('');
+
     return `
       <article class="card" data-id="${p.id}">
         <div class="thumb ${catClass}" aria-hidden="true">${thumbInner}${badgeHtml}</div>
+        <div class="rating" aria-label="Đánh giá">${stars}</div>
         <div class="name">${p.name}</div>
         <div class="meta">
-          ${priceHtml}
-          <div class="kit">
-            <button class="btn fav" aria-pressed="${isFav ? 'true' : 'false'}" data-action="fav">❤️</button>
-            <button class="btn btn--pri" data-action="add">Thêm</button>
-          </div>
+          <div class="pricegroup">${priceHtml}</div>
+          <button class="btn btn--fav fav" aria-pressed="${isFav ? 'true' : 'false'}" data-action="fav" aria-label="Yêu thích"><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5c0-2.62 2.13-4.75 4.75-4.75 1.77 0 3.39.91 4.25 2.31.86-1.4 2.48-2.31 4.25-2.31 2.62 0 4.75 2.13 4.75 4.75 0 3.78-3.4 6.86-8.55 11.54z"/></svg></button>
+        </div>
+        <div class="card__foot">
+          <button class="btn btn--cart" data-action="add" aria-label="Thêm vào giỏ">Thêm vào giỏ</button>
         </div>
       </article>`;
   }).join('');
