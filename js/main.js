@@ -148,11 +148,11 @@ function setSelAll(mode){
 function syncSelectionMapWithCart(){
   const base = getCart();
   const sel = getSelMap();
-  const pref = getSelAll();
   let changed = false;
-  // mặc định chọn theo prefer nếu chưa có key
+  // mặc định CHỌN SẴN cho sản phẩm mới thêm vào giỏ
+  // (không phụ thuộc trạng thái "Chọn tất cả")
   Object.entries(base).forEach(([pid,q])=>{
-    if (q>0 && !(pid in sel)) { sel[pid] = (pref === 'none') ? false : true; changed = true; }
+    if (q>0 && !(pid in sel)) { sel[pid] = true; changed = true; }
   });
   // loại bỏ key không còn trong giỏ
   Object.keys(sel).forEach((pid)=>{
@@ -365,7 +365,7 @@ function ensureProductModal() {
     el.id = "productModal";
     el.className = "modal";
     el.hidden = true;
-    el.innerHTML = `<div class="modal__overlay" id="productOverlay"></div><div class="modal__panel"><header class="modal__head"><h3 id="pmTitle">Chi tiết sản phẩm</h3><button class="btn btn--icon" id="pmClose">✕</button></header><div class="pm-body"><div class="pm-thumb" id="pmThumb">🛒</div><div class="pm-info"><div class="pm-name" id="pmName"></div><div class="rating pm-rating" id="pmRating" aria-label="Đánh giá"></div><div class="pm-price" id="pmPrice"></div><p class="pm-desc" id="pmDesc"></p><label class="pm-qty">SL: <input id="pmQty" type="number" min="1" step="1" value="1" /></label><button class="btn btn--pri" id="pmAdd">Thêm vào giỏ</button></div></div></div>`;
+    el.innerHTML = `<div class="modal__overlay" id="productOverlay"></div><div class="modal__panel"><header class="modal__head"><h3 id="pmTitle">Chi tiết sản phẩm</h3><button class="btn btn--icon" id="pmClose">✕</button></header><div class="pm-body"><div class="pm-thumb" id="pmThumb">🛒</div><div class="pm-info"><div class="pm-name" id="pmName"></div><div class="rating pm-rating" id="pmRating" aria-label="Đánh giá"></div><div class="pm-price" id="pmPrice"></div><p class="pm-desc" id="pmDesc"></p><div class="pm-reviews" id="pmReviews" aria-live="polite"></div><label class="pm-qty">SL: <input id="pmQty" type="number" min="1" step="1" value="1" /></label><button class="btn btn--pri" id="pmAdd">Thêm vào giỏ</button></div></div></div>`;
     document.body.appendChild(el);
     $("#pmClose", el).addEventListener("click", closeProductModal);
     $("#productOverlay", el).addEventListener("click", closeProductModal);
@@ -411,6 +411,8 @@ export async function openProductModal(productId, opts = {}) {
     closeProductModal();
     openCart();
   };
+  // Render phần đánh giá từ dữ liệu đã lưu
+  try { renderPmReviews(p.id); } catch {}
   modal.hidden = false;
 }
 function closeProductModal() {
@@ -428,6 +430,54 @@ function attachCardClicks() {
     });
   });
 }
+
+// --- Reviews in Product Modal ---
+function sanitizeInline(str) {
+  return String(str || '')
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;');
+}
+function renderStars(n) {
+  const val = Math.max(0, Math.min(5, Number(n) || 0));
+  return Array.from({ length: 5 }, (_, i) => (i < val ? '★' : '☆')).join('');
+}
+function renderPmReviews(productId) {
+  const modal = ensureProductModal();
+  const cont = $("#pmReviews", modal);
+  if (!cont) return;
+  const all = (window.VVVReviews?.Local.getAll() || []).filter(r => String(r.productId) === String(productId));
+  if (!all.length) {
+    cont.innerHTML = `<div class="pm-reviews__empty">Chưa có đánh giá cho sản phẩm này.</div>`;
+    return;
+  }
+  const avg = Math.round(all.reduce((s, r) => s + (Number(r.rating) || 0), 0) / all.length);
+  const avgStars = renderStars(avg);
+  const items = all.slice().reverse().slice(0, 3).map(r => {
+    const short = sanitizeInline(String(r.comment || '').trim().slice(0, 120));
+    return `<li><span class="pm-reviews__stars" aria-label="${r.rating} sao">${renderStars(r.rating)}</span> <span class="pm-reviews__comment">${short}</span></li>`;
+  }).join('');
+  cont.innerHTML = `
+    <div class="pm-reviews__header">
+      <strong>Đánh giá</strong>
+      <span class="pm-reviews__stars" aria-label="${avg} sao">${avgStars}</span>
+      <span class="pm-reviews__count">(${all.length})</span>
+    </div>
+    <ul class="pm-reviews__list">${items}</ul>
+  `;
+  const pmRatingEl = $("#pmRating", modal);
+  if (pmRatingEl) pmRatingEl.textContent = avgStars;
+}
+
+// Cập nhật realtime khi vừa lưu đánh giá
+document.addEventListener('vvv:review_saved', (e) => {
+  const r = e?.detail;
+  if (!r || !currentProductId) return;
+  if (String(r.productId) === String(currentProductId)) {
+    try { renderPmReviews(currentProductId); } catch {}
+  }
+});
 
 // ---------- Auth helpers ----------
 async function refreshCurrentUser() {
@@ -651,13 +701,13 @@ function setupListeners() {
   document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeAccountDrawer(); });
   accountOverlay?.addEventListener('click', closeAccountDrawer);
 
-  // Account button: nếu chưa đăng nhập thì điều hướng sang trang Đăng nhập riêng; nếu đã đăng nhập thì mở drawer Tài khoản
+  // Account button: nếu đã đăng nhập thì chuyển sang trang Tài khoản riêng; nếu chưa thì sang Đăng nhập
   accountBtn.addEventListener("click", async (e) => {
     e.preventDefault();
     try {
       const u = await apiCurrentUser();
       if (u) {
-        openAccountDrawer();
+        location.href = new URL('../html/account.html', location.href).toString();
       } else {
         location.href = new URL('../client/login.html', location.href).toString();
       }
@@ -876,6 +926,7 @@ function setupListeners() {
 
   // Cart events
   cartItems.addEventListener("click", (e) => {
+    // 1) Xử lý nút Xóa
     const removeBtn = e.target.closest('[data-action="remove"]');
     if (removeBtn) {
       e.preventDefault();
@@ -883,6 +934,17 @@ function setupListeners() {
       const cartItem = removeBtn.closest(".cart-item");
       const pid = cartItem?.dataset.id;
       if (pid) removeFromCart(pid);
+      return;
+    }
+    // 2) Click vào khoảng trống của cart-item -> mở khung chi tiết sản phẩm
+    const isInteractive = !!e.target.closest('[data-action], button, input, label');
+    if (isInteractive) return;
+    const row = e.target.closest('.cart-item');
+    const pid = row?.dataset?.id;
+    if (row && pid) {
+      e.preventDefault();
+      e.stopPropagation();
+      openProductModal(pid);
     }
   });
   // Ngăn nhập chữ trong ô SL

@@ -15,6 +15,7 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="../css/style.css" />
+    <link rel="stylesheet" href="../assets/css/reviews.css" />
     <!-- Cache busting + no-cache for go live -->
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
     <meta http-equiv="Pragma" content="no-cache" />
@@ -497,7 +498,7 @@
             </button>
         </div>
         <div class="actions">
-          <a class="btn btn--icon" id="accountBtn" href="../client/register.html">Tài khoản</a>
+          <a class="btn btn--icon" id="accountBtn" href="account.html">Tài khoản</a>
           <button
             class="btn btn--pri"
             id="cartOpenBtn"
@@ -822,5 +823,14 @@
     <script src="../client/auth.js"></script>
     <script type="module" src="../js/main.js?v=flowfix1"></script>
     <script type="module" src="../js/flash.js"></script>
+    <script src="../assets/js/reviews.js"></script>
+    <script>
+      // Khởi tạo gắn nút/summary sau khi trang sẵn sàng
+      window.addEventListener('DOMContentLoaded', function(){
+        if (window.initReviews) {
+          window.initReviews({ rootSelector: '#accountOrdersBody' });
+        }
+      });
+    </script>
   </body>
 </html>

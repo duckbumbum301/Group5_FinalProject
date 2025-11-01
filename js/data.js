@@ -281,7 +281,7 @@ const DRINK_TEA = makeProducts(420, "drink", "tea", [
 
 const DRINK_CAN = makeProducts(430, "drink", "can", [
   {
-    name: "soda chanh 7 Up (320ml)",
+    name: "Soda chanh 7 Up (320ml)",
     price: 10000,
     image: "../images/DRINK/can/7upsodachanh.jpg",
   },

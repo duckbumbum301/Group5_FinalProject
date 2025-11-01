@@ -108,14 +108,18 @@ async function renderCart() {
         ? `<span class="price price--sale">${money(eff)}</span> <span class="price price--orig">${money(p.price)}</span>`
         : `${money(p.price)}`;
       const isSel = Object.prototype.hasOwnProperty.call(selMap, p.id) ? !!selMap[p.id] : true;
+      const thumb = p.image
+        ? `<img src="${p.image}" alt="${p.name}" class="oc-thumb" onerror="this.onerror=null; this.src='../images/brand/LogoVVV.png';" />`
+        : `<div class="oc-thumb">${p.emoji || '🧺'}</div>`;
       return `
       <div class="cart-item" data-id="${p.id}">
+        <input type="checkbox" data-action="sel" ${isSel ? 'checked' : ''} aria-label="Chọn mua" />
+        ${thumb}
         <div>
           <strong>${p.name}</strong>
           <div class="muted">${priceHtml} • ${p.unit}</div>
         </div>
         <div class="qty">
-          <input type="checkbox" data-action="sel" ${isSel ? 'checked' : ''} aria-label="Chọn mua" />
           <label for="qty-${p.id}" class="muted">SL:</label>
           <input id="qty-${p.id}" type="number" min="1" step="1" inputmode="numeric" pattern="[0-9]*" value="${qty}" data-action="qty" />
           <button class="btn btn--outline" data-action="remove">Xóa</button>

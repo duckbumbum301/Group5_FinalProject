@@ -180,16 +180,26 @@ export function openOrderConfirmModal(orderId) {
       const price = p.price || 0;
       const line = price * q;
       const name = p.name || pid;
-      const unit = p.unit ? `/${p.unit}` : '';
+      const unitText = p.unit ? ` / ${p.unit}` : '';
       const thumb = p.image
         ? `<img src="${p.image}" alt="${name}" class="oc-thumb">`
         : `<div class="oc-thumb">${p.emoji || '🧺'}</div>`;
       return `
-        <div class="oc-item">
+        <div class="oc-item"
+          data-order-id="${ord.id}" 
+          data-product-id="${pid}" 
+          data-product-name="${name.replace(/"/g,'&quot;')}"
+          data-product-price="${money(price)}${unitText}"
+          data-product-qty="${q}"
+        >
           ${thumb}
           <div class="oc-item__main">
             <div class="oc-name">${name}</div>
-            <div class="muted">Giá bán: ${money(price)}${unit}</div>
+            <div class="muted">Giá bán: ${money(price)}${unitText}</div>
+            <div class="vvv-review-row">
+              <div class="vvv-review-summary"></div>
+              <button type="button" class="btn vvv-review-btn">Đánh giá</button>
+            </div>
           </div>
           <div class="oc-item__meta">
             <div class="oc-line">${money(line)}</div>
@@ -219,6 +229,8 @@ export function openOrderConfirmModal(orderId) {
     `;
     const printBtn = document.getElementById('ocPrintBtn');
     if (printBtn) printBtn.onclick = () => printOrderDetails(ord);
+    // Thông báo để reviews.js gắn sự kiện
+    document.dispatchEvent(new CustomEvent('vvv:order_details_rendered', { detail: { orderId: ord.id } }));
   })();
   // Bind persistent close handlers once to ensure X works after printing
   if (!m.hasAttribute('data-bound')) {
@@ -332,6 +344,7 @@ export async function renderOrdersInto(containerEl) {
                 ${paidText}
               </div>
               <div class="orders-card__ops">
+                <button class="btn vvv-review-order-btn" data-action="review-order" data-id="${o.id}">Đánh giá</button>
                 <button class="btn btn--outline" data-action="reorder" data-id="${o.id}">Mua lại đơn</button>
                 <button class="btn btn--danger" data-action="return" data-id="${o.id}" ${returnable ? '' : 'disabled title="Chỉ trả hàng sau khi giao thành công"'}>Trả hàng</button>
               </div>
@@ -362,6 +375,13 @@ export async function renderOrdersInto(containerEl) {
           }
           openCart();
         }
+        return;
+      }
+      const reviewOrderBtn = e.target.closest('[data-action="review-order"]');
+      if (reviewOrderBtn) {
+        e.preventDefault();
+        const id = reviewOrderBtn.getAttribute('data-id');
+        openOrderConfirmModal(id);
         return;
       }
       const returnBtn = e.target.closest('[data-action="return"]');
