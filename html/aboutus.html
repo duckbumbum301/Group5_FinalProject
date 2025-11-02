@@ -24,56 +24,7 @@
     <meta http-equiv="Expires" content="0" />
   </head>
   <body>
-    <header class="header">
-      <div class="container header__row">
-        <a
-          href="/html/index.html"
-          class="logo"
-          aria-label="Trang chủ Vựa Vui Vẻ"
-          ><img
-            src="../images/brand/LogoVVV1.jpg"
-            alt="Vựa Vui Vẻ"
-            class="logo__img"
-        /></a>
-        <nav class="nav" aria-label="Điều hướng chính">
-          <a href="index.html#products">Sản phẩm</a>
-          <a href="recipes.html">Công thức</a>
-          <a href="aboutus.html">Giới thiệu</a>
-        </nav>
-        <div class="searchbox" role="search">
-            <input
-              id="searchInput"
-              class="searchbox__input"
-              type="search"
-              placeholder="Search"
-              aria-label="Tìm kiếm sản phẩm"
-              autocomplete="on"
-            />
-            <button class="searchbox__btn" aria-label="Tìm">
-              <svg class="searchbox__icon" width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                <circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="2" />
-                <line x1="16.65" y1="16.65" x2="21" y2="21" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
-              </svg>
-            </button>
-        </div>
-        <div class="actions">
-          <a
-            class="btn btn--icon"
-            id="accountBtn"
-            href="account.html"
-            >Tài khoản</a
-          >
-          <button
-            class="btn btn--pri"
-            id="cartOpenBtn"
-            aria-haspopup="dialog"
-            aria-controls="cartDrawer"
-          >
-            Giỏ hàng <span id="cartBadge" class="badge">0</span>
-          </button>
-        </div>
-      </div>
-    </header>
+    <header id="siteHeader" class="header"></header>
 
     <main>
       <!-- Hero Banner with Video -->
@@ -639,6 +590,7 @@
       </div>
     </footer>
 
+    <script type="module" src="../js/header.js"></script>
     <script>
       document.getElementById("year").textContent = new Date().getFullYear();
     </script>

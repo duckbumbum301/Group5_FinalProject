@@ -454,21 +454,90 @@ function renderPmReviews(productId) {
   }
   const avg = Math.round(all.reduce((s, r) => s + (Number(r.rating) || 0), 0) / all.length);
   const avgStars = renderStars(avg);
-  const items = all.slice().reverse().slice(0, 3).map(r => {
-    const short = sanitizeInline(String(r.comment || '').trim().slice(0, 120));
-    return `<li><span class="pm-reviews__stars" aria-label="${r.rating} sao">${renderStars(r.rating)}</span> <span class="pm-reviews__comment">${short}</span></li>`;
-  }).join('');
+  
+  // Render reviews with expandable functionality
+  const renderReviewItems = (reviewsToShow) => {
+    return reviewsToShow.map(r => {
+      const short = sanitizeInline(String(r.comment || '').trim().slice(0, 120));
+      return `<li><span class="pm-reviews__stars" aria-label="${r.rating} sao">${renderStars(r.rating)}</span> <span class="pm-reviews__comment">${short}</span></li>`;
+    }).join('');
+  };
+  
+  const initialReviews = all.slice().reverse().slice(0, 3);
+  const hasMore = all.length > 3;
+  
   cont.innerHTML = `
     <div class="pm-reviews__header">
       <strong>Đánh giá</strong>
       <span class="pm-reviews__stars" aria-label="${avg} sao">${avgStars}</span>
       <span class="pm-reviews__count">(${all.length})</span>
     </div>
-    <ul class="pm-reviews__list">${items}</ul>
+    <ul class="pm-reviews__list" id="pmReviewsList">${renderReviewItems(initialReviews)}</ul>
+    ${hasMore ? `<button type="button" class="pm-reviews__show-more" id="pmShowMoreBtn">Xem thêm đánh giá (${all.length - 3})</button>` : ''}
   `;
+  
+  // Add show more functionality
+  if (hasMore) {
+    const showMoreBtn = $("#pmShowMoreBtn", cont);
+    if (showMoreBtn) {
+      showMoreBtn.addEventListener('click', () => {
+        const reviewsList = $("#pmReviewsList", cont);
+        const allReviews = all.slice().reverse();
+        reviewsList.innerHTML = renderReviewItems(allReviews);
+        showMoreBtn.style.display = 'none';
+      });
+    }
+  }
+  
   const pmRatingEl = $("#pmRating", modal);
   if (pmRatingEl) pmRatingEl.textContent = avgStars;
 }
+
+// --- Seed reviews cho toàn bộ sản phẩm ---
+function seedAllProductReviews(opts = {}) {
+  const { perProduct = 3, overwrite = false } = opts || {};
+  try {
+    const STORAGE_KEY = 'vvv_reviews';
+    const existing = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+    const saveAll = (arr) => localStorage.setItem(STORAGE_KEY, JSON.stringify(arr));
+    const now = new Date().toISOString();
+    const sampleComments = [
+      'Hàng chất lượng, sẽ mua lại.',
+      'Đóng gói cẩn thận, giao nhanh.',
+      'Giá tốt, sản phẩm đúng mô tả.',
+      'Tươi ngon, rất hài lòng.',
+      'Phù hợp với nhu cầu, đáng tiền.',
+    ];
+    const byPid = (pid) => existing.filter(r => String(r.productId) === String(pid));
+    const createFor = (pid) => {
+      const items = [];
+      for (let i = 0; i < perProduct; i++) {
+        const rating = 3 + Math.floor(Math.random() * 3);
+        const comment = sampleComments[Math.floor(Math.random() * sampleComments.length)] + (Math.random() < 0.3 ? ' 👍' : '');
+        items.push({ orderId: `SEED-${pid}-${i+1}`, productId: pid, rating, comment, createdAt: now, updatedAt: now });
+      }
+      return items;
+    };
+    const applySeed = async () => {
+      const list = Array.isArray(allProducts) && allProducts.length ? allProducts : await apiListProducts();
+      let merged = existing.slice();
+      for (const p of list) {
+        const pid = p?.id; if (!pid) continue;
+        if (!overwrite && byPid(pid).length > 0) continue;
+        merged = merged.concat(createFor(pid));
+      }
+      saveAll(merged);
+      if (typeof currentProductId !== 'undefined' && currentProductId) {
+        try { renderPmReviews(currentProductId); } catch {}
+      }
+      try { document.dispatchEvent(new CustomEvent('vvv:reviews_seeded')); } catch {}
+    };
+    applySeed();
+  } catch (err) {
+    console.warn('Seed reviews failed:', err);
+  }
+}
+try { window.seedAllProductReviews = seedAllProductReviews; } catch {}
 
 // Cập nhật realtime khi vừa lưu đánh giá
 document.addEventListener('vvv:review_saved', (e) => {
@@ -1103,6 +1172,19 @@ function init() {
       .map((p) => `<option value="${p.name}"></option>`)
       .join("");
     renderWithPagination();
+
+    // If navigated with `?product=ID`, open product modal directly
+    try {
+      const pidFromURL = new URLSearchParams(location.search).get('product');
+      if (pidFromURL) openProductModal(pidFromURL);
+    } catch {}
+
+    // Seed reviews cho các sản phẩm chưa có đánh giá
+    try {
+      if (typeof window.seedAllProductReviews === 'function') {
+        window.seedAllProductReviews({ perProduct: 3, overwrite: false });
+      }
+    } catch {}
   });
   syncSelectionMapWithCart();
   renderUI();

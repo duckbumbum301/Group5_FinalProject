@@ -108,9 +108,9 @@ select.input, input[type="range"]{padding:10px;height:auto}
 .btn.fav{transition:transform .12s ease;color:#fff}
 .btn.fav.fav-anim{animation:fav-bump .28s ease-in-out}
 
-/* Product rating stars */
-.rating{display:flex;gap:4px;align-items:center;justify-content:center;margin-top:4px;font-size:18px;color:#f7b500}
-.rating .star{font-size:18px;line-height:1}
+/* Product rating stars — match product detail style */
+.rating{display:flex;gap:4px;align-items:center;justify-content:center;margin-top:4px;font-size:18px;color:#f1b41a;letter-spacing:1px}
+.rating .star{font-size:14px;line-height:1}
 /* Left-align stars inside product modal */
 .pm-rating{justify-content:flex-start;margin:4px 0 8px}
 
@@ -445,7 +445,7 @@ select.input, input[type="range"]{padding:10px;height:auto}
 /* --- Product Modal Reviews --- */
 .pm-reviews { margin-top: 8px; border-top: 1px dashed #ddd; padding-top: 8px; }
 .pm-reviews__header { display: flex; align-items: center; gap: 8px; font-size: 14px; color: #333; }
-.pm-reviews__stars { color: #f1b41a; font-size: 14px; letter-spacing: 1px; }
+.pm-reviews__stars { color: #f1b41a; font-size: 18px; letter-spacing: 1px; }
 .pm-reviews__count { color: #555; font-size: 13px; }
 .pm-reviews__list { margin-top: 6px; padding-left: 18px; }
 .pm-reviews__list li { margin: 4px 0; color: #333; }
@@ -456,6 +456,22 @@ select.input, input[type="range"]{padding:10px;height:auto}
   overflow-wrap: anywhere; 
 }
 .pm-reviews__empty { color: #555; font-size: 13px; }
+.pm-reviews__show-more { 
+  background: #f8f9fa; 
+  border: 1px solid #ddd; 
+  border-radius: 6px; 
+  padding: 8px 12px; 
+  margin: 6px 0 8px; 
+  color: #16a34a; 
+  font-size: 13px; 
+  cursor: pointer; 
+  transition: all 0.2s ease; 
+  width: 100%;
+}
+.pm-reviews__show-more:hover { 
+  background: #e9ecef; 
+  border-color: #16a34a; 
+}
 .pm-qty{ display:inline-flex; align-items:center; gap:8px; }
 .pm-qty input{ width:90px; margin-left:0; background:var(--green); color:#fff; border:1px solid var(--green); border-radius:8px; padding:6px 10px; outline:none; transition:box-shadow .2s, background .2s; }
 .pm-qty input:focus{ box-shadow:0 0 0 3px rgba(22,163,74,0.12); }
