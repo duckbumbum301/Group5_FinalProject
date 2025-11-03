@@ -836,12 +836,83 @@
     <script src="../client/auth.js"></script>
     <script type="module" src="../js/main.js?v=recipes"></script>
     <!-- Scripts -->
-    <script src="../js/cart.js"></script>
-    <script src="../js/main.js"></script>
     <script type="module">
-      import { RECIPES } from "../js/data.js";
+      import { RECIPES, PRODUCTS } from "../js/data.js";
+      import { addToCart } from "../js/cart.js";
+      import { openCart } from "../js/ui.js";
+
       let currentPage = 1;
       const recipesPerPage = 9;
+
+      // Normalize Vietnamese text for better matching
+      function normalizeText(text) {
+        return text
+          .toLowerCase()
+          .normalize("NFD")
+          .replace(/[\u0300-\u036f]/g, "")
+          .replace(/đ/g, "d")
+          .replace(/\s+/g, " ")
+          .trim();
+      }
+
+      // Helper function to find product by name match with flexible matching
+      function findProductByName(matchName) {
+        const normalizedMatch = normalizeText(matchName);
+
+        // Try exact match first (case-insensitive)
+        let product = PRODUCTS.find((p) =>
+          p.name.toLowerCase().includes(matchName.toLowerCase())
+        );
+
+        // If not found, try normalized matching
+        if (!product) {
+          product = PRODUCTS.find((p) => {
+            const normalizedProductName = normalizeText(p.name);
+            return normalizedProductName.includes(normalizedMatch);
+          });
+        }
+
+        return product;
+      }
+
+      // Add all recipe ingredients to cart
+      function addRecipeIngredientsToCart(recipeName) {
+        const recipe = RECIPES.find(
+          (r) => r.name.toLowerCase() === recipeName.toLowerCase()
+        );
+        if (!recipe) {
+          alert("Không tìm thấy công thức. Vui lòng chọn món từ gợi ý.");
+          return;
+        }
+
+        let addedCount = 0;
+        const missingItems = [];
+
+        for (const item of recipe.items) {
+          const product = findProductByName(item.match);
+          if (product && item.qty > 0) {
+            addToCart(product.id, item.qty);
+            addedCount++;
+          } else {
+            missingItems.push(item.match);
+          }
+        }
+
+        if (addedCount > 0) {
+          let message = `Đã thêm ${addedCount} nguyên liệu vào giỏ hàng!`;
+          if (missingItems.length > 0) {
+            message += `\n\nChưa tìm thấy: ${missingItems.join(", ")}`;
+          }
+          alert(message);
+          // Không tự động mở giỏ hàng, chỉ thông báo thành công
+        } else {
+          alert(
+            `Không tìm thấy nguyên liệu phù hợp trong kho.\n\nNguyên liệu cần tìm:\n- ${missingItems.join(
+              "\n- "
+            )}`
+          );
+        }
+      }
 
       function renderRecipeCard(recipe) {
         const ingredients = recipe.items
@@ -856,7 +927,7 @@
             /"/g,
             "&quot;"
           )}" 
-               style="background: white; border-radius: 20px; overflow: hidden; box-shadow: 0 8px 24px rgba(0,0,0,0.08); transition: transform 0.3s ease; cursor: pointer;" 
+               style="background: white; border-radius: 20px; overflow: hidden; box-shadow: 0 8px 24px rgba(0,0,0,0.08); transition: transform 0.3s ease; cursor: pointer; display: flex; flex-direction: column; height: 100%;" 
                onmouseover="this.style.transform='translateY(-8px)'" 
                onmouseout="this.style.transform='translateY(0)'">
             <div style="position: relative; padding-top: 66.67%; overflow: hidden;">
@@ -866,14 +937,26 @@
                    onerror="this.src='../images/brand/LogoVVV1.jpg';"
               />
             </div>
-            <div style="padding: 24px;">
+            <div style="padding: 24px; display: flex; flex-direction: column; flex: 1;">
               <h3 style="font-size: 22px; font-weight: 700; color: #065f46; margin: 0 0 16px;">${
                 recipe.name
               }</h3>
-              <div style="display: flex; flex-wrap: wrap; gap: 8px;">
-                ${ingredients}
-              </div>
-              <button class="btn btn--pri add-recipe-btn" style="width: 100%; margin-top: 16px; padding: 12px;">
+              <div class="ingredients"
+                style="
+                  --chip-h:48px;                     /* chỉnh theo đúng chiều cao chip của bạn */
+                  display:flex; flex-wrap:wrap; gap:8px;
+                  align-content:flex-start;          /* dồn các hàng lên trên */
+                  margin-bottom:16px; flex:1;
+                  min-height:calc(var(--chip-h)*2 + 8px); /* chừa sẵn đúng 2 hàng + row-gap */
+                ">
+              ${ingredients}
+              <!-- phần tử ảo: ép tạo hàng mới, không thêm khoảng hở -->
+              <div aria-hidden="true" style="flex:0 0 100%; width:0; height:0; margin-top:-8px;"></div>
+            </div>
+              <button class="btn btn--pri add-recipe-btn" data-recipe="${recipe.name.replace(
+                /"/g,
+                "&quot;"
+              )}" style="width: 100%; padding: 12px; margin-top: auto;">
                 Thêm vào giỏ
               </button>
             </div>
@@ -956,16 +1039,6 @@
         }
       }
 
-      window.selectRecipe = function (recipeName) {
-        const input = document.getElementById("recipeInput");
-        if (input) {
-          input.value = recipeName;
-          // Trigger add to cart
-          const event = new Event("input", { bubbles: true });
-          input.dispatchEvent(event);
-        }
-      };
-
       // Initialize
       document.addEventListener("DOMContentLoaded", () => {
         renderPage(currentPage);
@@ -1002,6 +1075,20 @@
           });
         }
 
+        // Handle "Add all ingredients" button click from top search
+        const recipeAddAllBtn = document.getElementById("recipeAddAllBtn");
+        if (recipeAddAllBtn) {
+          recipeAddAllBtn.addEventListener("click", () => {
+            const recipeInput = document.getElementById("recipeInput");
+            const recipeName = (recipeInput?.value || "").trim();
+            if (recipeName) {
+              addRecipeIngredientsToCart(recipeName);
+            } else {
+              alert("Vui lòng nhập tên món ăn.");
+            }
+          });
+        }
+
         // Add event delegation for recipe cards
         const recipeGrid = document.getElementById("recipeGrid");
         if (recipeGrid) {
@@ -1009,29 +1096,44 @@
             // Handle "Add to Cart" button clicks
             if (e.target.classList.contains("add-recipe-btn")) {
               e.stopPropagation();
-              const card = e.target.closest(".recipe-card");
-              const recipeName = card.getAttribute("data-recipe-name");
+              const recipeName = e.target.getAttribute("data-recipe");
               if (recipeName) {
-                selectRecipe(recipeName);
+                addRecipeIngredientsToCart(recipeName);
               }
             }
 
-            // Handle card clicks to select recipe
-            if (e.target.closest(".recipe-card")) {
+            // Handle card clicks to fill input
+            if (
+              e.target.closest(".recipe-card") &&
+              !e.target.classList.contains("add-recipe-btn")
+            ) {
               const card = e.target.closest(".recipe-card");
               const recipeName = card.getAttribute("data-recipe-name");
-              if (
-                recipeName &&
-                !e.target.classList.contains("add-recipe-btn")
-              ) {
-                selectRecipe(recipeName);
+              if (recipeName) {
+                const recipeInput = document.getElementById("recipeInput");
+                if (recipeInput) {
+                  recipeInput.value = recipeName;
+                  // Scroll to input
+                  recipeInput.scrollIntoView({
+                    behavior: "smooth",
+                    block: "center",
+                  });
+                  recipeInput.focus();
+                }
               }
             }
           });
+        }
+
+        // Populate recipe datalist for autocomplete
+        const recipeList = document.getElementById("recipeList");
+        if (recipeList) {
+          recipeList.innerHTML = RECIPES.map(
+            (r) => `<option value="${r.name}">`
+          ).join("");
         }
       });
     </script>
     <script type="module" src="../js/header.js"></script>
   </body>
 </html>
-

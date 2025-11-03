@@ -15,16 +15,26 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="../css/style.css" />
-    <link rel="stylesheet" href="../assets/css/reviews.css" />
     <!-- Cache busting + no-cache for go live -->
-    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta
+      http-equiv="Cache-Control"
+      content="no-cache, no-store, must-revalidate"
+    />
     <meta http-equiv="Pragma" content="no-cache" />
     <meta http-equiv="Expires" content="0" />
   </head>
   <body>
     <header class="header">
       <div class="container header__row">
-        <a href="/html/index.html" class="logo" aria-label="Trang chủ Vựa Vui Vẻ"><img src="../images/brand/LogoVVV1.jpg" alt="Vựa Vui Vẻ" class="logo__img" /></a>
+        <a
+          href="/html/index.html"
+          class="logo"
+          aria-label="Trang chủ Vựa Vui Vẻ"
+          ><img
+            src="../images/brand/LogoVVV1.jpg"
+            alt="Vựa Vui Vẻ"
+            class="logo__img"
+        /></a>
         <nav class="nav" aria-label="Điều hướng chính">
           <div class="nav-item nav-item--dropdown">
             <button
@@ -482,23 +492,49 @@
           <a href="aboutus.html">Giới thiệu</a>
         </nav>
         <div class="searchbox" role="search">
-            <input
-              id="searchInput"
-              class="searchbox__input"
-              type="search"
-              placeholder="Search"
-              aria-label="Tìm kiếm sản phẩm"
-              autocomplete="on"
-            />
-            <button class="searchbox__btn" aria-label="Tìm">
-              <svg class="searchbox__icon" width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                <circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="2" />
-                <line x1="16.65" y1="16.65" x2="21" y2="21" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
-              </svg>
-            </button>
+          <input
+            id="searchInput"
+            class="searchbox__input"
+            type="search"
+            placeholder="Search"
+            aria-label="Tìm kiếm sản phẩm"
+            autocomplete="on"
+          />
+          <button class="searchbox__btn" aria-label="Tìm">
+            <svg
+              class="searchbox__icon"
+              width="18"
+              height="18"
+              viewBox="0 0 24 24"
+              fill="none"
+              aria-hidden="true"
+            >
+              <circle
+                cx="11"
+                cy="11"
+                r="7"
+                stroke="currentColor"
+                stroke-width="2"
+              />
+              <line
+                x1="16.65"
+                y1="16.65"
+                x2="21"
+                y2="21"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+              />
+            </svg>
+          </button>
         </div>
         <div class="actions">
-          <a class="btn btn--icon" id="accountBtn" href="account.html">Tài khoản</a>
+          <a
+            class="btn btn--icon"
+            id="accountBtn"
+            href="../client/register.html"
+            >Tài khoản</a
+          >
           <button
             class="btn btn--pri"
             id="cartOpenBtn"
@@ -516,32 +552,70 @@
       <section id="promos" class="section" aria-label="Khuyến mãi nổi bật">
         <div class="container">
           <div class="promo-slider">
-             <div class="promo-slider__track" id="promoTrack">
-               <div class="promo-slider__slide"><img src="../images/brand/Banner.png" alt="Ưu đãi tuần này" /></div>
-               <div class="promo-slider__slide"><img src="../images/brand/newuser.png" alt="Ưu đãi người mới" /></div>
-               <div class="promo-slider__slide"><img src="../images/brand/haloweenvvv.png" alt="Ưu đãi Halloween" /></div>
-               <div class="promo-slider__slide"><img src="../images/brand/xmasbanner.png" alt="Ưu đãi Giáng sinh" /></div>
-             </div>
-             <button class="promo-slider__arrow prev" id="promoPrev" aria-label="Ảnh trước">‹</button>
-             <button class="promo-slider__arrow next" id="promoNext" aria-label="Ảnh sau">›</button>
-             <div class="promo-slider__dots" id="promoDots" role="tablist" aria-label="Chọn banner">
-               <button class="dot active" data-index="0" aria-label="Banner 1"></button>
-               <button class="dot" data-index="1" aria-label="Banner 2"></button>
-               <button class="dot" data-index="2" aria-label="Banner 3"></button>
-               <button class="dot" data-index="3" aria-label="Banner 4"></button>
-             </div>
-           </div>
+            <div class="promo-slider__track" id="promoTrack">
+              <div class="promo-slider__slide">
+                <img src="../images/brand/Banner.png" alt="Ưu đãi tuần này" />
+              </div>
+              <div class="promo-slider__slide">
+                <img src="../images/brand/newuser.png" alt="Ưu đãi người mới" />
+              </div>
+              <div class="promo-slider__slide">
+                <img
+                  src="../images/brand/haloweenvvv.png"
+                  alt="Ưu đãi Halloween"
+                />
+              </div>
+              <div class="promo-slider__slide">
+                <img
+                  src="../images/brand/xmasbanner.png"
+                  alt="Ưu đãi Giáng sinh"
+                />
+              </div>
+            </div>
+            <button
+              class="promo-slider__arrow prev"
+              id="promoPrev"
+              aria-label="Ảnh trước"
+            >
+              ‹
+            </button>
+            <button
+              class="promo-slider__arrow next"
+              id="promoNext"
+              aria-label="Ảnh sau"
+            >
+              ›
+            </button>
+            <div
+              class="promo-slider__dots"
+              id="promoDots"
+              role="tablist"
+              aria-label="Chọn banner"
+            >
+              <button
+                class="dot active"
+                data-index="0"
+                aria-label="Banner 1"
+              ></button>
+              <button class="dot" data-index="1" aria-label="Banner 2"></button>
+              <button class="dot" data-index="2" aria-label="Banner 3"></button>
+              <button class="dot" data-index="3" aria-label="Banner 4"></button>
+            </div>
+          </div>
         </div>
       </section>
-
 
       <section id="flashsale" class="section">
         <div class="container">
           <div class="title">
             <h2>Flash Sale</h2>
             <div class="flash-actions">
-              <button class="pill" id="tabMorning" data-slot="morning">06:00–08:00</button>
-              <button class="pill" id="tabAfternoon" data-slot="afternoon">16:00–18:00</button>
+              <button class="pill" id="tabMorning" data-slot="morning">
+                06:00–08:00
+              </button>
+              <button class="pill" id="tabAfternoon" data-slot="afternoon">
+                16:00–18:00
+              </button>
             </div>
           </div>
           <div class="flash-banner">
@@ -557,8 +631,9 @@
         <div class="container">
           <div class="title">
             <h2>Sản phẩm</h2>
-            <label class="pill"><input type="checkbox" id="favOnly" /> Chỉ xem Yêu thích</label>
-
+            <label class="pill"
+              ><input type="checkbox" id="favOnly" /> Chỉ xem Yêu thích</label
+            >
           </div>
           <div class="controls">
             <label for="categoryFilter">Danh mục:</label>
@@ -614,7 +689,9 @@
             <button class="btn btn--pri" id="recipeAddAllBtn">
               Thêm tất cả nguyên liệu vào giỏ
             </button>
-            <button class="btn btn--outline" id="recipeSearchBtn">Tìm kiếm</button>
+            <button class="btn btn--outline" id="recipeSearchBtn">
+              Tìm kiếm
+            </button>
           </div>
           <p class="muted">
             Mẹo: Chọn món trong gợi ý để đúng công thức dữ liệu mẫu.
@@ -648,13 +725,21 @@
           <div class="total-row">
             <span>Tạm tính:</span><strong id="cartSubtotal">0đ</strong>
           </div>
-          <label class="muted" style="display:flex; align-items:center; gap:8px; margin:8px 0;">
+          <label
+            class="muted"
+            style="display: flex; align-items: center; gap: 8px; margin: 8px 0"
+          >
             <input type="checkbox" id="cartSelectAll" checked />
             Chọn tất cả
           </label>
-          <div class="cart-actions" style="display:flex; gap:8px; flex-wrap:wrap;">
+          <div
+            class="cart-actions"
+            style="display: flex; gap: 8px; flex-wrap: wrap"
+          >
             <button class="btn btn--pri" id="checkoutBtn">Thanh toán</button>
-            <button class="btn btn--outline" id="clearCartBtn">Làm sạch giỏ hàng</button>
+            <button class="btn btn--outline" id="clearCartBtn">
+              Làm sạch giỏ hàng
+            </button>
           </div>
         </div>
       </div>
@@ -674,7 +759,9 @@
       <div class="drawer__panel">
         <div class="drawer__head">
           <h3 id="accountTitle">Tài khoản</h3>
-          <button class="btn btn--icon" id="accountCloseBtn" aria-label="Đóng">Đóng</button>
+          <button class="btn btn--icon" id="accountCloseBtn" aria-label="Đóng">
+            Đóng
+          </button>
         </div>
         <div class="account-tabs">
           <nav class="account-nav">
@@ -694,25 +781,106 @@
           <div class="account-content">
             <section id="accountProfilePanel" class="account-panel">
               <form id="accountForm" class="contact" style="padding: 16px">
-                <input class="input" type="text" name="name" placeholder="Họ và tên" autocomplete="name" required />
-                <input class="input" type="email" name="email" placeholder="Email (không thay đổi sau đăng ký)" autocomplete="email" readonly aria-readonly="true" />
-                <input class="input" type="tel" name="phone" placeholder="Số điện thoại (không thay đổi sau đăng ký)" autocomplete="tel" inputmode="numeric" pattern="\d{9,11}" title="Nhập 9–11 chữ số" readonly aria-readonly="true" />
-                <p class="muted" id="acctAddrInline" role="status" aria-live="polite">Địa chỉ mặc định: </p>
-                <textarea class="input" name="address" rows="3" placeholder="Địa chỉ giao hàng..." autocomplete="street-address" required></textarea>
-                <button class="btn btn--pri" type="submit">Lưu thông tin</button>
-                <p class="muted" id="accountMsg" role="status" aria-live="polite"></p>
+                <input
+                  class="input"
+                  type="text"
+                  name="name"
+                  placeholder="Họ và tên"
+                  autocomplete="name"
+                  required
+                />
+                <input
+                  class="input"
+                  type="email"
+                  name="email"
+                  placeholder="Email (không thay đổi sau đăng ký)"
+                  autocomplete="email"
+                  readonly
+                  aria-readonly="true"
+                />
+                <input
+                  class="input"
+                  type="tel"
+                  name="phone"
+                  placeholder="Số điện thoại (không thay đổi sau đăng ký)"
+                  autocomplete="tel"
+                  inputmode="numeric"
+                  pattern="\d{9,11}"
+                  title="Nhập 9–11 chữ số"
+                  readonly
+                  aria-readonly="true"
+                />
+                <p
+                  class="muted"
+                  id="acctAddrInline"
+                  role="status"
+                  aria-live="polite"
+                >
+                  Địa chỉ mặc định:
+                </p>
+                <textarea
+                  class="input"
+                  name="address"
+                  rows="3"
+                  placeholder="Địa chỉ giao hàng..."
+                  autocomplete="street-address"
+                  required
+                ></textarea>
+                <button class="btn btn--pri" type="submit">
+                  Lưu thông tin
+                </button>
+                <p
+                  class="muted"
+                  id="accountMsg"
+                  role="status"
+                  aria-live="polite"
+                ></p>
               </form>
             </section>
             <section id="accountOrdersPanel" class="account-panel" hidden>
-              <div id="accountOrdersBody" class="orders-body" style="padding: 16px"></div>
+              <div
+                id="accountOrdersBody"
+                class="orders-body"
+                style="padding: 16px"
+              ></div>
             </section>
             <section id="accountPasswordPanel" class="account-panel" hidden>
-              <form id="changePasswordForm" class="contact" style="padding: 16px">
-                <input class="input" type="password" name="current" placeholder="Mật khẩu hiện tại" autocomplete="current-password" required />
-                <input class="input" type="password" name="new" placeholder="Mật khẩu mới" autocomplete="new-password" required />
-                <input class="input" type="password" name="confirm" placeholder="Xác nhận mật khẩu mới" autocomplete="new-password" required />
+              <form
+                id="changePasswordForm"
+                class="contact"
+                style="padding: 16px"
+              >
+                <input
+                  class="input"
+                  type="password"
+                  name="current"
+                  placeholder="Mật khẩu hiện tại"
+                  autocomplete="current-password"
+                  required
+                />
+                <input
+                  class="input"
+                  type="password"
+                  name="new"
+                  placeholder="Mật khẩu mới"
+                  autocomplete="new-password"
+                  required
+                />
+                <input
+                  class="input"
+                  type="password"
+                  name="confirm"
+                  placeholder="Xác nhận mật khẩu mới"
+                  autocomplete="new-password"
+                  required
+                />
                 <button class="btn btn--pri" type="submit">Đổi mật khẩu</button>
-                <p class="muted" id="pwMsg" role="status" aria-live="polite"></p>
+                <p
+                  class="muted"
+                  id="pwMsg"
+                  role="status"
+                  aria-live="polite"
+                ></p>
               </form>
             </section>
           </div>
@@ -725,7 +893,12 @@
     </aside>
 
     <!-- ====== ORDERS MODAL (mới) ====== -->
-    <section id="ordersModal" class="modal" hidden aria-labelledby="ordersTitle">
+    <section
+      id="ordersModal"
+      class="modal"
+      hidden
+      aria-labelledby="ordersTitle"
+    >
       <div id="ordersOverlay" class="modal__overlay"></div>
       <div class="modal__panel">
         <header class="modal__head">
@@ -744,25 +917,80 @@
           <h3 id="authTitle">Tài khoản</h3>
           <button id="authCloseBtn" class="btn btn--icon">✕</button>
         </header>
-        <div class="modal__body" style="padding: 16px;">
+        <div class="modal__body" style="padding: 16px">
           <form id="registerForm" class="contact">
             <h4 class="auth-title">Tạo tài khoản</h4>
-            <input class="input" type="text" name="name" placeholder="Họ và tên" autocomplete="name" required />
-            <input class="input" type="tel" name="phone" placeholder="Số điện thoại" autocomplete="tel" required />
-            <input class="input" type="email" name="email" placeholder="Email" autocomplete="email" required />
-            <input class="input" type="password" name="password" placeholder="Mật khẩu" autocomplete="new-password" required />
-            <button class="btn btn--pri btn--full" type="submit">Tạo tài khoản</button>
-            <p class="muted" id="registerMsg" role="status" aria-live="polite"></p>
-            <p class="muted">Đã có tài khoản? <a href="../client/login.html">Đăng nhập</a></p>
+            <input
+              class="input"
+              type="text"
+              name="name"
+              placeholder="Họ và tên"
+              autocomplete="name"
+              required
+            />
+            <input
+              class="input"
+              type="tel"
+              name="phone"
+              placeholder="Số điện thoại"
+              autocomplete="tel"
+              required
+            />
+            <input
+              class="input"
+              type="email"
+              name="email"
+              placeholder="Email"
+              autocomplete="email"
+              required
+            />
+            <input
+              class="input"
+              type="password"
+              name="password"
+              placeholder="Mật khẩu"
+              autocomplete="new-password"
+              required
+            />
+            <button class="btn btn--pri btn--full" type="submit">
+              Tạo tài khoản
+            </button>
+            <p
+              class="muted"
+              id="registerMsg"
+              role="status"
+              aria-live="polite"
+            ></p>
+            <p class="muted">
+              Đã có tài khoản? <a href="../client/login.html">Đăng nhập</a>
+            </p>
           </form>
 
           <form id="loginForm" class="contact" hidden>
             <h4 class="auth-title">Đăng nhập tài khoản</h4>
-            <input class="input" type="tel" name="phone" placeholder="Số điện thoại" autocomplete="username" required />
-            <input class="input" type="password" name="password" placeholder="Mật khẩu" autocomplete="current-password" required />
-            <button class="btn btn--pri btn--full" type="submit">Đăng nhập</button>
+            <input
+              class="input"
+              type="tel"
+              name="phone"
+              placeholder="Số điện thoại"
+              autocomplete="username"
+              required
+            />
+            <input
+              class="input"
+              type="password"
+              name="password"
+              placeholder="Mật khẩu"
+              autocomplete="current-password"
+              required
+            />
+            <button class="btn btn--pri btn--full" type="submit">
+              Đăng nhập
+            </button>
             <p class="muted" id="loginMsg" role="status" aria-live="polite"></p>
-            <p class="muted">Chưa có tài khoản? <a href="../client/register.html">Đăng ký</a></p>
+            <p class="muted">
+              Chưa có tài khoản? <a href="../client/register.html">Đăng ký</a>
+            </p>
           </form>
         </div>
       </div>
@@ -802,10 +1030,16 @@
                 <li>Địa chỉ</li>
               </ul>
             </div>
-            <div class="sf-legal">Điều khoản dịch vụ | Chính sách giao hàng | Chính sách đổi trả</div>
+            <div class="sf-legal">
+              Điều khoản dịch vụ | Chính sách giao hàng | Chính sách đổi trả
+            </div>
           </div>
           <div class="sf-brand">
-            <img class="sf-logo" src="../images/brand/LogoVVV.png" alt="Vựa Vui Vẻ" />
+            <img
+              class="sf-logo"
+              src="../images/brand/LogoVVV.png"
+              alt="Vựa Vui Vẻ"
+            />
             <div class="sf-contact">
               <div>Hotline: <span>012345678</span></div>
               <div>Địa chỉ liên hệ: <span>Vựa Vui Vẻ</span></div>
@@ -823,14 +1057,5 @@
     <script src="../client/auth.js"></script>
     <script type="module" src="../js/main.js?v=flowfix1"></script>
     <script type="module" src="../js/flash.js"></script>
-    <script src="../assets/js/reviews.js"></script>
-    <script>
-      // Khởi tạo gắn nút/summary sau khi trang sẵn sàng
-      window.addEventListener('DOMContentLoaded', function(){
-        if (window.initReviews) {
-          window.initReviews({ rootSelector: '#accountOrdersBody' });
-        }
-      });
-    </script>
   </body>
 </html>
