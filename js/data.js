@@ -1083,3 +1083,40 @@ export const RECIPES = [
     ],
   },
 ];
+
+// ====================================================
+// BANNERS (Promo Slider)
+// ====================================================
+export const BANNERS = [
+  {
+    id: "banner1",
+    title: "Freeship cho đơn >299k",
+    image: "../images/brand/banner1.jpg",
+    link: "#catalog",
+  },
+  {
+    id: "banner2",
+    title: "Đã đăng kí khuyến mãi",
+    image: "../images/brand/banner2.jpg",
+    link: "#catalog",
+  },
+  {
+    id: "banner3",
+    title: "Thịt/Cá tươi mỗi ngày",
+    image: "../images/brand/banner3.jpg",
+    link: "#catalog",
+  },
+];
+
+// ====================================================
+// FLASH SALE (Giờ vàng giá sốc)
+// ====================================================
+export const FLASH_SALE = {
+  active: true,
+  windows: [
+    { label: "06:00–08:00", start: 6, end: 8 },
+    { label: "18:00–18:00", start: 18, end: 18 },
+  ],
+  discountPercent: 15,
+  productIds: ["100", "101", "102", "110", "200", "201", "300", "400"],
+};

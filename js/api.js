@@ -43,10 +43,34 @@ function lsSet(key, val) {
 
 // ========= PRODUCTS =========
 export async function apiListProducts() {
-  return PRODUCTS;
+  try {
+    // Load from JSON Server API
+    const response = await fetch("http://localhost:3000/products");
+    if (!response.ok) {
+      console.warn("Failed to fetch from API, falling back to static data");
+      return PRODUCTS;
+    }
+    const products = await response.json();
+    // Filter only active products for frontend
+    return products.filter((p) => p.status === "active" || !p.status);
+  } catch (error) {
+    console.error("Error loading products from API:", error);
+    // Fallback to static data if API fails
+    return PRODUCTS;
+  }
 }
+
 export async function apiGetProductById(id) {
-  return PRODUCTS.find((p) => p.id === id) || null;
+  try {
+    const response = await fetch(`http://localhost:3000/products/${id}`);
+    if (!response.ok) {
+      return PRODUCTS.find((p) => p.id === id) || null;
+    }
+    return await response.json();
+  } catch (error) {
+    console.error("Error fetching product:", error);
+    return PRODUCTS.find((p) => p.id === id) || null;
+  }
 }
 
 // ========= VOUCHERS (mock) =========
@@ -76,15 +100,26 @@ export async function apiApplyVoucher(code, { subtotal, shippingFee }) {
   if (c === "VUA50") {
     // Yêu cầu đăng nhập và kiểm tra lịch sử đơn
     const cur = await apiCurrentUser();
-    if (!cur) return { ok: false, message: "Vui lòng đăng nhập để áp dụng mã người mới." };
+    if (!cur)
+      return {
+        ok: false,
+        message: "Vui lòng đăng nhập để áp dụng mã người mới.",
+      };
     const orders = lsGet(LS_ORDERS, []);
     const hasAnyOrder = orders.some((o) => {
       const u = o.user || {};
-      const samePhone = cur.phone && u.phone && String(u.phone) === String(cur.phone);
-      const sameId = (o.customer_id && cur.id && String(o.customer_id) === String(cur.id)) || false;
+      const samePhone =
+        cur.phone && u.phone && String(u.phone) === String(cur.phone);
+      const sameId =
+        (o.customer_id && cur.id && String(o.customer_id) === String(cur.id)) ||
+        false;
       return samePhone || sameId;
     });
-    if (hasAnyOrder) return { ok: false, message: "Mã VUA50 chỉ áp dụng cho đơn đầu tiên của tài khoản." };
+    if (hasAnyOrder)
+      return {
+        ok: false,
+        message: "Mã VUA50 chỉ áp dụng cho đơn đầu tiên của tài khoản.",
+      };
 
     const CAP = 500000; // tối đa 500.000đ
     return {
@@ -147,15 +182,16 @@ function genOrderId() {
 }
 
 // ========= ORDERS =========
+const API_BASE = "http://localhost:3000";
+
 export async function apiCreateOrder(orderPayload) {
-  const orders = lsGet(LS_ORDERS, []);
   // Validate: không cho tạo đơn nếu không có item hoặc tổng tiền = 0
   const items = orderPayload?.items || {};
   const hasItems = Object.values(items).some((q) => Number(q) > 0);
   const subtotalNum = Number(orderPayload?.subtotal || 0);
   const totalNum = Number(orderPayload?.total || 0);
   if (!hasItems || subtotalNum <= 0 || totalNum <= 0) {
-    throw new Error('EMPTY_ORDER');
+    throw new Error("EMPTY_ORDER");
   }
 
   const id = genOrderId();
@@ -176,54 +212,192 @@ export async function apiCreateOrder(orderPayload) {
     payment_status: "pending", // chờ thanh toán hoặc COD
     delivery_status: "placed",
   };
-  orders.push(newOrder);
-  lsSet(LS_ORDERS, orders);
-  return newOrder;
-}
-export async function apiListOrders() {
-  return lsGet(LS_ORDERS, []);
+
+  try {
+    // POST directly to json-server /orders
+    // Middleware sẽ tự động trừ stock
+    const response = await fetch(`${API_BASE}/orders`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(newOrder),
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}));
+      throw new Error(errorData.error || errorData.message || "API failed");
+    }
+
+    const savedOrder = await response.json();
+    console.log("✅ Order created successfully:", savedOrder.id);
+
+    // Log audit
+    const user = await apiCurrentUser();
+    if (user) {
+      await apiCreateAuditLog("order.create", user.email || user.phone, {
+        orderId: savedOrder.id,
+        total: savedOrder.total,
+      });
+    }
+
+    // Stock is automatically deducted by backend middleware
+    return savedOrder;
+  } catch (error) {
+    console.error("Failed to create order via API:", error.message);
+
+    // Fallback to localStorage only if network error
+    if (error.message.includes("fetch")) {
+      console.warn("Using localStorage fallback due to network error");
+      const orders = lsGet(LS_ORDERS, []);
+      orders.push(newOrder);
+      lsSet(LS_ORDERS, orders);
+      return newOrder;
+    }
+
+    // Re-throw validation errors (like out of stock)
+    throw error;
+  }
 }
 
-export async function apiCancelOrder(orderId) {
-  const orders = lsGet(LS_ORDERS, []);
-  const idx = orders.findIndex((o) => o.id === orderId);
-  if (idx === -1) return null;
-  const now = new Date().toISOString();
-  const o = orders[idx];
-  o.delivery_status = 'cancelled';
-  o.tracking = Array.isArray(o.tracking) ? o.tracking.slice() : [];
-  const has = o.tracking.some((s) => s.code === 'cancelled');
-  if (!has) o.tracking.push({ code: 'cancelled', label: 'Đã hủy đơn', at: now });
-  lsSet(LS_ORDERS, orders);
-  return o;
+export async function apiListOrders(filters = {}) {
+  try {
+    let url = `${API_BASE}/orders?_sort=created_at&_order=desc`;
+    if (filters.status) url += `&delivery_status=${filters.status}`;
+    if (filters.customer_id) url += `&user.id=${filters.customer_id}`;
+
+    const response = await fetch(url);
+    if (!response.ok) throw new Error("API failed");
+    return await response.json();
+  } catch (error) {
+    console.error(
+      "Failed to fetch orders from API, using localStorage fallback:",
+      error
+    );
+    return lsGet(LS_ORDERS, []);
+  }
 }
 
-// Thêm API Trả hàng: đánh dấu đơn là returned và thêm bước vào tracking
-export async function apiReturnOrder(orderId) {
-  const orders = lsGet(LS_ORDERS, []);
-  const idx = orders.findIndex((o) => o.id === orderId);
-  if (idx === -1) return null;
-  const now = new Date().toISOString();
-  const o = orders[idx];
-  o.delivery_status = 'returned';
-  o.tracking = Array.isArray(o.tracking) ? o.tracking.slice() : [];
-  const has = o.tracking.some((s) => s.code === 'returned');
-  if (!has) o.tracking.push({ code: 'returned', label: 'Đã trả hàng', at: now });
-  lsSet(LS_ORDERS, orders);
-  return o;
+export async function apiGetOrderById(orderId) {
+  try {
+    const response = await fetch(`${API_BASE}/orders/${orderId}`);
+    if (!response.ok) throw new Error("Order not found");
+    return await response.json();
+  } catch (error) {
+    console.error("Failed to fetch order from API:", error);
+    const orders = lsGet(LS_ORDERS, []);
+    return orders.find((o) => o.id === orderId) || null;
+  }
+}
+
+export async function apiUpdateOrderStatus(
+  orderId,
+  newStatus,
+  updatedBy = "Admin"
+) {
+  try {
+    const order = await apiGetOrderById(orderId);
+    if (!order) throw new Error("Order not found");
+
+    const now = new Date().toISOString();
+    const tracking = Array.isArray(order.tracking) ? [...order.tracking] : [];
+
+    // Update tracking based on new status
+    const trackingMap = {
+      preparing: { code: "preparing", label: "Đang chuẩn bị", at: now },
+      ready: { code: "ready", label: "Sẵn sàng giao", at: now },
+      pickup: { code: "pickup", label: "Shipper đã nhận", at: now },
+      delivering: { code: "delivering", label: "Đang giao", at: now },
+      delivered: { code: "delivered", label: "Giao thành công", at: now },
+      cancelled: { code: "cancelled", label: "Đã hủy đơn", at: now },
+      returned: { code: "returned", label: "Đã trả hàng", at: now },
+    };
+
+    const trackingEntry = trackingMap[newStatus];
+    if (trackingEntry) {
+      const existingIdx = tracking.findIndex(
+        (t) => t.code === trackingEntry.code
+      );
+      if (existingIdx >= 0) {
+        tracking[existingIdx].at = now;
+      } else {
+        tracking.push(trackingEntry);
+      }
+    }
+
+    const updates = {
+      delivery_status: newStatus,
+      tracking,
+      updated_at: now,
+      updated_by: updatedBy,
+    };
+
+    const response = await fetch(`${API_BASE}/orders/${orderId}`, {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(updates),
+    });
+    if (!response.ok) throw new Error("Update failed");
+    const updatedOrder = await response.json();
+
+    // Create audit log
+    await apiCreateAuditLog("update_order_status", updatedBy, {
+      orderId,
+      oldStatus: order.delivery_status,
+      newStatus,
+    });
+
+    return updatedOrder;
+  } catch (error) {
+    console.error("Failed to update order via API:", error);
+    // Fallback to localStorage
+    const orders = lsGet(LS_ORDERS, []);
+    const idx = orders.findIndex((o) => o.id === orderId);
+    if (idx === -1) return null;
+    const now = new Date().toISOString();
+    const o = orders[idx];
+    o.delivery_status = newStatus;
+    o.tracking = Array.isArray(o.tracking) ? o.tracking.slice() : [];
+    const has = o.tracking.some((s) => s.code === newStatus);
+    if (!has) o.tracking.push({ code: newStatus, label: newStatus, at: now });
+    lsSet(LS_ORDERS, orders);
+    return o;
+  }
+}
+
+export async function apiCancelOrder(orderId, cancelledBy = "Customer") {
+  return await apiUpdateOrderStatus(orderId, "cancelled", cancelledBy);
+}
+
+export async function apiReturnOrder(orderId, returnedBy = "Customer") {
+  return await apiUpdateOrderStatus(orderId, "returned", returnedBy);
 }
 
 // Đánh dấu đơn đã thanh toán (giả lập online)
 export async function apiMarkOrderPaid(orderId) {
-  const orders = lsGet(LS_ORDERS, []);
-  const idx = orders.findIndex((o) => o.id === orderId);
-  if (idx === -1) return null;
-  const o = orders[idx];
-  o.payment_status = 'paid';
-  lsSet(LS_ORDERS, orders);
-  return o;
-}
+  try {
+    const response = await fetch(`${API_BASE}/orders/${orderId}`, {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ payment_status: "paid" }),
+    });
+    if (!response.ok) throw new Error("Update failed");
 
+    // Create audit log
+    await apiCreateAuditLog("mark_paid", "System", { orderId });
+
+    return await response.json();
+  } catch (error) {
+    console.error("Failed to mark order paid via API:", error);
+    const orders = lsGet(LS_ORDERS, []);
+    const idx = orders.findIndex((o) => o.id === orderId);
+    if (idx === -1) return null;
+    const o = orders[idx];
+    o.payment_status = "paid";
+    lsSet(LS_ORDERS, orders);
+    return o;
+  }
+}
 
 // ========= AUTH / USERS =========
 function getUsers() {
@@ -271,12 +445,21 @@ function setUsers(list) {
   } catch {}
 })();
 
-export async function apiRegisterUser({ name, email, phone, password, address }) {
+export async function apiRegisterUser({
+  name,
+  email,
+  phone,
+  password,
+  address,
+}) {
   const e = (email || "").trim().toLowerCase();
   const p = (phone || "").replace(/\D/g, "");
   const users = getUsers();
   if (!name || (!e && !p) || !password)
-    return { ok: false, message: "Vui lòng nhập đủ họ tên, SĐT/email và mật khẩu." };
+    return {
+      ok: false,
+      message: "Vui lòng nhập đủ họ tên, SĐT/email và mật khẩu.",
+    };
   if (e && users.some((u) => (u.email || "").toLowerCase() === e))
     return { ok: false, message: "Email đã tồn tại." };
   if (p && users.some((u) => (u.phone || "") === p))
@@ -292,7 +475,18 @@ export async function apiRegisterUser({ name, email, phone, password, address })
   };
   users.push(user);
   setUsers(users);
-  lsSet(LS_SESSION, { id: user.id, email: user.email, phone: user.phone, name: user.name });
+  lsSet(LS_SESSION, {
+    id: user.id,
+    email: user.email,
+    phone: user.phone,
+    name: user.name,
+  });
+
+  // Log audit
+  await apiCreateAuditLog("user.register", user.email || user.phone, {
+    userId: user.id,
+  });
+
   return {
     ok: true,
     user: {
@@ -311,18 +505,44 @@ export async function apiLoginUser({ email, phone, password }) {
   const p = (phone || "").replace(/\D/g, "");
   const pw = String(password || "");
   const candidate = users.find(
-    (x) => (e && (x.email || "").toLowerCase() === e) || (p && (x.phone || "") === p)
+    (x) =>
+      (e && (x.email || "").toLowerCase() === e) || (p && (x.phone || "") === p)
   );
   if (!candidate) {
-    return { ok: false, reason: "user_not_found", message: "Không tìm thấy tài khoản. Vui lòng đăng ký." };
+    return {
+      ok: false,
+      reason: "user_not_found",
+      message: "Không tìm thấy tài khoản. Vui lòng đăng ký.",
+    };
   }
   if (candidate.password !== pw) {
-    return { ok: false, reason: "wrong_password", message: "Mật khẩu không đúng." };
+    return {
+      ok: false,
+      reason: "wrong_password",
+      message: "Mật khẩu không đúng.",
+    };
   }
-  lsSet(LS_SESSION, { id: candidate.id, email: candidate.email, phone: candidate.phone, name: candidate.name });
+  lsSet(LS_SESSION, {
+    id: candidate.id,
+    email: candidate.email,
+    phone: candidate.phone,
+    name: candidate.name,
+  });
+
+  // Log audit
+  await apiCreateAuditLog("user.login", candidate.email || candidate.phone, {
+    userId: candidate.id,
+  });
+
   return {
     ok: true,
-    user: { id: candidate.id, name: candidate.name, email: candidate.email, phone: candidate.phone, address: candidate.address },
+    user: {
+      id: candidate.id,
+      name: candidate.name,
+      email: candidate.email,
+      phone: candidate.phone,
+      address: candidate.address,
+    },
   };
 }
 
@@ -339,11 +559,28 @@ export async function apiCurrentUser() {
       const users = getUsers();
       let u = null;
       if (s.id) u = users.find((x) => x.id === s.id);
-      if (!u && s.email) u = users.find((x) => (x.email || "").toLowerCase() === String(s.email).toLowerCase());
-      if (!u && s.phone) u = users.find((x) => (x.phone || "") === String(s.phone));
-      if (u) return { id: u.id, name: u.name, email: u.email, phone: u.phone, address: u.address };
+      if (!u && s.email)
+        u = users.find(
+          (x) => (x.email || "").toLowerCase() === String(s.email).toLowerCase()
+        );
+      if (!u && s.phone)
+        u = users.find((x) => (x.phone || "") === String(s.phone));
+      if (u)
+        return {
+          id: u.id,
+          name: u.name,
+          email: u.email,
+          phone: u.phone,
+          address: u.address,
+        };
       // nếu không có trong users, trả về thông tin tối thiểu từ session
-      return { id: s.id || s.phone || s.email, name: s.name || "", email: s.email || "", phone: s.phone || "", address: s.address || "" };
+      return {
+        id: s.id || s.phone || s.email,
+        name: s.name || "",
+        email: s.email || "",
+        phone: s.phone || "",
+        address: s.address || "",
+      };
     }
   } catch {}
   // Fallback client
@@ -365,7 +602,13 @@ export async function apiCurrentUser() {
   const users = getUsers();
   const uOld = users.find((x) => x.id === sOld.id);
   return uOld
-    ? { id: uOld.id, name: uOld.name, email: uOld.email, phone: uOld.phone, address: uOld.address }
+    ? {
+        id: uOld.id,
+        name: uOld.name,
+        email: uOld.email,
+        phone: uOld.phone,
+        address: uOld.address,
+      }
     : null;
 }
 
@@ -374,7 +617,9 @@ export async function apiLogoutUser() {
   localStorage.removeItem(OLD_CLIENT_SESSION);
   localStorage.removeItem(OLD_LS_SESSION);
   // Đồng bộ luồng Account: clear cờ đã xem profile khi logout qua API
-  try { localStorage.removeItem('vvv_has_seen_profile'); } catch {}
+  try {
+    localStorage.removeItem("vvv_has_seen_profile");
+  } catch {}
   return { ok: true };
 }
 
@@ -382,28 +627,38 @@ export async function apiUpdateProfile({ name, address, phone, email }) {
   // Ưu tiên session mới
   const sRaw = localStorage.getItem(LS_SESSION);
   let s = null;
-  try { s = JSON.parse(sRaw || "null"); } catch {}
+  try {
+    s = JSON.parse(sRaw || "null");
+  } catch {}
   if (!s) return { ok: false, message: "Chưa đăng nhập." };
   const users = getUsers();
   let idx = -1;
   if (s.id) idx = users.findIndex((x) => x.id === s.id);
-  if (idx === -1 && s.email) idx = users.findIndex((x) => (x.email || "").toLowerCase() === String(s.email).toLowerCase());
-  if (idx === -1 && s.phone) idx = users.findIndex((x) => (x.phone || "") === String(s.phone));
+  if (idx === -1 && s.email)
+    idx = users.findIndex(
+      (x) => (x.email || "").toLowerCase() === String(s.email).toLowerCase()
+    );
+  if (idx === -1 && s.phone)
+    idx = users.findIndex((x) => (x.phone || "") === String(s.phone));
   if (idx === -1) return { ok: false, message: "Không tìm thấy người dùng." };
 
   // Chuẩn hóa & kiểm tra trùng SĐT nếu có yêu cầu cập nhật
   let newPhone = (phone ?? users[idx].phone) || "";
   newPhone = String(newPhone).replace(/\D/g, "");
   if (newPhone && newPhone !== (users[idx].phone || "")) {
-    const dupPhone = users.some((u, i) => i !== idx && (u.phone || "") === newPhone);
+    const dupPhone = users.some(
+      (u, i) => i !== idx && (u.phone || "") === newPhone
+    );
     if (dupPhone) return { ok: false, message: "SĐT đã tồn tại." };
   }
 
   // Chuẩn hóa & kiểm tra trùng Email nếu có yêu cầu cập nhật
   let newEmail = (email ?? users[idx].email) || "";
   newEmail = String(newEmail).trim().toLowerCase();
-  if (newEmail && newEmail !== ((users[idx].email || "").toLowerCase())) {
-    const dupEmail = users.some((u, i) => i !== idx && (String(u.email || "").toLowerCase()) === newEmail);
+  if (newEmail && newEmail !== (users[idx].email || "").toLowerCase()) {
+    const dupEmail = users.some(
+      (u, i) => i !== idx && String(u.email || "").toLowerCase() === newEmail
+    );
     if (dupEmail) return { ok: false, message: "Email đã tồn tại." };
   }
 
@@ -421,6 +676,14 @@ export async function apiUpdateProfile({ name, address, phone, email }) {
     phone: users[idx].phone,
     name: users[idx].name,
   });
+
+  // Log audit
+  await apiCreateAuditLog(
+    "profile.update",
+    users[idx].email || users[idx].phone,
+    { userId: users[idx].id, changes: { name, address, phone, email } }
+  );
+
   return {
     ok: true,
     user: {
@@ -436,25 +699,102 @@ export async function apiUpdateProfile({ name, address, phone, email }) {
 export async function apiChangePassword({ oldPassword, newPassword }) {
   // Đảm bảo đang đăng nhập
   let s = null;
-  try { s = JSON.parse(localStorage.getItem(LS_SESSION) || "null"); } catch {}
+  try {
+    s = JSON.parse(localStorage.getItem(LS_SESSION) || "null");
+  } catch {}
   if (!s) return { ok: false, message: "Chưa đăng nhập." };
 
   const users = getUsers();
   let idx = -1;
   if (s.id) idx = users.findIndex((x) => x.id === s.id);
-  if (idx === -1 && s.email) idx = users.findIndex((x) => (x.email || "").toLowerCase() === String(s.email).toLowerCase());
-  if (idx === -1 && s.phone) idx = users.findIndex((x) => (x.phone || "") === String(s.phone));
+  if (idx === -1 && s.email)
+    idx = users.findIndex(
+      (x) => (x.email || "").toLowerCase() === String(s.email).toLowerCase()
+    );
+  if (idx === -1 && s.phone)
+    idx = users.findIndex((x) => (x.phone || "") === String(s.phone));
   if (idx === -1) return { ok: false, message: "Không tìm thấy người dùng." };
 
   const curPw = String(oldPassword || "");
   const newPw = String(newPassword || "");
   if (!curPw) return { ok: false, message: "Vui lòng nhập mật khẩu hiện tại." };
-  if (users[idx].password !== curPw) return { ok: false, reason: "wrong_old_password", message: "Mật khẩu hiện tại không đúng." };
-  if (!newPw || newPw.length < 6) return { ok: false, reason: "weak_password", message: "Mật khẩu mới phải ≥ 6 ký tự." };
-  if (newPw === curPw) return { ok: false, message: "Mật khẩu mới không được trùng mật khẩu hiện tại." };
+  if (users[idx].password !== curPw)
+    return {
+      ok: false,
+      reason: "wrong_old_password",
+      message: "Mật khẩu hiện tại không đúng.",
+    };
+  if (!newPw || newPw.length < 6)
+    return {
+      ok: false,
+      reason: "weak_password",
+      message: "Mật khẩu mới phải ≥ 6 ký tự.",
+    };
+  if (newPw === curPw)
+    return {
+      ok: false,
+      message: "Mật khẩu mới không được trùng mật khẩu hiện tại.",
+    };
 
   users[idx] = { ...users[idx], password: newPw };
   setUsers(users);
+
+  // Log audit
+  await apiCreateAuditLog(
+    "password.change",
+    users[idx].email || users[idx].phone,
+    { userId: users[idx].id }
+  );
+
   // Không cần cập nhật session vì phiên không lưu password
   return { ok: true };
+}
+
+// ========= AUDIT LOGS =========
+const LS_AUDIT = "vvv_audit_logs";
+
+export async function apiCreateAuditLog(action, who = "System", metadata = {}) {
+  const logEntry = {
+    id: Date.now().toString() + Math.random().toString(36).substr(2, 5),
+    action,
+    who,
+    metadata,
+    timestamp: new Date().toISOString(),
+  };
+
+  try {
+    const response = await fetch(`${API_BASE}/auditLogs`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(logEntry),
+    });
+    if (!response.ok) throw new Error("Failed to create audit log");
+    return await response.json();
+  } catch (error) {
+    console.error(
+      "Failed to create audit log via API, using localStorage:",
+      error
+    );
+    const logs = lsGet(LS_AUDIT, []);
+    logs.push(logEntry);
+    lsSet(LS_AUDIT, logs);
+    return logEntry;
+  }
+}
+
+export async function apiListAuditLogs(limit = 100) {
+  try {
+    const response = await fetch(
+      `${API_BASE}/auditLogs?_sort=timestamp&_order=desc&_limit=${limit}`
+    );
+    if (!response.ok) throw new Error("Failed to fetch audit logs");
+    return await response.json();
+  } catch (error) {
+    console.error(
+      "Failed to fetch audit logs from API, using localStorage:",
+      error
+    );
+    const logs = lsGet(LS_AUDIT, []);
+    return logs.slice().reverse().slice(0, limit);
+  }
 }

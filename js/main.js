@@ -11,7 +11,7 @@ import {
   ensureDatalist,
   getFlashEffectivePrice,
 } from "./utils.js";
-import { RECIPES } from "./data.js";
+import { RECIPES, BANNERS, FLASH_SALE } from "./data.js";
 import {
   loadCart,
   addToCart,

@@ -1,6 +1,6 @@
 // js/checkout.js — Tách logic Checkout thành module
-import { $, money } from './utils.js';
-import { getCart, clearCart, removeFromCart } from './cart.js';
+import { $, money } from "./utils.js";
+import { getCart, clearCart, removeFromCart } from "./cart.js";
 import {
   apiListDeliverySlots,
   calcShippingFee,
@@ -10,16 +10,16 @@ import {
   apiGetProductById,
   apiUpdateProfile,
   apiMarkOrderPaid,
-} from './api.js';
+} from "./api.js";
 
-const LS_USER = 'vvv_user';
+const LS_USER = "vvv_user";
 
 function ensureCheckoutModal() {
-  let el = document.getElementById('checkoutModal');
+  let el = document.getElementById("checkoutModal");
   if (!el) {
-    el = document.createElement('section');
-    el.id = 'checkoutModal';
-    el.className = 'modal';
+    el = document.createElement("section");
+    el.id = "checkoutModal";
+    el.className = "modal";
     el.hidden = true;
     el.innerHTML = `
       <div class="modal__overlay" id="coOverlay"></div>
@@ -76,10 +76,10 @@ function ensureCheckoutModal() {
         </form>
       </div>`;
     document.body.appendChild(el);
-    $('#coClose', el).addEventListener('click', closeCheckoutModal);
-    $('#coOverlay', el).addEventListener('click', closeCheckoutModal);
-    document.addEventListener('keydown', (e) => {
-      if (!el.hidden && e.key === 'Escape') closeCheckoutModal();
+    $("#coClose", el).addEventListener("click", closeCheckoutModal);
+    $("#coOverlay", el).addEventListener("click", closeCheckoutModal);
+    document.addEventListener("keydown", (e) => {
+      if (!el.hidden && e.key === "Escape") closeCheckoutModal();
     });
   }
   return el;
@@ -88,26 +88,26 @@ function ensureCheckoutModal() {
 export async function openCheckoutModal(selected) {
   const cur = await apiCurrentUser();
   if (!cur) {
-    localStorage.setItem('vvv_return_to', location.href);
-    location.href = new URL('../client/login.html', location.href).toString();
+    localStorage.setItem("vvv_return_to", location.href);
+    location.href = new URL("../client/login.html", location.href).toString();
     return;
   }
 
   const el = ensureCheckoutModal();
 
   const slots = await apiListDeliverySlots();
-  const sel = $('#coSlot', el);
+  const sel = $("#coSlot", el);
   sel.innerHTML = slots
     .map((s) => `<option value="${s.id}">${s.date} • ${s.window}</option>`)
-    .join('');
+    .join("");
 
-  const form = $('#coForm', el);
-  form.elements.name.value = cur.name || '';
-  form.elements.phone.value = cur.phone || '';
-  form.elements.address.value = cur.address || '';
+  const form = $("#coForm", el);
+  form.elements.name.value = cur.name || "";
+  form.elements.phone.value = cur.phone || "";
+  form.elements.address.value = cur.address || "";
 
-  const sumEl = $('#coSummary', el);
-  const msgEl = $('#coVoucherMsg', el);
+  const sumEl = $("#coSummary", el);
+  const msgEl = $("#coVoucherMsg", el);
   let appliedVoucher = null; // {type, value}
   let subtotal = 0;
   let shipping = 0;
@@ -122,11 +122,15 @@ export async function openCheckoutModal(selected) {
     const map = {};
     for (const p of products) if (p && p.id) map[p.id] = p;
 
-    const { getFlashEffectivePrice } = await import('./utils.js');
+    const { getFlashEffectivePrice } = await import("./utils.js");
 
     subtotal = entries.reduce((s, [pid, q]) => {
       const p = map[pid];
-      const eff = p ? (getFlashEffectivePrice ? getFlashEffectivePrice(p) : p.price) : 0;
+      const eff = p
+        ? getFlashEffectivePrice
+          ? getFlashEffectivePrice(p)
+          : p.price
+        : 0;
       return s + eff * q;
     }, 0);
   }
@@ -135,21 +139,29 @@ export async function openCheckoutModal(selected) {
     shipping = calcShippingFee(form.elements.address.value, subtotal);
     discount = 0;
     if (appliedVoucher) {
-      if (appliedVoucher.type === 'ship') shipping = 0;
-      if (appliedVoucher.type === 'percent') {
+      if (appliedVoucher.type === "ship") shipping = 0;
+      if (appliedVoucher.type === "percent") {
         const raw = Math.round((subtotal * appliedVoucher.value) / 100);
         discount = appliedVoucher.cap ? Math.min(raw, appliedVoucher.cap) : raw;
       }
-      if (appliedVoucher.type === 'fixed') {
+      if (appliedVoucher.type === "fixed") {
         discount = Math.min(appliedVoucher.value || 0, subtotal);
       }
     }
     const total = Math.max(0, subtotal + shipping - discount);
     sumEl.innerHTML = `
-      <div class="row"><span class="muted">Tạm tính</span><strong>${money(subtotal)}</strong></div>
-      <div class="row"><span class="muted">Giảm</span><strong>${money(discount)}</strong></div>
-      <div class="row"><span class="muted">Ship</span><strong>${money(shipping)}</strong></div>
-      <div class="total-row"><span class="muted">Tổng</span><strong class="total">${money(total)}</strong></div>
+      <div class="row"><span class="muted">Tạm tính</span><strong>${money(
+        subtotal
+      )}</strong></div>
+      <div class="row"><span class="muted">Giảm</span><strong>${money(
+        discount
+      )}</strong></div>
+      <div class="row"><span class="muted">Ship</span><strong>${money(
+        shipping
+      )}</strong></div>
+      <div class="total-row"><span class="muted">Tổng</span><strong class="total">${money(
+        total
+      )}</strong></div>
     `;
     form.dataset.total = String(total);
     form.dataset.discount = String(discount);
@@ -158,7 +170,7 @@ export async function openCheckoutModal(selected) {
   await recalc();
 
   // gắn nút chọn trên bản đồ
-  const pickBtn = $('#btnPickOnMap', el);
+  const pickBtn = $("#btnPickOnMap", el);
   if (pickBtn) {
     pickBtn.onclick = () => openAddressPicker(form);
   }
@@ -166,7 +178,7 @@ export async function openCheckoutModal(selected) {
   // lưu hàm recalc vào form để AddressPicker gọi lại
   form._recalcFn = () => recalc();
 
-  $('#coApplyVoucher', el).onclick = async () => {
+  $("#coApplyVoucher", el).onclick = async () => {
     await computeSubtotal();
     const curShip = calcShippingFee(form.elements.address.value, subtotal);
     const code = form.elements.voucher.value;
@@ -176,42 +188,42 @@ export async function openCheckoutModal(selected) {
     });
     if (!res.ok) {
       msgEl.textContent = res.message;
-      msgEl.className = 'muted err';
+      msgEl.className = "muted err";
       appliedVoucher = null;
       discount = 0;
       await recalc();
       return;
     }
     msgEl.textContent = res.message;
-    msgEl.className = 'muted ok';
+    msgEl.className = "muted ok";
     appliedVoucher = { type: res.type, value: res.value, cap: res.cap };
     await recalc();
   };
 
-  form.elements.address.addEventListener('input', () => recalc());
+  form.elements.address.addEventListener("input", () => recalc());
   el._recalcFn = () => recalc();
-  document.addEventListener('cart:changed', el._recalcFn);
+  document.addEventListener("cart:changed", el._recalcFn);
 
   form.onsubmit = async (e) => {
     e.preventDefault();
     const fd = new FormData(form);
-    const name = (fd.get('name') || '').toString().trim();
-    const phone = (fd.get('phone') || '').toString().trim();
-    const address = (fd.get('address') || '').toString().trim();
-    const slot = (fd.get('slot') || '').toString();
-    const voucher = (fd.get('voucher') || '').toString().trim().toUpperCase();
-    const payment = (fd.get('payment') || 'COD').toString();
-    const note = (fd.get('note') || '').toString();
+    const name = (fd.get("name") || "").toString().trim();
+    const phone = (fd.get("phone") || "").toString().trim();
+    const address = (fd.get("address") || "").toString().trim();
+    const slot = (fd.get("slot") || "").toString();
+    const voucher = (fd.get("voucher") || "").toString().trim().toUpperCase();
+    const payment = (fd.get("payment") || "COD").toString();
+    const note = (fd.get("note") || "").toString();
     if (!name || !phone || !address) {
-      alert('Vui lòng điền đầy đủ thông tin.');
+      alert("Vui lòng điền đầy đủ thông tin.");
       return;
     }
 
     const cur2 = await apiCurrentUser();
     if (!cur2) {
-      alert('Phiên đăng nhập đã hết hạn. Vui lòng đăng nhập lại.');
-      localStorage.setItem('vvv_return_to', location.href);
-      location.href = new URL('../client/login.html', location.href).toString();
+      alert("Phiên đăng nhập đã hết hạn. Vui lòng đăng nhập lại.");
+      localStorage.setItem("vvv_return_to", location.href);
+      location.href = new URL("../client/login.html", location.href).toString();
       return;
     }
 
@@ -219,14 +231,15 @@ export async function openCheckoutModal(selected) {
     const base = selected?.items ?? getCart();
     const entries = Object.entries(base).filter(([, q]) => q > 0);
     if (!entries.length) {
-      alert('Bạn chưa chọn sản phẩm nào để thanh toán.');
+      alert("Bạn chưa chọn sản phẩm nào để thanh toán.");
       return;
     }
 
     await recalc();
-    const discountNow = parseInt(form.dataset.discount || '0', 10) || 0;
+    const discountNow = parseInt(form.dataset.discount || "0", 10) || 0;
     const totalNow =
-      parseInt(form.dataset.total || '0', 10) || subtotal + shipping - discountNow;
+      parseInt(form.dataset.total || "0", 10) ||
+      subtotal + shipping - discountNow;
 
     const user = { name, phone, address };
     localStorage.setItem(LS_USER, JSON.stringify(user));
@@ -235,18 +248,28 @@ export async function openCheckoutModal(selected) {
     } catch {}
 
     try {
+      // Items phải là object {productId: quantity} để backend middleware xử lý đúng
+      const itemsObj = selected?.items ?? getCart();
+
       const newOrder = await apiCreateOrder({
+        customerName: name,
+        phone,
+        address,
+        email: cur2.email || "",
         user,
         slot,
         voucher,
-        payment,
+        paymentMethod: payment,
         note,
-        status: 'Pending',
+        status: "placed",
+        delivery_status: "placed",
+        payment_status: payment === "QR" ? "pending" : "cod",
         subtotal,
         shipping_fee: shipping,
         discount: discountNow,
+        totalAmount: totalNow,
         total: totalNow,
-        items: { ...(selected?.items ?? getCart()) },
+        items: itemsObj, // Gửi dưới dạng object, không phải array
       });
 
       // Chỉ xóa các sản phẩm đã chọn, giữ lại các món chưa chọn
@@ -257,15 +280,20 @@ export async function openCheckoutModal(selected) {
       }
 
       closeCheckoutModal();
-      if (payment === 'QR') {
+      if (payment === "QR") {
         openQRModal(newOrder);
       } else {
-        document.dispatchEvent(new CustomEvent('order:confirmed', { detail: { orderId: newOrder.id } }));
+        document.dispatchEvent(
+          new CustomEvent("order:confirmed", {
+            detail: { orderId: newOrder.id },
+          })
+        );
       }
     } catch (err) {
-      const msg = err && err.message === 'EMPTY_ORDER'
-        ? 'Giỏ hàng trống, không thể đặt đơn.'
-        : 'Không thể tạo đơn. Vui lòng thử lại.';
+      const msg =
+        err && err.message === "EMPTY_ORDER"
+          ? "Giỏ hàng trống, không thể đặt đơn."
+          : "Không thể tạo đơn. Vui lòng thử lại.";
       alert(msg);
     }
   };
@@ -274,19 +302,18 @@ export async function openCheckoutModal(selected) {
 }
 
 export function closeCheckoutModal() {
-  const el = document.getElementById('checkoutModal');
+  const el = document.getElementById("checkoutModal");
   if (!el) return;
-  if (el._recalcFn) document.removeEventListener('cart:changed', el._recalcFn);
+  if (el._recalcFn) document.removeEventListener("cart:changed", el._recalcFn);
   el.hidden = true;
 }
 
-
-function ensureAddressPicker(){
-  let m = document.getElementById('addressPickerModal');
-  if(!m){
-    m = document.createElement('section');
-    m.id = 'addressPickerModal';
-    m.className = 'modal';
+function ensureAddressPicker() {
+  let m = document.getElementById("addressPickerModal");
+  if (!m) {
+    m = document.createElement("section");
+    m.id = "addressPickerModal";
+    m.className = "modal";
     m.hidden = true;
     m.innerHTML = `
       <div class="modal__overlay" id="apOverlay"></div>
@@ -315,178 +342,247 @@ function ensureAddressPicker(){
         </div>
       </div>`;
     document.body.appendChild(m);
-    document.getElementById('apClose').addEventListener('click',()=>closeAddressPicker());
-    document.getElementById('apOverlay').addEventListener('click',()=>closeAddressPicker());
+    document
+      .getElementById("apClose")
+      .addEventListener("click", () => closeAddressPicker());
+    document
+      .getElementById("apOverlay")
+      .addEventListener("click", () => closeAddressPicker());
   }
   return m;
 }
 
-async function loadLeaflet(){
-  if(window.L && typeof window.L.map === 'function') return;
-  await new Promise((resolve)=>{
-    const link = document.createElement('link');
-    link.rel = 'stylesheet';
-    link.href = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css';
-    link.onload = resolve; link.onerror = resolve; document.head.appendChild(link);
+async function loadLeaflet() {
+  if (window.L && typeof window.L.map === "function") return;
+  await new Promise((resolve) => {
+    const link = document.createElement("link");
+    link.rel = "stylesheet";
+    link.href = "https://unpkg.com/leaflet@1.9.4/dist/leaflet.css";
+    link.onload = resolve;
+    link.onerror = resolve;
+    document.head.appendChild(link);
   });
-  await new Promise((resolve, reject)=>{
-    const s = document.createElement('script');
-    s.src = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js';
-    s.onload = resolve; s.onerror = reject; document.body.appendChild(s);
+  await new Promise((resolve, reject) => {
+    const s = document.createElement("script");
+    s.src = "https://unpkg.com/leaflet@1.9.4/dist/leaflet.js";
+    s.onload = resolve;
+    s.onerror = reject;
+    document.body.appendChild(s);
   });
 }
 
-async function geocode(query){
-  if(!query) return [];
-  const url = `https://nominatim.openstreetmap.org/search?format=json&addressdetails=1&limit=6&countrycodes=vn&q=${encodeURIComponent(query)}`;
-  const res = await fetch(url, { headers: { 'Accept-Language':'vi' } });
-  if(!res.ok) return [];
+async function geocode(query) {
+  if (!query) return [];
+  const url = `https://nominatim.openstreetmap.org/search?format=json&addressdetails=1&limit=6&countrycodes=vn&q=${encodeURIComponent(
+    query
+  )}`;
+  const res = await fetch(url, { headers: { "Accept-Language": "vi" } });
+  if (!res.ok) return [];
   return await res.json();
 }
-async function reverseGeocode(lat,lng){
+async function reverseGeocode(lat, lng) {
   const url = `https://nominatim.openstreetmap.org/reverse?format=json&addressdetails=1&zoom=18&lat=${lat}&lon=${lng}`;
-  const res = await fetch(url, { headers: { 'Accept-Language':'vi' } });
-  if(!res.ok) return null;
+  const res = await fetch(url, { headers: { "Accept-Language": "vi" } });
+  if (!res.ok) return null;
   return await res.json();
 }
 
-let apState = { map:null, marker:null, adjusting:false, lat:null, lng:null, address:'' };
-function setPickedText(addr){
-  const wrap = document.getElementById('apPicked');
-  const addrEl = document.getElementById('apPickedAddr');
-  if(!wrap || !addrEl) return;
-  if(addr && addr.trim()){
+let apState = {
+  map: null,
+  marker: null,
+  adjusting: false,
+  lat: null,
+  lng: null,
+  address: "",
+};
+function setPickedText(addr) {
+  const wrap = document.getElementById("apPicked");
+  const addrEl = document.getElementById("apPickedAddr");
+  if (!wrap || !addrEl) return;
+  if (addr && addr.trim()) {
     addrEl.textContent = addr;
-    wrap.style.display = 'block';
-  }else{
-    addrEl.textContent = '';
-    wrap.style.display = 'none';
+    wrap.style.display = "block";
+  } else {
+    addrEl.textContent = "";
+    wrap.style.display = "none";
   }
 }
 
-export async function openAddressPicker(targetForm){
+export async function openAddressPicker(targetForm) {
   await loadLeaflet();
   const m = ensureAddressPicker();
-  const mapEl = document.getElementById('apMap');
-  const sEl = document.getElementById('apSearch');
-  const sugEl = document.getElementById('apSuggests');
-  const btnAdjust = document.getElementById('apAdjust');
-  const btnConfirm = document.getElementById('apConfirm');
-  const btnLocate = document.getElementById('apLocate');
-  sugEl.style.display = 'none';
+  const mapEl = document.getElementById("apMap");
+  const sEl = document.getElementById("apSearch");
+  const sugEl = document.getElementById("apSuggests");
+  const btnAdjust = document.getElementById("apAdjust");
+  const btnConfirm = document.getElementById("apConfirm");
+  const btnLocate = document.getElementById("apLocate");
+  sugEl.style.display = "none";
 
-  if(!apState.map){
-    apState.map = L.map(mapEl, { zoomControl:true }).setView([10.776,106.700], 13);
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution: '&copy; OpenStreetMap contributors'
+  if (!apState.map) {
+    apState.map = L.map(mapEl, { zoomControl: true }).setView(
+      [10.776, 106.7],
+      13
+    );
+    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+      attribution: "&copy; OpenStreetMap contributors",
     }).addTo(apState.map);
   }
   apState.adjusting = false;
-  btnAdjust.textContent = 'Sửa vị trí';
+  btnAdjust.textContent = "Sửa vị trí";
 
   // init from form or geolocation
-  const lat0 = parseFloat(targetForm.elements.lat.value || 'NaN');
-  const lng0 = parseFloat(targetForm.elements.lng.value || 'NaN');
+  const lat0 = parseFloat(targetForm.elements.lat.value || "NaN");
+  const lng0 = parseFloat(targetForm.elements.lng.value || "NaN");
   const addr0 = targetForm.elements.address.value;
-  if(!Number.isNaN(lat0) && !Number.isNaN(lng0)){
-    apState.lat = lat0; apState.lng = lng0; apState.address = addr0;
+  if (!Number.isNaN(lat0) && !Number.isNaN(lng0)) {
+    apState.lat = lat0;
+    apState.lng = lng0;
+    apState.address = addr0;
   }
 
-  function setMarker(lat,lng){
-    apState.lat = lat; apState.lng = lng;
-    if(!apState.marker){ apState.marker = L.marker([lat,lng],{draggable:false}).addTo(apState.map); }
-    else{ apState.marker.setLatLng([lat,lng]); }
-    apState.map.setView([lat,lng], 16);
+  function setMarker(lat, lng) {
+    apState.lat = lat;
+    apState.lng = lng;
+    if (!apState.marker) {
+      apState.marker = L.marker([lat, lng], { draggable: false }).addTo(
+        apState.map
+      );
+    } else {
+      apState.marker.setLatLng([lat, lng]);
+    }
+    apState.map.setView([lat, lng], 16);
   }
 
-  async function setAddressFromLatLng(lat,lng){
-    const info = await reverseGeocode(lat,lng).catch(()=>null);
-    if(info && info.display_name){ sEl.value = info.display_name; apState.address = info.display_name; }
-    setPickedText(apState.address||'');
+  async function setAddressFromLatLng(lat, lng) {
+    const info = await reverseGeocode(lat, lng).catch(() => null);
+    if (info && info.display_name) {
+      sEl.value = info.display_name;
+      apState.address = info.display_name;
+    }
+    setPickedText(apState.address || "");
   }
 
-  if(apState.lat && apState.lng){ setMarker(apState.lat, apState.lng); }
-  else if(navigator.geolocation){
-    navigator.geolocation.getCurrentPosition(async (pos)=>{
-      const { latitude, longitude } = pos.coords;
-      setMarker(latitude, longitude);
-      await setAddressFromLatLng(latitude, longitude);
-    }, ()=>{ apState.map.setView([10.776,106.700], 13); });
+  if (apState.lat && apState.lng) {
+    setMarker(apState.lat, apState.lng);
+  } else if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(
+      async (pos) => {
+        const { latitude, longitude } = pos.coords;
+        setMarker(latitude, longitude);
+        await setAddressFromLatLng(latitude, longitude);
+      },
+      () => {
+        apState.map.setView([10.776, 106.7], 13);
+      }
+    );
   } else {
-    apState.map.setView([10.776,106.700], 13);
+    apState.map.setView([10.776, 106.7], 13);
   }
-  setPickedText(apState.address||'');
+  setPickedText(apState.address || "");
 
   // search
-  let searchTimer=null;
-  sEl.oninput = ()=>{
+  let searchTimer = null;
+  sEl.oninput = () => {
     clearTimeout(searchTimer);
     const q = sEl.value.trim();
     setPickedText(q);
-    if(!q){
-      sugEl.innerHTML = '';
-      sugEl.style.display = 'none';
+    if (!q) {
+      sugEl.innerHTML = "";
+      sugEl.style.display = "none";
       return;
     }
-    searchTimer = setTimeout(async ()=>{
+    searchTimer = setTimeout(async () => {
       const list = await geocode(q);
-      sugEl.innerHTML = list.map(item=>`<button class="sug" data-lat="${item.lat}" data-lng="${item.lon}">${item.display_name}</button>`).join('') || '';
-      sugEl.style.display = list.length ? 'grid' : 'none';
-      [...sugEl.querySelectorAll('.sug')].forEach(btn=>{
-        btn.onclick = ()=>{
-          const lat = parseFloat(btn.dataset.lat), lng = parseFloat(btn.dataset.lng);
-          setMarker(lat,lng); apState.address = btn.textContent; setPickedText(apState.address);
-          sugEl.style.display = 'none';
+      sugEl.innerHTML =
+        list
+          .map(
+            (item) =>
+              `<button class="sug" data-lat="${item.lat}" data-lng="${item.lon}">${item.display_name}</button>`
+          )
+          .join("") || "";
+      sugEl.style.display = list.length ? "grid" : "none";
+      [...sugEl.querySelectorAll(".sug")].forEach((btn) => {
+        btn.onclick = () => {
+          const lat = parseFloat(btn.dataset.lat),
+            lng = parseFloat(btn.dataset.lng);
+          setMarker(lat, lng);
+          apState.address = btn.textContent;
+          setPickedText(apState.address);
+          sugEl.style.display = "none";
         };
       });
     }, 300);
   };
-  sEl.onblur = ()=>{ setTimeout(()=>{ sugEl.style.display = 'none'; }, 200); };
+  sEl.onblur = () => {
+    setTimeout(() => {
+      sugEl.style.display = "none";
+    }, 200);
+  };
 
   // adjust mode
-  btnAdjust.onclick = ()=>{
+  btnAdjust.onclick = () => {
     apState.adjusting = !apState.adjusting;
-    btnAdjust.textContent = apState.adjusting ? 'Kết thúc sửa' : 'Sửa vị trí';
-    if(apState.adjusting){
-      apState.map.once('click', async (e)=>{
-        const { lat, lng } = e.latlng; setMarker(lat,lng); await setAddressFromLatLng(lat,lng); apState.adjusting=false; btnAdjust.textContent='Sửa vị trí';
+    btnAdjust.textContent = apState.adjusting ? "Kết thúc sửa" : "Sửa vị trí";
+    if (apState.adjusting) {
+      apState.map.once("click", async (e) => {
+        const { lat, lng } = e.latlng;
+        setMarker(lat, lng);
+        await setAddressFromLatLng(lat, lng);
+        apState.adjusting = false;
+        btnAdjust.textContent = "Sửa vị trí";
       });
     }
   };
 
   // locate current
-  btnLocate.onclick = ()=>{
-    if(!navigator.geolocation) return alert('Thiết bị không hỗ trợ lấy vị trí.');
-    navigator.geolocation.getCurrentPosition(async (pos)=>{
-      const { latitude, longitude } = pos.coords; setMarker(latitude, longitude); await setAddressFromLatLng(latitude, longitude);
-    }, (err)=>{ alert('Không lấy được vị trí: ' + (err?.message||'')); });
+  btnLocate.onclick = () => {
+    if (!navigator.geolocation)
+      return alert("Thiết bị không hỗ trợ lấy vị trí.");
+    navigator.geolocation.getCurrentPosition(
+      async (pos) => {
+        const { latitude, longitude } = pos.coords;
+        setMarker(latitude, longitude);
+        await setAddressFromLatLng(latitude, longitude);
+      },
+      (err) => {
+        alert("Không lấy được vị trí: " + (err?.message || ""));
+      }
+    );
   };
 
   // confirm
-  btnConfirm.onclick = ()=>{
-
-    if(!apState.address && sEl.value.trim()) apState.address = sEl.value.trim();
-    if(apState.address){ targetForm.elements.address.value = apState.address; }
-    if(apState.lat && apState.lng){ targetForm.elements.lat.value = String(apState.lat); targetForm.elements.lng.value = String(apState.lng); }
+  btnConfirm.onclick = () => {
+    if (!apState.address && sEl.value.trim())
+      apState.address = sEl.value.trim();
+    if (apState.address) {
+      targetForm.elements.address.value = apState.address;
+    }
+    if (apState.lat && apState.lng) {
+      targetForm.elements.lat.value = String(apState.lat);
+      targetForm.elements.lng.value = String(apState.lng);
+    }
     closeAddressPicker();
-    if(typeof targetForm._recalcFn === 'function'){ targetForm._recalcFn(); }
+    if (typeof targetForm._recalcFn === "function") {
+      targetForm._recalcFn();
+    }
   };
 
   m.hidden = false;
 }
 
-export function closeAddressPicker(){
-  const m = document.getElementById('addressPickerModal');
-  if(m) m.hidden = true;
+export function closeAddressPicker() {
+  const m = document.getElementById("addressPickerModal");
+  if (m) m.hidden = true;
 }
 
 // ====== QR Pay (giả lập) ======
 function ensureQRModal() {
-  let m = document.getElementById('qrPayModal');
+  let m = document.getElementById("qrPayModal");
   if (!m) {
-    m = document.createElement('section');
-    m.id = 'qrPayModal';
-    m.className = 'modal';
+    m = document.createElement("section");
+    m.id = "qrPayModal";
+    m.className = "modal";
     m.hidden = true;
     m.innerHTML = `
       <div class="modal__overlay" id="qrOverlay"></div>
@@ -514,25 +610,31 @@ function openQRModal(order) {
   m.dataset.orderId = String(order.id);
   const amount = order.total || 0;
   const payload = `VUA VUI VE | ORDER #${order.id} | ${amount}`;
-  const img = document.getElementById('qrImg');
-  img.src = `https://api.qrserver.com/v1/create-qr-code/?size=240x240&data=${encodeURIComponent(payload)}`;
+  const img = document.getElementById("qrImg");
+  img.src = `https://api.qrserver.com/v1/create-qr-code/?size=240x240&data=${encodeURIComponent(
+    payload
+  )}`;
 
   const finalize = async () => {
     const id = m.dataset.orderId;
-    try { await apiMarkOrderPaid(id); } catch {}
+    try {
+      await apiMarkOrderPaid(id);
+    } catch {}
     closeQRModal();
-    document.dispatchEvent(new CustomEvent('order:confirmed', { detail: { orderId: id } }));
+    document.dispatchEvent(
+      new CustomEvent("order:confirmed", { detail: { orderId: id } })
+    );
   };
-  const overlay = document.getElementById('qrOverlay');
-  const closeBtn = document.getElementById('qrClose');
-  const doneBtn = document.getElementById('qrDone');
+  const overlay = document.getElementById("qrOverlay");
+  const closeBtn = document.getElementById("qrClose");
+  const doneBtn = document.getElementById("qrDone");
   overlay.onclick = finalize;
   closeBtn.onclick = finalize;
   doneBtn.onclick = finalize;
 }
 
 function closeQRModal() {
-  const m = document.getElementById('qrPayModal');
+  const m = document.getElementById("qrPayModal");
   if (!m) return;
   m.hidden = true;
 }

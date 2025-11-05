@@ -1,0 +1,401 @@
+[
+  {
+    "id": "ORD20250103001",
+    "customerName": "Nguyễn Văn A",
+    "email": "nguyenvana@gmail.com",
+    "phone": "0901234567",
+    "address": "123 Lê Lợi, Quận 1, TP.HCM",
+    "items": [
+      {
+        "productId": "110",
+        "productName": "Cà rốt (500g)",
+        "quantity": 2,
+        "price": 15000,
+        "subtotal": 30000
+      },
+      {
+        "productId": "112",
+        "productName": "Bí Đỏ (500g)",
+        "quantity": 1,
+        "price": 18000,
+        "subtotal": 18000
+      }
+    ],
+    "totalAmount": 48000,
+    "status": "pickup",
+    "paymentMethod": "cod",
+    "createdAt": "2025-01-03T10:30:00.000Z",
+    "updatedAt": "2025-11-04T04:23:43.878Z",
+    "delivery_status": "pickup",
+    "tracking": [
+      {
+        "code": "preparing",
+        "label": "Đang chuẩn bị",
+        "at": "2025-11-03T09:10:15.439Z"
+      },
+      {
+        "code": "ready",
+        "label": "Sẵn sàng giao",
+        "at": "2025-11-03T09:13:05.134Z"
+      },
+      {
+        "code": "pickup",
+        "label": "Shipper đã nhận",
+        "at": "2025-11-04T04:23:43.878Z"
+      }
+    ],
+    "updated_at": "2025-11-04T04:23:43.878Z",
+    "updated_by": "ilovetranduythanh@gmail.com"
+  },
+  {
+    "id": "ORD20250103002",
+    "customerName": "Trần Thị B",
+    "email": "tranthib@gmail.com",
+    "phone": "0902345678",
+    "address": "456 Nguyễn Huệ, Quận 1, TP.HCM",
+    "items": [
+      {
+        "productId": "100",
+        "productName": "Rau muống (500g)",
+        "quantity": 3,
+        "price": 15000,
+        "subtotal": 45000
+      }
+    ],
+    "totalAmount": 45000,
+    "status": "pickup",
+    "paymentMethod": "banking",
+    "createdAt": "2025-01-03T11:15:00.000Z",
+    "updatedAt": "2025-11-03T09:13:03.249Z",
+    "delivery_status": "pickup",
+    "tracking": [
+      {
+        "code": "ready",
+        "label": "Sẵn sàng giao",
+        "at": "2025-11-03T09:10:07.144Z"
+      },
+      {
+        "code": "pickup",
+        "label": "Shipper đã nhận",
+        "at": "2025-11-03T09:13:03.249Z"
+      }
+    ],
+    "updated_at": "2025-11-03T09:13:03.249Z",
+    "updated_by": "admin@vuavuive.vn"
+  },
+  {
+    "id": "ORD20250102001",
+    "customerName": "Lê Văn C",
+    "email": "levanc@gmail.com",
+    "phone": "0903456789",
+    "address": "789 Hai Bà Trưng, Quận 3, TP.HCM",
+    "items": [
+      {
+        "productId": "184",
+        "productName": "Thịt heo ba rọi (500g)",
+        "quantity": 1,
+        "price": 85000,
+        "subtotal": 85000
+      },
+      {
+        "productId": "110",
+        "productName": "Cà rốt (500g)",
+        "quantity": 1,
+        "price": 15000,
+        "subtotal": 15000
+      }
+    ],
+    "totalAmount": 100000,
+    "status": "completed",
+    "paymentMethod": "cod",
+    "createdAt": "2025-01-02T14:00:00.000Z",
+    "updatedAt": "2025-01-02T18:00:00.000Z"
+  },
+  {
+    "id": "ORD-20251103-154823-WR5XNF",
+    "user": {
+      "name": "Quốc Việt",
+      "phone": "0973654843",
+      "address": "Đường Hẻm 96, Khu phố 82, Phường Chánh Hưng, Thành phố Hồ Chí Minh, 73009, Việt Nam"
+    },
+    "slot": "2025-11-02_09:00-11:00",
+    "voucher": "",
+    "payment": "COD",
+    "note": "",
+    "status": "Pending",
+    "subtotal": 30000,
+    "shipping_fee": 20000,
+    "discount": 0,
+    "total": 50000,
+    "items": {
+      "102": 1,
+      "140": 1,
+      "620": 1
+    },
+    "created_at": "2025-11-03T08:48:23.894Z",
+    "tracking": [
+      {
+        "code": "placed",
+        "label": "Đã đặt hàng",
+        "at": "2025-11-03T08:48:23.894Z"
+      },
+      {
+        "code": "preparing",
+        "label": "Đang chuẩn bị",
+        "at": null
+      },
+      {
+        "code": "ready",
+        "label": "Sẵn sàng giao",
+        "at": null
+      },
+      {
+        "code": "pickup",
+        "label": "Shipper đã nhận",
+        "at": null
+      },
+      {
+        "code": "delivering",
+        "label": "Đang giao",
+        "at": null
+      },
+      {
+        "code": "delivered",
+        "label": "Giao thành công",
+        "at": null
+      }
+    ],
+    "payment_status": "pending",
+    "delivery_status": "placed"
+  },
+  {
+    "id": "ORD-20251103-155048-4EFYYJ",
+    "user": {
+      "name": "Quốc Việt",
+      "phone": "0973654843",
+      "address": "Đường Hẻm 96, Khu phố 82, Phường Chánh Hưng, Thành phố Hồ Chí Minh, 73009, Việt Nam"
+    },
+    "slot": "2025-11-03_18:00-20:00",
+    "voucher": "FREESHIP",
+    "payment": "COD",
+    "note": "",
+    "status": "Pending",
+    "subtotal": 55000,
+    "shipping_fee": 0,
+    "discount": 0,
+    "total": 55000,
+    "items": {
+      "102": 1,
+      "122": 2,
+      "421": 1
+    },
+    "created_at": "2025-11-03T08:50:48.467Z",
+    "tracking": [
+      {
+        "code": "placed",
+        "label": "Đã đặt hàng",
+        "at": "2025-11-03T08:50:48.467Z"
+      },
+      {
+        "code": "preparing",
+        "label": "Đang chuẩn bị",
+        "at": null
+      },
+      {
+        "code": "ready",
+        "label": "Sẵn sàng giao",
+        "at": null
+      },
+      {
+        "code": "pickup",
+        "label": "Shipper đã nhận",
+        "at": null
+      },
+      {
+        "code": "delivering",
+        "label": "Đang giao",
+        "at": null
+      },
+      {
+        "code": "delivered",
+        "label": "Giao thành công",
+        "at": null
+      }
+    ],
+    "payment_status": "pending",
+    "delivery_status": "placed"
+  },
+  {
+    "id": "ORD-20251103-163446-80GFY5",
+    "user": {
+      "name": "Quốc Việt",
+      "phone": "0973654843",
+      "address": "Bình Đường 2, Phường Dĩ An, Thành phố Hồ Chí Minh, 75350, Việt Nam"
+    },
+    "slot": "2025-11-02_09:00-11:00",
+    "voucher": "FREESHIP",
+    "payment": "COD",
+    "note": "",
+    "status": "Pending",
+    "subtotal": 29250,
+    "shipping_fee": 0,
+    "discount": 0,
+    "total": 29250,
+    "items": {
+      "122": 3
+    },
+    "created_at": "2025-11-03T09:34:46.866Z",
+    "tracking": [
+      {
+        "code": "placed",
+        "label": "Đã đặt hàng",
+        "at": "2025-11-03T09:34:46.866Z"
+      },
+      {
+        "code": "preparing",
+        "label": "Đang chuẩn bị",
+        "at": null
+      },
+      {
+        "code": "ready",
+        "label": "Sẵn sàng giao",
+        "at": null
+      },
+      {
+        "code": "pickup",
+        "label": "Shipper đã nhận",
+        "at": null
+      },
+      {
+        "code": "delivering",
+        "label": "Đang giao",
+        "at": null
+      },
+      {
+        "code": "delivered",
+        "label": "Giao thành công",
+        "at": null
+      }
+    ],
+    "payment_status": "pending",
+    "delivery_status": "placed"
+  },
+  {
+    "id": "ORD-20251103-163719-LL00PY",
+    "user": {
+      "name": "Đỗ Bá Danh Lộc",
+      "phone": "0912345678",
+      "address": "hùng vương street\nhùng vương street"
+    },
+    "slot": "2025-11-02_09:00-11:00",
+    "voucher": "",
+    "payment": "COD",
+    "note": "",
+    "status": "Pending",
+    "subtotal": 161120,
+    "shipping_fee": 20000,
+    "discount": 0,
+    "total": 181120,
+    "items": {
+      "100": 1,
+      "101": 1,
+      "111": 1,
+      "140": 1,
+      "300": 1,
+      "610": 1,
+      "620": 1
+    },
+    "created_at": "2025-11-03T09:37:19.664Z",
+    "tracking": [
+      {
+        "code": "placed",
+        "label": "Đã đặt hàng",
+        "at": "2025-11-03T09:37:19.664Z"
+      },
+      {
+        "code": "preparing",
+        "label": "Đang chuẩn bị",
+        "at": null
+      },
+      {
+        "code": "ready",
+        "label": "Sẵn sàng giao",
+        "at": null
+      },
+      {
+        "code": "pickup",
+        "label": "Shipper đã nhận",
+        "at": null
+      },
+      {
+        "code": "delivering",
+        "label": "Đang giao",
+        "at": null
+      },
+      {
+        "code": "delivered",
+        "label": "Giao thành công",
+        "at": null
+      }
+    ],
+    "payment_status": "pending",
+    "delivery_status": "placed"
+  },
+  {
+    "id": "ORD-20251104-112858-B9F7M7",
+    "user": {
+      "name": "Quốc Việt",
+      "phone": "0973654843",
+      "address": "Bình Đường 2, Phường Dĩ An, Thành phố Hồ Chí Minh, 75350, Việt Nam"
+    },
+    "slot": "2025-11-04_13:00-15:00",
+    "voucher": "FREESHIP",
+    "payment": "COD",
+    "note": "GỌI TRƯỚC NHA ĐAN NGỦ",
+    "status": "Pending",
+    "subtotal": 175000,
+    "shipping_fee": 0,
+    "discount": 0,
+    "total": 175000,
+    "items": {
+      "310": 1,
+      "600": 1,
+      "751": 1
+    },
+    "created_at": "2025-11-04T04:28:58.165Z",
+    "tracking": [
+      {
+        "code": "placed",
+        "label": "Đã đặt hàng",
+        "at": "2025-11-04T04:28:58.165Z"
+      },
+      {
+        "code": "preparing",
+        "label": "Đang chuẩn bị",
+        "at": null
+      },
+      {
+        "code": "ready",
+        "label": "Sẵn sàng giao",
+        "at": null
+      },
+      {
+        "code": "pickup",
+        "label": "Shipper đã nhận",
+        "at": null
+      },
+      {
+        "code": "delivering",
+        "label": "Đang giao",
+        "at": null
+      },
+      {
+        "code": "delivered",
+        "label": "Giao thành công",
+        "at": null
+      }
+    ],
+    "payment_status": "pending",
+    "delivery_status": "placed"
+  }
+]

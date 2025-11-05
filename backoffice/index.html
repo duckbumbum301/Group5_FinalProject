@@ -1,80 +1,81 @@
 <!DOCTYPE html>
 <html lang="vi">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Vựa Vui Vẻ — Back Office</title>
-  <link rel="stylesheet" href="styles.css" />
-  <!-- Chart.js (optional) -->
-  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
-</head>
-<body>
-  <div id="app">
-    <!-- Header -->
-    <header class="topbar">
-      <div class="brand">🍀 Vựa Vui Vẻ • Back Office</div>
-      <div class="top-actions">
-        <span id="userBadge"></span>
-        <button id="btnLogout" class="btn btn-outline small">Đăng xuất</button>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Vựa Vui Vẻ — Back Office</title>
+    <link rel="stylesheet" href="styles.css" />
+    <!-- Chart.js (optional) -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  </head>
+  <body>
+    <div id="app">
+      <!-- Header -->
+      <header class="topbar">
+        <div class="brand">🍀 Vựa Vui Vẻ • Back Office</div>
+        <div class="top-actions">
+          <span id="userBadge"></span>
+          <button id="btnLogout" class="btn btn-outline small">
+            Đăng xuất
+          </button>
+        </div>
+      </header>
+
+      <!-- Layout -->
+      <div class="layout">
+        <aside class="sidebar">
+          <nav>
+            <a href="#/dashboard" class="nav-item"> Dashboard</a>
+            <a href="#/orders" class="nav-item"> Đơn hàng</a>
+            <a href="#/products" class="nav-item"> Sản phẩm</a>
+            <a href="#/reports" class="nav-item"> Báo cáo</a>
+            <a href="#/audit" class="nav-item admin-only"> Audit Log</a>
+            <a href="#/users" class="nav-item admin-only"> Người dùng</a>
+          </nav>
+        </aside>
+        <main id="view" class="view"></main>
       </div>
-    </header>
-
-    <!-- Layout -->
-    <div class="layout">
-      <aside class="sidebar">
-        <nav>
-          <a href="#/dashboard" class="nav-item">📊 Dashboard</a>
-          <a href="#/orders" class="nav-item">🧾 Đơn hàng</a>
-          <a href="#/products" class="nav-item">🧺 Sản phẩm</a>
-          <a href="#/reports" class="nav-item">📈 Báo cáo</a>
-          <a href="#/audit" class="nav-item">🗂️ Audit Log</a>
-          <a href="#/users" class="nav-item admin-only">👤 Người dùng</a>
-        </nav>
-      </aside>
-      <main id="view" class="view"></main>
     </div>
-  </div>
 
-  <!-- Toast -->
-  <div id="toastRoot" aria-live="polite" aria-atomic="true"></div>
+    <!-- Toast -->
+    <div id="toastRoot" aria-live="polite" aria-atomic="true"></div>
 
-  <!-- Login Screen -->
-  <div id="loginScreen" class="login-screen">
-    <!-- ✅ thêm novalidate + prefill email/password -->
-    <form id="loginForm" class="card login-card" novalidate>
-      <h1>Đăng nhập Back Office</h1>
+    <!-- Login Screen -->
+    <div id="loginScreen" class="login-screen">
+      <!-- ✅ thêm novalidate + prefill email/password -->
+      <form id="loginForm" class="card login-card" novalidate>
+        <h1>Đăng nhập Back Office</h1>
 
-      <label>Email</label>
-      <input
-        type="email"
-        name="email"
-        required
-        value="ilovetranduythanh@gmail.com"
-        autocomplete="username"
-      />
+        <label>Email</label>
+        <input
+          type="email"
+          name="email"
+          required
+          value="ilovetranduythanh@gmail.com"
+          autocomplete="username"
+        />
 
-      <label>Mật khẩu</label>
-      <input
-        type="password"
-        name="password"
-        required
-        value="10diem10diem"
-        autocomplete="current-password"
-      />
+        <label>Mật khẩu</label>
+        <input
+          type="password"
+          name="password"
+          required
+          value="10diem10diem"
+          autocomplete="current-password"
+        />
 
-      <label>Vai trò</label>
-      <select name="role">
-        <option>Admin</option>
-        <option>Manager</option>
-        <option>Staff</option>
-      </select>
+        <label>Vai trò</label>
+        <select name="role">
+          <option>Admin</option>
+          <option>Manager</option>
+          <option>Staff</option>
+        </select>
 
-      <button class="btn primary" type="submit">Đăng nhập</button>
-      <p class="muted small">*Mock login – bất kỳ email/mật khẩu đều được.</p>
-    </form>
-  </div>
+        <button class="btn primary" type="submit">Đăng nhập</button>
+        <p class="muted small">*Mock login – bất kỳ email/mật khẩu đều được.</p>
+      </form>
+    </div>
 
-  <script type="module" src="app.js"></script>
-</body>
+    <script type="module" src="app.js"></script>
+  </body>
 </html>
-

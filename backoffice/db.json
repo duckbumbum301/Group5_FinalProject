@@ -1,0 +1,2587 @@
+{
+  "products": [
+    {
+      "id": "100",
+      "name": "Rau muống (500g)",
+      "category": "Rau củ",
+      "price": 13000,
+      "stock": 13,
+      "status": "active"
+    },
+    {
+      "id": "101",
+      "name": "Cải bẹ xanh (500g)",
+      "category": "veg",
+      "subcategory": "leaf",
+      "price": 18000,
+      "unit": "gói",
+      "stock": 48,
+      "image": "../images/VEG/leaf/caibexanh.jpg",
+      "description": "Cải bẹ xanh (500g) - Sản phẩm chất lượng cao",
+      "popular": 101
+    },
+    {
+      "id": "102",
+      "name": "Rau mồng tơi (500g)",
+      "category": "veg",
+      "subcategory": "leaf",
+      "price": 16000,
+      "unit": "gói",
+      "stock": 29,
+      "image": "../images/VEG/leaf/rau-mong-toi-goi-300g_202506020917306037.jpg",
+      "description": "Rau mồng tơi (500g) - Sản phẩm chất lượng cao",
+      "popular": 92
+    },
+    {
+      "id": "103",
+      "name": "Cải Thia (500g)",
+      "category": "veg",
+      "subcategory": "leaf",
+      "price": 18000,
+      "unit": "gói",
+      "stock": 49,
+      "image": "../images/VEG/cabbage/cải thìa.jpg",
+      "description": "Cải Thia (500g) - Sản phẩm chất lượng cao",
+      "popular": 76
+    },
+    {
+      "id": "110",
+      "name": "Cà rốt (500g)",
+      "category": "veg",
+      "subcategory": "root",
+      "price": 15000,
+      "unit": "gói",
+      "stock": 37,
+      "image": "../images/VEG/root/Cà Rốt.jpg",
+      "description": "Cà rốt (500g) - Sản phẩm chất lượng cao",
+      "popular": 27
+    },
+    {
+      "id": "111",
+      "name": "Khoai tây (1kg)",
+      "category": "veg",
+      "subcategory": "root",
+      "price": 20000,
+      "unit": "gói",
+      "stock": 11,
+      "image": "../images/VEG/root/Khoai Tây.jpg",
+      "description": "Khoai tây (1kg) - Sản phẩm chất lượng cao",
+      "popular": 54
+    },
+    {
+      "id": "112",
+      "name": "Bí Đỏ (500g)",
+      "category": "veg",
+      "subcategory": "root",
+      "price": 18000,
+      "unit": "gói",
+      "stock": 51,
+      "image": "../images/VEG/root/Bí Đỏ.jpg",
+      "description": "Bí Đỏ (500g) - Sản phẩm chất lượng cao",
+      "popular": 94
+    },
+    {
+      "id": "120",
+      "name": "Bầu sao (500g)",
+      "category": "veg",
+      "subcategory": "fruit",
+      "price": 12000,
+      "unit": "gói",
+      "stock": 47,
+      "image": "../images/VEG/fruit/bausao.jpg",
+      "description": "Bầu sao (500g) - Sản phẩm chất lượng cao",
+      "popular": 66
+    },
+    {
+      "id": "121",
+      "name": "Bí xanh (1kg)",
+      "category": "veg",
+      "subcategory": "fruit",
+      "price": 25000,
+      "unit": "gói",
+      "stock": 33,
+      "image": "../images/VEG/fruit/bi-xanh-trai-202403181357319493.jpg",
+      "description": "Bí xanh (1kg) - Sản phẩm chất lượng cao",
+      "popular": 10
+    },
+    {
+      "id": "122",
+      "name": "Cà chua bi (500g)",
+      "category": "veg",
+      "subcategory": "fruit",
+      "price": 15000,
+      "unit": "gói",
+      "stock": 56,
+      "image": "../images/VEG/fruit/ca-chua-bi-hop-300g_202504140839559740.jpg",
+      "description": "Cà chua bi (500g) - Sản phẩm chất lượng cao",
+      "popular": 93
+    },
+    {
+      "id": "130",
+      "name": "Nấm rơm (200g)",
+      "category": "veg",
+      "subcategory": "mushroom",
+      "price": 20000,
+      "unit": "gói",
+      "stock": 57,
+      "image": "../images/VEG/mushroom/namrom.jpg",
+      "description": "Nấm rơm (200g) - Sản phẩm chất lượng cao",
+      "popular": 93
+    },
+    {
+      "id": "131",
+      "name": "Nấm kim châm (200g)",
+      "category": "veg",
+      "subcategory": "mushroom",
+      "price": 18000,
+      "unit": "gói",
+      "stock": 28,
+      "image": "../images/VEG/mushroom/namkimcham.jpg",
+      "description": "Nấm kim châm (200g) - Sản phẩm chất lượng cao",
+      "popular": 76
+    },
+    {
+      "id": "140",
+      "name": "Hành Lá (100g)",
+      "category": "veg",
+      "subcategory": "herb",
+      "price": 8000,
+      "unit": "gói",
+      "stock": 37,
+      "image": "../images/VEG/herb/hành lá.jpg",
+      "description": "Hành Lá (100g) - Sản phẩm chất lượng cao",
+      "popular": 99
+    },
+    {
+      "id": "141",
+      "name": "Hẹ Lá (100g)",
+      "category": "veg",
+      "subcategory": "herb",
+      "price": 10000,
+      "unit": "gói",
+      "stock": 45,
+      "image": "../images/VEG/herb/hẹ lá.jpg",
+      "description": "Hẹ Lá (100g) - Sản phẩm chất lượng cao",
+      "popular": 50
+    },
+    {
+      "id": "142",
+      "name": "Ngò Gai (100g)",
+      "category": "veg",
+      "subcategory": "herb",
+      "price": 4000,
+      "unit": "gói",
+      "stock": 51,
+      "image": "../images/VEG/herb/ngò gai.jpg",
+      "description": "Ngò Gai (100g) - Sản phẩm chất lượng cao",
+      "popular": 65
+    },
+    {
+      "id": "150",
+      "name": "Cải bẹ dún (1kg)",
+      "category": "veg",
+      "subcategory": "cabbage",
+      "price": 25000,
+      "unit": "gói",
+      "stock": 52,
+      "image": "../images/VEG/cabbage/cải bẹ dún.jpg",
+      "description": "Cải bẹ dún (1kg) - Sản phẩm chất lượng cao",
+      "popular": 80
+    },
+    {
+      "id": "151",
+      "name": "Cải ngồng (500g)",
+      "category": "veg",
+      "subcategory": "cabbage",
+      "price": 30000,
+      "unit": "gói",
+      "stock": 44,
+      "image": "../images/VEG/cabbage/cải ngồng.jpg",
+      "description": "Cải ngồng (500g) - Sản phẩm chất lượng cao",
+      "popular": 81
+    },
+    {
+      "id": "152",
+      "name": "Cải ngọt (500g)",
+      "category": "veg",
+      "subcategory": "cabbage",
+      "price": 25000,
+      "unit": "gói",
+      "stock": 36,
+      "image": "../images/VEG/cabbage/cải ngọt.jpg",
+      "description": "Cải ngọt (500g) - Sản phẩm chất lượng cao",
+      "popular": 35
+    },
+    {
+      "id": "153",
+      "name": "Cải thìa (500g)",
+      "category": "veg",
+      "subcategory": "cabbage",
+      "price": 15000,
+      "unit": "gói",
+      "stock": 48,
+      "image": "../images/VEG/cabbage/cải thìa.jpg",
+      "description": "Cải thìa (500g) - Sản phẩm chất lượng cao",
+      "popular": 101
+    },
+    {
+      "id": "160",
+      "name": "Xà lách thuỷ tinh thuỷ canh",
+      "category": "veg",
+      "subcategory": "organic",
+      "price": 30000,
+      "unit": "gói",
+      "stock": 56,
+      "image": "../images/VEG/organic/xà lách thuỷ canh.jpg",
+      "description": "Xà lách thuỷ tinh thuỷ canh - Sản phẩm chất lượng cao",
+      "popular": 30
+    },
+    {
+      "id": "170",
+      "name": "Khổ qua sơ chế",
+      "category": "veg",
+      "subcategory": "processed",
+      "price": 30000,
+      "unit": "gói",
+      "stock": 11,
+      "image": "../images/VEG/processed/khổ qua sơ chế.jpg",
+      "description": "Khổ qua sơ chế - Sản phẩm chất lượng cao",
+      "popular": 66
+    },
+    {
+      "id": "200",
+      "name": "Táo Mỹ (1kg)",
+      "category": "fruit",
+      "subcategory": "mixed",
+      "price": 85000,
+      "unit": "gói",
+      "stock": 14,
+      "image": "../images/FRUIT/Mixed/Táo.jpg",
+      "description": "Táo Mỹ (1kg) - Sản phẩm chất lượng cao",
+      "popular": 48
+    },
+    {
+      "id": "201",
+      "name": "Chuối Laba (1kg)",
+      "category": "fruit",
+      "subcategory": "mixed",
+      "price": 28000,
+      "unit": "gói",
+      "stock": 22,
+      "image": "../images/FRUIT/Mixed/Chuối.jpg",
+      "description": "Chuối Laba (1kg) - Sản phẩm chất lượng cao",
+      "popular": 40
+    },
+    {
+      "id": "202",
+      "name": "Cam sành (1kg)",
+      "category": "fruit",
+      "subcategory": "mixed",
+      "price": 35000,
+      "unit": "gói",
+      "stock": 44,
+      "image": "../images/FRUIT/Mixed/Cam.jpg",
+      "description": "Cam sành (1kg) - Sản phẩm chất lượng cao",
+      "popular": 98
+    },
+    {
+      "id": "210",
+      "name": "Giỏ trái cây Mix",
+      "category": "fruit",
+      "subcategory": "gift",
+      "price": 250000,
+      "unit": "gói",
+      "stock": 59,
+      "image": "../images/FRUIT/gift/mix.jpg",
+      "description": "Giỏ trái cây Mix - Sản phẩm chất lượng cao",
+      "popular": 85
+    },
+    {
+      "id": "211",
+      "name": "Giỏ quà cao cấp",
+      "category": "fruit",
+      "subcategory": "gift",
+      "price": 480000,
+      "unit": "gói",
+      "stock": 36,
+      "image": "../images/FRUIT/gift/caocap.jpg",
+      "description": "Giỏ quà cao cấp - Sản phẩm chất lượng cao",
+      "popular": 63
+    },
+    {
+      "id": "300",
+      "name": "Thịt heo ba rọi (500g)",
+      "category": "meat",
+      "subcategory": "pork",
+      "price": 70000,
+      "unit": "gói",
+      "stock": 22,
+      "image": "../images/MEAT/pork/baroi.jpg",
+      "description": "Thịt heo ba rọi (500g) - Sản phẩm chất lượng cao",
+      "popular": 89
+    },
+    {
+      "id": "301",
+      "name": "Sườn non (500g)",
+      "category": "meat",
+      "subcategory": "pork",
+      "price": 85000,
+      "unit": "gói",
+      "stock": 44,
+      "image": "../images/MEAT/pork/suon.jpg",
+      "description": "Sườn non (500g) - Sản phẩm chất lượng cao",
+      "popular": 51
+    },
+    {
+      "id": "310",
+      "name": "Cá basa phi lê (500g)",
+      "category": "meat",
+      "subcategory": "fish",
+      "price": 55000,
+      "unit": "gói",
+      "stock": 34,
+      "image": "../images/MEAT/fish/ca-basa-cat-lat_202505260007155939.jpg",
+      "description": "Cá basa phi lê (500g) - Sản phẩm chất lượng cao",
+      "popular": 76
+    },
+    {
+      "id": "311",
+      "name": "Cá hồi cắt lát (200g)",
+      "category": "meat",
+      "subcategory": "fish",
+      "price": 95000,
+      "unit": "gói",
+      "stock": 51,
+      "image": "../images/MEAT/fish/cahoi.jpg",
+      "description": "Cá hồi cắt lát (200g) - Sản phẩm chất lượng cao",
+      "popular": 17
+    },
+    {
+      "id": "320",
+      "name": "Ức gà phi lê (500g)",
+      "category": "meat",
+      "subcategory": "poultry",
+      "price": 60000,
+      "unit": "gói",
+      "stock": 45,
+      "image": "../images/MEAT/poultry/ucga.jpg",
+      "description": "Ức gà phi lê (500g) - Sản phẩm chất lượng cao",
+      "popular": 35
+    },
+    {
+      "id": "321",
+      "name": "Đùi gà ta (1kg)",
+      "category": "meat",
+      "subcategory": "poultry",
+      "price": 85000,
+      "unit": "gói",
+      "stock": 33,
+      "image": "../images/MEAT/poultry/dui.jpg",
+      "description": "Đùi gà ta (1kg) - Sản phẩm chất lượng cao",
+      "popular": 11
+    },
+    {
+      "id": "330",
+      "name": "Bắp bò",
+      "category": "meat",
+      "subcategory": "redmeat",
+      "price": 60000,
+      "unit": "gói",
+      "stock": 12,
+      "image": "../images/MEAT/redmeat/bapbo.jpg",
+      "description": "Bắp bò - Sản phẩm chất lượng cao",
+      "popular": 49
+    },
+    {
+      "id": "331",
+      "name": "Nạm bò",
+      "category": "meat",
+      "subcategory": "redmeat",
+      "price": 85000,
+      "unit": "gói",
+      "stock": 34,
+      "image": "../images/MEAT/redmeat/nambo.jpg",
+      "description": "Nạm bò - Sản phẩm chất lượng cao",
+      "popular": 22
+    },
+    {
+      "id": "340",
+      "name": "Bạch tuộc",
+      "category": "meat",
+      "subcategory": "seafood",
+      "price": 60000,
+      "unit": "gói",
+      "stock": 56,
+      "image": "../images/MEAT/seafood/bachtuoc.jpg",
+      "description": "Bạch tuộc - Sản phẩm chất lượng cao",
+      "popular": 31
+    },
+    {
+      "id": "341",
+      "name": "Râu mực",
+      "category": "meat",
+      "subcategory": "seafood",
+      "price": 85000,
+      "unit": "gói",
+      "stock": 14,
+      "image": "../images/MEAT/seafood/râu mực.jpg",
+      "description": "Râu mực - Sản phẩm chất lượng cao",
+      "popular": 15
+    },
+    {
+      "id": "400",
+      "name": "Nước cam ép Twister (330ml)",
+      "category": "drink",
+      "subcategory": "juice",
+      "price": 12000,
+      "unit": "gói",
+      "stock": 44,
+      "image": "../images/DRINK/juice/epcam.jpg",
+      "description": "Nước cam ép Twister (330ml) - Sản phẩm chất lượng cao",
+      "popular": 89
+    },
+    {
+      "id": "401",
+      "name": "Nước ép táo (350ml)",
+      "category": "drink",
+      "subcategory": "juice",
+      "price": 15000,
+      "unit": "gói",
+      "stock": 34,
+      "image": "../images/DRINK/juice/eptao.jpg",
+      "description": "Nước ép táo (350ml) - Sản phẩm chất lượng cao",
+      "popular": 62
+    },
+    {
+      "id": "410",
+      "name": "Sữa tươi Vinamilk (180ml)",
+      "category": "drink",
+      "subcategory": "milk",
+      "price": 9000,
+      "unit": "gói",
+      "stock": 21,
+      "image": "../images/DRINK/milk/vinamilk.jpg",
+      "description": "Sữa tươi Vinamilk (180ml) - Sản phẩm chất lượng cao",
+      "popular": 62
+    },
+    {
+      "id": "411",
+      "name": "Sữa đậu nành Fami (200ml)",
+      "category": "drink",
+      "subcategory": "milk",
+      "price": 8000,
+      "unit": "gói",
+      "stock": 48,
+      "image": "../images/DRINK/milk/fami.jpg",
+      "description": "Sữa đậu nành Fami (200ml) - Sản phẩm chất lượng cao",
+      "popular": 48
+    },
+    {
+      "id": "420",
+      "name": "Trà ô long Tea Plus (500ml)",
+      "category": "drink",
+      "subcategory": "tea",
+      "price": 10000,
+      "unit": "gói",
+      "stock": 54,
+      "image": "../images/DRINK/tea/olong.jpg",
+      "description": "Trà ô long Tea Plus (500ml) - Sản phẩm chất lượng cao",
+      "popular": 54
+    },
+    {
+      "id": "421",
+      "name": "Trà chanh C2 (500ml)",
+      "category": "drink",
+      "subcategory": "tea",
+      "price": 9000,
+      "unit": "gói",
+      "stock": 51,
+      "image": "../images/DRINK/tea/c2.jpg",
+      "description": "Trà chanh C2 (500ml) - Sản phẩm chất lượng cao",
+      "popular": 73
+    },
+    {
+      "id": "430",
+      "name": "Soda chanh 7 Up (320ml)",
+      "category": "drink",
+      "subcategory": "can",
+      "price": 10000,
+      "unit": "gói",
+      "stock": 38,
+      "image": "../images/DRINK/can/7upsodachanh.jpg",
+      "description": "Soda chanh 7 Up (320ml) - Sản phẩm chất lượng cao",
+      "popular": 78
+    },
+    {
+      "id": "431",
+      "name": "Nước ngọt Fanta hương dâu lon (320ml)",
+      "category": "drink",
+      "subcategory": "can",
+      "price": 9000,
+      "unit": "gói",
+      "stock": 55,
+      "image": "../images/DRINK/can/fantadau.jpg",
+      "description": "Nước ngọt Fanta hương dâu lon (320ml) - Sản phẩm chất lượng cao",
+      "popular": 99
+    },
+    {
+      "id": "440",
+      "name": "Cà phê phin đậm truyền thống Phương Vy 500g",
+      "category": "drink",
+      "subcategory": "coffee",
+      "price": 10000,
+      "unit": "gói",
+      "stock": 43,
+      "image": "../images/DRINK/coffee/caphephin.jpg",
+      "description": "Cà phê phin đậm truyền thống Phương Vy 500g - Sản phẩm chất lượng cao",
+      "popular": 52
+    },
+    {
+      "id": "441",
+      "name": "Cà phê Trung Nguyên S chinh phục thành công 100g",
+      "category": "drink",
+      "subcategory": "coffee",
+      "price": 9000,
+      "unit": "gói",
+      "stock": 46,
+      "image": "../images/DRINK/coffee/caphetrungnguyen.jpg",
+      "description": "Cà phê Trung Nguyên S chinh phục thành công 100g - Sản phẩm chất lượng cao",
+      "popular": 19
+    },
+    {
+      "id": "500",
+      "name": "Gạo ST25 (1kg)",
+      "category": "dry",
+      "subcategory": "rice",
+      "price": 38000,
+      "unit": "gói",
+      "stock": 12,
+      "image": "../images/DRY/rice/st25.jpg",
+      "description": "Gạo ST25 (1kg) - Sản phẩm chất lượng cao",
+      "popular": 64
+    },
+    {
+      "id": "501",
+      "name": "Gạo thơm Jasmine (1kg)",
+      "category": "dry",
+      "subcategory": "rice",
+      "price": 32000,
+      "unit": "gói",
+      "stock": 27,
+      "image": "../images/DRY/rice/gaothom.jpg",
+      "description": "Gạo thơm Jasmine (1kg) - Sản phẩm chất lượng cao",
+      "popular": 76
+    },
+    {
+      "id": "510",
+      "name": "Mì Hảo Hảo (5 gói)",
+      "category": "dry",
+      "subcategory": "noodle",
+      "price": 24000,
+      "unit": "gói",
+      "stock": 30,
+      "image": "../images/DRY/noodle/haohao.jpg",
+      "description": "Mì Hảo Hảo (5 gói) - Sản phẩm chất lượng cao",
+      "popular": 80
+    },
+    {
+      "id": "511",
+      "name": "Bún khô (500g)",
+      "category": "dry",
+      "subcategory": "noodle",
+      "price": 22000,
+      "unit": "gói",
+      "stock": 22,
+      "image": "../images/DRY/noodle/bunkho.jpg",
+      "description": "Bún khô (500g) - Sản phẩm chất lượng cao",
+      "popular": 16
+    },
+    {
+      "id": "520",
+      "name": "Đậu xanh (500g)",
+      "category": "dry",
+      "subcategory": "beans",
+      "price": 26000,
+      "unit": "gói",
+      "stock": 15,
+      "image": "../images/DRY/beans/dauxanh.jpg",
+      "description": "Đậu xanh (500g) - Sản phẩm chất lượng cao",
+      "popular": 79
+    },
+    {
+      "id": "521",
+      "name": "Đậu đỏ (500g)",
+      "category": "dry",
+      "subcategory": "beans",
+      "price": 25000,
+      "unit": "gói",
+      "stock": 44,
+      "image": "../images/DRY/beans/daudo.jpg",
+      "description": "Đậu đỏ (500g) - Sản phẩm chất lượng cao",
+      "popular": 11
+    },
+    {
+      "id": "530",
+      "name": "Bột phô mai StFood gói 100g",
+      "category": "dry",
+      "subcategory": "flour",
+      "price": 26000,
+      "unit": "gói",
+      "stock": 51,
+      "image": "../images/DRY/flour/bột phô mai.jpg",
+      "description": "Bột phô mai StFood gói 100g - Sản phẩm chất lượng cao",
+      "popular": 90
+    },
+    {
+      "id": "531",
+      "name": "Bột bánh rán Ajinomoto vị truyền thống gói 200g",
+      "category": "dry",
+      "subcategory": "flour",
+      "price": 25000,
+      "unit": "gói",
+      "stock": 27,
+      "image": "../images/DRY/flour/bột bánh rán doraemon.jpg",
+      "description": "Bột bánh rán Ajinomoto vị truyền thống gói 200g - Sản phẩm chất lượng cao",
+      "popular": 67
+    },
+    {
+      "id": "540",
+      "name": "Rong biển rắc giòn trộn gia vị",
+      "category": "dry",
+      "subcategory": "seaweed",
+      "price": 26000,
+      "unit": "gói",
+      "stock": 35,
+      "image": "../images/DRY/seaweed/rong biển giòn.jpg",
+      "description": "Rong biển rắc giòn trộn gia vị - Sản phẩm chất lượng cao",
+      "popular": 16
+    },
+    {
+      "id": "541",
+      "name": "Rong biển nướng giòn trộn chà bông cá hồi ",
+      "category": "dry",
+      "subcategory": "seaweed",
+      "price": 25000,
+      "unit": "gói",
+      "stock": 52,
+      "image": "../images/DRY/seaweed/rong biển.jpg",
+      "description": "Rong biển nướng giòn trộn chà bông cá hồi  - Sản phẩm chất lượng cao",
+      "popular": 23
+    },
+    {
+      "id": "550",
+      "name": "Pate thịt bò Vissan ",
+      "category": "dry",
+      "subcategory": "canned",
+      "price": 25000,
+      "unit": "gói",
+      "stock": 26,
+      "image": "../images/DRY/canned/vissan bò 2 lát.png",
+      "description": "Pate thịt bò Vissan  - Sản phẩm chất lượng cao",
+      "popular": 30
+    },
+    {
+      "id": "551",
+      "name": "Thịt heo hai lát Vissan (150g)",
+      "category": "dry",
+      "subcategory": "canned",
+      "price": 35000,
+      "unit": "gói",
+      "stock": 19,
+      "image": "../images/DRY/canned/vissan heo 2 lát.png",
+      "description": "Thịt heo hai lát Vissan (150g) - Sản phẩm chất lượng cao",
+      "popular": 71
+    },
+    {
+      "id": "600",
+      "name": "Nước mắm Nam Ngư (500ml)",
+      "category": "spice",
+      "subcategory": "sauce",
+      "price": 25000,
+      "unit": "gói",
+      "stock": 29,
+      "image": "../images/SPICE/Sauce/nuocmam.jpg",
+      "description": "Nước mắm Nam Ngư (500ml) - Sản phẩm chất lượng cao",
+      "popular": 105
+    },
+    {
+      "id": "601",
+      "name": "Nước tương Maggi (500ml)",
+      "category": "spice",
+      "subcategory": "sauce",
+      "price": 23000,
+      "unit": "gói",
+      "stock": 41,
+      "image": "../images/SPICE/Sauce/nuoctuong.jpg",
+      "description": "Nước tương Maggi (500ml) - Sản phẩm chất lượng cao",
+      "popular": 99
+    },
+    {
+      "id": "610",
+      "name": "Dầu ăn Neptune (1L)",
+      "category": "spice",
+      "subcategory": "oil",
+      "price": 55000,
+      "unit": "gói",
+      "stock": 51,
+      "image": "../images/SPICE/Oil/226995-thumb-moi_202411071422115102.jpg",
+      "description": "Dầu ăn Neptune (1L) - Sản phẩm chất lượng cao",
+      "popular": 67
+    },
+    {
+      "id": "620",
+      "name": "Muối i-ốt (200g)",
+      "category": "spice",
+      "subcategory": "powder",
+      "price": 6000,
+      "unit": "gói",
+      "stock": 22,
+      "image": "../images/SPICE/Powder/muoi.jpg",
+      "description": "Muối i-ốt (200g) - Sản phẩm chất lượng cao",
+      "popular": 57
+    },
+    {
+      "id": "621",
+      "name": "Bột ngọt Ajinomoto (200g)",
+      "category": "spice",
+      "subcategory": "powder",
+      "price": 12000,
+      "unit": "gói",
+      "stock": 48,
+      "image": "../images/SPICE/Powder/botngot.jpg",
+      "description": "Bột ngọt Ajinomoto (200g) - Sản phẩm chất lượng cao",
+      "popular": 57
+    },
+    {
+      "id": "700",
+      "name": "Túi đựng rác đen",
+      "category": "household",
+      "subcategory": "bags",
+      "price": 20000,
+      "unit": "gói",
+      "stock": 26,
+      "image": "../images/HOUSEHOLD/bags/tuidungracden.jpg",
+      "description": "Túi đựng rác đen - Sản phẩm chất lượng cao",
+      "popular": 25
+    },
+    {
+      "id": "701",
+      "name": "Túi đựng rác màu",
+      "category": "household",
+      "subcategory": "bags",
+      "price": 22000,
+      "unit": "gói",
+      "stock": 39,
+      "image": "../images/HOUSEHOLD/bags/túi đựng rác màu.jpg",
+      "description": "Túi đựng rác màu - Sản phẩm chất lượng cao",
+      "popular": 64
+    },
+    {
+      "id": "710",
+      "name": "Nước rửa chén Sunlight gói",
+      "category": "household",
+      "subcategory": "cleaning",
+      "price": 10000,
+      "unit": "gói",
+      "stock": 18,
+      "image": "../images/HOUSEHOLD/cleaning/sunlight gói.jpg",
+      "description": "Nước rửa chén Sunlight gói - Sản phẩm chất lượng cao",
+      "popular": 79
+    },
+    {
+      "id": "711",
+      "name": "Nước rửa chén Sunlight",
+      "category": "household",
+      "subcategory": "cleaning",
+      "price": 35000,
+      "unit": "gói",
+      "stock": 35,
+      "image": "../images/HOUSEHOLD/cleaning/sunlight.jpg",
+      "description": "Nước rửa chén Sunlight - Sản phẩm chất lượng cao",
+      "popular": 91
+    },
+    {
+      "id": "750",
+      "name": "Kem đánh răng Closeup",
+      "category": "household",
+      "subcategory": "personal",
+      "price": 32000,
+      "unit": "gói",
+      "stock": 45,
+      "image": "../images/HOUSEHOLD/personal/closeup.jpg",
+      "description": "Kem đánh răng Closeup - Sản phẩm chất lượng cao",
+      "popular": 102
+    },
+    {
+      "id": "751",
+      "name": "Kem dưỡng da Nivea",
+      "category": "household",
+      "subcategory": "personal",
+      "price": 95000,
+      "unit": "gói",
+      "stock": 16,
+      "image": "../images/HOUSEHOLD/personal/nivea.jpg",
+      "description": "Kem dưỡng da Nivea - Sản phẩm chất lượng cao",
+      "popular": 97
+    },
+    {
+      "id": "752",
+      "name": "Dầu gội Sunsilk",
+      "category": "household",
+      "subcategory": "personal",
+      "price": 75000,
+      "unit": "gói",
+      "stock": 19,
+      "image": "../images/HOUSEHOLD/personal/sunsilk.jpg",
+      "description": "Dầu gội Sunsilk - Sản phẩm chất lượng cao",
+      "popular": 72
+    },
+    {
+      "id": "720",
+      "name": "Dao bào",
+      "category": "household",
+      "subcategory": "kitchenware",
+      "price": 40000,
+      "unit": "gói",
+      "stock": 33,
+      "image": "../images/HOUSEHOLD/kitchenware/dao bào.jpg",
+      "description": "Dao bào - Sản phẩm chất lượng cao",
+      "popular": 35
+    },
+    {
+      "id": "721",
+      "name": "Hộp đựng thực phẩm",
+      "category": "household",
+      "subcategory": "kitchenware",
+      "price": 50000,
+      "unit": "gói",
+      "stock": 33,
+      "image": "../images/HOUSEHOLD/kitchenware/hộp đựng thực phẩm.jpg",
+      "description": "Hộp đựng thực phẩm - Sản phẩm chất lượng cao",
+      "popular": 89
+    },
+    {
+      "id": "730",
+      "name": "Bột giặt Aba",
+      "category": "household",
+      "subcategory": "laundry",
+      "price": 65000,
+      "unit": "gói",
+      "stock": 16,
+      "image": "../images/HOUSEHOLD/laundry/aba.jpg",
+      "description": "Bột giặt Aba - Sản phẩm chất lượng cao",
+      "popular": 28
+    },
+    {
+      "id": "731",
+      "name": "Bột giặt Omo",
+      "category": "household",
+      "subcategory": "laundry",
+      "price": 70000,
+      "unit": "gói",
+      "stock": 45,
+      "image": "../images/HOUSEHOLD/laundry/omo.jpg",
+      "description": "Bột giặt Omo - Sản phẩm chất lượng cao",
+      "popular": 23
+    },
+    {
+      "id": "740",
+      "name": "Khăn tắm",
+      "category": "household",
+      "subcategory": "paper",
+      "price": 80000,
+      "unit": "gói",
+      "stock": 28,
+      "image": "../images/HOUSEHOLD/paper/khăn tắm.jpg",
+      "description": "Khăn tắm - Sản phẩm chất lượng cao",
+      "popular": 59
+    },
+    {
+      "id": "741",
+      "name": "Giấy vệ sinh Puri",
+      "category": "household",
+      "subcategory": "paper",
+      "price": 30000,
+      "unit": "gói",
+      "stock": 33,
+      "image": "../images/HOUSEHOLD/paper/puri.jpg",
+      "description": "Giấy vệ sinh Puri - Sản phẩm chất lượng cao",
+      "popular": 19
+    },
+    {
+      "id": "800",
+      "name": "Bánh Oreo (133g)",
+      "category": "sweet",
+      "subcategory": "snack",
+      "price": 15000,
+      "unit": "gói",
+      "stock": 58,
+      "image": "../images/SWEET/SNACK/oreo.jpg",
+      "description": "Bánh Oreo (133g) - Sản phẩm chất lượng cao",
+      "popular": 19
+    },
+    {
+      "id": "801",
+      "name": "Bánh gạo One One (100g)",
+      "category": "sweet",
+      "subcategory": "snack",
+      "price": 18000,
+      "unit": "gói",
+      "stock": 20,
+      "image": "../images/SWEET/SNACK/oneone.jpg",
+      "description": "Bánh gạo One One (100g) - Sản phẩm chất lượng cao",
+      "popular": 67
+    },
+    {
+      "id": "810",
+      "name": "Socola Snickers (40g)",
+      "category": "sweet",
+      "subcategory": "chocolate",
+      "price": 25000,
+      "unit": "gói",
+      "stock": 21,
+      "image": "../images/SWEET/CHOCOLATE/snickers.jpg",
+      "description": "Socola Snickers (40g) - Sản phẩm chất lượng cao",
+      "popular": 87
+    },
+    {
+      "id": "820",
+      "name": "Kẹo Alpenliebe (120g)",
+      "category": "sweet",
+      "subcategory": "candy",
+      "price": 18000,
+      "unit": "gói",
+      "stock": 45,
+      "image": "../images/SWEET/CANDY/alpenliebe.jpg",
+      "description": "Kẹo Alpenliebe (120g) - Sản phẩm chất lượng cao",
+      "popular": 27
+    },
+    {
+      "id": "821",
+      "name": "Kẹo bạc hà Mentos (38g)",
+      "category": "sweet",
+      "subcategory": "candy",
+      "price": 15000,
+      "unit": "gói",
+      "stock": 34,
+      "image": "../images/SWEET/CANDY/mentos.jpg",
+      "description": "Kẹo bạc hà Mentos (38g) - Sản phẩm chất lượng cao",
+      "popular": 92
+    },
+    {
+      "id": "830",
+      "name": "Ngũ cốc Granola",
+      "category": "sweet",
+      "subcategory": "cereal",
+      "price": 95000,
+      "unit": "gói",
+      "stock": 28,
+      "image": "../images/SWEET/cereal/ngũ cốc granola.jpg",
+      "description": "Ngũ cốc Granola - Sản phẩm chất lượng cao",
+      "popular": 39
+    },
+    {
+      "id": "840",
+      "name": "Chuối sấy",
+      "category": "sweet",
+      "subcategory": "dried",
+      "price": 45000,
+      "unit": "gói",
+      "stock": 30,
+      "image": "../images/SWEET/dried/chuối sấy.jpg",
+      "description": "Chuối sấy - Sản phẩm chất lượng cao",
+      "popular": 32
+    },
+    {
+      "id": "841",
+      "name": "Mít sấy",
+      "category": "sweet",
+      "subcategory": "dried",
+      "price": 50000,
+      "unit": "gói",
+      "stock": 19,
+      "image": "../images/SWEET/dried/mít sấy.jpg",
+      "description": "Mít sấy - Sản phẩm chất lượng cao",
+      "popular": 104
+    },
+    {
+      "id": "842",
+      "name": "Xoài sấy",
+      "category": "sweet",
+      "subcategory": "dried",
+      "price": 60000,
+      "unit": "gói",
+      "stock": 13,
+      "image": "../images/SWEET/dried/xoài sấy.jpg",
+      "description": "Xoài sấy - Sản phẩm chất lượng cao",
+      "popular": 45
+    },
+    {
+      "id": "P7293",
+      "name": "Nước gạo rang Woongjin 1.5 lít",
+      "category": "Đồ uống",
+      "price": 69500,
+      "stock": 6,
+      "status": "active"
+    },
+    {
+      "id": "999",
+      "name": "lạp xưởng nướng đá",
+      "category": "Đồ khô",
+      "price": 56000,
+      "stock": 53,
+      "status": "active"
+    },
+    {
+      "id": "998",
+      "name": "bánh tacos",
+      "category": "Đồ khô",
+      "price": 39000,
+      "stock": 36,
+      "status": "active"
+    },
+    {
+      "id": "997",
+      "name": "lạp xưởng nướng đá",
+      "category": "Đồ khô",
+      "price": 69000,
+      "stock": 69,
+      "image": "..\\images\\testaddP\\lapxuonh.jpg",
+      "status": "active"
+    },
+    {
+      "id": "996",
+      "name": "bánh cá",
+      "category": "Đồ khô",
+      "price": 29000,
+      "stock": 29,
+      "status": "active"
+    }
+  ],
+  "orders": [
+    {
+      "id": "ORD20250103001",
+      "customerName": "Nguyễn Văn A",
+      "email": "nguyenvana@gmail.com",
+      "phone": "0901234567",
+      "address": "123 Lê Lợi, Quận 1, TP.HCM",
+      "items": [
+        {
+          "productId": "110",
+          "productName": "Cà rốt (500g)",
+          "quantity": 2,
+          "price": 15000,
+          "subtotal": 30000
+        },
+        {
+          "productId": "112",
+          "productName": "Bí Đỏ (500g)",
+          "quantity": 1,
+          "price": 18000,
+          "subtotal": 18000
+        }
+      ],
+      "totalAmount": 48000,
+      "status": "ready",
+      "paymentMethod": "cod",
+      "createdAt": "2025-01-03T10:30:00.000Z",
+      "updatedAt": "2025-11-03T09:13:05.134Z",
+      "delivery_status": "ready",
+      "tracking": [
+        {
+          "code": "preparing",
+          "label": "Đang chuẩn bị",
+          "at": "2025-11-03T09:10:15.439Z"
+        },
+        {
+          "code": "ready",
+          "label": "Sẵn sàng giao",
+          "at": "2025-11-03T09:13:05.134Z"
+        }
+      ],
+      "updated_at": "2025-11-03T09:13:05.134Z",
+      "updated_by": "admin@vuavuive.vn"
+    },
+    {
+      "id": "ORD20250103002",
+      "customerName": "Trần Thị B",
+      "email": "tranthib@gmail.com",
+      "phone": "0902345678",
+      "address": "456 Nguyễn Huệ, Quận 1, TP.HCM",
+      "items": [
+        {
+          "productId": "100",
+          "productName": "Rau muống (500g)",
+          "quantity": 3,
+          "price": 15000,
+          "subtotal": 45000
+        }
+      ],
+      "totalAmount": 45000,
+      "status": "pickup",
+      "paymentMethod": "banking",
+      "createdAt": "2025-01-03T11:15:00.000Z",
+      "updatedAt": "2025-11-03T09:13:03.249Z",
+      "delivery_status": "pickup",
+      "tracking": [
+        {
+          "code": "ready",
+          "label": "Sẵn sàng giao",
+          "at": "2025-11-03T09:10:07.144Z"
+        },
+        {
+          "code": "pickup",
+          "label": "Shipper đã nhận",
+          "at": "2025-11-03T09:13:03.249Z"
+        }
+      ],
+      "updated_at": "2025-11-03T09:13:03.249Z",
+      "updated_by": "admin@vuavuive.vn"
+    },
+    {
+      "id": "ORD20250102001",
+      "customerName": "Lê Văn C",
+      "email": "levanc@gmail.com",
+      "phone": "0903456789",
+      "address": "789 Hai Bà Trưng, Quận 3, TP.HCM",
+      "items": [
+        {
+          "productId": "184",
+          "productName": "Thịt heo ba rọi (500g)",
+          "quantity": 1,
+          "price": 85000,
+          "subtotal": 85000
+        },
+        {
+          "productId": "110",
+          "productName": "Cà rốt (500g)",
+          "quantity": 1,
+          "price": 15000,
+          "subtotal": 15000
+        }
+      ],
+      "totalAmount": 100000,
+      "status": "completed",
+      "paymentMethod": "cod",
+      "createdAt": "2025-01-02T14:00:00.000Z",
+      "updatedAt": "2025-01-02T18:00:00.000Z"
+    },
+    {
+      "id": "ORD-20251103-154823-WR5XNF",
+      "user": {
+        "name": "Quốc Việt",
+        "phone": "0973654843",
+        "address": "Đường Hẻm 96, Khu phố 82, Phường Chánh Hưng, Thành phố Hồ Chí Minh, 73009, Việt Nam"
+      },
+      "slot": "2025-11-02_09:00-11:00",
+      "voucher": "",
+      "payment": "COD",
+      "note": "",
+      "status": "Pending",
+      "subtotal": 30000,
+      "shipping_fee": 20000,
+      "discount": 0,
+      "total": 50000,
+      "items": {
+        "102": 1,
+        "140": 1,
+        "620": 1
+      },
+      "created_at": "2025-11-03T08:48:23.894Z",
+      "tracking": [
+        {
+          "code": "placed",
+          "label": "Đã đặt hàng",
+          "at": "2025-11-03T08:48:23.894Z"
+        },
+        {
+          "code": "preparing",
+          "label": "Đang chuẩn bị",
+          "at": null
+        },
+        {
+          "code": "ready",
+          "label": "Sẵn sàng giao",
+          "at": null
+        },
+        {
+          "code": "pickup",
+          "label": "Shipper đã nhận",
+          "at": null
+        },
+        {
+          "code": "delivering",
+          "label": "Đang giao",
+          "at": null
+        },
+        {
+          "code": "delivered",
+          "label": "Giao thành công",
+          "at": null
+        }
+      ],
+      "payment_status": "pending",
+      "delivery_status": "placed"
+    },
+    {
+      "id": "ORD-20251103-155048-4EFYYJ",
+      "user": {
+        "name": "Quốc Việt",
+        "phone": "0973654843",
+        "address": "Đường Hẻm 96, Khu phố 82, Phường Chánh Hưng, Thành phố Hồ Chí Minh, 73009, Việt Nam"
+      },
+      "slot": "2025-11-03_18:00-20:00",
+      "voucher": "FREESHIP",
+      "payment": "COD",
+      "note": "",
+      "status": "Pending",
+      "subtotal": 55000,
+      "shipping_fee": 0,
+      "discount": 0,
+      "total": 55000,
+      "items": {
+        "102": 1,
+        "122": 2,
+        "421": 1
+      },
+      "created_at": "2025-11-03T08:50:48.467Z",
+      "tracking": [
+        {
+          "code": "placed",
+          "label": "Đã đặt hàng",
+          "at": "2025-11-03T08:50:48.467Z"
+        },
+        {
+          "code": "preparing",
+          "label": "Đang chuẩn bị",
+          "at": null
+        },
+        {
+          "code": "ready",
+          "label": "Sẵn sàng giao",
+          "at": null
+        },
+        {
+          "code": "pickup",
+          "label": "Shipper đã nhận",
+          "at": null
+        },
+        {
+          "code": "delivering",
+          "label": "Đang giao",
+          "at": null
+        },
+        {
+          "code": "delivered",
+          "label": "Giao thành công",
+          "at": null
+        }
+      ],
+      "payment_status": "pending",
+      "delivery_status": "placed"
+    },
+    {
+      "id": "ORD-20251105-124950-CAS6A3",
+      "user": {
+        "name": "Quốc Việt",
+        "phone": "0973654843",
+        "address": "Phường Bến Cát, Thành phố Hồ Chí Minh, Việt Nam"
+      },
+      "slot": "2025-11-05_13:00-15:00",
+      "voucher": "FREESHIP",
+      "payment": "QR",
+      "note": "",
+      "status": "delivered",
+      "subtotal": 175000,
+      "shipping_fee": 0,
+      "discount": 0,
+      "total": 175000,
+      "items": {
+        "310": 1,
+        "600": 1,
+        "751": 1
+      },
+      "created_at": "2025-11-05T05:49:50.120Z",
+      "tracking": [
+        {
+          "code": "placed",
+          "label": "Đã đặt hàng",
+          "at": "2025-11-05T05:49:50.120Z"
+        },
+        {
+          "code": "preparing",
+          "label": "Đang chuẩn bị",
+          "at": "2025-11-05T08:26:52.722Z"
+        },
+        {
+          "code": "ready",
+          "label": "Sẵn sàng giao",
+          "at": "2025-11-05T08:26:55.342Z"
+        },
+        {
+          "code": "pickup",
+          "label": "Shipper đã nhận",
+          "at": "2025-11-05T08:26:59.034Z"
+        },
+        {
+          "code": "delivering",
+          "label": "Đang giao",
+          "at": "2025-11-05T08:27:01.112Z"
+        },
+        {
+          "code": "delivered",
+          "label": "Giao thành công",
+          "at": "2025-11-05T08:27:03.287Z"
+        }
+      ],
+      "payment_status": "pending",
+      "delivery_status": "delivered",
+      "updatedAt": "2025-11-05T08:27:03.287Z",
+      "updated_at": "2025-11-05T08:27:03.287Z",
+      "updated_by": "ilovetranduythanh@gmail.com"
+    },
+    {
+      "id": "ORD-20251105-125023-FTB4MA",
+      "user": {
+        "name": "Quốc Việt",
+        "phone": "0973654843",
+        "address": "Phường Bến Cát, Thành phố Hồ Chí Minh, Việt Nam"
+      },
+      "slot": "2025-11-04_09:00-11:00",
+      "voucher": "",
+      "payment": "COD",
+      "note": "",
+      "status": "delivered",
+      "subtotal": 26000,
+      "shipping_fee": 20000,
+      "discount": 0,
+      "total": 46000,
+      "items": {
+        "100": 2
+      },
+      "created_at": "2025-11-05T05:50:23.266Z",
+      "tracking": [
+        {
+          "code": "placed",
+          "label": "Đã đặt hàng",
+          "at": "2025-11-05T05:50:23.266Z"
+        },
+        {
+          "code": "preparing",
+          "label": "Đang chuẩn bị",
+          "at": "2025-11-05T08:22:16.556Z"
+        },
+        {
+          "code": "ready",
+          "label": "Sẵn sàng giao",
+          "at": "2025-11-05T08:22:18.528Z"
+        },
+        {
+          "code": "pickup",
+          "label": "Shipper đã nhận",
+          "at": "2025-11-05T08:22:19.882Z"
+        },
+        {
+          "code": "delivering",
+          "label": "Đang giao",
+          "at": "2025-11-05T08:22:21.206Z"
+        },
+        {
+          "code": "delivered",
+          "label": "Giao thành công",
+          "at": "2025-11-05T08:22:23.213Z"
+        }
+      ],
+      "payment_status": "pending",
+      "delivery_status": "delivered",
+      "updatedAt": "2025-11-05T08:22:23.213Z",
+      "updated_at": "2025-11-05T08:22:23.213Z",
+      "updated_by": "ilovetranduythanh@gmail.com"
+    },
+    {
+      "id": "ORD-20251105-132858-AMJW3J",
+      "customerName": "Quốc Việt",
+      "phone": "0973654843",
+      "address": "Phường Bến Cát, Thành phố Hồ Chí Minh, Việt Nam",
+      "email": "huynhquocviet0609@gmail.com",
+      "user": {
+        "name": "Quốc Việt",
+        "phone": "0973654843",
+        "address": "Phường Bến Cát, Thành phố Hồ Chí Minh, Việt Nam"
+      },
+      "slot": "2025-11-04_09:00-11:00",
+      "voucher": "FREESHIP",
+      "paymentMethod": "COD",
+      "note": "",
+      "status": "placed",
+      "delivery_status": "placed",
+      "payment_status": "pending",
+      "subtotal": 296000,
+      "shipping_fee": 0,
+      "discount": 0,
+      "totalAmount": 296000,
+      "total": 296000,
+      "items": {
+        "112": 1,
+        "140": 1,
+        "300": 1,
+        "310": 1,
+        "600": 2,
+        "751": 1
+      },
+      "created_at": "2025-11-05T06:28:58.079Z",
+      "tracking": [
+        {
+          "code": "placed",
+          "label": "Đã đặt hàng",
+          "at": "2025-11-05T06:28:58.079Z"
+        },
+        {
+          "code": "preparing",
+          "label": "Đang chuẩn bị",
+          "at": null
+        },
+        {
+          "code": "ready",
+          "label": "Sẵn sàng giao",
+          "at": null
+        },
+        {
+          "code": "pickup",
+          "label": "Shipper đã nhận",
+          "at": null
+        },
+        {
+          "code": "delivering",
+          "label": "Đang giao",
+          "at": null
+        },
+        {
+          "code": "delivered",
+          "label": "Giao thành công",
+          "at": null
+        }
+      ]
+    },
+    {
+      "id": "ORD-20251105-133009-YWOHEY",
+      "customerName": "Quốc Việt",
+      "phone": "0973654843",
+      "address": "Phường Bến Cát, Thành phố Hồ Chí Minh, Việt Nam",
+      "email": "huynhquocviet0609@gmail.com",
+      "user": {
+        "name": "Quốc Việt",
+        "phone": "0973654843",
+        "address": "Phường Bến Cát, Thành phố Hồ Chí Minh, Việt Nam"
+      },
+      "slot": "2025-11-04_09:00-11:00",
+      "voucher": "FREESHIP",
+      "paymentMethod": "QR",
+      "note": "GỌI TRƯỚC NHA ĐANG NGỦ",
+      "status": "placed",
+      "delivery_status": "placed",
+      "payment_status": "pending",
+      "subtotal": 26000,
+      "shipping_fee": 0,
+      "discount": 0,
+      "totalAmount": 26000,
+      "total": 26000,
+      "items": {
+        "100": 2
+      },
+      "created_at": "2025-11-05T06:30:09.654Z",
+      "tracking": [
+        {
+          "code": "placed",
+          "label": "Đã đặt hàng",
+          "at": "2025-11-05T06:30:09.654Z"
+        },
+        {
+          "code": "preparing",
+          "label": "Đang chuẩn bị",
+          "at": null
+        },
+        {
+          "code": "ready",
+          "label": "Sẵn sàng giao",
+          "at": null
+        },
+        {
+          "code": "pickup",
+          "label": "Shipper đã nhận",
+          "at": null
+        },
+        {
+          "code": "delivering",
+          "label": "Đang giao",
+          "at": null
+        },
+        {
+          "code": "delivered",
+          "label": "Giao thành công",
+          "at": null
+        }
+      ]
+    },
+    {
+      "id": "ORD-20251105-133144-BQ8JZB",
+      "customerName": "Quốc Việt",
+      "phone": "0973654843",
+      "address": "Phường Bến Cát, Thành phố Hồ Chí Minh, Việt Nam",
+      "email": "huynhquocviet0609@gmail.com",
+      "user": {
+        "name": "Quốc Việt",
+        "phone": "0973654843",
+        "address": "Phường Bến Cát, Thành phố Hồ Chí Minh, Việt Nam"
+      },
+      "slot": "2025-11-04_09:00-11:00",
+      "voucher": "",
+      "paymentMethod": "COD",
+      "note": "",
+      "status": "placed",
+      "delivery_status": "placed",
+      "payment_status": "pending",
+      "subtotal": 36000,
+      "shipping_fee": 20000,
+      "discount": 0,
+      "totalAmount": 56000,
+      "total": 56000,
+      "items": {
+        "101": 2
+      },
+      "created_at": "2025-11-05T06:31:44.386Z",
+      "tracking": [
+        {
+          "code": "placed",
+          "label": "Đã đặt hàng",
+          "at": "2025-11-05T06:31:44.386Z"
+        },
+        {
+          "code": "preparing",
+          "label": "Đang chuẩn bị",
+          "at": null
+        },
+        {
+          "code": "ready",
+          "label": "Sẵn sàng giao",
+          "at": null
+        },
+        {
+          "code": "pickup",
+          "label": "Shipper đã nhận",
+          "at": null
+        },
+        {
+          "code": "delivering",
+          "label": "Đang giao",
+          "at": null
+        },
+        {
+          "code": "delivered",
+          "label": "Giao thành công",
+          "at": null
+        }
+      ]
+    },
+    {
+      "id": "ORD-20251105-133218-1IQ2J2",
+      "customerName": "Quốc Việt",
+      "phone": "0973654843",
+      "address": "Phường Bến Cát, Thành phố Hồ Chí Minh, Việt Nam",
+      "email": "huynhquocviet0609@gmail.com",
+      "user": {
+        "name": "Quốc Việt",
+        "phone": "0973654843",
+        "address": "Phường Bến Cát, Thành phố Hồ Chí Minh, Việt Nam"
+      },
+      "slot": "2025-11-04_09:00-11:00",
+      "voucher": "",
+      "paymentMethod": "COD",
+      "note": "",
+      "status": "placed",
+      "delivery_status": "placed",
+      "payment_status": "pending",
+      "subtotal": 36000,
+      "shipping_fee": 20000,
+      "discount": 0,
+      "totalAmount": 56000,
+      "total": 56000,
+      "items": {
+        "101": 2
+      },
+      "created_at": "2025-11-05T06:32:18.645Z",
+      "tracking": [
+        {
+          "code": "placed",
+          "label": "Đã đặt hàng",
+          "at": "2025-11-05T06:32:18.645Z"
+        },
+        {
+          "code": "preparing",
+          "label": "Đang chuẩn bị",
+          "at": null
+        },
+        {
+          "code": "ready",
+          "label": "Sẵn sàng giao",
+          "at": null
+        },
+        {
+          "code": "pickup",
+          "label": "Shipper đã nhận",
+          "at": null
+        },
+        {
+          "code": "delivering",
+          "label": "Đang giao",
+          "at": null
+        },
+        {
+          "code": "delivered",
+          "label": "Giao thành công",
+          "at": null
+        }
+      ]
+    },
+    {
+      "id": "ORD-20251105-133730-KRQAOX",
+      "customerName": "Quốc Việt",
+      "phone": "0973654843",
+      "address": "Phường Bến Cát, Thành phố Hồ Chí Minh, Việt Nam",
+      "email": "huynhquocviet0609@gmail.com",
+      "user": {
+        "name": "Quốc Việt",
+        "phone": "0973654843",
+        "address": "Phường Bến Cát, Thành phố Hồ Chí Minh, Việt Nam"
+      },
+      "slot": "2025-11-04_09:00-11:00",
+      "voucher": "",
+      "paymentMethod": "COD",
+      "note": "",
+      "status": "placed",
+      "delivery_status": "placed",
+      "payment_status": "pending",
+      "subtotal": 54000,
+      "shipping_fee": 20000,
+      "discount": 0,
+      "totalAmount": 74000,
+      "total": 74000,
+      "items": {
+        "101": 3
+      },
+      "created_at": "2025-11-05T06:37:30.295Z",
+      "tracking": [
+        {
+          "code": "placed",
+          "label": "Đã đặt hàng",
+          "at": "2025-11-05T06:37:30.295Z"
+        },
+        {
+          "code": "preparing",
+          "label": "Đang chuẩn bị",
+          "at": null
+        },
+        {
+          "code": "ready",
+          "label": "Sẵn sàng giao",
+          "at": null
+        },
+        {
+          "code": "pickup",
+          "label": "Shipper đã nhận",
+          "at": null
+        },
+        {
+          "code": "delivering",
+          "label": "Đang giao",
+          "at": null
+        },
+        {
+          "code": "delivered",
+          "label": "Giao thành công",
+          "at": null
+        }
+      ]
+    },
+    {
+      "id": "ORD-20251105-134009-UIM15H",
+      "customerName": "Quốc Việt",
+      "phone": "0973654843",
+      "address": "Phường Bến Cát, Thành phố Hồ Chí Minh, Việt Nam",
+      "email": "huynhquocviet0609@gmail.com",
+      "user": {
+        "name": "Quốc Việt",
+        "phone": "0973654843",
+        "address": "Phường Bến Cát, Thành phố Hồ Chí Minh, Việt Nam"
+      },
+      "slot": "2025-11-04_09:00-11:00",
+      "voucher": "",
+      "paymentMethod": "COD",
+      "note": "",
+      "status": "placed",
+      "delivery_status": "placed",
+      "payment_status": "pending",
+      "subtotal": 168000,
+      "shipping_fee": 20000,
+      "discount": 0,
+      "totalAmount": 188000,
+      "total": 188000,
+      "items": {
+        "999": 3
+      },
+      "created_at": "2025-11-05T06:40:09.760Z",
+      "tracking": [
+        {
+          "code": "placed",
+          "label": "Đã đặt hàng",
+          "at": "2025-11-05T06:40:09.760Z"
+        },
+        {
+          "code": "preparing",
+          "label": "Đang chuẩn bị",
+          "at": null
+        },
+        {
+          "code": "ready",
+          "label": "Sẵn sàng giao",
+          "at": null
+        },
+        {
+          "code": "pickup",
+          "label": "Shipper đã nhận",
+          "at": null
+        },
+        {
+          "code": "delivering",
+          "label": "Đang giao",
+          "at": null
+        },
+        {
+          "code": "delivered",
+          "label": "Giao thành công",
+          "at": null
+        }
+      ]
+    },
+    {
+      "id": "ORD-20251105-134725-EM68XQ",
+      "customerName": "Quốc Việt",
+      "phone": "0973654843",
+      "address": "Phường Bến Cát, Thành phố Hồ Chí Minh, Việt Nam",
+      "email": "huynhquocviet0609@gmail.com",
+      "user": {
+        "name": "Quốc Việt",
+        "phone": "0973654843",
+        "address": "Phường Bến Cát, Thành phố Hồ Chí Minh, Việt Nam"
+      },
+      "slot": "2025-11-04_09:00-11:00",
+      "voucher": "FREESHIP",
+      "paymentMethod": "COD",
+      "note": "",
+      "status": "placed",
+      "delivery_status": "placed",
+      "payment_status": "pending",
+      "subtotal": 117000,
+      "shipping_fee": 20000,
+      "discount": 0,
+      "totalAmount": 137000,
+      "total": 137000,
+      "items": {
+        "998": 3
+      },
+      "created_at": "2025-11-05T06:47:25.990Z",
+      "tracking": [
+        {
+          "code": "placed",
+          "label": "Đã đặt hàng",
+          "at": "2025-11-05T06:47:25.990Z"
+        },
+        {
+          "code": "preparing",
+          "label": "Đang chuẩn bị",
+          "at": null
+        },
+        {
+          "code": "ready",
+          "label": "Sẵn sàng giao",
+          "at": null
+        },
+        {
+          "code": "pickup",
+          "label": "Shipper đã nhận",
+          "at": null
+        },
+        {
+          "code": "delivering",
+          "label": "Đang giao",
+          "at": null
+        },
+        {
+          "code": "delivered",
+          "label": "Giao thành công",
+          "at": null
+        }
+      ]
+    },
+    {
+      "id": "ORD-20251105-145115-WKYR64",
+      "customerName": "Quốc Việt",
+      "phone": "0973654843",
+      "address": "Phường Bến Cát, Thành phố Hồ Chí Minh, Việt Nam",
+      "email": "huynhquocviet0609@gmail.com",
+      "user": {
+        "name": "Quốc Việt",
+        "phone": "0973654843",
+        "address": "Phường Bến Cát, Thành phố Hồ Chí Minh, Việt Nam"
+      },
+      "slot": "2025-11-04_09:00-11:00",
+      "voucher": "",
+      "paymentMethod": "COD",
+      "note": "",
+      "status": "placed",
+      "delivery_status": "placed",
+      "payment_status": "pending",
+      "subtotal": 80000,
+      "shipping_fee": 20000,
+      "discount": 0,
+      "totalAmount": 100000,
+      "total": 100000,
+      "items": {
+        "201": 1,
+        "530": 2
+      },
+      "created_at": "2025-11-05T07:51:15.914Z",
+      "tracking": [
+        {
+          "code": "placed",
+          "label": "Đã đặt hàng",
+          "at": "2025-11-05T07:51:15.914Z"
+        },
+        {
+          "code": "preparing",
+          "label": "Đang chuẩn bị",
+          "at": null
+        },
+        {
+          "code": "ready",
+          "label": "Sẵn sàng giao",
+          "at": null
+        },
+        {
+          "code": "pickup",
+          "label": "Shipper đã nhận",
+          "at": null
+        },
+        {
+          "code": "delivering",
+          "label": "Đang giao",
+          "at": null
+        },
+        {
+          "code": "delivered",
+          "label": "Giao thành công",
+          "at": null
+        }
+      ]
+    },
+    {
+      "id": "ORD-20251105-145211-JCL90F",
+      "customerName": "Quốc Việt",
+      "phone": "0973654843",
+      "address": "Phường Bến Cát, Thành phố Hồ Chí Minh, Việt Nam",
+      "email": "huynhquocviet0609@gmail.com",
+      "user": {
+        "name": "Quốc Việt",
+        "phone": "0973654843",
+        "address": "Phường Bến Cát, Thành phố Hồ Chí Minh, Việt Nam"
+      },
+      "slot": "2025-11-04_09:00-11:00",
+      "voucher": "FREESHIP",
+      "paymentMethod": "COD",
+      "note": "",
+      "status": "placed",
+      "delivery_status": "placed",
+      "payment_status": "pending",
+      "subtotal": 72000,
+      "shipping_fee": 0,
+      "discount": 0,
+      "totalAmount": 72000,
+      "total": 72000,
+      "items": {
+        "101": 4
+      },
+      "created_at": "2025-11-05T07:52:11.844Z",
+      "tracking": [
+        {
+          "code": "placed",
+          "label": "Đã đặt hàng",
+          "at": "2025-11-05T07:52:11.844Z"
+        },
+        {
+          "code": "preparing",
+          "label": "Đang chuẩn bị",
+          "at": null
+        },
+        {
+          "code": "ready",
+          "label": "Sẵn sàng giao",
+          "at": null
+        },
+        {
+          "code": "pickup",
+          "label": "Shipper đã nhận",
+          "at": null
+        },
+        {
+          "code": "delivering",
+          "label": "Đang giao",
+          "at": null
+        },
+        {
+          "code": "delivered",
+          "label": "Giao thành công",
+          "at": null
+        }
+      ]
+    },
+    {
+      "id": "ORD-20251105-150612-4CFOXK",
+      "customerName": "Trần Duy Thanh",
+      "phone": "0912345678",
+      "address": "Hẻm 170, Khu phố 87, Phường Hiệp Bình, Thành phố Thủ Đức, Thành phố Hồ Chí Minh, 75350, Việt Nam",
+      "email": "tranduythanh@gmail.com",
+      "user": {
+        "name": "Trần Duy Thanh",
+        "phone": "0912345678",
+        "address": "Hẻm 170, Khu phố 87, Phường Hiệp Bình, Thành phố Thủ Đức, Thành phố Hồ Chí Minh, 75350, Việt Nam"
+      },
+      "slot": "2025-11-04_09:00-11:00",
+      "voucher": "",
+      "paymentMethod": "COD",
+      "note": "",
+      "status": "placed",
+      "delivery_status": "placed",
+      "payment_status": "pending",
+      "subtotal": 18000,
+      "shipping_fee": 20000,
+      "discount": 0,
+      "totalAmount": 38000,
+      "total": 38000,
+      "items": {
+        "131": 1
+      },
+      "created_at": "2025-11-05T08:06:12.666Z",
+      "tracking": [
+        {
+          "code": "placed",
+          "label": "Đã đặt hàng",
+          "at": "2025-11-05T08:06:12.666Z"
+        },
+        {
+          "code": "preparing",
+          "label": "Đang chuẩn bị",
+          "at": null
+        },
+        {
+          "code": "ready",
+          "label": "Sẵn sàng giao",
+          "at": null
+        },
+        {
+          "code": "pickup",
+          "label": "Shipper đã nhận",
+          "at": null
+        },
+        {
+          "code": "delivering",
+          "label": "Đang giao",
+          "at": null
+        },
+        {
+          "code": "delivered",
+          "label": "Giao thành công",
+          "at": null
+        }
+      ]
+    },
+    {
+      "id": "ORD-20251105-150659-38UTBJ",
+      "customerName": "Trần Duy Thanh",
+      "phone": "0912345678",
+      "address": "Hẻm 170, Khu phố 87, Phường Hiệp Bình, Thành phố Thủ Đức, Thành phố Hồ Chí Minh, 75350, Việt Nam",
+      "email": "tranduythanh@gmail.com",
+      "user": {
+        "name": "Trần Duy Thanh",
+        "phone": "0912345678",
+        "address": "Hẻm 170, Khu phố 87, Phường Hiệp Bình, Thành phố Thủ Đức, Thành phố Hồ Chí Minh, 75350, Việt Nam"
+      },
+      "slot": "2025-11-04_09:00-11:00",
+      "voucher": "",
+      "paymentMethod": "COD",
+      "note": "",
+      "status": "placed",
+      "delivery_status": "placed",
+      "payment_status": "pending",
+      "subtotal": 105000,
+      "shipping_fee": 20000,
+      "discount": 0,
+      "totalAmount": 125000,
+      "total": 125000,
+      "items": {
+        "122": 1,
+        "142": 1,
+        "310": 1,
+        "600": 1,
+        "620": 1
+      },
+      "created_at": "2025-11-05T08:06:59.024Z",
+      "tracking": [
+        {
+          "code": "placed",
+          "label": "Đã đặt hàng",
+          "at": "2025-11-05T08:06:59.024Z"
+        },
+        {
+          "code": "preparing",
+          "label": "Đang chuẩn bị",
+          "at": null
+        },
+        {
+          "code": "ready",
+          "label": "Sẵn sàng giao",
+          "at": null
+        },
+        {
+          "code": "pickup",
+          "label": "Shipper đã nhận",
+          "at": null
+        },
+        {
+          "code": "delivering",
+          "label": "Đang giao",
+          "at": null
+        },
+        {
+          "code": "delivered",
+          "label": "Giao thành công",
+          "at": null
+        }
+      ]
+    },
+    {
+      "id": "ORD-20251105-150804-FLNG32",
+      "customerName": "Trần Duy Thanh",
+      "phone": "0912345678",
+      "address": "Hẻm 170, Khu phố 87, Phường Hiệp Bình, Thành phố Thủ Đức, Thành phố Hồ Chí Minh, 75350, Việt Nam",
+      "email": "tranduythanh@gmail.com",
+      "user": {
+        "name": "Trần Duy Thanh",
+        "phone": "0912345678",
+        "address": "Hẻm 170, Khu phố 87, Phường Hiệp Bình, Thành phố Thủ Đức, Thành phố Hồ Chí Minh, 75350, Việt Nam"
+      },
+      "slot": "2025-11-04_09:00-11:00",
+      "voucher": "",
+      "paymentMethod": "COD",
+      "note": "",
+      "status": "placed",
+      "delivery_status": "placed",
+      "payment_status": "pending",
+      "subtotal": 65000,
+      "shipping_fee": 20000,
+      "discount": 0,
+      "totalAmount": 85000,
+      "total": 85000,
+      "items": {
+        "100": 5
+      },
+      "created_at": "2025-11-05T08:08:04.288Z",
+      "tracking": [
+        {
+          "code": "placed",
+          "label": "Đã đặt hàng",
+          "at": "2025-11-05T08:08:04.288Z"
+        },
+        {
+          "code": "preparing",
+          "label": "Đang chuẩn bị",
+          "at": null
+        },
+        {
+          "code": "ready",
+          "label": "Sẵn sàng giao",
+          "at": null
+        },
+        {
+          "code": "pickup",
+          "label": "Shipper đã nhận",
+          "at": null
+        },
+        {
+          "code": "delivering",
+          "label": "Đang giao",
+          "at": null
+        },
+        {
+          "code": "delivered",
+          "label": "Giao thành công",
+          "at": null
+        }
+      ]
+    },
+    {
+      "id": "ORD-20251105-152410-20I9BW",
+      "customerName": "Quốc Việt",
+      "phone": "0372641942",
+      "address": "Phường Bến Cát, Thành phố Hồ Chí Minh, Việt Nam",
+      "email": "0372641942@gmail.com",
+      "user": {
+        "name": "Quốc Việt",
+        "phone": "0372641942",
+        "address": "Phường Bến Cát, Thành phố Hồ Chí Minh, Việt Nam"
+      },
+      "slot": "2025-11-04_09:00-11:00",
+      "voucher": "FREESHIP",
+      "paymentMethod": "COD",
+      "note": "",
+      "status": "placed",
+      "delivery_status": "placed",
+      "payment_status": "pending",
+      "subtotal": 102000,
+      "shipping_fee": 0,
+      "discount": 0,
+      "totalAmount": 102000,
+      "total": 102000,
+      "items": {
+        "112": 4,
+        "122": 2
+      },
+      "created_at": "2025-11-05T08:24:10.256Z",
+      "tracking": [
+        {
+          "code": "placed",
+          "label": "Đã đặt hàng",
+          "at": "2025-11-05T08:24:10.256Z"
+        },
+        {
+          "code": "preparing",
+          "label": "Đang chuẩn bị",
+          "at": null
+        },
+        {
+          "code": "ready",
+          "label": "Sẵn sàng giao",
+          "at": null
+        },
+        {
+          "code": "pickup",
+          "label": "Shipper đã nhận",
+          "at": null
+        },
+        {
+          "code": "delivering",
+          "label": "Đang giao",
+          "at": null
+        },
+        {
+          "code": "delivered",
+          "label": "Giao thành công",
+          "at": null
+        }
+      ]
+    },
+    {
+      "id": "ORD-20251105-152641-5XH34U",
+      "customerName": "Quốc Việt",
+      "phone": "0372641942",
+      "address": "Phường Bến Cát, Thành phố Hồ Chí Minh, Việt Nam",
+      "email": "0372641942@gmail.com",
+      "user": {
+        "name": "Quốc Việt",
+        "phone": "0372641942",
+        "address": "Phường Bến Cát, Thành phố Hồ Chí Minh, Việt Nam"
+      },
+      "slot": "2025-11-04_09:00-11:00",
+      "voucher": "FREESHIP",
+      "paymentMethod": "QR",
+      "note": "",
+      "status": "delivered",
+      "delivery_status": "delivered",
+      "payment_status": "pending",
+      "subtotal": 35000,
+      "shipping_fee": 0,
+      "discount": 0,
+      "totalAmount": 35000,
+      "total": 35000,
+      "items": {
+        "551": 1
+      },
+      "created_at": "2025-11-05T08:26:41.567Z",
+      "tracking": [
+        {
+          "code": "placed",
+          "label": "Đã đặt hàng",
+          "at": "2025-11-05T08:26:41.567Z"
+        },
+        {
+          "code": "preparing",
+          "label": "Đang chuẩn bị",
+          "at": "2025-11-05T08:29:09.666Z"
+        },
+        {
+          "code": "ready",
+          "label": "Sẵn sàng giao",
+          "at": "2025-11-05T08:29:11.273Z"
+        },
+        {
+          "code": "pickup",
+          "label": "Shipper đã nhận",
+          "at": "2025-11-05T08:29:12.224Z"
+        },
+        {
+          "code": "delivering",
+          "label": "Đang giao",
+          "at": "2025-11-05T08:29:12.978Z"
+        },
+        {
+          "code": "delivered",
+          "label": "Giao thành công",
+          "at": "2025-11-05T08:29:13.659Z"
+        }
+      ],
+      "updatedAt": "2025-11-05T08:29:13.659Z",
+      "updated_at": "2025-11-05T08:29:13.659Z",
+      "updated_by": "ilovetranduythanh@gmail.com"
+    }
+  ],
+  "users": [
+    {
+      "id": 1,
+      "email": "admin@vuavuive.com",
+      "name": "Admin User",
+      "role": "Admin",
+      "createdAt": "2025-01-01T00:00:00.000Z",
+      "lastLogin": "2025-01-03T08:00:00.000Z"
+    },
+    {
+      "id": 2,
+      "email": "manager@vuavuive.com",
+      "name": "Manager User",
+      "role": "Manager",
+      "createdAt": "2025-01-01T00:00:00.000Z",
+      "lastLogin": "2025-01-03T09:00:00.000Z"
+    },
+    {
+      "id": 3,
+      "email": "staff@vuavuive.com",
+      "name": "Staff User",
+      "role": "Staff",
+      "createdAt": "2025-01-01T00:00:00.000Z",
+      "lastLogin": "2025-01-02T10:00:00.000Z"
+    }
+  ],
+  "auditLogs": [
+    {
+      "id": 1,
+      "action": "login",
+      "user": "admin@vuavuive.com",
+      "details": "Đăng nhập thành công với vai trò Admin",
+      "timestamp": "2025-01-03T08:00:00.000Z",
+      "ipAddress": "192.168.1.1"
+    },
+    {
+      "id": 2,
+      "action": "update_order",
+      "user": "admin@vuavuive.com",
+      "details": "Cập nhật trạng thái đơn hàng ORD20250103002 từ pending → confirmed",
+      "timestamp": "2025-01-03T11:20:00.000Z",
+      "ipAddress": "192.168.1.1"
+    },
+    {
+      "id": 3,
+      "action": "update_product",
+      "user": "manager@vuavuive.com",
+      "details": "Cập nhật giá sản phẩm 110 (Cà rốt) từ 12000đ → 15000đ",
+      "timestamp": "2025-01-03T09:30:00.000Z",
+      "ipAddress": "192.168.1.2"
+    },
+    {
+      "id": "1762159703940r6b1x",
+      "action": "create_order",
+      "who": "Quốc Việt",
+      "metadata": {
+        "orderId": "ORD-20251103-154823-WR5XNF",
+        "total": 50000,
+        "status": "placed"
+      },
+      "timestamp": "2025-11-03T08:48:23.940Z"
+    },
+    {
+      "id": "1762159848487bk5k2",
+      "action": "create_order",
+      "who": "Quốc Việt",
+      "metadata": {
+        "orderId": "ORD-20251103-155048-4EFYYJ",
+        "total": 55000,
+        "status": "placed"
+      },
+      "timestamp": "2025-11-03T08:50:48.487Z"
+    },
+    {
+      "id": "1762161007241spxno",
+      "action": "update_order_status",
+      "who": "ilovetranduythanh@gmail.com",
+      "metadata": {
+        "orderId": "ORD20250103002",
+        "newStatus": "ready"
+      },
+      "timestamp": "2025-11-03T09:10:07.241Z"
+    },
+    {
+      "id": "1762161015472xt4pu",
+      "action": "update_order_status",
+      "who": "ilovetranduythanh@gmail.com",
+      "metadata": {
+        "orderId": "ORD20250103001",
+        "newStatus": "preparing"
+      },
+      "timestamp": "2025-11-03T09:10:15.472Z"
+    },
+    {
+      "id": "1762161183285tg46r",
+      "action": "update_order_status",
+      "who": "admin@vuavuive.vn",
+      "metadata": {
+        "orderId": "ORD20250103002",
+        "oldStatus": "ready",
+        "newStatus": "pickup"
+      },
+      "timestamp": "2025-11-03T09:13:03.285Z"
+    },
+    {
+      "id": "1762161185169ad174",
+      "action": "update_order_status",
+      "who": "admin@vuavuive.vn",
+      "metadata": {
+        "orderId": "ORD20250103001",
+        "oldStatus": "ready",
+        "newStatus": "ready"
+      },
+      "timestamp": "2025-11-03T09:13:05.169Z"
+    },
+    {
+      "id": "1762321790168t67nw",
+      "action": "create_order",
+      "who": "Quốc Việt",
+      "metadata": {
+        "orderId": "ORD-20251105-124950-CAS6A3",
+        "total": 175000,
+        "status": "placed"
+      },
+      "timestamp": "2025-11-05T05:49:50.168Z"
+    },
+    {
+      "id": "1762321823284thbqi",
+      "action": "create_order",
+      "who": "Quốc Việt",
+      "metadata": {
+        "orderId": "ORD-20251105-125023-FTB4MA",
+        "total": 46000,
+        "status": "placed"
+      },
+      "timestamp": "2025-11-05T05:50:23.284Z"
+    },
+    {
+      "id": "1762330936594dv4rk",
+      "action": "update_order_status",
+      "who": "ilovetranduythanh@gmail.com",
+      "metadata": {
+        "orderId": "ORD-20251105-125023-FTB4MA",
+        "oldStatus": "placed",
+        "newStatus": "preparing"
+      },
+      "timestamp": "2025-11-05T08:22:16.594Z"
+    },
+    {
+      "id": "1762330938561o9fgv",
+      "action": "update_order_status",
+      "who": "ilovetranduythanh@gmail.com",
+      "metadata": {
+        "orderId": "ORD-20251105-125023-FTB4MA",
+        "oldStatus": "preparing",
+        "newStatus": "ready"
+      },
+      "timestamp": "2025-11-05T08:22:18.561Z"
+    },
+    {
+      "id": "1762330939915dvo6j",
+      "action": "update_order_status",
+      "who": "ilovetranduythanh@gmail.com",
+      "metadata": {
+        "orderId": "ORD-20251105-125023-FTB4MA",
+        "oldStatus": "ready",
+        "newStatus": "pickup"
+      },
+      "timestamp": "2025-11-05T08:22:19.915Z"
+    },
+    {
+      "id": "1762330941221csel7",
+      "action": "update_order_status",
+      "who": "ilovetranduythanh@gmail.com",
+      "metadata": {
+        "orderId": "ORD-20251105-125023-FTB4MA",
+        "oldStatus": "pickup",
+        "newStatus": "delivering"
+      },
+      "timestamp": "2025-11-05T08:22:21.221Z"
+    },
+    {
+      "id": "1762330943224v6nt7",
+      "action": "update_order_status",
+      "who": "ilovetranduythanh@gmail.com",
+      "metadata": {
+        "orderId": "ORD-20251105-125023-FTB4MA",
+        "oldStatus": "delivering",
+        "newStatus": "delivered"
+      },
+      "timestamp": "2025-11-05T08:22:23.224Z"
+    },
+    {
+      "id": "1762331212762aksdg",
+      "action": "update_order_status",
+      "who": "ilovetranduythanh@gmail.com",
+      "metadata": {
+        "orderId": "ORD-20251105-124950-CAS6A3",
+        "oldStatus": "placed",
+        "newStatus": "preparing"
+      },
+      "timestamp": "2025-11-05T08:26:52.762Z"
+    },
+    {
+      "id": "1762331215375prwmn",
+      "action": "update_order_status",
+      "who": "ilovetranduythanh@gmail.com",
+      "metadata": {
+        "orderId": "ORD-20251105-124950-CAS6A3",
+        "oldStatus": "preparing",
+        "newStatus": "ready"
+      },
+      "timestamp": "2025-11-05T08:26:55.375Z"
+    },
+    {
+      "id": "1762331219070f4et3",
+      "action": "update_order_status",
+      "who": "ilovetranduythanh@gmail.com",
+      "metadata": {
+        "orderId": "ORD-20251105-124950-CAS6A3",
+        "oldStatus": "ready",
+        "newStatus": "pickup"
+      },
+      "timestamp": "2025-11-05T08:26:59.070Z"
+    },
+    {
+      "id": "1762331221145v8rgs",
+      "action": "update_order_status",
+      "who": "ilovetranduythanh@gmail.com",
+      "metadata": {
+        "orderId": "ORD-20251105-124950-CAS6A3",
+        "oldStatus": "pickup",
+        "newStatus": "delivering"
+      },
+      "timestamp": "2025-11-05T08:27:01.145Z"
+    },
+    {
+      "id": "17623312233189mzzw",
+      "action": "update_order_status",
+      "who": "ilovetranduythanh@gmail.com",
+      "metadata": {
+        "orderId": "ORD-20251105-124950-CAS6A3",
+        "oldStatus": "delivering",
+        "newStatus": "delivered"
+      },
+      "timestamp": "2025-11-05T08:27:03.318Z"
+    },
+    {
+      "id": "1762331349701unyml",
+      "action": "update_order_status",
+      "who": "ilovetranduythanh@gmail.com",
+      "metadata": {
+        "orderId": "ORD-20251105-152641-5XH34U",
+        "oldStatus": "placed",
+        "newStatus": "preparing"
+      },
+      "timestamp": "2025-11-05T08:29:09.701Z"
+    },
+    {
+      "id": "176233135129278s1y",
+      "action": "update_order_status",
+      "who": "ilovetranduythanh@gmail.com",
+      "metadata": {
+        "orderId": "ORD-20251105-152641-5XH34U",
+        "oldStatus": "preparing",
+        "newStatus": "ready"
+      },
+      "timestamp": "2025-11-05T08:29:11.292Z"
+    },
+    {
+      "id": "17623313522648avnt",
+      "action": "update_order_status",
+      "who": "ilovetranduythanh@gmail.com",
+      "metadata": {
+        "orderId": "ORD-20251105-152641-5XH34U",
+        "oldStatus": "ready",
+        "newStatus": "pickup"
+      },
+      "timestamp": "2025-11-05T08:29:12.264Z"
+    },
+    {
+      "id": "176233135300778h05",
+      "action": "update_order_status",
+      "who": "ilovetranduythanh@gmail.com",
+      "metadata": {
+        "orderId": "ORD-20251105-152641-5XH34U",
+        "oldStatus": "pickup",
+        "newStatus": "delivering"
+      },
+      "timestamp": "2025-11-05T08:29:13.007Z"
+    },
+    {
+      "id": "1762331353695k5s2w",
+      "action": "update_order_status",
+      "who": "ilovetranduythanh@gmail.com",
+      "metadata": {
+        "orderId": "ORD-20251105-152641-5XH34U",
+        "oldStatus": "delivering",
+        "newStatus": "delivered"
+      },
+      "timestamp": "2025-11-05T08:29:13.695Z"
+    },
+    {
+      "id": "176233192361046wqm",
+      "action": "user.login",
+      "who": "0372641942@gmail.com",
+      "metadata": {},
+      "timestamp": "2025-11-05T08:38:43.610Z"
+    },
+    {
+      "id": "1762331942728qp3tw",
+      "action": "profile.update",
+      "who": "0372641942@gmail.com",
+      "metadata": {
+        "changes": {
+          "name": "Quốc Việt",
+          "address": "Phường Bến Cát",
+          "phone": "0372641942",
+          "email": "0372641942@gmail.com"
+        }
+      },
+      "timestamp": "2025-11-05T08:39:02.728Z"
+    },
+    {
+      "id": "1762331992834n4md1",
+      "action": "user.login",
+      "who": "0372641942@gmail.com",
+      "metadata": {},
+      "timestamp": "2025-11-05T08:39:52.834Z"
+    }
+  ]
+}

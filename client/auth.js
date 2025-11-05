@@ -13,8 +13,11 @@ const OLD_LS_SESSION = "client_session_v1";
 /* ---------- Helpers DOM & Điều hướng ---------- */
 const $ = (s, r = document) => r.querySelector(s);
 function go(href) {
-  try { location.href = new URL(href, location.href).toString(); }
-  catch { location.href = href; }
+  try {
+    location.href = new URL(href, location.href).toString();
+  } catch {
+    location.href = href;
+  }
 }
 
 /* ---------- Chuẩn hóa & validate ---------- */
@@ -67,9 +70,9 @@ function clearSession() {
     localStorage.removeItem(LS_SESSION);
     localStorage.removeItem(OLD_LS_SESSION);
     // Xóa thêm key rất cũ nếu còn
-    localStorage.removeItem('vvv_session');
+    localStorage.removeItem("vvv_session");
     // Đảm bảo luồng Account: lần đăng nhập mới phải xem profile trước khi logout
-    localStorage.removeItem('vvv_has_seen_profile');
+    localStorage.removeItem("vvv_has_seen_profile");
   } catch {}
 }
 
@@ -144,6 +147,6 @@ window.vvvAuth = {
 };
 
 /* Relax: do not enforce localhost:8080; support any dev host/port */
-(function relaxOrigin(){
+(function relaxOrigin() {
   // No-op to avoid redirect loops or connection refused when server runs on other ports
 })();

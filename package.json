@@ -1,0 +1,27 @@
+{
+  "name": "vuavuive-group5",
+  "version": "1.0.0",
+  "description": "Hệ thống quản lý cửa hàng thực phẩm Vựa Vui Vẻ",
+  "type": "module",
+  "scripts": {
+    "sync": "node backoffice/sync-products.js",
+    "backend": "node backoffice/server-simple.js",
+    "backend-old": "node backoffice/server.js",
+    "frontend": "npx http-server -p 8000 -c-1",
+    "dev": "concurrently \"npm run backend\" \"npm run frontend\"",
+    "start": "npm run dev"
+  },
+  "keywords": [
+    "e-commerce",
+    "food-store",
+    "json-server",
+    "vuavuive"
+  ],
+  "author": "Group 5",
+  "license": "MIT",
+  "devDependencies": {
+    "json-server": "^0.17.4",
+    "concurrently": "^8.2.2",
+    "http-server": "^14.1.1"
+  }
+}

@@ -1,0 +1,26 @@
+[
+  {
+    "id": 1,
+    "email": "admin@vuavuive.com",
+    "name": "Admin User",
+    "role": "Admin",
+    "createdAt": "2025-01-01T00:00:00.000Z",
+    "lastLogin": "2025-01-03T08:00:00.000Z"
+  },
+  {
+    "id": 2,
+    "email": "manager@vuavuive.com",
+    "name": "Manager User",
+    "role": "Manager",
+    "createdAt": "2025-01-01T00:00:00.000Z",
+    "lastLogin": "2025-01-03T09:00:00.000Z"
+  },
+  {
+    "id": 3,
+    "email": "staff@vuavuive.com",
+    "name": "Staff User",
+    "role": "Staff",
+    "createdAt": "2025-01-01T00:00:00.000Z",
+    "lastLogin": "2025-01-02T10:00:00.000Z"
+  }
+]

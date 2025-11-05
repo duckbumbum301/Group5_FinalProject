@@ -1,0 +1,177 @@
+[
+  {
+    "id": 1,
+    "action": "login",
+    "user": "admin@vuavuive.com",
+    "details": "Đăng nhập thành công với vai trò Admin",
+    "timestamp": "2025-01-03T08:00:00.000Z",
+    "ipAddress": "192.168.1.1"
+  },
+  {
+    "id": 2,
+    "action": "update_order",
+    "user": "admin@vuavuive.com",
+    "details": "Cập nhật trạng thái đơn hàng ORD20250103002 từ pending → confirmed",
+    "timestamp": "2025-01-03T11:20:00.000Z",
+    "ipAddress": "192.168.1.1"
+  },
+  {
+    "id": 3,
+    "action": "update_product",
+    "user": "manager@vuavuive.com",
+    "details": "Cập nhật giá sản phẩm 110 (Cà rốt) từ 12000đ → 15000đ",
+    "timestamp": "2025-01-03T09:30:00.000Z",
+    "ipAddress": "192.168.1.2"
+  },
+  {
+    "id": "1762159703940r6b1x",
+    "action": "create_order",
+    "who": "Quốc Việt",
+    "metadata": {
+      "orderId": "ORD-20251103-154823-WR5XNF",
+      "total": 50000,
+      "status": "placed"
+    },
+    "timestamp": "2025-11-03T08:48:23.940Z"
+  },
+  {
+    "id": "1762159848487bk5k2",
+    "action": "create_order",
+    "who": "Quốc Việt",
+    "metadata": {
+      "orderId": "ORD-20251103-155048-4EFYYJ",
+      "total": 55000,
+      "status": "placed"
+    },
+    "timestamp": "2025-11-03T08:50:48.487Z"
+  },
+  {
+    "id": "1762161007241spxno",
+    "action": "update_order_status",
+    "who": "ilovetranduythanh@gmail.com",
+    "metadata": {
+      "orderId": "ORD20250103002",
+      "newStatus": "ready"
+    },
+    "timestamp": "2025-11-03T09:10:07.241Z"
+  },
+  {
+    "id": "1762161015472xt4pu",
+    "action": "update_order_status",
+    "who": "ilovetranduythanh@gmail.com",
+    "metadata": {
+      "orderId": "ORD20250103001",
+      "newStatus": "preparing"
+    },
+    "timestamp": "2025-11-03T09:10:15.472Z"
+  },
+  {
+    "id": "1762161183285tg46r",
+    "action": "update_order_status",
+    "who": "admin@vuavuive.vn",
+    "metadata": {
+      "orderId": "ORD20250103002",
+      "oldStatus": "ready",
+      "newStatus": "pickup"
+    },
+    "timestamp": "2025-11-03T09:13:03.285Z"
+  },
+  {
+    "id": "1762161185169ad174",
+    "action": "update_order_status",
+    "who": "admin@vuavuive.vn",
+    "metadata": {
+      "orderId": "ORD20250103001",
+      "oldStatus": "ready",
+      "newStatus": "ready"
+    },
+    "timestamp": "2025-11-03T09:13:05.169Z"
+  },
+  {
+    "id": "1762162486926ntm4s",
+    "action": "create_order",
+    "who": "Quốc Việt",
+    "metadata": {
+      "orderId": "ORD-20251103-163446-80GFY5",
+      "total": 29250,
+      "status": "placed"
+    },
+    "timestamp": "2025-11-03T09:34:46.926Z"
+  },
+  {
+    "id": "1762162639701uk6l6",
+    "action": "create_order",
+    "who": "Đỗ Bá Danh Lộc",
+    "metadata": {
+      "orderId": "ORD-20251103-163719-LL00PY",
+      "total": 181120,
+      "status": "placed"
+    },
+    "timestamp": "2025-11-03T09:37:19.701Z"
+  },
+  {
+    "id": "1762230223980mggit",
+    "action": "update_order_status",
+    "who": "ilovetranduythanh@gmail.com",
+    "metadata": {
+      "orderId": "ORD20250103001",
+      "oldStatus": "ready",
+      "newStatus": "pickup"
+    },
+    "timestamp": "2025-11-04T04:23:43.980Z"
+  },
+  {
+    "id": "1762230538200j1iaw",
+    "action": "create_order",
+    "who": "Quốc Việt",
+    "metadata": {
+      "orderId": "ORD-20251104-112858-B9F7M7",
+      "total": 175000,
+      "status": "placed"
+    },
+    "timestamp": "2025-11-04T04:28:58.200Z"
+  },
+  {
+    "id": "LOG-1762243223000-IEPIAO7W3",
+    "action": "create_product",
+    "user": "TestUser",
+    "metadata": {
+      "productId": "TEST001"
+    },
+    "timestamp": "2025-11-04T08:00:23.000Z"
+  },
+  {
+    "id": "LOG-1762243223001-7GP9MNEY3",
+    "action": "update_product",
+    "user": "TestUser",
+    "metadata": {
+      "productId": "TEST001",
+      "changes": {
+        "price": 25000,
+        "stock": 45
+      }
+    },
+    "timestamp": "2025-11-04T08:00:23.001Z"
+  },
+  {
+    "id": "LOG-1762243223003-ICI64BYPU",
+    "action": "update_stock",
+    "user": "TestUser",
+    "metadata": {
+      "productId": "TEST001",
+      "oldStock": 45,
+      "newStock": 40,
+      "change": -5
+    },
+    "timestamp": "2025-11-04T08:00:23.003Z"
+  },
+  {
+    "id": "LOG-1762243223005-UQ20FSBE3",
+    "action": "delete_product",
+    "user": "TestUser",
+    "metadata": {
+      "productId": "TEST001"
+    },
+    "timestamp": "2025-11-04T08:00:23.005Z"
+  }
+]
