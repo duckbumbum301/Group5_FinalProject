@@ -32,7 +32,7 @@ function renderRecipeCard(recipe) {
               <div style="display: flex; flex-wrap: wrap; gap: 8px;">
                 ${ingredients}
               </div>
-              <button class="btn btn--pri add-recipe-btn" style="width: 100%; margin-top: 16px; padding: 12px;">
+              <button class="btn btn--cart add-recipe-btn" style="width: 100%; margin-top: 16px;">
                 Thêm vào giỏ
               </button>
             </div>
@@ -167,7 +167,19 @@ document.addEventListener("DOMContentLoaded", () => {
         const card = e.target.closest(".recipe-card");
         const recipeName = card.getAttribute("data-recipe-name");
         if (recipeName) {
-          selectRecipe(recipeName);
+          // Set selected recipe into input and trigger add-all button to match homepage behavior
+          const input = document.getElementById("recipeInput");
+          if (input) {
+            input.value = recipeName;
+            const addAllBtn = document.getElementById("recipeAddAllBtn");
+            if (addAllBtn) {
+              addAllBtn.click();
+            } else {
+              // Fallback: keep previous behavior
+              const event = new Event("input", { bubbles: true });
+              input.dispatchEvent(event);
+            }
+          }
         }
       }
 

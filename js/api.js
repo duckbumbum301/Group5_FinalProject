@@ -48,15 +48,17 @@ export async function apiListProducts() {
     const response = await fetch("http://localhost:3000/products");
     if (!response.ok) {
       console.warn("Failed to fetch from API, falling back to static data");
-      return PRODUCTS;
+      return PRODUCTS.map(normalizeProduct);
     }
     const products = await response.json();
-    // Filter only active products for frontend
-    return products.filter((p) => p.status === "active" || !p.status);
+    // Filter only active products for frontend and normalize fields
+    return products
+      .filter((p) => p.status === "active" || !p.status)
+      .map(normalizeProduct);
   } catch (error) {
     console.error("Error loading products from API:", error);
     // Fallback to static data if API fails
-    return PRODUCTS;
+    return PRODUCTS.map(normalizeProduct);
   }
 }
 
@@ -64,13 +66,61 @@ export async function apiGetProductById(id) {
   try {
     const response = await fetch(`http://localhost:3000/products/${id}`);
     if (!response.ok) {
-      return PRODUCTS.find((p) => p.id === id) || null;
+      const found = PRODUCTS.find((p) => p.id === id) || null;
+      return found ? normalizeProduct(found) : null;
     }
-    return await response.json();
+    const raw = await response.json();
+    return normalizeProduct(raw);
   } catch (error) {
     console.error("Error fetching product:", error);
-    return PRODUCTS.find((p) => p.id === id) || null;
+    const found = PRODUCTS.find((p) => p.id === id) || null;
+    return found ? normalizeProduct(found) : null;
   }
+}
+
+// ---- Helpers: normalize product fields ----
+function stripDiacritics(str) {
+  try {
+    return String(str || "")
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .toLowerCase()
+      .trim();
+  } catch {
+    return String(str || "").toLowerCase().trim();
+  }
+}
+
+function normalizeCategorySlug(cat) {
+  const s = stripDiacritics(cat);
+  const known = [
+    "veg",
+    "fruit",
+    "meat",
+    "drink",
+    "dry",
+    "spice",
+    "household",
+    "sweet",
+  ];
+  if (known.includes(s)) return s;
+  if (s === "rau cu") return "veg";
+  if (s === "trai cay") return "fruit";
+  if (s === "thit ca") return "meat";
+  if (s === "nuoc giai khat" || s === "do uong") return "drink";
+  if (s === "do kho") return "dry";
+  if (s === "gia vi") return "spice";
+  if (s === "do gia dung") return "household";
+  if (s === "do ngot") return "sweet";
+  return s || "all";
+}
+
+function normalizeProduct(p) {
+  const catRaw = p.cat ?? p.category ?? "";
+  const subRaw = p.sub ?? p.subcategory ?? "";
+  const normCat = normalizeCategorySlug(catRaw);
+  const normSub = String(subRaw || "").trim() || "all";
+  return { ...p, cat: normCat, sub: normSub };
 }
 
 // ========= VOUCHERS (mock) =========

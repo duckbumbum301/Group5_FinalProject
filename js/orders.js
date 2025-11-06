@@ -287,8 +287,27 @@ export function openOrderSuccessModal(orderId) {
   };
   const overlay = document.getElementById('osOverlay');
   const btn = document.getElementById('osContinueBtn');
-  if (overlay) overlay.onclick = () => closeOrderSuccessModal();
-  if (btn) btn.onclick = goShopping;
+  // Không cho đóng bằng overlay và chặn sự kiện lan xuống nền
+  if (overlay) {
+    overlay.onclick = (e) => { e.preventDefault(); e.stopPropagation(); };
+    overlay.addEventListener('click', (e) => { e.preventDefault(); e.stopPropagation(); });
+    overlay.style.pointerEvents = '';
+  }
+  // Chống dính click: vô hiệu hoá nút trong ~1s đầu sau khi mở
+  if (btn) {
+    // Đặt lại handler chắc chắn chỉ điều hướng khi cho phép
+    btn.onclick = (e) => {
+      if (btn.disabled) { e.preventDefault(); e.stopPropagation(); return; }
+      goShopping();
+    };
+    // Khoá click tức thời, tránh click trước đó dội vào nút
+    btn.disabled = true;
+    btn.setAttribute('aria-disabled','true');
+    setTimeout(() => {
+      btn.disabled = false;
+      btn.removeAttribute('aria-disabled');
+    }, 1000);
+  }
   m.hidden = false;
 }
 

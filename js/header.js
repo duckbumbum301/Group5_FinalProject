@@ -1,6 +1,7 @@
 // js/header.js — Inject a consistent site header across pages
 import { bindMegaMenu } from './menu.js';
 import { getCart } from './cart.js';
+import { apiListProducts } from './api.js';
 
 function sumCartQty() {
   try {
@@ -16,9 +17,16 @@ function buildHeaderHTML() {
       <line x1="16.65" y1="16.65" x2="21" y2="21" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
     </svg>`;
 
-  // Use absolute link so it works from any page
+  // Chuẩn lấy từ trang chủ
   const homeHref = '/html/index.html';
-  const catalogHref = '/html/index.html#catalog';
+  const isHome = /\/html\/index\.html$/i.test(location.pathname);
+  const catalogHref = isHome ? '#catalog' : '/html/index.html#catalog';
+  const makeProductHref = (id) => {
+    const pid = String(id);
+    return isHome
+      ? `?product=${pid}#catalog`
+      : `/html/index.html?product=${pid}#catalog`;
+  };
 
   return `
     <div class="container header__row">
@@ -152,10 +160,9 @@ function buildHeaderHTML() {
                   </li>
                   <li>
                     <a
-                      href="${catalogHref}"
+                      href="${makeProductHref(210)}"
                       class="mega-menu__link"
-                      data-category="fruit"
-                      data-sub="gift"
+                      data-product-id="210"
                       >Giỏ quà</a
                     >
                   </li>
@@ -191,6 +198,23 @@ function buildHeaderHTML() {
                       data-category="meat"
                       data-sub="poultry"
                       >Gia cầm</a
+                    >
+                  </li>
+                  <!-- Sản phẩm cụ thể thuộc Gia cầm -->
+                  <li>
+                    <a
+                      href="${makeProductHref(320)}"
+                      class="mega-menu__link"
+                      data-product-id="320"
+                      >Ức gà</a
+                    >
+                  </li>
+                  <li>
+                    <a
+                      href="${makeProductHref(321)}"
+                      class="mega-menu__link"
+                      data-product-id="321"
+                      >Đùi gà</a
                     >
                   </li>
                   <li>
@@ -229,10 +253,9 @@ function buildHeaderHTML() {
                   </li>
                   <li>
                     <a
-                      href="${catalogHref}"
+                      href="${makeProductHref(400)}"
                       class="mega-menu__link"
-                      data-category="drink"
-                      data-sub="juice"
+                      data-product-id="400"
                       >Nước ép & sinh tố</a
                     >
                   </li>
@@ -470,13 +493,13 @@ function buildHeaderHTML() {
         <a href="recipes.html">Công thức</a>
         <a href="aboutus.html">Giới thiệu</a>
       </nav>
+      <div class="searchbox" role="search">
+        <input id="searchInput" class="searchbox__input" type="search" placeholder="Search" aria-label="Tìm kiếm sản phẩm" autocomplete="on" />
+        <button class="searchbox__btn" aria-label="Tìm">${iconSearch}</button>
+      </div>
       <div class="actions">
-        <div class="searchbox" role="search">
-          <input id="searchInput" class="searchbox__input" type="search" placeholder="Search" aria-label="Tìm kiếm sản phẩm" autocomplete="on" />
-          <button class="searchbox__btn" aria-label="Tìm">${iconSearch}</button>
-        </div>
-        <a class="btn btn--icon" id="accountBtn" href="account.html">Tài khoản</a>
-        <a class="btn btn--pri" id="cartOpenBtn" href="cart.html">Giỏ hàng <span id="cartBadge" class="badge">0</span></a>
+        <a class="btn btn--icon" id="accountBtn" href="../client/register.html">Tài khoản</a>
+        <button class="btn btn--pri" id="cartOpenBtn" aria-haspopup="dialog" aria-controls="cartDrawer">Giỏ hàng <span id="cartBadge" class="badge">0</span></button>
       </div>
     </div>`;
 }
@@ -485,13 +508,17 @@ function mountHeader() {
   const container = document.querySelector('#siteHeader') || document.querySelector('header.header');
   if (!container) return;
   container.innerHTML = buildHeaderHTML();
-  // Bind mega menu for hover/click interactions; on other pages, clicking link navigates to catalog in Home
-  bindMegaMenu((e) => {
-    const a = e.target.closest('.mega-menu__link');
-    if (!a) return;
-    // always navigate to homepage catalog to ensure consistent behavior
-    a.setAttribute('href', '/html/index.html#catalog');
+  const isHome = /\/html\/index\.html$/i.test(location.pathname);
+  // When header is fixed, add top padding to main equal to header height
+  requestAnimationFrame(() => {
+    try {
+      const h = container.offsetHeight || 60;
+      document.documentElement.style.setProperty('--header-h', h + 'px');
+      document.body.classList.add('has-fixed-header');
+    } catch {}
   });
+  // Bind mega menu hover/click interactions (links already point đúng bằng catalogHref)
+  bindMegaMenu();
   // Update cart badge immediately and on cart changes
   const badge = document.getElementById('cartBadge');
   if (badge) badge.textContent = String(sumCartQty());
@@ -499,6 +526,62 @@ function mountHeader() {
     const b = document.getElementById('cartBadge');
     if (b) b.textContent = String(sumCartQty());
   });
+
+  // Cart button: trên trang khác không có drawer, điều hướng về cart.html
+  const cartBtn = document.getElementById('cartOpenBtn');
+  if (cartBtn) {
+    cartBtn.addEventListener('click', (ev) => {
+      ev.preventDefault();
+      const url = new URL('/html/cart.html', location.href).toString();
+      location.href = url;
+    });
+  }
+
+  // Search: từ bất kỳ trang nào, điều hướng về trang sản phẩm
+  const searchBtn = document.querySelector('.searchbox__btn');
+  const searchInput = document.getElementById('searchInput');
+  let _productsCache = null;
+  const ensureProducts = async () => {
+    if (Array.isArray(_productsCache) && _productsCache.length) return _productsCache;
+    try { _productsCache = await apiListProducts(); } catch { _productsCache = []; }
+    return _productsCache;
+  };
+  const goHomeWithQuery = async (ev) => {
+    const q = (searchInput?.value || '').trim();
+    if (!isHome) {
+      ev?.preventDefault?.();
+      const url = new URL('/html/index.html#catalog', location.href);
+      // Nếu khớp chính xác tên sản phẩm, điều hướng bằng ?product=ID để hiển thị đúng 1 sản phẩm
+      if (q) {
+        const list = await ensureProducts();
+        const found = list.find(p => (p?.name || '').trim().toLowerCase() === q.toLowerCase());
+        if (found && found.id) url.searchParams.set('product', found.id);
+        else url.searchParams.set('q', q);
+      }
+      location.href = url.toString();
+    }
+    // Nếu đang ở trang chủ, để main.js xử lý lọc mà không reload
+  };
+  if (searchBtn) searchBtn.addEventListener('click', goHomeWithQuery);
+  if (searchInput) {
+    searchInput.addEventListener('keydown', (ev) => {
+      if (ev.key === 'Enter') goHomeWithQuery(ev);
+    });
+    // Khi chọn từ droplist trên trang khác, điều hướng ngay nếu tên khớp chính xác
+    if (!isHome) {
+      searchInput.addEventListener('input', async () => {
+        const q = (searchInput?.value || '').trim();
+        if (!q) return;
+        const list = await ensureProducts();
+        const found = list.find(p => (p?.name || '').trim().toLowerCase() === q.toLowerCase());
+        if (found && found.id) {
+          const url = new URL('/html/index.html#catalog', location.href);
+          url.searchParams.set('product', found.id);
+          location.href = url.toString();
+        }
+      });
+    }
+  }
 }
 
 document.addEventListener('DOMContentLoaded', mountHeader);

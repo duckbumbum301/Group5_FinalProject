@@ -267,16 +267,13 @@ async function renderCartPage(){
     const p = map[pid];
     if (!p) return '';
     const effPrice = getFlashEffectivePrice ? getFlashEffectivePrice(p) : p.price;
-    const priceHtml = (()=>{
-      const showOrig = Number(effPrice) !== Number(p.price);
-      const eff = `<span class="price price--sale">${money(effPrice)}</span>`;
-      const orig = showOrig ? ` <span class="price price--orig" style="text-decoration:line-through; opacity:.6;">${money(p.price)}</span>` : '';
-      return `${eff}${orig}`;
-    })();
+    const showOrig = Number(effPrice) !== Number(p.price);
+    const effText = `${money(effPrice)}`;
+    const origText = showOrig ? `${money(p.price)}` : '';
     const img = p.image || '../images/brand/LogoVVV.png';
     const isChecked = selectedIds.has(String(p.id)) ? 'checked' : '';
     return `
-      <div class="cart-line" data-id="${p.id}" style="display:grid; grid-template-columns: 28px 64px 180px 120px 140px 110px minmax(180px, 1fr); align-items:center; gap:12px; padding:12px 0; border-bottom:1px solid #eee;">
+      <div class="cart-line" data-id="${p.id}" style="display:grid; grid-template-columns: 28px 64px 180px 120px 110px 120px 110px minmax(180px, 1fr); align-items:center; gap:12px; padding:12px 0; border-bottom:1px solid #eee;">
         <div class="sel" style="text-align:center;">
           <input type="checkbox" data-action="select" ${isChecked} />
         </div>
@@ -284,7 +281,8 @@ async function renderCartPage(){
         <div class="meta" style="display:flex; flex-direction:column; gap:6px; justify-content:flex-start; align-items:flex-start;">
           <div class="cart-name" style="display:block; font-weight:600; text-align:left; font-size:14px; line-height:1.35; max-width:180px; white-space:normal; word-break:break-word; hyphens:auto; overflow:visible;">${p.name}</div>
         </div>
-        <div class="price-col" style="display:flex; align-items:center; justify-content:flex-end; padding-left:4px; white-space:nowrap;">${priceHtml}</div>
+        <div class="price-sale" style="text-align:right; font-weight:600; padding-left:4px; white-space:nowrap;">${effText}</div>
+        <div class="price-orig" style="text-align:right; color:#555; opacity:.6; white-space:nowrap; padding-right:12px; ${showOrig ? 'text-decoration:line-through;' : 'visibility:hidden;'}">${origText}</div>
         <div class="qty" style="display:flex; align-items:center; gap:6px; justify-content:center;">
           <button class="btn" data-action="dec" aria-label="Giảm" style="width:28px; height:28px; border-radius:8px; background:#f2f3f5;">−</button>
           <input id="qty-${p.id}" type="number" min="1" step="1" inputmode="numeric" pattern="[0-9]*" value="${qty}" data-action="qty" style="width:48px; text-align:center;" />

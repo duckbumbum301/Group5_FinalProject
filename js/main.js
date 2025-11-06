@@ -79,6 +79,7 @@ let favs = new Set();
 let filters = {
   q: "",
   qNorm: "",
+  pid: null,
   cat: "all",
   sub: "all",
   sort: "pop",
@@ -88,6 +89,9 @@ let filters = {
   nameTerm: "",
   nameTokens: [],
 };
+
+// Guard: tránh việc tham số URL (?q, ?product) ghi đè bộ lọc ngay sau khi người dùng đã tương tác
+let hasUserFilterInteraction = false;
 
 // infinite scroll
 let pageSize = 16;
@@ -387,9 +391,18 @@ let productMap = {};
 
 // ---------- Filtering + Render ----------
 function applyFilters() {
+  // Nếu đã chọn sản phẩm cụ thể (dropdown/header/search), bỏ qua các filter khác
+  if (filters.pid) {
+    const one = productIndex.find(
+      (p) => String(p.id) === String(filters.pid)
+    );
+    return one ? [one] : [];
+  }
+
   let items = productIndex.filter(
     (p) => p.stock && p.price <= filters.priceMax
   );
+
   if (
     (filters.nameOnly && filters.nameTerm) ||
     (filters.nameTokens && filters.nameTokens.length)
@@ -745,6 +758,25 @@ function handleMegaMenuLinkClick(e) {
   e.stopPropagation();
   const link = e.target.closest(".mega-menu__link");
   if (!link) return;
+  hasUserFilterInteraction = true;
+  // Nếu link trỏ tới sản phẩm cụ thể, mở modal trực tiếp
+  const pid = link.getAttribute("data-product-id");
+  if (pid) {
+    // Ép hiển thị đúng 1 sản phẩm trong grid, bất kể danh mục hiện tại
+    filters.pid = String(pid);
+    filters.q = "";
+    filters.qNorm = "";
+    filters.nameOnly = false;
+    filters.nameTerm = "";
+    filters.nameTokens = [];
+    filters.cat = "all";
+    filters.sub = "all";
+    renderWithPagination();
+    try { openProductModal(pid); } catch {}
+    closeMegaMenu();
+    document.getElementById("catalog")?.scrollIntoView({ behavior: "smooth" });
+    return;
+  }
   const catAttr = link.getAttribute("data-category") || "all";
   const subAttr = link.getAttribute("data-sub") || "all";
   filters.nameOnly = false;
@@ -814,13 +846,31 @@ function setupListeners() {
   const searchBtn = document.querySelector(".searchbox__btn");
   if (searchBtn) {
     searchBtn.addEventListener("click", () => {
+      hasUserFilterInteraction = true;
       const q = (searchInput?.value || "").trim();
-      filters.q = q;
-      filters.qNorm = normalizeVN(q);
-      filters.nameOnly = false;
-      filters.nameTerm = "";
-      filters.nameTokens = [];
-      renderWithPagination();
+      // Nếu khớp chính xác tên sản phẩm, hiển thị đúng 1 sản phẩm
+      const exact = allProducts.find(
+        (p) => normalizeVN(p.name) === normalizeVN(q)
+      );
+      if (exact) {
+        filters.pid = String(exact.id);
+        filters.q = "";
+        filters.qNorm = "";
+        filters.nameOnly = false;
+        filters.nameTerm = "";
+        filters.nameTokens = [];
+        filters.cat = "all";
+        filters.sub = "all";
+        renderWithPagination();
+      } else {
+        filters.pid = null;
+        filters.q = q;
+        filters.qNorm = normalizeVN(q);
+        filters.nameOnly = false;
+        filters.nameTerm = "";
+        filters.nameTokens = [];
+        renderWithPagination();
+      }
       document
         .getElementById("catalog")
         ?.scrollIntoView({ behavior: "smooth" });
@@ -834,15 +884,31 @@ function setupListeners() {
   searchInput.addEventListener(
     "input",
     debounce((e) => {
-      filters.q = (e.target.value || "").trim();
-      filters.qNorm = normalizeVN(filters.q);
-      filters.nameOnly = false;
-      filters.nameTerm = "";
-      filters.nameTokens = [];
+      hasUserFilterInteraction = true;
+      const q = (e.target.value || "").trim();
+      const exact = allProducts.find(
+        (p) => normalizeVN(p.name) === normalizeVN(q)
+      );
+      if (exact) {
+        filters.pid = String(exact.id);
+        filters.q = "";
+        filters.qNorm = "";
+        filters.nameOnly = false;
+        filters.nameTerm = "";
+        filters.nameTokens = [];
+      } else {
+        filters.pid = null;
+        filters.q = q;
+        filters.qNorm = normalizeVN(q);
+        filters.nameOnly = false;
+        filters.nameTerm = "";
+        filters.nameTokens = [];
+      }
       renderWithPagination();
     }, 200)
   );
   catFilter.addEventListener("change", (e) => {
+    hasUserFilterInteraction = true;
     const val = e.target.value;
     // Ánh xạ 9 giá trị dropdown sang (cat, sub)
     const MAP = {
@@ -865,10 +931,12 @@ function setupListeners() {
     renderWithPagination();
   });
   sortSelect.addEventListener("change", (e) => {
+    hasUserFilterInteraction = true;
     filters.sort = e.target.value;
     renderWithPagination();
   });
   favOnly.addEventListener("change", (e) => {
+    hasUserFilterInteraction = true;
     filters.favOnly = e.target.checked;
     filters.nameOnly = false;
     filters.nameTerm = "";
@@ -883,6 +951,7 @@ function setupListeners() {
     priceRange.style.setProperty("--progress", pct + "%");
   };
   priceRange.addEventListener("input", (e) => {
+    hasUserFilterInteraction = true;
     filters.priceMax = +e.target.value;
     priceValue.textContent = `≤ ${money(filters.priceMax)}`;
     updatePriceRangeFill();
@@ -1423,12 +1492,48 @@ function init() {
       .slice(0, 50)
       .map((p) => `<option value="${p.name}"></option>`)
       .join("");
+    // Ẩn các mục Mega Menu không có sản phẩm tương ứng
+    try { syncMegaMenuWithProducts(allProducts); } catch {}
     renderWithPagination();
+
+    // Nếu có tham số ?q= từ các trang khác, áp dụng bộ lọc và cuộn tới catalog
+    try {
+      const params = new URLSearchParams(location.search);
+      const qParam = params.get("q");
+      if (qParam && !hasUserFilterInteraction) {
+        searchInput.value = qParam;
+        filters.q = qParam.trim();
+        filters.qNorm = normalizeVN(filters.q);
+        filters.nameOnly = false;
+        filters.nameTerm = "";
+        filters.nameTokens = [];
+        renderWithPagination();
+        document.getElementById("catalog")?.scrollIntoView({ behavior: "smooth" });
+      }
+    } catch {}
 
     // If navigated with `?product=ID`, open product modal directly
     try {
-      const pidFromURL = new URLSearchParams(location.search).get("product");
-      if (pidFromURL) openProductModal(pidFromURL);
+      const pidFromSearch = new URLSearchParams(location.search).get("product");
+      const pidFromHash = (() => {
+        const hash = String(location.hash || "");
+        const q = hash.includes("?") ? hash.split("?")[1] : "";
+        return new URLSearchParams(q).get("product");
+      })();
+      const pidFromURL = pidFromSearch || pidFromHash;
+      if (pidFromURL && !hasUserFilterInteraction) {
+        try { openProductModal(pidFromURL); } catch {}
+        filters.pid = String(pidFromURL);
+        filters.q = "";
+        filters.qNorm = "";
+        filters.nameOnly = false;
+        filters.nameTerm = "";
+        filters.nameTokens = [];
+        filters.cat = "all";
+        filters.sub = "all";
+        renderWithPagination();
+        document.getElementById("catalog")?.scrollIntoView({ behavior: "smooth" });
+      }
     } catch {}
 
     // Seed reviews cho các sản phẩm chưa có đánh giá
@@ -1485,3 +1590,34 @@ document.addEventListener("fav:changed", () => {
   // Nếu đang bật lọc Yêu thích, re-render để phản ánh thay đổi
   if (filters.favOnly) renderWithPagination();
 });
+
+// Ẩn các liên kết Mega Menu không có sản phẩm tương ứng
+function syncMegaMenuWithProducts(list) {
+  const byCat = {};
+  for (const p of list || []) {
+    const c = (p.cat || "all").trim();
+    const s = (p.sub || "all").trim();
+    if (!byCat[c]) byCat[c] = new Set();
+    byCat[c].add(s);
+  }
+  document.querySelectorAll(".mega-menu__link").forEach((link) => {
+    // Bỏ qua các link sản phẩm trực tiếp
+    if (link.hasAttribute("data-product-id")) return;
+    const cat = link.getAttribute("data-category") || "all";
+    const sub = link.getAttribute("data-sub") || "all";
+    const hasAnyInCat = byCat[cat] && byCat[cat].size > 0;
+    const hasExact = byCat[cat] && byCat[cat].has(sub);
+    const shouldShow = sub === "all" ? hasAnyInCat : hasExact;
+    if (!shouldShow) {
+      const li = link.closest("li") || link;
+      li?.setAttribute("hidden", "");
+      li?.setAttribute("aria-hidden", "true");
+      link.setAttribute("aria-disabled", "true");
+      link.classList.add("is-disabled");
+      link.addEventListener("click", (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+      });
+    }
+  });
+}

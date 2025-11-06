@@ -4,8 +4,9 @@
       "id": "100",
       "name": "Rau muống (500g)",
       "category": "Rau củ",
-      "price": 13000,
-      "stock": 13,
+      "price": 15000,
+      "stock": 10,
+      "image": "../images/VEG/leaf/raumuong.jpg",
       "status": "active"
     },
     {
@@ -15,7 +16,7 @@
       "subcategory": "leaf",
       "price": 18000,
       "unit": "gói",
-      "stock": 48,
+      "stock": 47,
       "image": "../images/VEG/leaf/caibexanh.jpg",
       "description": "Cải bẹ xanh (500g) - Sản phẩm chất lượng cao",
       "popular": 101
@@ -75,7 +76,7 @@
       "subcategory": "root",
       "price": 18000,
       "unit": "gói",
-      "stock": 51,
+      "stock": 50,
       "image": "../images/VEG/root/Bí Đỏ.jpg",
       "description": "Bí Đỏ (500g) - Sản phẩm chất lượng cao",
       "popular": 94
@@ -111,7 +112,7 @@
       "subcategory": "fruit",
       "price": 15000,
       "unit": "gói",
-      "stock": 56,
+      "stock": 55,
       "image": "../images/VEG/fruit/ca-chua-bi-hop-300g_202504140839559740.jpg",
       "description": "Cà chua bi (500g) - Sản phẩm chất lượng cao",
       "popular": 93
@@ -159,7 +160,7 @@
       "subcategory": "herb",
       "price": 10000,
       "unit": "gói",
-      "stock": 45,
+      "stock": 44,
       "image": "../images/VEG/herb/hẹ lá.jpg",
       "description": "Hẹ Lá (100g) - Sản phẩm chất lượng cao",
       "popular": 50
@@ -183,7 +184,7 @@
       "subcategory": "cabbage",
       "price": 25000,
       "unit": "gói",
-      "stock": 52,
+      "stock": 50,
       "image": "../images/VEG/cabbage/cải bẹ dún.jpg",
       "description": "Cải bẹ dún (1kg) - Sản phẩm chất lượng cao",
       "popular": 80
@@ -231,7 +232,7 @@
       "subcategory": "organic",
       "price": 30000,
       "unit": "gói",
-      "stock": 56,
+      "stock": 53,
       "image": "../images/VEG/organic/xà lách thuỷ canh.jpg",
       "description": "Xà lách thuỷ tinh thuỷ canh - Sản phẩm chất lượng cao",
       "popular": 30
@@ -339,7 +340,7 @@
       "subcategory": "fish",
       "price": 55000,
       "unit": "gói",
-      "stock": 34,
+      "stock": 33,
       "image": "../images/MEAT/fish/ca-basa-cat-lat_202505260007155939.jpg",
       "description": "Cá basa phi lê (500g) - Sản phẩm chất lượng cao",
       "popular": 76
@@ -615,7 +616,7 @@
       "subcategory": "beans",
       "price": 25000,
       "unit": "gói",
-      "stock": 44,
+      "stock": 41,
       "image": "../images/DRY/beans/daudo.jpg",
       "description": "Đậu đỏ (500g) - Sản phẩm chất lượng cao",
       "popular": 11
@@ -699,7 +700,7 @@
       "subcategory": "sauce",
       "price": 25000,
       "unit": "gói",
-      "stock": 29,
+      "stock": 28,
       "image": "../images/SPICE/Sauce/nuocmam.jpg",
       "description": "Nước mắm Nam Ngư (500ml) - Sản phẩm chất lượng cao",
       "popular": 105
@@ -723,7 +724,7 @@
       "subcategory": "oil",
       "price": 55000,
       "unit": "gói",
-      "stock": 51,
+      "stock": 50,
       "image": "../images/SPICE/Oil/226995-thumb-moi_202411071422115102.jpg",
       "description": "Dầu ăn Neptune (1L) - Sản phẩm chất lượng cao",
       "popular": 67
@@ -735,7 +736,7 @@
       "subcategory": "powder",
       "price": 6000,
       "unit": "gói",
-      "stock": 22,
+      "stock": 21,
       "image": "../images/SPICE/Powder/muoi.jpg",
       "description": "Muối i-ốt (200g) - Sản phẩm chất lượng cao",
       "popular": 57
@@ -747,7 +748,7 @@
       "subcategory": "powder",
       "price": 12000,
       "unit": "gói",
-      "stock": 48,
+      "stock": 46,
       "image": "../images/SPICE/Powder/botngot.jpg",
       "description": "Bột ngọt Ajinomoto (200g) - Sản phẩm chất lượng cao",
       "popular": 57
@@ -819,7 +820,7 @@
       "subcategory": "personal",
       "price": 95000,
       "unit": "gói",
-      "stock": 16,
+      "stock": 13,
       "image": "../images/HOUSEHOLD/personal/nivea.jpg",
       "description": "Kem dưỡng da Nivea - Sản phẩm chất lượng cao",
       "popular": 97
@@ -915,7 +916,7 @@
       "subcategory": "snack",
       "price": 15000,
       "unit": "gói",
-      "stock": 58,
+      "stock": 57,
       "image": "../images/SWEET/SNACK/oreo.jpg",
       "description": "Bánh Oreo (133g) - Sản phẩm chất lượng cao",
       "popular": 19
@@ -963,7 +964,7 @@
       "subcategory": "candy",
       "price": 15000,
       "unit": "gói",
-      "stock": 34,
+      "stock": 33,
       "image": "../images/SWEET/CANDY/mentos.jpg",
       "description": "Kẹo bạc hà Mentos (38g) - Sản phẩm chất lượng cao",
       "popular": 92
@@ -2251,6 +2252,440 @@
       "updatedAt": "2025-11-05T08:29:13.659Z",
       "updated_at": "2025-11-05T08:29:13.659Z",
       "updated_by": "ilovetranduythanh@gmail.com"
+    },
+    {
+      "id": "ORD-20251106-182233-A28DC3",
+      "customerName": "Ngân",
+      "phone": "0938229502",
+      "address": "411 Bến Phú Lâm",
+      "email": "thanhnganxinhxeoo@gmail.com",
+      "user": {
+        "name": "Ngân",
+        "phone": "0938229502",
+        "address": "411 Bến Phú Lâm"
+      },
+      "slot": "2025-11-05_09:00-11:00",
+      "voucher": "FREESHIP",
+      "paymentMethod": "COD",
+      "note": "",
+      "status": "placed",
+      "delivery_status": "placed",
+      "payment_status": "pending",
+      "subtotal": 385000,
+      "shipping_fee": 0,
+      "discount": 0,
+      "totalAmount": 385000,
+      "total": 385000,
+      "items": {
+        "100": 1,
+        "101": 1,
+        "141": 1,
+        "150": 1,
+        "160": 3,
+        "621": 2,
+        "751": 2,
+        "821": 1
+      },
+      "created_at": "2025-11-06T11:22:33.947Z",
+      "tracking": [
+        {
+          "code": "placed",
+          "label": "Đã đặt hàng",
+          "at": "2025-11-06T11:22:33.947Z"
+        },
+        {
+          "code": "preparing",
+          "label": "Đang chuẩn bị",
+          "at": null
+        },
+        {
+          "code": "ready",
+          "label": "Sẵn sàng giao",
+          "at": null
+        },
+        {
+          "code": "pickup",
+          "label": "Shipper đã nhận",
+          "at": null
+        },
+        {
+          "code": "delivering",
+          "label": "Đang giao",
+          "at": null
+        },
+        {
+          "code": "delivered",
+          "label": "Giao thành công",
+          "at": null
+        }
+      ]
+    },
+    {
+      "id": "ORD-20251106-190737-21U9RG",
+      "customerName": "Ngân",
+      "phone": "0938229502",
+      "address": "411 Bến Phú Lâm",
+      "email": "thanhnganxinhxeoo@gmail.com",
+      "user": {
+        "name": "Ngân",
+        "phone": "0938229502",
+        "address": "411 Bến Phú Lâm"
+      },
+      "slot": "2025-11-05_09:00-11:00",
+      "voucher": "",
+      "paymentMethod": "COD",
+      "note": "",
+      "status": "placed",
+      "delivery_status": "placed",
+      "payment_status": "pending",
+      "subtotal": 266000,
+      "shipping_fee": 20000,
+      "discount": 0,
+      "totalAmount": 286000,
+      "total": 286000,
+      "items": {
+        "100": 2,
+        "310": 1,
+        "600": 1,
+        "610": 1,
+        "620": 1,
+        "751": 1
+      },
+      "created_at": "2025-11-06T12:07:37.559Z",
+      "tracking": [
+        {
+          "code": "placed",
+          "label": "Đã đặt hàng",
+          "at": "2025-11-06T12:07:37.559Z"
+        },
+        {
+          "code": "preparing",
+          "label": "Đang chuẩn bị",
+          "at": null
+        },
+        {
+          "code": "ready",
+          "label": "Sẵn sàng giao",
+          "at": null
+        },
+        {
+          "code": "pickup",
+          "label": "Shipper đã nhận",
+          "at": null
+        },
+        {
+          "code": "delivering",
+          "label": "Đang giao",
+          "at": null
+        },
+        {
+          "code": "delivered",
+          "label": "Giao thành công",
+          "at": null
+        }
+      ]
+    },
+    {
+      "id": "ORD-20251106-190750-NUBE4P",
+      "customerName": "Ngân",
+      "phone": "0938229502",
+      "address": "411 Bến Phú Lâm",
+      "email": "thanhnganxinhxeoo@gmail.com",
+      "user": {
+        "name": "Ngân",
+        "phone": "0938229502",
+        "address": "411 Bến Phú Lâm"
+      },
+      "slot": "2025-11-05_09:00-11:00",
+      "voucher": "",
+      "paymentMethod": "COD",
+      "note": "",
+      "status": "placed",
+      "delivery_status": "placed",
+      "payment_status": "pending",
+      "subtotal": 25000,
+      "shipping_fee": 20000,
+      "discount": 0,
+      "totalAmount": 45000,
+      "total": 45000,
+      "items": {
+        "521": 1
+      },
+      "created_at": "2025-11-06T12:07:50.234Z",
+      "tracking": [
+        {
+          "code": "placed",
+          "label": "Đã đặt hàng",
+          "at": "2025-11-06T12:07:50.234Z"
+        },
+        {
+          "code": "preparing",
+          "label": "Đang chuẩn bị",
+          "at": null
+        },
+        {
+          "code": "ready",
+          "label": "Sẵn sàng giao",
+          "at": null
+        },
+        {
+          "code": "pickup",
+          "label": "Shipper đã nhận",
+          "at": null
+        },
+        {
+          "code": "delivering",
+          "label": "Đang giao",
+          "at": null
+        },
+        {
+          "code": "delivered",
+          "label": "Giao thành công",
+          "at": null
+        }
+      ]
+    },
+    {
+      "id": "ORD-20251106-190955-E6KD9J",
+      "customerName": "Ngân",
+      "phone": "0938229502",
+      "address": "411 Bến Phú Lâm",
+      "email": "thanhnganxinhxeoo@gmail.com",
+      "user": {
+        "name": "Ngân",
+        "phone": "0938229502",
+        "address": "411 Bến Phú Lâm"
+      },
+      "slot": "2025-11-05_09:00-11:00",
+      "voucher": "",
+      "paymentMethod": "COD",
+      "note": "",
+      "status": "placed",
+      "delivery_status": "placed",
+      "payment_status": "pending",
+      "subtotal": 15000,
+      "shipping_fee": 20000,
+      "discount": 0,
+      "totalAmount": 35000,
+      "total": 35000,
+      "items": {
+        "122": 1
+      },
+      "created_at": "2025-11-06T12:09:55.373Z",
+      "tracking": [
+        {
+          "code": "placed",
+          "label": "Đã đặt hàng",
+          "at": "2025-11-06T12:09:55.373Z"
+        },
+        {
+          "code": "preparing",
+          "label": "Đang chuẩn bị",
+          "at": null
+        },
+        {
+          "code": "ready",
+          "label": "Sẵn sàng giao",
+          "at": null
+        },
+        {
+          "code": "pickup",
+          "label": "Shipper đã nhận",
+          "at": null
+        },
+        {
+          "code": "delivering",
+          "label": "Đang giao",
+          "at": null
+        },
+        {
+          "code": "delivered",
+          "label": "Giao thành công",
+          "at": null
+        }
+      ]
+    },
+    {
+      "id": "ORD-20251106-191028-A48O0A",
+      "customerName": "Ngân",
+      "phone": "0938229502",
+      "address": "411 Bến Phú Lâm",
+      "email": "thanhnganxinhxeoo@gmail.com",
+      "user": {
+        "name": "Ngân",
+        "phone": "0938229502",
+        "address": "411 Bến Phú Lâm"
+      },
+      "slot": "2025-11-05_09:00-11:00",
+      "voucher": "",
+      "paymentMethod": "COD",
+      "note": "",
+      "status": "placed",
+      "delivery_status": "placed",
+      "payment_status": "pending",
+      "subtotal": 33000,
+      "shipping_fee": 20000,
+      "discount": 0,
+      "totalAmount": 53000,
+      "total": 53000,
+      "items": {
+        "112": 1,
+        "800": 1
+      },
+      "created_at": "2025-11-06T12:10:28.339Z",
+      "tracking": [
+        {
+          "code": "placed",
+          "label": "Đã đặt hàng",
+          "at": "2025-11-06T12:10:28.339Z"
+        },
+        {
+          "code": "preparing",
+          "label": "Đang chuẩn bị",
+          "at": null
+        },
+        {
+          "code": "ready",
+          "label": "Sẵn sàng giao",
+          "at": null
+        },
+        {
+          "code": "pickup",
+          "label": "Shipper đã nhận",
+          "at": null
+        },
+        {
+          "code": "delivering",
+          "label": "Đang giao",
+          "at": null
+        },
+        {
+          "code": "delivered",
+          "label": "Giao thành công",
+          "at": null
+        }
+      ]
+    },
+    {
+      "id": "ORD-20251106-191229-C6UZFY",
+      "customerName": "Ngân",
+      "phone": "0938229502",
+      "address": "411 Bến Phú Lâm",
+      "email": "thanhnganxinhxeoo@gmail.com",
+      "user": {
+        "name": "Ngân",
+        "phone": "0938229502",
+        "address": "411 Bến Phú Lâm"
+      },
+      "slot": "2025-11-05_09:00-11:00",
+      "voucher": "",
+      "paymentMethod": "COD",
+      "note": "",
+      "status": "placed",
+      "delivery_status": "placed",
+      "payment_status": "pending",
+      "subtotal": 25000,
+      "shipping_fee": 20000,
+      "discount": 0,
+      "totalAmount": 45000,
+      "total": 45000,
+      "items": {
+        "521": 1
+      },
+      "created_at": "2025-11-06T12:12:29.570Z",
+      "tracking": [
+        {
+          "code": "placed",
+          "label": "Đã đặt hàng",
+          "at": "2025-11-06T12:12:29.570Z"
+        },
+        {
+          "code": "preparing",
+          "label": "Đang chuẩn bị",
+          "at": null
+        },
+        {
+          "code": "ready",
+          "label": "Sẵn sàng giao",
+          "at": null
+        },
+        {
+          "code": "pickup",
+          "label": "Shipper đã nhận",
+          "at": null
+        },
+        {
+          "code": "delivering",
+          "label": "Đang giao",
+          "at": null
+        },
+        {
+          "code": "delivered",
+          "label": "Giao thành công",
+          "at": null
+        }
+      ]
+    },
+    {
+      "id": "ORD-20251106-191426-63WV2M",
+      "customerName": "Ngân",
+      "phone": "0938229502",
+      "address": "411 Bến Phú Lâm",
+      "email": "thanhnganxinhxeoo@gmail.com",
+      "user": {
+        "name": "Ngân",
+        "phone": "0938229502",
+        "address": "411 Bến Phú Lâm"
+      },
+      "slot": "2025-11-05_09:00-11:00",
+      "voucher": "",
+      "paymentMethod": "COD",
+      "note": "",
+      "status": "placed",
+      "delivery_status": "placed",
+      "payment_status": "pending",
+      "subtotal": 50000,
+      "shipping_fee": 20000,
+      "discount": 0,
+      "totalAmount": 70000,
+      "total": 70000,
+      "items": {
+        "150": 1,
+        "521": 1
+      },
+      "created_at": "2025-11-06T12:14:26.386Z",
+      "tracking": [
+        {
+          "code": "placed",
+          "label": "Đã đặt hàng",
+          "at": "2025-11-06T12:14:26.386Z"
+        },
+        {
+          "code": "preparing",
+          "label": "Đang chuẩn bị",
+          "at": null
+        },
+        {
+          "code": "ready",
+          "label": "Sẵn sàng giao",
+          "at": null
+        },
+        {
+          "code": "pickup",
+          "label": "Shipper đã nhận",
+          "at": null
+        },
+        {
+          "code": "delivering",
+          "label": "Đang giao",
+          "at": null
+        },
+        {
+          "code": "delivered",
+          "label": "Giao thành công",
+          "at": null
+        }
+      ]
     }
   ],
   "users": [
@@ -2582,6 +3017,176 @@
       "who": "0372641942@gmail.com",
       "metadata": {},
       "timestamp": "2025-11-05T08:39:52.834Z"
+    },
+    {
+      "id": "1762428153874r4noi",
+      "action": "profile.update",
+      "who": "thanhnganxinhxeoo@gmail.com",
+      "metadata": {
+        "userId": "1762349671563",
+        "changes": {
+          "name": "Ngân",
+          "address": "411 Bến Phú Lâm"
+        }
+      },
+      "timestamp": "2025-11-06T11:22:33.874Z"
+    },
+    {
+      "id": "1762428153979dr2x1",
+      "action": "order.create",
+      "who": "thanhnganxinhxeoo@gmail.com",
+      "metadata": {
+        "orderId": "ORD-20251106-182233-A28DC3",
+        "total": 385000
+      },
+      "timestamp": "2025-11-06T11:22:33.979Z"
+    },
+    {
+      "id": "1762428202188ibh0o",
+      "action": "user.login",
+      "who": "thanhnganxinhxeoo@gmail.com",
+      "metadata": {
+        "userId": "1762349671563"
+      },
+      "timestamp": "2025-11-06T11:23:22.188Z"
+    },
+    {
+      "id": "1762430857536dqicd",
+      "action": "profile.update",
+      "who": "thanhnganxinhxeoo@gmail.com",
+      "metadata": {
+        "userId": "1762349671563",
+        "changes": {
+          "name": "Ngân",
+          "address": "411 Bến Phú Lâm"
+        }
+      },
+      "timestamp": "2025-11-06T12:07:37.536Z"
+    },
+    {
+      "id": "17624308575896nb2n",
+      "action": "order.create",
+      "who": "thanhnganxinhxeoo@gmail.com",
+      "metadata": {
+        "orderId": "ORD-20251106-190737-21U9RG",
+        "total": 286000
+      },
+      "timestamp": "2025-11-06T12:07:37.589Z"
+    },
+    {
+      "id": "17624308701998f8uk",
+      "action": "profile.update",
+      "who": "thanhnganxinhxeoo@gmail.com",
+      "metadata": {
+        "userId": "1762349671563",
+        "changes": {
+          "name": "Ngân",
+          "address": "411 Bến Phú Lâm"
+        }
+      },
+      "timestamp": "2025-11-06T12:07:50.199Z"
+    },
+    {
+      "id": "17624308703206a4ih",
+      "action": "order.create",
+      "who": "thanhnganxinhxeoo@gmail.com",
+      "metadata": {
+        "orderId": "ORD-20251106-190750-NUBE4P",
+        "total": 45000
+      },
+      "timestamp": "2025-11-06T12:07:50.320Z"
+    },
+    {
+      "id": "1762430995340v1tjb",
+      "action": "profile.update",
+      "who": "thanhnganxinhxeoo@gmail.com",
+      "metadata": {
+        "userId": "1762349671563",
+        "changes": {
+          "name": "Ngân",
+          "address": "411 Bến Phú Lâm"
+        }
+      },
+      "timestamp": "2025-11-06T12:09:55.340Z"
+    },
+    {
+      "id": "176243099539939qs8",
+      "action": "order.create",
+      "who": "thanhnganxinhxeoo@gmail.com",
+      "metadata": {
+        "orderId": "ORD-20251106-190955-E6KD9J",
+        "total": 35000
+      },
+      "timestamp": "2025-11-06T12:09:55.399Z"
+    },
+    {
+      "id": "1762431028311pgcy6",
+      "action": "profile.update",
+      "who": "thanhnganxinhxeoo@gmail.com",
+      "metadata": {
+        "userId": "1762349671563",
+        "changes": {
+          "name": "Ngân",
+          "address": "411 Bến Phú Lâm"
+        }
+      },
+      "timestamp": "2025-11-06T12:10:28.311Z"
+    },
+    {
+      "id": "17624310283766g0lb",
+      "action": "order.create",
+      "who": "thanhnganxinhxeoo@gmail.com",
+      "metadata": {
+        "orderId": "ORD-20251106-191028-A48O0A",
+        "total": 53000
+      },
+      "timestamp": "2025-11-06T12:10:28.376Z"
+    },
+    {
+      "id": "17624311495433x6ni",
+      "action": "profile.update",
+      "who": "thanhnganxinhxeoo@gmail.com",
+      "metadata": {
+        "userId": "1762349671563",
+        "changes": {
+          "name": "Ngân",
+          "address": "411 Bến Phú Lâm"
+        }
+      },
+      "timestamp": "2025-11-06T12:12:29.543Z"
+    },
+    {
+      "id": "1762431149593yo9zs",
+      "action": "order.create",
+      "who": "thanhnganxinhxeoo@gmail.com",
+      "metadata": {
+        "orderId": "ORD-20251106-191229-C6UZFY",
+        "total": 45000
+      },
+      "timestamp": "2025-11-06T12:12:29.593Z"
+    },
+    {
+      "id": "1762431266352ut3ul",
+      "action": "profile.update",
+      "who": "thanhnganxinhxeoo@gmail.com",
+      "metadata": {
+        "userId": "1762349671563",
+        "changes": {
+          "name": "Ngân",
+          "address": "411 Bến Phú Lâm"
+        }
+      },
+      "timestamp": "2025-11-06T12:14:26.352Z"
+    },
+    {
+      "id": "1762431266415f46us",
+      "action": "order.create",
+      "who": "thanhnganxinhxeoo@gmail.com",
+      "metadata": {
+        "orderId": "ORD-20251106-191426-63WV2M",
+        "total": 70000
+      },
+      "timestamp": "2025-11-06T12:14:26.415Z"
     }
   ]
 }
