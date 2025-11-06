@@ -249,6 +249,54 @@ export function closeOrderConfirmModal() {
   m.hidden = true;
 }
 
+// ====== Order Success Modal ======
+function ensureOrderSuccessModal() {
+  let m = document.getElementById('orderSuccessModal');
+  if (!m) {
+    m = document.createElement('section');
+    m.id = 'orderSuccessModal';
+    m.className = 'modal';
+    m.hidden = true;
+    m.innerHTML = `
+      <div id="osOverlay" class="modal__overlay"></div>
+      <div class="modal__panel" role="dialog" aria-modal="true">
+        <div class="modal__body" style="text-align:center; padding:24px 20px;">
+          <div class="os-icon" aria-hidden="true" style="width:80px; height:80px; border-radius:999px; margin:0 auto 16px; display:flex; align-items:center; justify-content:center; background:#65a30d; box-shadow:0 6px 16px rgba(101,163,13,.35);">
+            <svg viewBox="0 0 24 24" width="44" height="44" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="12" cy="12" r="0" fill="#fff"></circle>
+              <path d="M9.5 16.2l-3.2-3.2a1 1 0 10-1.4 1.4l4 4a1 1 0 001.4 0l8-8a1 1 0 10-1.4-1.4l-7.4 7.4z" fill="#fff"/>
+            </svg>
+          </div>
+          <div class="os-title" style="font-weight:800; font-size:20px; color:#0f172a; margin-bottom:16px;">Bạn đã đặt hàng thành công</div>
+          <div class="os-actions" style="margin-top:8px;">
+            <button id="osContinueBtn" class="btn btn--pri">Tiếp tục mua sắm</button>
+          </div>
+        </div>
+      </div>`;
+    document.body.appendChild(m);
+  }
+  return m;
+}
+
+export function openOrderSuccessModal(orderId) {
+  const m = ensureOrderSuccessModal();
+  // Bind close behaviors
+  const goShopping = () => {
+    const target = location.pathname.endsWith('/index.html') ? '#catalog' : '../html/index.html#catalog';
+    location.href = new URL(target, location.href).toString();
+  };
+  const overlay = document.getElementById('osOverlay');
+  const btn = document.getElementById('osContinueBtn');
+  if (overlay) overlay.onclick = () => closeOrderSuccessModal();
+  if (btn) btn.onclick = goShopping;
+  m.hidden = false;
+}
+
+export function closeOrderSuccessModal() {
+  const m = ensureOrderSuccessModal();
+  m.hidden = true;
+}
+
 function printOrderDetails(ord) {
   const bodyEl = document.getElementById('ocBody');
   const inner = bodyEl ? bodyEl.innerHTML : '';

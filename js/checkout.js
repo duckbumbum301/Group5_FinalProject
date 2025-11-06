@@ -288,6 +288,10 @@ export async function openCheckoutModal(selected) {
             detail: { orderId: newOrder.id },
           })
         );
+        try {
+          const mod = await import("./orders.js");
+          mod.openOrderSuccessModal(newOrder.id);
+        } catch {}
       }
     } catch (err) {
       const msg =
@@ -624,6 +628,10 @@ function openQRModal(order) {
     document.dispatchEvent(
       new CustomEvent("order:confirmed", { detail: { orderId: id } })
     );
+    try {
+      const mod = await import("./orders.js");
+      mod.openOrderSuccessModal(id);
+    } catch {}
   };
   const overlay = document.getElementById("qrOverlay");
   const closeBtn = document.getElementById("qrClose");

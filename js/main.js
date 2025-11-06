@@ -496,7 +496,7 @@ export async function openProductModal(productId, opts = {}) {
       : getFlashEffectivePrice
       ? getFlashEffectivePrice(p)
       : p.price;
-  $("#pmPrice", modal).textContent = money(eff) + " • " + p.unit;
+  $("#pmPrice", modal).textContent = money(eff);
   $("#pmDesc", modal).textContent =
     "Sản phẩm tươi ngon, giao nhanh trong ngày. (Mô tả demo)";
   const pmThumb = $("#pmThumb", modal);
@@ -512,7 +512,6 @@ export async function openProductModal(productId, opts = {}) {
     addToCart(p.id, qty);
     showToast(`${p.name} (+${qty}) đã vào giỏ.`);
     closeProductModal();
-    openCart();
   };
   // Render phần đánh giá từ dữ liệu đã lưu
   try {
@@ -552,12 +551,16 @@ function renderPmReviews(productId) {
   const modal = ensureProductModal();
   const cont = $("#pmReviews", modal);
   if (!cont) return;
-  const all = (window.VVVReviews?.Local.getAll() || []).filter(
+  let all = (window.VVVReviews?.Local.getAll() || []).filter(
     (r) => String(r.productId) === String(productId)
   );
   if (!all.length) {
-    cont.innerHTML = `<div class="pm-reviews__empty">Chưa có đánh giá cho sản phẩm này.</div>`;
-    return;
+    const sampleComments = [
+      "Giá tốt, sản phẩm đúng mô tả.",
+      "Đóng gói cẩn thận, giao nhanh.",
+      "Tươi ngon, rất hài lòng.",
+    ];
+    all = sampleComments.map((c, i) => ({ rating: 4 - (i % 2), comment: c }));
   }
   const avg = Math.round(
     all.reduce((s, r) => s + (Number(r.rating) || 0), 0) / all.length
@@ -997,7 +1000,7 @@ function setupListeners() {
     try {
       const mod = await import("./orders.js");
       const id = e?.detail?.orderId;
-      mod.openOrderConfirmModal(id);
+      mod.openOrderSuccessModal(id);
     } catch {}
   });
 
@@ -1172,6 +1175,9 @@ function setupListeners() {
     const action = btn.dataset.action;
     if (!pid) return;
     if (action === "add") {
+      // Ngăn mọi handler khác chạy trùng trên cùng sự kiện để tránh cộng 2
+      e.preventDefault();
+      e.stopImmediatePropagation();
       const product = productMap[pid];
       showToast(`${product?.name || "Sản phẩm"} đã được thêm vào giỏ hàng.`);
       addToCart(pid, 1);

@@ -123,7 +123,12 @@ async function renderSlot(slotKey){
   const sel = getSelectionFor(slot.key, all);
   const saleMap = getSaleMapForSlot(slot.key, sel);
   const withSale = sel.map(p => ({ ...p, salePercent: saleMap[p.id] || 0 }));
-  const gridEl = document.getElementById('flashGrid') || document.getElementById('productGrid');
+  // Chỉ gắn handler lên lưới Flash Sale, tránh trùng với Catalog (#productGrid)
+  const gridEl = document.getElementById('flashGrid');
+  if (!gridEl) {
+    // Nếu không có flashGrid trên trang hiện tại thì bỏ qua để tránh double-binding
+    return;
+  }
   renderProductsInto(gridEl, withSale, favs);
   // gắn sự kiện Add/Fav riêng cho trang này (đảm bảo chỉ gắn một lần)
   if (gridEl._flashHandler) gridEl.removeEventListener('click', gridEl._flashHandler);
