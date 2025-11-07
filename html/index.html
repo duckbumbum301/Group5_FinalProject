@@ -876,6 +876,20 @@
     </footer>
     <script src="../client/auth.js"></script>
     <script src="../assets/js/reviews.js"></script>
+    <script>
+      // Push banner down equal to fixed header height
+      (function(){
+        const hdr = document.querySelector('header.header');
+        if(!hdr) return;
+        requestAnimationFrame(() => {
+          try {
+            const h = hdr.offsetHeight || 60;
+            document.documentElement.style.setProperty('--header-h', h + 'px');
+            document.body.classList.add('has-fixed-header');
+          } catch {}
+        });
+      })();
+    </script>
     <script type="module" src="../js/main.js?v=flowfix1"></script>
     <script type="module" src="../js/flash.js"></script>
   </body>
