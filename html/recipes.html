@@ -44,10 +44,10 @@
             "
           >
             <h1
+              class="gradient-title"
               style="
                 font-size: 56px;
                 font-weight: 800;
-                color: #065f46;
                 margin: 0 0 24px;
                 line-height: 1.2;
               "
@@ -96,15 +96,15 @@
       </section>
 
       <!-- Main Recipe Assistant -->
-      <section class="section" style="background: #f9fafb">
+<section class="section" style="background: #effeee">
         <div class="container">
           <div style="max-width: 900px; margin: 0 auto">
             <div class="title" style="margin-bottom: 32px">
               <h2
+                class="gradient-title"
                 style="
                   font-size: 36px;
                   font-weight: 800;
-                  color: #065f46;
                   margin: 0;
                   text-align: center;
                 "
@@ -129,6 +129,7 @@
                   gap: 12px;
                   flex-wrap: wrap;
                   align-items: flex-start;
+                  justify-content: center;
                   margin-bottom: 20px;
                 "
               >
@@ -139,7 +140,7 @@
                   placeholder="Nhập món: canh bí đỏ, canh chua cá, rau muống xào..."
                   aria-label="Tên món ăn"
                   style="
-                    flex: 1;
+                    flex: 0 1 520px;
                     min-width: 250px;
                     font-size: 18px;
                     padding: 16px;
@@ -177,10 +178,10 @@
         <div class="container">
           <div style="text-align: center; margin-bottom: 60px">
             <h2
+              class="gradient-title"
               style="
                 font-size: 36px;
                 font-weight: 800;
-                color: #065f46;
                 margin: 0 0 16px;
               "
             >
@@ -351,16 +352,16 @@
       <!-- All Recipes Grid -->
       <section
         class="section"
-        style="background: linear-gradient(135deg, #f0f9f4 0%, #ffffff 100%)"
+        style="background: #effeee"
         id="allRecipesSection"
       >
         <div class="container">
           <div style="text-align: center; margin-bottom: 60px">
             <h2
+              class="gradient-title"
               style="
                 font-size: 36px;
                 font-weight: 800;
-                color: #065f46;
                 margin: 0 0 16px;
               "
             >
@@ -471,10 +472,10 @@
             </div>
             <div>
               <h2
+                class="gradient-title"
                 style="
                   font-size: 36px;
                   font-weight: 800;
-                  color: #065f46;
                   margin: 0 0 24px;
                 "
               >
@@ -521,13 +522,13 @@
       <section
         class="section"
         style="
-          background: linear-gradient(135deg, #065f46 0%, #16a34a 100%);
+          background: linear-gradient(90deg, var(--green), var(--green-2));
           color: white;
           text-align: center;
         "
       >
         <div class="container" style="max-width: 800px">
-          <h2 style="font-size: 42px; font-weight: 800; margin: 0 0 24px">
+          <h2 class="gradient-title gradient-title--pastel" style="font-size: 42px; font-weight: 800; margin: 0 0 24px">
             Sẵn sàng bắt đầu nấu ăn?
           </h2>
           <p style="font-size: 20px; margin: 0 0 40px; opacity: 0.95">
@@ -572,23 +573,24 @@
         </div>
       </section>
     </main>
-    <footer class="site-footer">
+    <footer class="site-footer" style="background:url('../images/brand/footer.png') center/cover no-repeat; color:#fff7e4;">
       <div class="container">
         <div class="sf-grid">
           <div class="sf-cols">
             <div class="sf-col">
               <h4>Trang chủ</h4>
               <ul>
-                <li><a href="index.html#catalog">Sản phẩm</a></li>
-                <li><a href="index.html#cart">Giỏ hàng</a></li>
+                <li><a href="#catalog">Sản phẩm</a></li>
+                <li><a href="#flashsale">Flash Sale</a></li>
+                <li><a href="#cart">Giỏ hàng</a></li>
               </ul>
             </div>
             <div class="sf-col">
               <h4>Về Vựa Vui Vẻ</h4>
               <ul>
                 <li><a href="aboutus.html">Câu chuyện chúng tôi</a></li>
-                <li><a href="index.html#values">Giá trị mang đến</a></li>
-                <li><a href="index.html#mission">Sứ mệnh</a></li>
+                <li><a href="#values">Giá trị mang đến</a></li>
+                <li><a href="#mission">Sứ mệnh</a></li>
               </ul>
             </div>
             <div class="sf-col">
@@ -601,23 +603,14 @@
             <div class="sf-col">
               <h4>Liên hệ</h4>
               <ul>
-                <li>Hotline</li>
-                <li>Địa chỉ</li>
+                <li>Hotline: 012345678</li>
+                <li>Địa chỉ liên hệ: Vựa Vui Vẻ</li>
               </ul>
             </div>
-            <div class="sf-legal">
-              Điều khoản dịch vụ | Chính sách giao hàng | Chính sách đổi trả
-            </div>
+            <div class="sf-legal">Điều khoản dịch vụ | Chính sách giao hàng | Chính sách đổi trả</div>
           </div>
           <div class="sf-brand">
-            <img
-              class="sf-logo"
-              src="../images/brand/LogoVVV.png"
-              alt="Vựa Vui Vẻ"
-            />
             <div class="sf-contact">
-              <div>Hotline: <span>012345678</span></div>
-              <div>Địa chỉ liên hệ: <span>Vựa Vui Vẻ</span></div>
               <div>© <span id="year"></span> vựa vui vẻ</div>
             </div>
             <div class="sf-social">
@@ -640,7 +633,7 @@
     >
       <div class="drawer__panel">
         <div class="drawer__head">
-          <h3>Giỏ hàng</h3>
+          <h3 class="gradient-title">Giỏ hàng</h3>
           <button
             class="btn btn--icon"
             id="cartCloseBtn"
@@ -686,7 +679,7 @@
     >
       <div class="drawer__panel">
         <div class="drawer__head">
-          <h3 id="accountTitle">Tài khoản</h3>
+          <h3 id="accountTitle" class="gradient-title">Tài khoản</h3>
           <button class="btn btn--icon" id="accountCloseBtn" aria-label="Đóng">
             Đóng
           </button>
@@ -938,7 +931,7 @@
               />
             </div>
             <div style="padding: 24px; display: flex; flex-direction: column; flex: 1;">
-              <h3 style="font-size: 22px; font-weight: 700; color: #065f46; margin: 0 0 16px;">${
+              <h3 class="gradient-title" style="font-size: 22px; font-weight: 700; margin: 0 0 16px; text-align: center;">${
                 recipe.name
               }</h3>
               <div class="ingredients"

@@ -5,6 +5,28 @@
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <title>Đăng nhập — Vựa Vui Vẻ</title>
     <link rel="stylesheet" href="styles.css" />
+    <style>
+      /* Chỉ áp dụng cho tiêu đề trang Login */
+      @font-face{
+        font-family:'Blenda Script';
+        src:url('../assets/font/1FTV-blenda-script.otf') format('opentype');
+        font-weight:400; font-style:normal; font-display:swap;
+      }
+      .auth-title{
+        font-family:'Blenda Script', cursive;
+        font-weight:800;
+        font-size:34px;
+        color:#2f7f31; /* fallback nếu không hỗ trợ gradient */
+        margin:0;
+      }
+      @supports (-webkit-background-clip: text) {
+        .auth-title{
+          background: linear-gradient(180deg, #1f5a27 0%, #66c372 100%);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+        }
+      }
+    </style>
     <!-- Cache busting + no-cache for go live -->
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
     <meta http-equiv="Pragma" content="no-cache" />
@@ -14,7 +36,7 @@
     <div class="container container--wide container--right container--bare">
       <!-- Trang: Login -->
       <div class="row">
-        <h1 align="center">Đăng nhập</h1>
+        <h1 align="center" class="auth-title">Đăng nhập</h1>
       </div>
       <p class="muted">
         Nhập <strong>Tài khoản</strong> và <strong>Mật khẩu</strong> để tiếp tục.

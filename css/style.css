@@ -2,7 +2,7 @@
 :root
 {
   --green:#4c9f3f;--green-2:#2f7f31;--green-600:#4c9f3f;--orange:#ff8a00;--text:#222;--muted:#6b7280;
-  --bg:#f7faf9;--white:#fff;--border:#e5e7eb;--shadow:0 10px 30px rgba(0,0,0,.08);
+  --bg:#fff7e4;--white:#fff;--border:#e5e7eb;--shadow:0 10px 30px rgba(0,0,0,.08);
   --radius:16px;--radius-sm:10px;--pad:16px;--trans:.25s ease;
 }
 *{box-sizing:border-box}
@@ -14,10 +14,18 @@ body
 }
 a{color:inherit;text-decoration:none}
 img{max-width:100%;display:block}
+/* Custom heading font: Blenda Script */
+@font-face{
+  font-family:'Blenda Script';
+  src:url('../assets/font/1FTV-blenda-script.otf') format('opentype');
+  font-weight:400;
+  font-style:normal;
+  font-display:swap;
+}
 .container{max-width:1200px;margin:0 auto;padding:0 20px}
 
 /* Header */
-.header{position:fixed;top:0;left:0;right:0;z-index:50;background:var(--white);box-shadow:var(--shadow)}
+.header{position:fixed;top:0;left:0;right:0;z-index:50;background:#fff7e4;box-shadow:var(--shadow)}
 .header__row{display:flex;align-items:center;justify-content:space-between;padding:14px 0;gap:12px}
 .logo{font-weight:800;font-size:22px;color:var(--green);letter-spacing:.4px;margin-right:12px}
 .logo__img{height:72px;width:auto;display:block}
@@ -73,7 +81,40 @@ img{max-width:100%;display:block}
 /* Sections */
 .section{padding:36px 0}
 .title{display:flex;align-items:center;justify-content:space-between;margin:0 0 16px}
-.title h2{margin:0;font-size:22px}
+.title h2{margin:0;font-size:34px;line-height:1.2;display:inline-block;padding-right:4px;font-family:'Blenda Script',cursive;color:var(--green-2)}
+@supports ((-webkit-background-clip:text) or (background-clip:text)) {
+  .title h2{
+    background:linear-gradient(180deg,#1b5223 0%,#72c97a 100%);
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+    -webkit-text-fill-color:transparent;
+  }
+}
+/* Generic gradient text for headings with fallback */
+.gradient-title{ color: var(--green-2); font-family:'Blenda Script',cursive; }
+/* Make gradient titles more prominent (e.g., Giỏ hàng in recipes) */
+.gradient-title{ font-size:32px; line-height:1.2; }
+@supports (-webkit-background-clip: text) {
+  .gradient-title{
+    background:linear-gradient(180deg,#1f5a27 0%,#66c372 100%);
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+  }
+}
+/* Pastel gradient variant for special CTA text */
+.gradient-title--pastel{ color:#fff; }
+@supports (-webkit-background-clip: text) {
+  .gradient-title--pastel{
+    background: linear-gradient(180deg, #effeee 0%, #fff7e4 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+}
+/* Cart page: add extra spacing below header for the title */
+main[aria-label="Trang Giỏ hàng"] .title{ margin-top:12px; }
+/* Account page: push title down so header doesn’t cover it */
+main[aria-label="Trang Tài khoản"] .title{ margin-top:28px; }
 .controls{display:flex;gap:14px;flex-wrap:wrap;align-items:center;margin-bottom:12px}
 .controls label{white-space:nowrap}
 select.input, input[type="range"]{padding:10px;height:auto}
@@ -90,7 +131,7 @@ select.input, input[type="range"]{padding:10px;height:auto}
 
 /* Grid + Cards */
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px}
-.card{background:var(--white);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:12px;display:flex;flex-direction:column;gap:10px;transition:var(--trans)}
+.card{background:#fff;border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:12px;display:flex;flex-direction:column;gap:10px;transition:var(--trans)}
 .card:hover{transform:translateY(-3px)}
 .thumb{border-radius:12px;display:grid;place-items:center;aspect-ratio:1/1;overflow:hidden;font-size:40px;font-weight:900;color:#fff}
 .thumb--veg{background:linear-gradient(120deg,#31cf7e,#16a34a)}
@@ -149,6 +190,8 @@ select.input, input[type="range"]{padding:10px;height:auto}
 .drawer__panel{position:relative;width:min(720px,100%);background:var(--white);box-shadow:var(--shadow);display:flex;flex-direction:column;height:100%;z-index:20}
 .drawer__head{display:flex;align-items:center;justify-content:space-between;padding:16px;border-bottom:1px solid var(--border)}
 .drawer__foot{margin-top:auto;padding:16px;border-top:1px solid var(--border);display:grid;gap:10px}
+/* Enlarge drawer titles (e.g., Giỏ hàng on homepage) */
+.drawer__head h3{ font-size:26px; line-height:1.2; margin:0; }
 .total-row{display:flex;align-items:center;justify-content:space-between}
 .cart-list{padding:16px;display:grid;gap:12px;overflow:auto}
 .cart-item{display:grid;grid-template-columns:28px 56px 1fr auto;gap:10px;align-items:center;border:1px solid var(--border);border-radius:12px;padding:10px}
@@ -269,6 +312,11 @@ select.input, input[type="range"]{padding:10px;height:auto}
   grid-template-columns: repeat(4, 1fr);
   gap: 24px;
   padding: 24px;
+}
+
+/* Chỉ đổi font cho nút 'Sản phẩm' */
+#productsMenuToggle {
+  font-family: 'Montserrat', system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
 }
 
 .mega-menu__column {
@@ -539,6 +587,7 @@ select.input, input[type="range"]{padding:10px;height:auto}
   display: grid;
   grid-template-columns: 240px 1fr;
   gap: 12px;
+  align-items: start; /* đảm bảo 2 cột căn đỉnh cùng hàng */
 }
 .account-nav {
   padding: 12px;
@@ -564,7 +613,7 @@ select.input, input[type="range"]{padding:10px;height:auto}
   box-shadow: 0 0 0 2px rgba(22, 163, 74, 0.1);
 }
 .account-content {
-  padding: 12px 0;
+  padding: 12px; /* đồng nhất khoảng đệm với cột menu */
 }
 .account-panel[hidden] { display: none; }
 
@@ -1050,6 +1099,7 @@ select.input, input[type="range"]{padding:10px;height:auto}
   display: grid;
   grid-template-columns: 240px 1fr;
   gap: 12px;
+  align-items: start; /* đảm bảo 2 cột căn đỉnh cùng hàng */
 }
 .account-nav {
   padding: 12px;
@@ -1075,7 +1125,7 @@ select.input, input[type="range"]{padding:10px;height:auto}
   box-shadow: 0 0 0 2px rgba(22, 163, 74, 0.1);
 }
 .account-content {
-  padding: 12px 0;
+  padding: 12px; /* đồng nhất khoảng đệm với cột menu */
 }
 .account-panel[hidden] { display: none; }
 

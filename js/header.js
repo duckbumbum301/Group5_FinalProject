@@ -1,7 +1,7 @@
 // js/header.js — Inject a consistent site header across pages
 import { bindMegaMenu } from './menu.js';
 import { getCart } from './cart.js';
-import { apiListProducts } from './api.js';
+import { apiListProducts, apiCurrentUser } from './api.js';
 
 function sumCartQty() {
   try {
@@ -30,7 +30,7 @@ function buildHeaderHTML() {
 
   return `
     <div class="container header__row">
-      <a href="${homeHref}" class="logo" aria-label="Trang chủ Vựa Vui Vẻ"><img src="../images/brand/LogoVVV1.jpg" alt="Vựa Vui Vẻ" class="logo__img" /></a>
+      <a href="${homeHref}" class="logo" aria-label="Trang chủ Vựa Vui Vẻ"><img src="../images/brand/LogoVVV.png" alt="Vựa Vui Vẻ" class="logo__img" /></a>
       <nav class="nav" aria-label="Điều hướng chính">
         <div class="nav-item nav-item--dropdown">
           <button
@@ -534,6 +534,28 @@ function mountHeader() {
       ev.preventDefault();
       const url = new URL('/html/cart.html', location.href).toString();
       location.href = url;
+    });
+  }
+
+  // Account button: nếu đã đăng nhập -> account.html; nếu chưa -> login.html
+  const accountBtn = document.getElementById('accountBtn');
+  if (accountBtn) {
+    // Cập nhật href ban đầu theo trạng thái hiện tại
+    (async () => {
+      try {
+        const u = await apiCurrentUser();
+        accountBtn.setAttribute('href', u ? '/html/account.html' : '/client/login.html');
+      } catch {}
+    })();
+    accountBtn.addEventListener('click', async (ev) => {
+      ev.preventDefault();
+      try {
+        const u = await apiCurrentUser();
+        const url = new URL(u ? '/html/account.html' : '/client/login.html', location.href);
+        location.href = url.toString();
+      } catch {
+        location.href = new URL('/client/login.html', location.href).toString();
+      }
     });
   }
 

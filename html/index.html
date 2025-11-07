@@ -17,6 +17,8 @@
       />
       <link rel="stylesheet" href="../css/style.css" />
       <link rel="stylesheet" href="../assets/css/reviews.css" />
+      <!-- Homepage background override -->
+      <style>:root{--bg:#effeee}</style>
       <!-- Cache busting + no-cache for go live -->
       <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
       <meta http-equiv="Pragma" content="no-cache" />
@@ -78,7 +80,7 @@
 
     <header class="header">
       <div class="container header__row">
-        <a href="/html/index.html" class="logo" aria-label="Trang chủ Vựa Vui Vẻ"><img src="../images/brand/LogoVVV1.jpg" alt="Vựa Vui Vẻ" class="logo__img" /></a>
+        <a href="/html/index.html" class="logo" aria-label="Trang chủ Vựa Vui Vẻ"><img src="../images/brand/LogoVVV.png" alt="Vựa Vui Vẻ" class="logo__img" /></a>
         <nav class="nav" aria-label="Điều hướng chính">
           <div class="nav-item nav-item--dropdown">
             <button
@@ -822,7 +824,7 @@
       </div>
     </section>
 
-    <footer class="site-footer">
+    <footer class="site-footer" style="background:url('../images/brand/footer.png') center/cover no-repeat; color:#fff7e4;">
       <div class="container">
         <div class="sf-grid">
           <div class="sf-cols">
@@ -852,17 +854,14 @@
             <div class="sf-col">
               <h4>Liên hệ</h4>
               <ul>
-                <li>Hotline</li>
-                <li>Địa chỉ</li>
+                <li>Hotline: 012345678</li>
+                <li>Địa chỉ liên hệ: Vựa Vui Vẻ</li>
               </ul>
             </div>
             <div class="sf-legal">Điều khoản dịch vụ | Chính sách giao hàng | Chính sách đổi trả</div>
           </div>
           <div class="sf-brand">
-            <img class="sf-logo" src="../images/brand/LogoVVV1.jpg" alt="Vựa Vui Vẻ" />
             <div class="sf-contact">
-              <div>Hotline: <span>012345678</span></div>
-              <div>Địa chỉ liên hệ: <span>Vựa Vui Vẻ</span></div>
               <div>© <span id="year"></span> vựa vui vẻ</div>
             </div>
             <div class="sf-social">
