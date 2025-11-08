@@ -79,7 +79,11 @@ router.post("/create_payment_url", function (req, res, next) {
   vnp_Params["vnp_SecureHash"] = signed;
   vnpUrl += "?" + querystring.stringify(vnp_Params, { encode: false });
 
-  res.redirect(vnpUrl);
+  // Trả về JSON thay vì redirect để frontend có thể xử lý
+  res.status(200).json({
+    code: "00",
+    data: vnpUrl,
+  });
 });
 
 router.get("/vnpay_return", function (req, res, next) {
@@ -154,12 +158,10 @@ router.get("/vnpay_ipn", function (req, res, next) {
             res.status(200).json({ RspCode: "00", Message: "Success" });
           }
         } else {
-          res
-            .status(200)
-            .json({
-              RspCode: "02",
-              Message: "This order has been updated to the payment status",
-            });
+          res.status(200).json({
+            RspCode: "02",
+            Message: "This order has been updated to the payment status",
+          });
         }
       } else {
         res.status(200).json({ RspCode: "04", Message: "Amount invalid" });

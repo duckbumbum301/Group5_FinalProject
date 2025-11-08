@@ -16,7 +16,7 @@
       "subcategory": "leaf",
       "price": 18000,
       "unit": "gói",
-      "stock": 47,
+      "stock": 40,
       "image": "../images/VEG/leaf/caibexanh.jpg",
       "description": "Cải bẹ xanh (500g) - Sản phẩm chất lượng cao",
       "popular": 101
@@ -520,7 +520,7 @@
       "subcategory": "can",
       "price": 9000,
       "unit": "gói",
-      "stock": 55,
+      "stock": 41,
       "image": "../images/DRINK/can/fantadau.jpg",
       "description": "Nước ngọt Fanta hương dâu lon (320ml) - Sản phẩm chất lượng cao",
       "popular": 99
@@ -760,7 +760,7 @@
       "subcategory": "bags",
       "price": 20000,
       "unit": "gói",
-      "stock": 26,
+      "stock": 19,
       "image": "../images/HOUSEHOLD/bags/tuidungracden.jpg",
       "description": "Túi đựng rác đen - Sản phẩm chất lượng cao",
       "popular": 25
@@ -2809,6 +2809,440 @@
           "at": null
         }
       ]
+    },
+    {
+      "id": "ORD-20251108-213711-LFUHMX",
+      "customerName": "Quốc Việt",
+      "phone": "0973654843",
+      "address": "hùng vương street\nhùng vương street",
+      "email": "huynhquocviet0609@gmail.com",
+      "user": {
+        "name": "Quốc Việt",
+        "phone": "0973654843",
+        "address": "hùng vương street\nhùng vương street"
+      },
+      "slot": "2025-11-07_09:00-11:00",
+      "voucher": "FREESHIP",
+      "paymentMethod": "VNPAY",
+      "note": "",
+      "status": "placed",
+      "delivery_status": "placed",
+      "payment_status": "pending",
+      "subtotal": 56000,
+      "shipping_fee": 0,
+      "discount": 0,
+      "totalAmount": 56000,
+      "total": 56000,
+      "items": {
+        "101": 1,
+        "431": 2,
+        "700": 1
+      },
+      "created_at": "2025-11-08T14:37:11.797Z",
+      "tracking": [
+        {
+          "code": "placed",
+          "label": "Đã đặt hàng",
+          "at": "2025-11-08T14:37:11.797Z"
+        },
+        {
+          "code": "preparing",
+          "label": "Đang chuẩn bị",
+          "at": null
+        },
+        {
+          "code": "ready",
+          "label": "Sẵn sàng giao",
+          "at": null
+        },
+        {
+          "code": "pickup",
+          "label": "Shipper đã nhận",
+          "at": null
+        },
+        {
+          "code": "delivering",
+          "label": "Đang giao",
+          "at": null
+        },
+        {
+          "code": "delivered",
+          "label": "Giao thành công",
+          "at": null
+        }
+      ]
+    },
+    {
+      "id": "ORD-20251108-213726-0TL6BC",
+      "customerName": "Quốc Việt",
+      "phone": "0973654843",
+      "address": "hùng vương street\nhùng vương street",
+      "email": "huynhquocviet0609@gmail.com",
+      "user": {
+        "name": "Quốc Việt",
+        "phone": "0973654843",
+        "address": "hùng vương street\nhùng vương street"
+      },
+      "slot": "2025-11-07_09:00-11:00",
+      "voucher": "",
+      "paymentMethod": "VNPAY",
+      "note": "",
+      "status": "placed",
+      "delivery_status": "placed",
+      "payment_status": "pending",
+      "subtotal": 56000,
+      "shipping_fee": 20000,
+      "discount": 0,
+      "totalAmount": 76000,
+      "total": 76000,
+      "items": {
+        "101": 1,
+        "431": 2,
+        "700": 1
+      },
+      "created_at": "2025-11-08T14:37:26.099Z",
+      "tracking": [
+        {
+          "code": "placed",
+          "label": "Đã đặt hàng",
+          "at": "2025-11-08T14:37:26.099Z"
+        },
+        {
+          "code": "preparing",
+          "label": "Đang chuẩn bị",
+          "at": null
+        },
+        {
+          "code": "ready",
+          "label": "Sẵn sàng giao",
+          "at": null
+        },
+        {
+          "code": "pickup",
+          "label": "Shipper đã nhận",
+          "at": null
+        },
+        {
+          "code": "delivering",
+          "label": "Đang giao",
+          "at": null
+        },
+        {
+          "code": "delivered",
+          "label": "Giao thành công",
+          "at": null
+        }
+      ]
+    },
+    {
+      "id": "ORD-20251108-213743-UJG6G9",
+      "customerName": "Quốc Việt",
+      "phone": "0973654843",
+      "address": "hùng vương street\nhùng vương street",
+      "email": "huynhquocviet0609@gmail.com",
+      "user": {
+        "name": "Quốc Việt",
+        "phone": "0973654843",
+        "address": "hùng vương street\nhùng vương street"
+      },
+      "slot": "2025-11-07_09:00-11:00",
+      "voucher": "",
+      "paymentMethod": "VNPAY",
+      "note": "",
+      "status": "placed",
+      "delivery_status": "placed",
+      "payment_status": "pending",
+      "subtotal": 56000,
+      "shipping_fee": 20000,
+      "discount": 0,
+      "totalAmount": 76000,
+      "total": 76000,
+      "items": {
+        "101": 1,
+        "431": 2,
+        "700": 1
+      },
+      "created_at": "2025-11-08T14:37:43.468Z",
+      "tracking": [
+        {
+          "code": "placed",
+          "label": "Đã đặt hàng",
+          "at": "2025-11-08T14:37:43.468Z"
+        },
+        {
+          "code": "preparing",
+          "label": "Đang chuẩn bị",
+          "at": null
+        },
+        {
+          "code": "ready",
+          "label": "Sẵn sàng giao",
+          "at": null
+        },
+        {
+          "code": "pickup",
+          "label": "Shipper đã nhận",
+          "at": null
+        },
+        {
+          "code": "delivering",
+          "label": "Đang giao",
+          "at": null
+        },
+        {
+          "code": "delivered",
+          "label": "Giao thành công",
+          "at": null
+        }
+      ]
+    },
+    {
+      "id": "ORD-20251108-213941-WTBHEY",
+      "customerName": "Quốc Việt",
+      "phone": "0973654843",
+      "address": "hùng vương street\nhùng vương street",
+      "email": "huynhquocviet0609@gmail.com",
+      "user": {
+        "name": "Quốc Việt",
+        "phone": "0973654843",
+        "address": "hùng vương street\nhùng vương street"
+      },
+      "slot": "2025-11-07_09:00-11:00",
+      "voucher": "",
+      "paymentMethod": "VNPAY",
+      "note": "",
+      "status": "placed",
+      "delivery_status": "placed",
+      "payment_status": "pending",
+      "subtotal": 56000,
+      "shipping_fee": 20000,
+      "discount": 0,
+      "totalAmount": 76000,
+      "total": 76000,
+      "items": {
+        "101": 1,
+        "431": 2,
+        "700": 1
+      },
+      "created_at": "2025-11-08T14:39:41.563Z",
+      "tracking": [
+        {
+          "code": "placed",
+          "label": "Đã đặt hàng",
+          "at": "2025-11-08T14:39:41.563Z"
+        },
+        {
+          "code": "preparing",
+          "label": "Đang chuẩn bị",
+          "at": null
+        },
+        {
+          "code": "ready",
+          "label": "Sẵn sàng giao",
+          "at": null
+        },
+        {
+          "code": "pickup",
+          "label": "Shipper đã nhận",
+          "at": null
+        },
+        {
+          "code": "delivering",
+          "label": "Đang giao",
+          "at": null
+        },
+        {
+          "code": "delivered",
+          "label": "Giao thành công",
+          "at": null
+        }
+      ]
+    },
+    {
+      "id": "ORD-20251108-214040-3Q58G7",
+      "customerName": "Quốc Việt",
+      "phone": "0973654843",
+      "address": "hùng vương street\nhùng vương street",
+      "email": "huynhquocviet0609@gmail.com",
+      "user": {
+        "name": "Quốc Việt",
+        "phone": "0973654843",
+        "address": "hùng vương street\nhùng vương street"
+      },
+      "slot": "2025-11-07_09:00-11:00",
+      "voucher": "FREESHIP",
+      "paymentMethod": "VNPAY",
+      "note": "",
+      "status": "placed",
+      "delivery_status": "placed",
+      "payment_status": "pending",
+      "subtotal": 56000,
+      "shipping_fee": 0,
+      "discount": 0,
+      "totalAmount": 56000,
+      "total": 56000,
+      "items": {
+        "101": 1,
+        "431": 2,
+        "700": 1
+      },
+      "created_at": "2025-11-08T14:40:40.901Z",
+      "tracking": [
+        {
+          "code": "placed",
+          "label": "Đã đặt hàng",
+          "at": "2025-11-08T14:40:40.901Z"
+        },
+        {
+          "code": "preparing",
+          "label": "Đang chuẩn bị",
+          "at": null
+        },
+        {
+          "code": "ready",
+          "label": "Sẵn sàng giao",
+          "at": null
+        },
+        {
+          "code": "pickup",
+          "label": "Shipper đã nhận",
+          "at": null
+        },
+        {
+          "code": "delivering",
+          "label": "Đang giao",
+          "at": null
+        },
+        {
+          "code": "delivered",
+          "label": "Giao thành công",
+          "at": null
+        }
+      ]
+    },
+    {
+      "id": "ORD-20251108-214047-9N9T3J",
+      "customerName": "Quốc Việt",
+      "phone": "0973654843",
+      "address": "hùng vương street\nhùng vương street",
+      "email": "huynhquocviet0609@gmail.com",
+      "user": {
+        "name": "Quốc Việt",
+        "phone": "0973654843",
+        "address": "hùng vương street\nhùng vương street"
+      },
+      "slot": "2025-11-07_09:00-11:00",
+      "voucher": "",
+      "paymentMethod": "VNPAY",
+      "note": "",
+      "status": "placed",
+      "delivery_status": "placed",
+      "payment_status": "pending",
+      "subtotal": 56000,
+      "shipping_fee": 20000,
+      "discount": 0,
+      "totalAmount": 76000,
+      "total": 76000,
+      "items": {
+        "101": 1,
+        "431": 2,
+        "700": 1
+      },
+      "created_at": "2025-11-08T14:40:47.906Z",
+      "tracking": [
+        {
+          "code": "placed",
+          "label": "Đã đặt hàng",
+          "at": "2025-11-08T14:40:47.906Z"
+        },
+        {
+          "code": "preparing",
+          "label": "Đang chuẩn bị",
+          "at": null
+        },
+        {
+          "code": "ready",
+          "label": "Sẵn sàng giao",
+          "at": null
+        },
+        {
+          "code": "pickup",
+          "label": "Shipper đã nhận",
+          "at": null
+        },
+        {
+          "code": "delivering",
+          "label": "Đang giao",
+          "at": null
+        },
+        {
+          "code": "delivered",
+          "label": "Giao thành công",
+          "at": null
+        }
+      ]
+    },
+    {
+      "id": "ORD-20251108-214722-49I7JN",
+      "customerName": "Quốc Việt",
+      "phone": "0973654843",
+      "address": "hùng vương street\nhùng vương street",
+      "email": "huynhquocviet0609@gmail.com",
+      "user": {
+        "name": "Quốc Việt",
+        "phone": "0973654843",
+        "address": "hùng vương street\nhùng vương street"
+      },
+      "slot": "2025-11-07_09:00-11:00",
+      "voucher": "FREESHIP",
+      "paymentMethod": "VNPAY",
+      "note": "",
+      "status": "placed",
+      "delivery_status": "placed",
+      "payment_status": "pending",
+      "subtotal": 56000,
+      "shipping_fee": 0,
+      "discount": 0,
+      "totalAmount": 56000,
+      "total": 56000,
+      "items": {
+        "101": 1,
+        "431": 2,
+        "700": 1
+      },
+      "created_at": "2025-11-08T14:47:22.011Z",
+      "tracking": [
+        {
+          "code": "placed",
+          "label": "Đã đặt hàng",
+          "at": "2025-11-08T14:47:22.011Z"
+        },
+        {
+          "code": "preparing",
+          "label": "Đang chuẩn bị",
+          "at": null
+        },
+        {
+          "code": "ready",
+          "label": "Sẵn sàng giao",
+          "at": null
+        },
+        {
+          "code": "pickup",
+          "label": "Shipper đã nhận",
+          "at": null
+        },
+        {
+          "code": "delivering",
+          "label": "Đang giao",
+          "at": null
+        },
+        {
+          "code": "delivered",
+          "label": "Giao thành công",
+          "at": null
+        }
+      ]
     }
   ],
   "users": [
@@ -3455,6 +3889,167 @@
         "total": 121000
       },
       "timestamp": "2025-11-08T08:48:25.342Z"
+    },
+    {
+      "id": "1762612631696w0uux",
+      "action": "profile.update",
+      "who": "huynhquocviet0609@gmail.com",
+      "metadata": {
+        "userId": "1762589889193",
+        "changes": {
+          "name": "Quốc Việt",
+          "address": "hùng vương street\nhùng vương street"
+        }
+      },
+      "timestamp": "2025-11-08T14:37:11.696Z"
+    },
+    {
+      "id": "17626126318276rrck",
+      "action": "order.create",
+      "who": "huynhquocviet0609@gmail.com",
+      "metadata": {
+        "orderId": "ORD-20251108-213711-LFUHMX",
+        "total": 56000
+      },
+      "timestamp": "2025-11-08T14:37:11.827Z"
+    },
+    {
+      "id": "1762612646070skqkd",
+      "action": "profile.update",
+      "who": "huynhquocviet0609@gmail.com",
+      "metadata": {
+        "userId": "1762589889193",
+        "changes": {
+          "name": "Quốc Việt",
+          "address": "hùng vương street\nhùng vương street"
+        }
+      },
+      "timestamp": "2025-11-08T14:37:26.070Z"
+    },
+    {
+      "id": "17626126461361rznh",
+      "action": "order.create",
+      "who": "huynhquocviet0609@gmail.com",
+      "metadata": {
+        "orderId": "ORD-20251108-213726-0TL6BC",
+        "total": 76000
+      },
+      "timestamp": "2025-11-08T14:37:26.136Z"
+    },
+    {
+      "id": "1762612663436vbvvw",
+      "action": "profile.update",
+      "who": "huynhquocviet0609@gmail.com",
+      "metadata": {
+        "userId": "1762589889193",
+        "changes": {
+          "name": "Quốc Việt",
+          "address": "hùng vương street\nhùng vương street"
+        }
+      },
+      "timestamp": "2025-11-08T14:37:43.436Z"
+    },
+    {
+      "id": "1762612663499y3m21",
+      "action": "order.create",
+      "who": "huynhquocviet0609@gmail.com",
+      "metadata": {
+        "orderId": "ORD-20251108-213743-UJG6G9",
+        "total": 76000
+      },
+      "timestamp": "2025-11-08T14:37:43.499Z"
+    },
+    {
+      "id": "17626127815323vgqp",
+      "action": "profile.update",
+      "who": "huynhquocviet0609@gmail.com",
+      "metadata": {
+        "userId": "1762589889193",
+        "changes": {
+          "name": "Quốc Việt",
+          "address": "hùng vương street\nhùng vương street"
+        }
+      },
+      "timestamp": "2025-11-08T14:39:41.532Z"
+    },
+    {
+      "id": "17626127815962hsdm",
+      "action": "order.create",
+      "who": "huynhquocviet0609@gmail.com",
+      "metadata": {
+        "orderId": "ORD-20251108-213941-WTBHEY",
+        "total": 76000
+      },
+      "timestamp": "2025-11-08T14:39:41.596Z"
+    },
+    {
+      "id": "1762612840866364lw",
+      "action": "profile.update",
+      "who": "huynhquocviet0609@gmail.com",
+      "metadata": {
+        "userId": "1762589889193",
+        "changes": {
+          "name": "Quốc Việt",
+          "address": "hùng vương street\nhùng vương street"
+        }
+      },
+      "timestamp": "2025-11-08T14:40:40.866Z"
+    },
+    {
+      "id": "1762612840932rgcsg",
+      "action": "order.create",
+      "who": "huynhquocviet0609@gmail.com",
+      "metadata": {
+        "orderId": "ORD-20251108-214040-3Q58G7",
+        "total": 56000
+      },
+      "timestamp": "2025-11-08T14:40:40.932Z"
+    },
+    {
+      "id": "1762612847875qqua9",
+      "action": "profile.update",
+      "who": "huynhquocviet0609@gmail.com",
+      "metadata": {
+        "userId": "1762589889193",
+        "changes": {
+          "name": "Quốc Việt",
+          "address": "hùng vương street\nhùng vương street"
+        }
+      },
+      "timestamp": "2025-11-08T14:40:47.875Z"
+    },
+    {
+      "id": "1762612847937b0iry",
+      "action": "order.create",
+      "who": "huynhquocviet0609@gmail.com",
+      "metadata": {
+        "orderId": "ORD-20251108-214047-9N9T3J",
+        "total": 76000
+      },
+      "timestamp": "2025-11-08T14:40:47.937Z"
+    },
+    {
+      "id": "1762613241994pvhc2",
+      "action": "profile.update",
+      "who": "huynhquocviet0609@gmail.com",
+      "metadata": {
+        "userId": "1762589889193",
+        "changes": {
+          "name": "Quốc Việt",
+          "address": "hùng vương street\nhùng vương street"
+        }
+      },
+      "timestamp": "2025-11-08T14:47:21.994Z"
+    },
+    {
+      "id": "176261324204402iie",
+      "action": "order.create",
+      "who": "huynhquocviet0609@gmail.com",
+      "metadata": {
+        "orderId": "ORD-20251108-214722-49I7JN",
+        "total": 56000
+      },
+      "timestamp": "2025-11-08T14:47:22.044Z"
     }
   ]
 }

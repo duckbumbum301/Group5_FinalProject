@@ -8,8 +8,11 @@
     "backend": "node backoffice/server-simple.js",
     "backend-old": "node backoffice/server.js",
     "frontend": "npx http-server -p 8000 -c-1",
+    "vnpay": "cd vnpay_nodejs && npm start",
     "dev": "concurrently \"npm run backend\" \"npm run frontend\"",
-    "start": "npm run dev"
+    "dev:vnpay": "concurrently \"npm run backend\" \"npm run frontend\" \"npm run vnpay\"",
+    "start": "npm run dev",
+    "test:vnpay": "node test-vnpay.js"
   },
   "keywords": [
     "e-commerce",

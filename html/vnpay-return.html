@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Xử lý thanh toán VNPay - Vựa Vui Vẻ</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          "Helvetica Neue", Arial, sans-serif;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: #333;
+      }
+
+      .container {
+        background: white;
+        padding: 60px 40px;
+        border-radius: 24px;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        text-align: center;
+        max-width: 480px;
+        width: 90%;
+      }
+
+      .spinner {
+        width: 60px;
+        height: 60px;
+        border: 6px solid #f3f3f3;
+        border-top: 6px solid #667eea;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+        margin: 0 auto 30px;
+      }
+
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+
+      h2 {
+        color: #333;
+        margin: 0 0 16px;
+        font-size: 24px;
+        font-weight: 600;
+      }
+
+      p {
+        color: #666;
+        margin: 0 0 20px;
+        font-size: 16px;
+        line-height: 1.6;
+      }
+
+      .success {
+        color: #10b981;
+      }
+
+      .error {
+        color: #ef4444;
+      }
+
+      .order-info {
+        background: #f8f9fa;
+        padding: 20px;
+        border-radius: 12px;
+        margin: 20px 0;
+        text-align: left;
+      }
+
+      .order-info div {
+        display: flex;
+        justify-content: space-between;
+        padding: 8px 0;
+        border-bottom: 1px solid #e5e7eb;
+      }
+
+      .order-info div:last-child {
+        border-bottom: none;
+        font-weight: 600;
+        color: #667eea;
+      }
+
+      .btn {
+        display: inline-block;
+        padding: 12px 32px;
+        background: #667eea;
+        color: white;
+        text-decoration: none;
+        border-radius: 8px;
+        font-size: 16px;
+        font-weight: 500;
+        margin-top: 20px;
+        transition: background 0.3s;
+      }
+
+      .btn:hover {
+        background: #5568d3;
+      }
+
+      .message {
+        display: none;
+        animation: fadeIn 0.5s ease-in;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .loading {
+        display: block;
+      }
+
+      .hidden {
+        display: none !important;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <!-- Loading State -->
+      <div id="loadingState" class="loading">
+        <div class="spinner"></div>
+        <h2>Đang xử lý thanh toán...</h2>
+        <p>Vui lòng chờ trong giây lát, đừng tắt trang này.</p>
+      </div>
+
+      <!-- Success State -->
+      <div id="successState" class="message">
+        <svg
+          width="80"
+          height="80"
+          viewBox="0 0 80 80"
+          fill="none"
+          style="margin: 0 auto 20px"
+        >
+          <circle
+            cx="40"
+            cy="40"
+            r="38"
+            stroke="#10b981"
+            stroke-width="4"
+            fill="none"
+          />
+          <path
+            d="M25 40L35 50L55 30"
+            stroke="#10b981"
+            stroke-width="4"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+        </svg>
+        <h2 class="success">✅ Thanh toán thành công!</h2>
+        <p>Đơn hàng của bạn đã được xác nhận và sẽ sớm được giao đến.</p>
+        <div id="orderInfo" class="order-info"></div>
+        <a href="./index.html" class="btn">Về trang chủ</a>
+      </div>
+
+      <!-- Error State -->
+      <div id="errorState" class="message">
+        <svg
+          width="80"
+          height="80"
+          viewBox="0 0 80 80"
+          fill="none"
+          style="margin: 0 auto 20px"
+        >
+          <circle
+            cx="40"
+            cy="40"
+            r="38"
+            stroke="#ef4444"
+            stroke-width="4"
+            fill="none"
+          />
+          <path
+            d="M30 30L50 50M50 30L30 50"
+            stroke="#ef4444"
+            stroke-width="4"
+            stroke-linecap="round"
+          />
+        </svg>
+        <h2 class="error">❌ Thanh toán không thành công</h2>
+        <p id="errorMessage">Giao dịch đã bị hủy hoặc xảy ra lỗi.</p>
+        <div id="errorDetails" class="order-info"></div>
+        <a href="./index.html" class="btn">Về trang chủ</a>
+      </div>
+    </div>
+
+    <script type="module">
+      import { parseVNPayReturn } from "../js/vnpay-api.js";
+      import { apiMarkOrderPaid, apiGetOrderById } from "../js/api.js";
+
+      let processed = false;
+      const loadingState = document.getElementById("loadingState");
+      const successState = document.getElementById("successState");
+      const errorState = document.getElementById("errorState");
+      const orderInfo = document.getElementById("orderInfo");
+      const errorDetails = document.getElementById("errorDetails");
+      const errorMessage = document.getElementById("errorMessage");
+
+      async function processVNPayReturn() {
+        if (processed) return;
+        processed = true;
+
+        try {
+          // Parse VNPay response
+          const vnpayData = parseVNPayReturn();
+          console.log("📥 VNPay Response:", vnpayData);
+
+          const {
+            responseCode,
+            txnRef,
+            amount,
+            transactionNo,
+            isSuccess,
+            message,
+          } = vnpayData;
+          const orderId = txnRef || localStorage.getItem("vvv_pending_order");
+
+          if (!orderId) {
+            throw new Error("Không tìm thấy mã đơn hàng");
+          }
+
+          // Hiển thị thông tin
+          const displayAmount = amount ? parseInt(amount) / 100 : 0;
+
+          if (isSuccess && responseCode === "00") {
+            // ✅ THANH TOÁN THÀNH CÔNG
+            try {
+              // Cập nhật trạng thái đơn hàng
+              await apiMarkOrderPaid(orderId);
+
+              // Lấy thông tin đơn hàng
+              const order = await apiGetOrderById(orderId);
+
+              // Hiển thị thông tin
+              orderInfo.innerHTML = `
+              <div>
+                <span>Mã đơn hàng:</span>
+                <strong>#${orderId}</strong>
+              </div>
+              <div>
+                <span>Số tiền:</span>
+                <strong>${displayAmount.toLocaleString("vi-VN")}₫</strong>
+              </div>
+              <div>
+                <span>Mã giao dịch:</span>
+                <strong>${transactionNo || "N/A"}</strong>
+              </div>
+              <div>
+                <span>Trạng thái:</span>
+                <strong class="success">${message}</strong>
+              </div>
+            `;
+
+              // Clear pending order
+              localStorage.removeItem("vvv_pending_order");
+              localStorage.removeItem("vvv_pending_order_time");
+
+              // Show success state
+              loadingState.classList.add("hidden");
+              successState.classList.add("loading");
+
+              // Dispatch event cho các module khác
+              document.dispatchEvent(
+                new CustomEvent("order:confirmed", {
+                  detail: { orderId, payment: "vnpay" },
+                })
+              );
+
+              // Auto redirect sau 5 giây
+              setTimeout(() => {
+                window.location.href = `./index.html?order_success=${orderId}`;
+              }, 5000);
+            } catch (error) {
+              console.error("Error updating order:", error);
+              // Vẫn hiển thị success vì tiền đã trừ
+              orderInfo.innerHTML = `
+              <div>
+                <span>Mã đơn hàng:</span>
+                <strong>#${orderId}</strong>
+              </div>
+              <div>
+                <span>Số tiền:</span>
+                <strong>${displayAmount.toLocaleString("vi-VN")}₫</strong>
+              </div>
+              <div>
+                <span>Lưu ý:</span>
+                <strong class="error">Vui lòng liên hệ CSKH để xác nhận đơn hàng</strong>
+              </div>
+            `;
+
+              loadingState.classList.add("hidden");
+              successState.classList.add("loading");
+
+              localStorage.removeItem("vvv_pending_order");
+              localStorage.removeItem("vvv_pending_order_time");
+            }
+          } else {
+            // ❌ THANH TOÁN THẤT BẠI
+            errorMessage.textContent = message || "Giao dịch không thành công";
+            errorDetails.innerHTML = `
+            <div>
+              <span>Mã đơn hàng:</span>
+              <strong>#${orderId}</strong>
+            </div>
+            <div>
+              <span>Mã lỗi:</span>
+              <strong>${responseCode}</strong>
+            </div>
+            <div>
+              <span>Lý do:</span>
+              <strong>${message}</strong>
+            </div>
+          `;
+
+            loadingState.classList.add("hidden");
+            errorState.classList.add("loading");
+
+            // Clear pending
+            localStorage.removeItem("vvv_pending_order");
+            localStorage.removeItem("vvv_pending_order_time");
+
+            // Auto redirect sau 7 giây
+            setTimeout(() => {
+              window.location.href = "./index.html";
+            }, 7000);
+          }
+        } catch (error) {
+          console.error("Process VNPay Return Error:", error);
+          errorMessage.textContent =
+            "Có lỗi xảy ra khi xử lý kết quả thanh toán";
+          errorDetails.innerHTML = `
+          <div>
+            <span>Lỗi:</span>
+            <strong>${error.message}</strong>
+          </div>
+        `;
+
+          loadingState.classList.add("hidden");
+          errorState.classList.add("loading");
+        }
+      }
+
+      // Auto execute when page loads
+      if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", processVNPayReturn);
+      } else {
+        processVNPayReturn();
+      }
+
+      // Timeout fallback
+      setTimeout(() => {
+        if (!processed) {
+          console.warn("⏱️ Timeout processing VNPay return");
+          errorMessage.textContent =
+            "Timeout xử lý thanh toán. Vui lòng kiểm tra email hoặc liên hệ CSKH.";
+          loadingState.classList.add("hidden");
+          errorState.classList.add("loading");
+          processed = true;
+        }
+      }, 30000); // 30 giây
+    </script>
+  </body>
+</html>

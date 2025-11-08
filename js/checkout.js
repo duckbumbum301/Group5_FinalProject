@@ -11,6 +11,7 @@ import {
   apiUpdateProfile,
   apiMarkOrderPaid,
 } from "./api.js";
+import { createVNPayPaymentUrl } from "./vnpay-api.js";
 
 const LS_USER = "vvv_user";
 
@@ -59,9 +60,10 @@ function ensureCheckoutModal() {
           <div class="co-grid co-grid--2">
             <div class="co-field">
               <label>Phương thức thanh toán</label>
-              <select name="payment" class="input">
-                <option value="COD">COD - tiền mặt</option>
-                <option value="QR">QR code</option>
+              <select name="payment" class="input" id="coPaymentMethod">
+                <option value="COD">💵 COD - Tiền mặt khi nhận hàng</option>
+                <option value="VNPAY">💳 VNPay - Thanh toán online</option>
+                <option value="QR">📱 QR Code (Demo)</option>
               </select>
             </div>
             <div class="co-field">
@@ -263,7 +265,12 @@ export async function openCheckoutModal(selected) {
         note,
         status: "placed",
         delivery_status: "placed",
-        payment_status: payment === "QR" ? "pending" : "cod",
+        payment_status:
+          payment === "VNPAY"
+            ? "pending"
+            : payment === "QR"
+            ? "pending"
+            : "cod",
         subtotal,
         shipping_fee: shipping,
         discount: discountNow,
@@ -271,6 +278,51 @@ export async function openCheckoutModal(selected) {
         total: totalNow,
         items: itemsObj, // Gửi dưới dạng object, không phải array
       });
+
+      // === XỬ LÝ THEO PAYMENT METHOD ===
+
+      if (payment === "VNPAY") {
+        // **Thanh toán qua VNPay**
+        console.log("🔄 Redirecting to VNPay...", {
+          orderId: newOrder.id,
+          amount: totalNow,
+        });
+
+        // Lưu orderId để xử lý sau khi return
+        localStorage.setItem("vvv_pending_order", newOrder.id);
+        localStorage.setItem("vvv_pending_order_time", Date.now());
+
+        const vnpayResult = await createVNPayPaymentUrl({
+          amount: totalNow,
+          orderId: newOrder.id,
+          orderInfo: `Thanh toán đơn hàng ${newOrder.id} - ${name}`,
+          bankCode: "", // Để trống = cổng VNPAYQR
+        });
+
+        console.log("📦 VNPay Result:", vnpayResult);
+
+        if (vnpayResult.ok && vnpayResult.paymentUrl) {
+          // Xóa giỏ hàng ngay để tránh duplicate order
+          if (selected?.items) {
+            Object.keys(selected.items).forEach((pid) => removeFromCart(pid));
+          } else {
+            clearCart();
+          }
+
+          closeCheckoutModal();
+
+          // Redirect sang VNPay
+          console.log("✅ Redirecting to:", vnpayResult.paymentUrl);
+          window.location.href = vnpayResult.paymentUrl;
+          return; // Dừng execution
+        } else {
+          alert(
+            "❌ Không thể kết nối VNPay: " +
+              (vnpayResult.error || "Vui lòng thử lại")
+          );
+          return;
+        }
+      }
 
       // Chỉ xóa các sản phẩm đã chọn, giữ lại các món chưa chọn
       if (selected?.items) {
