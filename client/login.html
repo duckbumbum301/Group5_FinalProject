@@ -72,18 +72,37 @@
                 placeholder="••••••••"
                 required
               />
-            </div>
-            <!--  Checkbox hiển thị mật khẩu -->
-            <label class="show-pass">
-              <input type="checkbox" id="showPassword" /> Hiển thị mật khẩu
-            </label>
-            <label id="capsHint" class="small muted" style="display:none">Caps Lock đang bật</label>
+              <button
+                type="button"
+                id="toggleLiPass"
+                class="pw-toggle"
+                aria-label="Hiện/ẩn mật khẩu"
+              >
+                <svg class="icon-eye" viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
+                  <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8S1 12 1 12z" stroke="currentColor" stroke-width="2" fill="none" />
+                  <circle cx="12" cy="12" r="3" fill="currentColor" />
+                </svg>
+                <svg class="icon-eye-off" viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
+                  <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8S1 12 1 12z" stroke="currentColor" stroke-width="2" fill="none" />
+                  <path d="M4 4l16 16" stroke="currentColor" stroke-width="2" />
+                </svg>
+              </button>
+            </div>  
           </td>
-        </tr>
+         </tr>
+          <tr> <!-- Ghi nhớ tài khoản -->
+            <td ><label id="capsHint" class="small muted" style="display:none">Caps Lock đang bật</label></td>
+            <td align="center">
+              <label class="show-pass">
+                <input type="checkbox" id="rememberAccount" /> Ghi nhớ tài khoản
+              </label>
+            </td>
+          </tr>
       </table>
 
       <div class="nav-actions" aria-label="điều hướng">
         <a class="btn btn-ghost" href="index.html">Trang chủ</a>
+        <a class="btn btn-ghost" id="btnForgot" href="forgot_pw.html">Quên mật khẩu?</a>
         <a class="btn btn-ghost" href="register.html">Chưa có tài khoản? Đăng ký</a>
       </div>
 
@@ -100,15 +119,17 @@
     <script type="module">
       import { apiLoginUser } from "../js/api.js?v=flowfix1";
       import { restoreCartForUser } from "../js/cart.js?v=flowfix1";
-      /*  Chức năng: Hiển thị / Ẩn mật khẩu bằng checkbox */
-      const showBox = document.getElementById("showPassword");
+      /*  Chức năng: Ghi nhớ tài khoản (bao gồm mật khẩu) */
+      const rememberBox = document.getElementById("rememberAccount");
       const passInput = document.getElementById("liPass");
+      const REMEMBER_KEY = 'vvv_remember_login';
+      const rememberPref = localStorage.getItem(REMEMBER_KEY) === 'true';
+      if (rememberBox) rememberBox.checked = rememberPref;
 
-      if (showBox && passInput) {
-        showBox.addEventListener("change", () => {
-          passInput.type = showBox.checked ? "text" : "password";
-        });
-      }
+      // Toggle mắt hiển/ẩn mật khẩu
+      document.getElementById('toggleLiPass')?.addEventListener('click', ()=>{
+        passInput.type = passInput.type === 'password' ? 'text' : 'password';
+      });
 
       /* Điều hướng: nếu đã đăng nhập -> quay lại trang trước hoặc trang chủ */
       (function(){
@@ -128,10 +149,12 @@
       (function(){
         const accountInput = document.getElementById("liAccount");
         try {
-          const lastAcc = localStorage.getItem("vvv_last_login_account")
+          const lastAcc = (rememberPref && (localStorage.getItem("vvv_last_login_account")
             || localStorage.getItem("vvv_last_login_phone")
-            || localStorage.getItem("vvv_last_login_email");
+            || localStorage.getItem("vvv_last_login_email"))) || "";
           if (!getSession() && lastAcc && accountInput && !accountInput.value) accountInput.value = lastAcc;
+          const lastPw = (rememberPref && localStorage.getItem('vvv_last_login_password')) || '';
+          if (!getSession() && lastPw && passInput && !passInput.value) passInput.value = lastPw;
         } catch {}
         if (accountInput && accountInput.value) { passInput?.focus(); } else { accountInput?.focus(); }
       })();
@@ -178,11 +201,21 @@
         }
 
         try {
-          // Lưu tài khoản để lần sau autofill
+          // Ghi nhớ tài khoản nếu người dùng chọn
           try {
-            localStorage.setItem("vvv_last_login_account", accountRaw);
-            if (isPhone) localStorage.setItem("vvv_last_login_phone", normalizedPhone);
-            if (isEmail) localStorage.setItem("vvv_last_login_email", lowerAcc);
+            localStorage.setItem(REMEMBER_KEY, String(!!rememberBox?.checked));
+            if (rememberBox?.checked) {
+              localStorage.setItem("vvv_last_login_account", accountRaw);
+              if (isPhone) localStorage.setItem("vvv_last_login_phone", normalizedPhone);
+              if (isEmail) localStorage.setItem("vvv_last_login_email", lowerAcc);
+              // Lưu mật khẩu cùng lúc khi bật ghi nhớ
+              localStorage.setItem('vvv_last_login_password', pass);
+            } else {
+              localStorage.removeItem("vvv_last_login_account");
+              localStorage.removeItem("vvv_last_login_phone");
+              localStorage.removeItem("vvv_last_login_email");
+              localStorage.removeItem('vvv_last_login_password');
+            }
           } catch {}
           const res = await apiLoginUser({ email: isEmail ? lowerAcc : "", phone: isPhone ? normalizedPhone : "", password: pass });
           if (!res?.ok) {

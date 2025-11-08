@@ -301,6 +301,11 @@ img {
   justify-content: space-between;
   margin: 0 0 16px;
 }
+/* Centered variant for pages that need the heading centered */
+.title.title--center {
+  justify-content: center;
+  text-align: center;
+}
 .title h2 {
   margin: 0;
   font-size: 34px;

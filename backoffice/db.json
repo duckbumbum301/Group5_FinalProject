@@ -309,296 +309,6 @@
       "description": "Giỏ quà cao cấp - Sản phẩm chất lượng cao",
       "popular": 63
     },
-
-    {
-      "id": "560",
-      "name": "Hạt đậu phộng rang (200g)",
-      "category": "dry",
-      "subcategory": "beans-nuts",
-      "price": 22000,
-      "unit": "gói",
-      "stock": 35,
-      "image": "",
-      "description": "Hạt đậu phộng rang (200g)",
-      "popular": 30
-    },
-    {
-      "id": "561",
-      "name": "Hạt hạnh nhân (100g)",
-      "category": "dry",
-      "subcategory": "beans-nuts",
-      "price": 65000,
-      "unit": "gói",
-      "stock": 22,
-      "image": "",
-      "description": "Hạt hạnh nhân (100g)",
-      "popular": 41
-    },
-    {
-      "id": "570",
-      "name": "Bột chiên giòn (200g)",
-      "category": "dry",
-      "subcategory": "flour-mix",
-      "price": 18000,
-      "unit": "gói",
-      "stock": 44,
-      "image": "",
-      "description": "Bột chiên giòn (200g)",
-      "popular": 29
-    },
-    {
-      "id": "571",
-      "name": "Bột tẩm tempura (200g)",
-      "category": "dry",
-      "subcategory": "flour-mix",
-      "price": 25000,
-      "unit": "gói",
-      "stock": 31,
-      "image": "",
-      "description": "Bột tẩm tempura (200g)",
-      "popular": 36
-    },
-    {
-      "id": "630",
-      "name": "Lá húng quế sấy (20g)",
-      "category": "spice",
-      "subcategory": "herbs",
-      "price": 19000,
-      "unit": "gói",
-      "stock": 40,
-      "image": "",
-      "description": "Lá húng quế sấy (20g)",
-      "popular": 33
-    },
-    {
-      "id": "631",
-      "name": "Lá rosemary sấy (20g)",
-      "category": "spice",
-      "subcategory": "herbs",
-      "price": 25000,
-      "unit": "gói",
-      "stock": 28,
-      "image": "",
-      "description": "Lá rosemary sấy (20g)",
-      "popular": 37
-    },
-    {
-      "id": "640",
-      "name": "Gia vị nướng BBQ (50g)",
-      "category": "spice",
-      "subcategory": "condiment",
-      "price": 32000,
-      "unit": "gói",
-      "stock": 30,
-      "image": "",
-      "description": "Gia vị nướng BBQ (50g)",
-      "popular": 45
-    },
-    {
-      "id": "641",
-      "name": "Gia vị lẩu thái (50g)",
-      "category": "spice",
-      "subcategory": "condiment",
-      "price": 35000,
-      "unit": "gói",
-      "stock": 28,
-      "image": "",
-      "description": "Gia vị lẩu thái (50g)",
-      "popular": 39
-    },
-    {
-      "id": "702",
-      "name": "Cuộn túi rác 60L",
-      "category": "household",
-      "subcategory": "bags-packaging",
-      "price": 38000,
-      "unit": "gói",
-      "stock": 30,
-      "image": "",
-      "description": "Cuộn túi rác 60L",
-      "popular": 29
-    },
-    {
-      "id": "703",
-      "name": "Túi hút chân không (10 chiếc)",
-      "category": "household",
-      "subcategory": "bags-packaging",
-      "price": 69000,
-      "unit": "gói",
-      "stock": 20,
-      "image": "",
-      "description": "Túi hút chân không (10 chiếc)",
-      "popular": 35
-    },
-    {
-      "id": "715",
-      "name": "Combo giặt & tẩy (2 món)",
-      "category": "household",
-      "subcategory": "laundry-cleaning",
-      "price": 89000,
-      "unit": "gói",
-      "stock": 26,
-      "image": "",
-      "description": "Combo giặt & tẩy (2 món)",
-      "popular": 34
-    },
-    {
-      "id": "716",
-      "name": "Nước lau đa năng (1L)",
-      "category": "household",
-      "subcategory": "laundry-cleaning",
-      "price": 55000,
-      "unit": "gói",
-      "stock": 33,
-      "image": "",
-      "description": "Nước lau đa năng (1L)",
-      "popular": 41
-    },
-    {
-      "id": "722",
-      "name": "Hộp bảo quản thực phẩm (2 chiếc)",
-      "category": "household",
-      "subcategory": "kitchen-storage",
-      "price": 59000,
-      "unit": "gói",
-      "stock": 25,
-      "image": "",
-      "description": "Hộp bảo quản thực phẩm (2 chiếc)",
-      "popular": 36
-    },
-    {
-      "id": "723",
-      "name": "Bộ hũ gia vị (3 chiếc)",
-      "category": "household",
-      "subcategory": "kitchen-storage",
-      "price": 49000,
-      "unit": "gói",
-      "stock": 28,
-      "image": "",
-      "description": "Bộ hũ gia vị (3 chiếc)",
-      "popular": 32
-    },
-    {
-      "id": "753",
-      "name": "Bàn chải đánh răng (2 chiếc)",
-      "category": "household",
-      "subcategory": "personal-care",
-      "price": 26000,
-      "unit": "gói",
-      "stock": 38,
-      "image": "",
-      "description": "Bàn chải đánh răng (2 chiếc)",
-      "popular": 33
-    },
-    {
-      "id": "754",
-      "name": "Sữa dưỡng thể (200ml)",
-      "category": "household",
-      "subcategory": "personal-care",
-      "price": 79000,
-      "unit": "gói",
-      "stock": 18,
-      "image": "",
-      "description": "Sữa dưỡng thể (200ml)",
-      "popular": 47
-    },
-
-    {
-      "id": "220",
-      "name": "Táo tươi (1kg)",
-      "category": "fruit",
-      "subcategory": "fresh",
-      "price": 85000,
-      "unit": "gói",
-      "stock": 40,
-      "image": "../images/FRUIT/fresh/Táo tươi.jpg",
-      "description": "Táo tươi (1kg)",
-      "popular": 50
-    },
-    {
-      "id": "221",
-      "name": "Cam tươi (1kg)",
-      "category": "fruit",
-      "subcategory": "fresh",
-      "price": 35000,
-      "unit": "gói",
-      "stock": 50,
-      "image": "../images/FRUIT/fresh/Cam tươi.jpg",
-      "description": "Cam tươi (1kg)",
-      "popular": 45
-    },
-    {
-      "id": "230",
-      "name": "Táo Mỹ nhập khẩu (1kg)",
-      "category": "fruit",
-      "subcategory": "imported",
-      "price": 99000,
-      "unit": "gói",
-      "stock": 30,
-      "image": "../images/FRUIT/imported/Táo Mỹ nhập khẩu.jpg",
-      "description": "Táo Mỹ nhập khẩu (1kg)",
-      "popular": 55
-    },
-    {
-      "id": "231",
-      "name": "Nho nhập khẩu (500g)",
-      "category": "fruit",
-      "subcategory": "imported",
-      "price": 120000,
-      "unit": "gói",
-      "stock": 25,
-      "image": "../images/FRUIT/imported/Nho nhập khẩu.jpg",
-      "description": "Nho nhập khẩu (500g)",
-      "popular": 60
-    },
-    {
-      "id": "240",
-      "name": "Chuối Laba mùa vụ (1kg)",
-      "category": "fruit",
-      "subcategory": "seasonal",
-      "price": 28000,
-      "unit": "gói",
-      "stock": 48,
-      "image": "../images/FRUIT/seasonal/Chuối Laba mùa vụ.jpg",
-      "description": "Chuối Laba mùa vụ (1kg)",
-      "popular": 42
-    },
-    {
-      "id": "241",
-      "name": "Cam sành theo mùa (1kg)",
-      "category": "fruit",
-      "subcategory": "seasonal",
-      "price": 35000,
-      "unit": "gói",
-      "stock": 52,
-      "image": "../images/FRUIT/seasonal/Cam sành theo mùa.jpg",
-      "description": "Cam sành theo mùa (1kg) - Sản phẩm chất lượng cao",
-      "popular": 46
-    },
-    {
-      "id": "250",
-      "name": "Chuối sấy (100g)",
-      "category": "fruit",
-      "subcategory": "dried",
-      "price": 45000,
-      "unit": "gói",
-      "stock": 28,
-      "image": "../images/FRUIT/dried/Chuối sấy 100g.jpg",
-      "description": "Chuối sấy (100g)",
-      "popular": 35
-    },
-    {
-      "id": "251",
-      "name": "Mít sấy (100g)",
-      "category": "fruit",
-      "subcategory": "dried",
-      "price": 50000,
-      "unit": "gói",
-      "stock": 24,
-      "image": "../images/FRUIT/dried/Mít sấy 100g.jpg",
-      "description": "Mít sấy (100g)",
-      "popular": 37
-    },
     {
       "id": "300",
       "name": "Thịt heo ba rọi (500g)",
@@ -3477,6 +3187,96 @@
         "total": 70000
       },
       "timestamp": "2025-11-06T12:14:26.415Z"
+    },
+    {
+      "id": "1762587594292p2038",
+      "action": "password.reset.start",
+      "who": "ilovetranduythanh@gmail.com",
+      "metadata": {
+        "userId": "client-seed-0906760495"
+      },
+      "timestamp": "2025-11-08T07:39:54.292Z"
+    },
+    {
+      "id": "1762589889193xitlu",
+      "action": "user.register",
+      "who": "huynhquocviet0609@gmail.com",
+      "metadata": {
+        "userId": "1762589889193"
+      },
+      "timestamp": "2025-11-08T08:18:09.193Z"
+    },
+    {
+      "id": "1762589937063533sg",
+      "action": "user.login",
+      "who": "huynhquocviet0609@gmail.com",
+      "metadata": {
+        "userId": "1762589889193"
+      },
+      "timestamp": "2025-11-08T08:18:57.063Z"
+    },
+    {
+      "id": "1762589980784t3sgp",
+      "action": "user.login",
+      "who": "huynhquocviet0609@gmail.com",
+      "metadata": {
+        "userId": "1762589889193"
+      },
+      "timestamp": "2025-11-08T08:19:40.784Z"
+    },
+    {
+      "id": "1762590246117sxzca",
+      "action": "user.login",
+      "who": "huynhquocviet0609@gmail.com",
+      "metadata": {
+        "userId": "1762589889193"
+      },
+      "timestamp": "2025-11-08T08:24:06.117Z"
+    },
+    {
+      "id": "1762590302659imbov",
+      "action": "user.login",
+      "who": "huynhquocviet0609@gmail.com",
+      "metadata": {
+        "userId": "1762589889193"
+      },
+      "timestamp": "2025-11-08T08:25:02.659Z"
+    },
+    {
+      "id": "17625904234671bmsl",
+      "action": "user.login",
+      "who": "huynhquocviet0609@gmail.com",
+      "metadata": {
+        "userId": "1762589889193"
+      },
+      "timestamp": "2025-11-08T08:27:03.467Z"
+    },
+    {
+      "id": "1762590519751flned",
+      "action": "user.login",
+      "who": "huynhquocviet0609@gmail.com",
+      "metadata": {
+        "userId": "1762589889193"
+      },
+      "timestamp": "2025-11-08T08:28:39.751Z"
+    },
+    {
+      "id": "1762590721716b2urg",
+      "action": "user.login",
+      "who": "huynhquocviet0609@gmail.com",
+      "metadata": {
+        "userId": "1762589889193"
+      },
+      "timestamp": "2025-11-08T08:32:01.716Z"
+    },
+    {
+      "id": "176259085876778sww",
+      "action": "user.login",
+      "who": "huynhquocviet0609@gmail.com",
+      "metadata": {
+        "userId": "1762589889193"
+      },
+      "timestamp": "2025-11-08T08:34:18.767Z"
     }
   ]
 }

@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Quên mật khẩu — Vựa Vui Vẻ</title>
+    <link rel="stylesheet" href="styles.css" />
+    <style>
+      @font-face {
+        font-family: "Blenda Script";
+        src: url("../assets/font/1FTV-blenda-script.otf") format("opentype");
+        font-weight: 400;
+        font-style: normal;
+        font-display: swap;
+      }
+      .auth-title {
+        font-family: "Blenda Script", cursive;
+        font-weight: 800;
+        font-size: 34px;
+        color: #2f7f31;
+        margin: 0;
+      }
+      @supports (-webkit-background-clip: text) {
+        .auth-title {
+          background: linear-gradient(180deg, #1f5a27 0%, #66c372 100%);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+        }
+      }
+      .fp-card {
+        background: #fff;
+        border: 1px solid #e6f3e9;
+        border-radius: 18px;
+        box-shadow: 0 10px 30px rgba(31, 90, 39, 0.08);
+        padding: 18px;
+      }
+      .fp-steps {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin: 6px 0 14px;
+      }
+      .fp-step {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 6px 10px;
+        border-radius: 999px;
+        background: #eff7f1;
+        color: #1f5a27;
+        font-weight: 700;
+        font-size: 14px;
+      }
+      .fp-step--active {
+        background: #dff3e4;
+        color: #146a2d;
+        box-shadow: 0 0 0 2px #bfe9cc inset;
+      }
+      .fp-sep {
+        flex: 1;
+        height: 1px;
+        background: linear-gradient(to right, #e6f3e9, #cde9d6, #e6f3e9);
+      }
+      .inline-row {
+        display: flex;
+        gap: 8px;
+        align-items: center;
+      }
+      .inline-row input {
+        flex: 1;
+      }
+      .code-inputs {
+        display: grid;
+        grid-template-columns: repeat(6, 1fr);
+        gap: 8px;
+        margin: 8px 0 12px;
+      }
+      .code-inputs input {
+        text-align: center;
+        font-size: 18px;
+        padding: 10px 0;
+        border-radius: 12px;
+        border: 1px solid #cce6d6;
+        background: #f7fff9;
+        color: #14532d;
+      }
+      .note {
+        color: #6b7280;
+        font-size: 13px;
+      }
+    </style>
+    <meta
+      http-equiv="Cache-Control"
+      content="no-cache, no-store, must-revalidate"
+    />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+  </head>
+  <body class="page-center theme-green">
+    <div class="container container--wide container--right container--bare">
+      <div class="row" style="text-align: center">
+        <h1 class="auth-title">Quên mật khẩu</h1>
+      </div>
+      <p class="muted">
+        Xác nhận email để nhận mã OTP, sau đó đặt lại mật khẩu.
+      </p>
+
+      <form id="formForgot" novalidate class="fp-card">
+        <div class="fp-steps">
+          <span class="fp-step fp-step--active" id="stEmail"
+            >1. Xác nhận email</span
+          >
+          <span class="fp-sep"></span>
+          <span class="fp-step" id="stReset">2. Đặt mật khẩu</span>
+        </div>
+        <table class="form-table">
+          <!-- Bước 1: Xác nhận email -->
+          <tr>
+            <td><label for="fpEmail">Email</label></td>
+            <td>
+              <div class="inline-row">
+                <input
+                  id="fpEmail"
+                  name="email"
+                  type="email"
+                  autocomplete="email"
+                  placeholder="email@domain.com"
+                  required
+                />
+                <button type="button" id="fpSend" class="btn btn-secondary">
+                  Xác nhận
+                </button>
+              </div>
+            </td>
+          </tr>
+
+          <!-- Bước 2: Nhập OTP + đặt mật khẩu mới -->
+          <tbody id="stepOtp" hidden>
+            <tr>
+              <td><label for="fpOtp">Mã OTP</label></td>
+              <td>
+                <div class="code-inputs" id="otpGrid">
+                  <input maxlength="1" inputmode="numeric" />
+                  <input maxlength="1" inputmode="numeric" />
+                  <input maxlength="1" inputmode="numeric" />
+                  <input maxlength="1" inputmode="numeric" />
+                  <input maxlength="1" inputmode="numeric" />
+                  <input maxlength="1" inputmode="numeric" />
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td><label for="fpNewPass">Mật khẩu mới</label></td>
+              <td>
+                <div class="pw-wrap">
+                  <input
+                    id="fpNewPass"
+                    name="newpw"
+                    type="password"
+                    minlength="6"
+                    autocomplete="new-password"
+                    placeholder="Tối thiểu 6 ký tự"
+                  />
+                  <button
+                    type="button"
+                    id="toggleFpPass"
+                    class="pw-toggle"
+                    aria-label="Hiện/ẩn mật khẩu"
+                  >
+                    <svg
+                      class="icon-eye"
+                      viewBox="0 0 24 24"
+                      width="22"
+                      height="22"
+                      aria-hidden="true"
+                    >
+                      <path
+                        d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8S1 12 1 12z"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        fill="none"
+                      />
+                      <circle cx="12" cy="12" r="3" fill="currentColor" />
+                    </svg>
+                    <svg
+                      class="icon-eye-off"
+                      viewBox="0 0 24 24"
+                      width="22"
+                      height="22"
+                      aria-hidden="true"
+                    >
+                      <path
+                        d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8S1 12 1 12z"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        fill="none"
+                      />
+                      <path
+                        d="M4 4l16 16"
+                        stroke="currentColor"
+                        stroke-width="2"
+                      />
+                    </svg>
+                  </button>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td><label for="fpNewPass2">Nhập lại mật khẩu</label></td>
+              <td>
+                <div class="pw-wrap">
+                  <input
+                    id="fpNewPass2"
+                    name="newpw2"
+                    type="password"
+                    minlength="6"
+                    autocomplete="new-password"
+                    placeholder="Nhập lại mật khẩu"
+                  />
+                  <button
+                    type="button"
+                    id="toggleFpPass2"
+                    class="pw-toggle"
+                    aria-label="Hiện/ẩn mật khẩu"
+                  >
+                    <svg
+                      class="icon-eye"
+                      viewBox="0 0 24 24"
+                      width="22"
+                      height="22"
+                      aria-hidden="true"
+                    >
+                      <path
+                        d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8S1 12 1 12z"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        fill="none"
+                      />
+                      <circle cx="12" cy="12" r="3" fill="currentColor" />
+                    </svg>
+                    <svg
+                      class="icon-eye-off"
+                      viewBox="0 0 24 24"
+                      width="22"
+                      height="22"
+                      aria-hidden="true"
+                    >
+                      <path
+                        d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8S1 12 1 12z"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        fill="none"
+                      />
+                      <path
+                        d="M4 4l16 16"
+                        stroke="currentColor"
+                        stroke-width="2"
+                      />
+                    </svg>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div
+          class="nav-actions inline-row"
+          aria-label="điều hướng"
+          style="margin-top: 10px"
+        >
+          <a class="btn btn-ghost" href="login.html">Trở về Đăng nhập</a>
+          <button class="btn btn-primary" id="fpReset" type="button" disabled>
+            Đổi mật khẩu
+          </button>
+        </div>
+
+        <p id="fpMsg" class="alert" style="display: none"></p>
+      </form>
+
+      <!-- Core auth dùng chung -->
+      <script src="auth.js"></script>
+      <script>
+        const emailInput = document.getElementById("fpEmail");
+        const btnSend = document.getElementById("fpSend");
+        const otpSection = document.getElementById("stepOtp");
+        const otpInputs = Array.from(
+          document.querySelectorAll("#otpGrid input")
+        );
+        const newPass = document.getElementById("fpNewPass");
+        const newPass2 = document.getElementById("fpNewPass2");
+        const btnReset = document.getElementById("fpReset");
+        const msgEl = document.getElementById("fpMsg");
+        const stEmail = document.getElementById("stEmail");
+        const stReset = document.getElementById("stReset");
+
+        const setMsg = (t) => {
+          msgEl.textContent = t || "";
+          msgEl.style.display = t ? "block" : "none";
+        };
+
+        // Toggle eyes
+        document
+          .getElementById("toggleFpPass")
+          ?.addEventListener("click", () => {
+            newPass.type = newPass.type === "password" ? "text" : "password";
+          });
+        document
+          .getElementById("toggleFpPass2")
+          ?.addEventListener("click", () => {
+            newPass2.type = newPass2.type === "password" ? "text" : "password";
+          });
+
+        // Bước 1: Xác nhận email và phát OTP (console)
+        btnSend.addEventListener("click", () => {
+          const raw = String(emailInput.value || "")
+            .trim()
+            .toLowerCase();
+          if (!vvvAuth.emailOk(raw)) {
+            setMsg("Vui lòng nhập email hợp lệ.");
+            return;
+          }
+          const users = vvvAuth.loadUsers();
+          const idx = users.findIndex(
+            (u) => String(u.email || "").toLowerCase() === raw
+          );
+          if (idx === -1) {
+            setMsg("Email chưa đăng ký.");
+            return;
+          }
+          const code = String(Math.floor(100000 + Math.random() * 900000));
+          const payload = { email: raw, code, at: Date.now() };
+          try {
+            localStorage.setItem("vvv_fp_pending", JSON.stringify(payload));
+          } catch {}
+          console.log("[OTP RESET]", raw, "code =", code);
+          setMsg(
+            "Mã OTP đã phát. Vui lòng kiểm tra Console và nhập OTP để tiếp tục."
+          );
+          otpSection.hidden = false;
+          btnReset.disabled = false;
+          stEmail.classList.remove("fp-step--active");
+          stReset.classList.add("fp-step--active");
+          otpInputs[0]?.focus();
+        });
+
+        // Bước 2: Đặt mật khẩu mới sau khi nhập đúng OTP
+        btnReset.addEventListener("click", () => {
+          const pending = (function () {
+            try {
+              return JSON.parse(
+                localStorage.getItem("vvv_fp_pending") || "null"
+              );
+            } catch {
+              return null;
+            }
+          })();
+          const email = String(emailInput.value || "")
+            .trim()
+            .toLowerCase();
+          if (!pending || pending.email !== email) {
+            setMsg("Vui lòng xác nhận email để nhận OTP.");
+            return;
+          }
+          if (Date.now() - Number(pending.at || 0) > 10 * 60 * 1000) {
+            setMsg("OTP đã hết hạn. Vui lòng xác nhận lại email.");
+            return;
+          }
+          const otp = otpInputs
+            .map((i) => String(i.value || "").trim())
+            .join("");
+          if (!otp || otp !== String(pending.code)) {
+            setMsg("OTP không đúng.");
+            return;
+          }
+          const pw1 = String(newPass.value || "");
+          const pw2 = String(newPass2.value || "");
+          if (!pw1 || pw1.length < 6) {
+            setMsg("Mật khẩu mới phải ≥ 6 ký tự.");
+            return;
+          }
+          if (pw1 !== pw2) {
+            setMsg("Xác nhận mật khẩu chưa khớp.");
+            return;
+          }
+
+          const users = vvvAuth.loadUsers();
+          const idx = users.findIndex(
+            (u) => String(u.email || "").toLowerCase() === email
+          );
+          if (idx === -1) {
+            setMsg("Không tìm thấy người dùng.");
+            return;
+          }
+
+          users[idx] = { ...users[idx], password: pw1 };
+          vvvAuth.saveUsers(users);
+          try {
+            localStorage.removeItem("vvv_fp_pending");
+          } catch {}
+          alert("Đổi mật khẩu thành công");
+          vvvAuth.go("login.html");
+        });
+
+        // OTP UX: tự chuyển ô, hỗ trợ Backspace và paste
+        otpInputs.forEach((input, idx) => {
+          input.addEventListener("input", (e) => {
+            e.target.value = e.target.value.replace(/\D/g, "").slice(0, 1);
+            if (e.target.value && idx < otpInputs.length - 1)
+              otpInputs[idx + 1].focus();
+          });
+          input.addEventListener("keydown", (e) => {
+            if (e.key === "Backspace" && !e.target.value && idx > 0)
+              otpInputs[idx - 1].focus();
+          });
+          input.addEventListener("paste", (e) => {
+            const txt = (e.clipboardData?.getData("text") || "")
+              .replace(/\D/g, "")
+              .slice(0, 6);
+            if (!txt) return;
+            e.preventDefault();
+            for (let i = 0; i < otpInputs.length; i++) {
+              otpInputs[i].value = txt[i] || "";
+            }
+            otpInputs[Math.min(txt.length, otpInputs.length - 1)].focus();
+          });
+        });
+      </script>
+    </div>
+  </body>
+</html>
