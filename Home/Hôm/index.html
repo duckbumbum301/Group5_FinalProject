@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Vựa Vui Vẻ — Demo</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  
+
+ <!-- HEADER (overlay chữ trắng; hover/scroll => solid trắng chữ xanh) -->
+<header class="header overlay" id="header">
+  <div class="container header-wrap">
+ <a class="logo" href="#">
+  <img src="images/logo.png.png" alt="Vựa Vui Vẻ logo">
+</a>
+
+    <button class="burger" aria-label="Mở menu" onclick="toggleMenu()">☰</button>
+    
+    <nav class="mainnav" id="mainnav">
+      <div class="dd">
+        <a href="../../html/index.html" class="dd-btn">Sản phẩm ▾</a>
+      </div>
+
+      <div class="dd">
+        <a href="../../html/recipes.html" class="dd-btn">Công thức ▾</a>
+      </div>
+
+      <div class="dd">
+        <a href="../../html/aboutus.html" class="dd-btn">Giới thiệu ▾</a>
+      </div>
+       
+       <!-- Account button -->
+        <button class="account-btn" id="accountBtn">
+          <img src="../Hôm/images/ic_account.png" alt="Account" class="account-icon"/>
+        </button>
+<a href="/html/cart.html" class="account-btn">
+    <img src="../Hôm/images/buy.png" alt="Account" class="account-icon"/>
+</a>
+
+    <!-- Account (drawer giữ nguyên) -->
+    <aside
+      id="accountModal"
+      class="drawer"
+      role="dialog"
+      aria-modal="true"
+      aria-label="Thông tin tài khoản"
+      aria-labelledby="accountTitle"
+      hidden
+    >
+      <div class="drawer__panel">
+        <div class="drawer__head">
+          <h3 id="accountTitle">Tài khoản</h3>
+          <button class="btn btn--icon" id="accountCloseBtn" aria-label="Đóng">Đóng</button>
+        </div>
+        <div class="account-tabs">
+          <nav class="account-nav">
+            <button class="account-item active" id="acctNavProfile">
+              <span>Sửa thông tin cá nhân</span>
+              <span>›</span>
+            </button>
+            <button class="account-item" id="acctNavOrders">
+              <span>Đơn hàng từng mua</span>
+              <span>›</span>
+            </button>
+            <button class="account-item" id="acctNavSecurity">
+              <span>Đổi mật khẩu</span>
+              <span>›</span>
+            </button>
+          </nav>
+          <div class="account-content">
+            <section id="accountProfilePanel" class="account-panel">
+              <form id="accountForm" class="contact" style="padding: 16px">
+                <input class="input" type="text" name="name" placeholder="Họ và tên" autocomplete="name" required />
+                <input class="input" type="email" name="email" placeholder="Email (không thay đổi sau đăng ký)" autocomplete="email" readonly aria-readonly="true" />
+                <input class="input" type="tel" name="phone" placeholder="Số điện thoại (không thay đổi sau đăng ký)" autocomplete="tel" inputmode="numeric" pattern="\d{9,11}" title="Nhập 9–11 chữ số" readonly aria-readonly="true" />
+                <p class="muted" id="acctAddrInline" role="status" aria-live="polite">Địa chỉ mặc định: </p>
+                <textarea class="input" name="address" rows="3" placeholder="Địa chỉ giao hàng..." autocomplete="street-address" required></textarea>
+                <button class="btn btn--pri" type="submit">Lưu thông tin</button>
+                <p class="muted" id="accountMsg" role="status" aria-live="polite"></p>
+              </form>
+            </section>
+            <section id="accountOrdersPanel" class="account-panel" hidden>
+              <div id="accountOrdersBody" class="orders-body" style="padding: 16px"></div>
+            </section>
+            <section id="accountPasswordPanel" class="account-panel" hidden>
+              <form id="changePasswordForm" class="contact" style="padding: 16px">
+                <input class="input" type="password" name="current" placeholder="Mật khẩu hiện tại" autocomplete="current-password" required />
+                <input class="input" type="password" name="new" placeholder="Mật khẩu mới" autocomplete="new-password" required />
+                <input class="input" type="password" name="confirm" placeholder="Xác nhận mật khẩu mới" autocomplete="new-password" required />
+                <button class="btn btn--pri" type="submit">Đổi mật khẩu</button>
+                <p class="muted" id="pwMsg" role="status" aria-live="polite"></p>
+              </form>
+            </section>
+          </div>
+        </div>
+        <div class="drawer__foot">
+          <button class="btn btn--danger" id="btnLogout">Đăng xuất</button>
+        </div>
+      </div>
+      <div class="drawer__overlay" id="accountOverlay" tabindex="-1"></div>
+    </aside>
+</header>
+
+ <section class="hero" id="hero">
+  <div class="container hero-grid">
+    <div class="hero-left">
+      <!-- Slide 1 -->
+      <img class="hero-slide active" src="../Hôm/images/BANNER_MUANGAY.png">
+
+      <!-- Slide 2 -->
+      <img class="hero-slide"  src="../Hôm/images/banner.png">
+      <!-- Slide 3 -->
+      <img class="hero-slide" src="../Hôm/images/tuinhua.png">
+
+      <!-- Slide 4 -->
+      <img class="hero-slide" src="../Hôm/images/banner2.png">
+          <!-- Slide 3 -->
+      <img class="hero-slide" src="../Hôm/images/banner1.png">
+    </div>
+
+    <div class="hero-right" aria-hidden="true">
+      <div class="ribbon a"></div>
+      <div class="ribbon b"></div>
+      <div class="ribbon c"></div>
+      <div class="parachute"></div>
+    </div>
+
+    <button class="hero-nav prev" onclick="heroPrev()">‹</button>
+    <button class="hero-nav next" onclick="heroNext()">›</button>
+  </div>
+</section>
+
+
+    <!-- Pagination gạch-gạch -->
+    <div class="hero-pagination" id="hero-pagi">
+      <span data-i="0"></span>
+      <span data-i="1"></span>
+      <span data-i="2"></span>
+      <span data-i="3"></span>
+      <span data-i="4"></span>
+    </div>
+  </section>
+
+  <!-- AWARDS -->
+  <section class="awards">
+    <div class="container awards-row">
+      <div>🏆 SUPERIOR TASTE</div>
+      <div>🏆 MONDE SELECTION</div>
+      <div>🏆 WORLD DAIRY INNOVATION 2025</div>
+      <div>🏆 PURITY AWARD</div>
+      <div>🏆 CARBON NEUTRALITY 2060</div>
+    </div>
+  </section>
+
+  <!-- VISUAL -->
+  <section class="ice-visual">
+    <div class="ice-left">
+      <img alt="Kem" src="images/ad.jpg" />
+    </div>
+    <div class="ice-right">
+      <img alt="Nắp hộp" src="images/moi.png" />
+     
+    </div>
+  </section>
+<!-- SHOP SLIDER (đã chỉnh cấu trúc, gọn đúng một section) -->
+<section id="shop" class="shop">
+  <div class="container">
+    <h1 class="title">Sắp ra mắt !!!</h1>
+
+    <div class="showcase">
+      <!-- Nav -->
+      <button class="nav left"  type="button" aria-label="Cuộn trái"  onclick="scrollByX(-360)">‹</button>
+      <button class="nav right" type="button" aria-label="Cuộn phải" onclick="scrollByX(360)">›</button>
+
+      <!-- Scroller -->
+      <div class="scroller" id="scroll" role="region" aria-label="Băng chuyền sản phẩm">
+
+       <!-- Card 6 -->
+<a class="pcard" href="#" data-name="Coca-Cola Zero" data-line="Nước ngọt có gas • 330ml">
+  <div class="media">
+    <img class="front" src="images/cocafront.jpg" alt="Coca-Cola - mặt trước">
+    <img class="side"  src="images/cocaside.jpg"  alt="Coca-Cola - cạnh bên">
+  </div>
+  <div class="pop">
+    <b>Coca-Cola Zero</b>
+    <span>Nước ngọt có gas • 330ml</span>
+    <a href="#" aria-label="Xem chi tiết">→</a>
+  </div>
+</a>
+
+<!-- Card 7 -->
+<a class="pcard" href="#" data-name="Pepsi không đường" data-line="Nước ngọt có gas • 330ml">
+  <div class="media">
+    <img class="front" src="images/pepsifront.jpg" alt="Pepsi - mặt trước">
+    <img class="side"  src="images/pepsiside.jpg" alt="Pepsi - mặt sau">
+  </div>
+  <div class="pop">
+    <b>Pepsi</b>
+    <span>Nước ngọt có gas • 330ml</span>
+    <a href="#" aria-label="Xem chi tiết">→</a>
+  </div>
+</a>
+<!-- Card: Cà phê sữa lon -->
+<a class="pcard" href="#" data-name="Cà phê sữa lon" data-line="Đóng lon • 330ml">
+  <div class="media">
+    <img class="front" src="images/caphefront.jpg" alt="Cà phê sữa lon - mặt trước">
+    <img class="side"  src="images/capheside.jpg"  alt="Cà phê sữa lon - cạnh bên">
+  </div>
+  <div class="pop">
+    <b>Cà phê sữa lon</b>
+    <span>Đóng lon • 330ml</span>
+    <a href="#" aria-label="Xem chi tiết">→</a>
+  </div>
+</a>
+
+<!-- Card: Fanta Cam -->
+<a class="pcard" href="#" data-name="Fanta dâu" data-line="Nước ngọt vị dâu • 330ml">
+  <div class="media">
+    <img class="front" src="images/fantafront.jpg" alt="Fanta Cam - mặt trước">
+    <img class="side"  src="images/fantaside.jpg"  alt="Fanta Cam - cạnh bên">
+  </div>
+  <div class="pop">
+    <b>Fanta dâu</b>
+    <span>Nước ngọt vị dâu • 330ml</span>
+    <a href="#" aria-label="Xem chi tiết">→</a>
+  </div>
+</a>
+<!-- Card: Nutriboost Cam -->
+<a class="pcard" href="#" data-name="Nutriboost Cam" data-line="Sữa trái cây • 297ml">
+  <div class="media">
+    <img class="front" src="images/nutrifront.jpg" alt="Nutriboost Cam - mặt trước">
+    <img class="side"  src="images/nutriside.jpg"  alt="Nutriboost Cam - cạnh bên">
+  </div>
+  <div class="pop">
+    <b>Nutriboost Cam</b>
+    <span>Sữa trái cây • 297ml</span>
+    <a href="#" aria-label="Xem chi tiết">→</a>
+  </div>
+</a>
+
+<!-- Card: Mirinda Soda Kem -->
+<a class="pcard" href="#" data-name="C2 dâu anh đào" data-line="Nước ngọt  • 330ml">
+  <div class="media">
+    <img class="front" src="images/c2f.jpg" alt="Mirinda Soda Kem - mặt trước">
+    <img class="side"  src="images/c2s.jpg"  alt="Mirinda Soda Kem - cạnh bên">
+  </div>
+  <div class="pop">
+    <b>C2 dâu anh đào</b>
+    <span>Nước ngọt • 330ml</span>
+    <a href="#" aria-label="Xem chi tiết">→</a>
+  </div>
+</a>
+
+
+<!-- Card: Sữa hạt dinh dưỡng -->
+<a class="pcard" href="#" data-name="Sữa hạt dinh dưỡng" data-line="Ngũ cốc • 180ml">
+  <div class="media">
+    <img class="front" src="images/suahatfront.jpg" alt="Sữa hạt dinh dưỡng - mặt trước">
+    <img class="side"  src="images/suahatside.jpg"  alt="Sữa hạt dinh dưỡng - cạnh bên">
+  </div>
+  <div class="pop">
+    <b>Sữa hạt dinh dưỡng</b>
+    <span>Ngũ cốc • 180ml</span>
+    <a href="#" aria-label="Xem chi tiết">→</a>
+  </div>
+</a>
+
+<!-- Card: Snickers -->
+<a class="pcard" href="#" data-name="Snickers" data-line="Thanh socola • 35g">
+  <div class="media">
+    <img class="front" src="images/snickerfront.jpg" alt="Snickers - mặt trước">
+    <img class="side"  src="images/snickerside.jpg"  alt="Snickers - cạnh bên">
+  </div>
+  <div class="pop">
+    <b>Snickers</b>
+    <span>Thanh socola • 35g</span>
+    <a href="#" aria-label="Xem chi tiết">→</a>
+  </div>
+</a>
+
+<!-- Card: KitKat -->
+<a class="pcard" href="#" data-name="KitKat" data-line="Wafer phủ socola • 35g">
+  <div class="media">
+    <img class="front" src="images/kitkatfront.jpg" alt="KitKat - mặt trước">
+    <img class="side"  src="images/kitkatside.jpg"  alt="KitKat - cạnh bên">
+  </div>
+  <div class="pop">
+    <b>KitKat</b>
+    <span>Wafer phủ socola • 35g</span>
+    <a href="#" aria-label="Xem chi tiết">→</a>
+  </div>
+</a>
+
+<!-- Card: Xoài sấy dẻo -->
+<a class="pcard" href="#" data-name="Xoài sấy dẻo" data-line="Trái cây sấy • 100g">
+  <div class="media">
+    <img class="front" src="images/xoaisayfront.jpg" alt="Xoài sấy dẻo - mặt trước">
+    <img class="side"  src="images/xoaisayside.jpg"  alt="Xoài sấy dẻo - cạnh bên">
+  </div>
+  <div class="pop">
+    <b>Xoài sấy dẻo</b>
+    <span>Trái cây sấy • 100g</span>
+    <a href="#" aria-label="Xem chi tiết">→</a>
+  </div>
+</a>
+
+<!-- Card: Poca Khoai Tây -->
+<a class="pcard" href="#" data-name="Poca Khoai Tây" data-line="Snack giòn • 45g">
+  <div class="media">
+    <img class="front" src="images/pocafront.jpg" alt="Poca Khoai Tây - mặt trước">
+    <img class="side"  src="images/pocaside.jpg"  alt="Poca Khoai Tây - cạnh bên">
+  </div>
+  <div class="pop">
+    <b>Poca Khoai Tây</b>
+    <span>Snack giòn • 45g</span>
+    <a href="#" aria-label="Xem chi tiết">→</a>
+  </div>
+</a>
+
+
+
+      <!-- Card 1 -->
+        <a class="pcard" href="#" data-name="Kem Magnum Almond" data-line="Kem que phủ socola hạnh nhân • 80ml">
+          <div class="media">
+            <img class="front" src="images/kemfront.jpg" alt="Kem Magnum Almond - mặt trước">
+    <img class="side"  src="images/kemside.jpg"  alt="Kem Magnum Almond - cạnh bên">
+          </div>
+          <div class="pop">
+            <b>Kem Magnum Almond</b>
+    <span>Kem que phủ socola hạnh nhân • 80ml</span>
+            <a href="#" aria-label="Xem chi tiết">→</a>
+          </div>
+        </a>
+
+       
+        
+
+      </div>
+       <br/>
+
+      <!-- Pill trung tâm đáy -->
+      <div class="hover-pill" id="hover-pill">
+        <div class="pill-name" id="pill-name">Sản phẩm</div>
+        <div class="pill-line" id="pill-line">Mô tả</div>
+        <span class="pill-arrow">→</span>
+      </div>
+      <br/>
+      
+      <!-- Progress bar -->
+      <div class="progress"><div class="bar" id="bar"></div></div>
+    </div>
+  </div>
+</section>
+
+
+
+ <!-- TECH -->
+<section id="tech" class="tech">
+  <div class="tech-grid">
+    <div class="tech-text">
+      <h2>Cầu tiến là bí quyết</h2>
+      <p><strong>Không ngừng tìm kiếm, ứng dụng công nghệ sản xuất tiên tiến nhất để đáp ứng những tiêu chuẩn khắt khe nhất của chính Vựa Vui Vẻ.</strong></p>
+      <a class="btn-outline" href="../About/index.html">Tìm hiểu thêm</a>
+    </div>
+
+    <div class="tech-img">
+      <img src="images/banner3.png" alt="Robot công nghệ">
+    </div>
+  </div>
+</section>
+
+  <!-- STORIES -->
+   <section id="tech" class="tech">
+  <div class="tech-grid">
+    <div class="tech-text">
+      <h2>Để tâm hành động</h2>
+      <p><strong>Chỉ 1 năm sau kế hoạch Net Zero 2050, có 3 đơn vị đạt chứng nhận trung hoà Carbon.</strong></p>
+   <a class="btn-outline" href="../About2/index.html">Tìm hiểu thêm</a>
+    </div>
+ 
+          <section id="green" class="stories">
+      <div class="grid3">
+        <article class="story">
+          <img alt="" src="images/nhamay.jpg" />
+          <div class="meta"><span>01</span></div>
+          <h3>Mảnh ghép nhà máy “xanh”</h3>
+          <p>Nhà máy giải khát đạt trung hoà Carbon theo PAS.</p>
+         
+        </article>
+        <article class="story">
+          <img alt="" src="images/esg.jpg" />
+          <div class="meta"><span>02</span></div>
+          <h3>3 đơn vị đạt chứng nhận trung hoà</h3>
+          <p>Bước tiến quan trọng trên con đường Net Zero.</p>
+    
+        </article>
+        <article class="story">
+          <img alt="" src="images/net0" />
+          <div class="meta"><span>03</span></div>
+          <h3>Lộ trình đến Net Zero 2050</h3>
+          <p>Cắt giảm 15% 2027, 50% 2035 và đạt 0 vào 2050.</p>
+      
+        </article>
+       <!-- nút tổng bên dưới -->
+  </section>
+ 
+ <!-- JOIN -->
+<section class="join">
+  <div class="join-wrap">
+    <figure class="join-media">
+      <img
+        src="images/group.jpg"
+        alt="Đồng đội Vựa Vui Vẻ năng động" loading="lazy">
+    </figure>
+
+    <div class="join-pane">
+      <h2 class="join-title">Mời vào đội</h2>
+
+      <ol class="join-list">
+        <li>
+          <b>Job phấp phới, chờ đồng đội mới!</b>
+          <p>Vựa Vui Vẻ mong sánh vai cùng bạn.</p>
+          <hr/>
+        </li>
+        <li>
+          <b>Chất Vựa Vui Vẻ</b>
+          <p>Chung tinh thần. Chung hành động. Chung giá trị.</p>
+        </li>
+               <hr/>
+        <li>
+          <b>Nhịp sống Vựa Vui Vẻ</b>
+          <p>Những câu chuyện đồng đội kể.</p>
+        </li>
+               <hr />
+      </ol>
+
+      <a class="join-cta" href="../Job/index.html">Ứng tuyển ngay →</a>
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer">
+      <div class="container">
+        <div class="sf-grid">
+          <div class="sf-cols">
+            <div class="sf-col">
+              <h4>Trang chủ</h4>
+              <ul>
+                <li><a href="#catalog">Sản phẩm</a></li>
+                <li><a href="#flashsale">Flash Sale</a></li>
+                <li><a href="#cart">Giỏ hàng</a></li>
+              </ul>
+            </div>
+            <div class="sf-col">
+              <h4>Về Vựa Vui Vẻ</h4>
+              <ul>
+                <li><a href="aboutus.html">Câu chuyện chúng tôi</a></li>
+                <li><a href="#values">Giá trị mang đến</a></li>
+                <li><a href="#mission">Sứ mệnh</a></li>
+              </ul>
+            </div>
+            <div class="sf-col">
+              <h4>Tài khoản</h4>
+              <ul>
+                <li><a href="../client/register.html">Đăng ký</a></li>
+                <li><a href="../client/login.html">Đăng nhập</a></li>
+              </ul>
+            </div>
+            <div class="sf-col">
+              <h4>Liên hệ</h4>
+              <ul>
+                <li>Hotline</li>
+                <li>Địa chỉ</li>
+              </ul>
+            </div>
+            <div class="sf-legal">Điều khoản dịch vụ | Chính sách giao hàng | Chính sách đổi trả</div>
+          </div>
+          <div class="sf-brand">
+    
+            <div class="sf-contact">
+              <div>Hotline: <span>012345678</span></div>
+              <div>Địa chỉ liên hệ: <span>Vựa Vui Vẻ</span></div>
+              <div>© <span id="year"></span> vựa vui vẻ</div>
+            </div>
+            <div class="sf-social">
+              <div class="sf-social__label">Theo dõi chúng tôi</div>
+              <a href="#" aria-label="Facebook" class="sf-social__btn">f</a>
+              <a href="#" aria-label="Instagram" class="sf-social__btn">IG</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
+    <img class="sf-logo" src="../Hôm/images/LogoVVV1.jpg"  alt="Vựa Vui Vẻ" />
+
+  <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,370 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Tìm hiểu thêm</title>
+  <link rel="stylesheet" href="job.css" />
+</head>
+<body>
+  <!-- ===== HEADER (nền trắng, chữ xanh lá, thu nhỏ khi cuộn) ===== -->
+  <header class="header" id="site-header">
+    <div class="header-wrap container">
+      <a class="logo" href="../Hôm/index.html">
+
+        <img src="images/logo.png.png" alt="Vựa Vui Vẻ Logo" class="logo-img"/>
+</a>
+      
+      <nav class="mainnav" id="mainnav" aria-label="Chính">
+        <a href="../../html/index.html">Sản phẩm</a>
+        <a href="../../html/recipes.html">Công thức</a>
+        <a href="../../html/aboutus.html">Giới thiệu</a>
+
+      <button class="burger" aria-controls="mainnav" aria-expanded="false" onclick="toggleMenu()">
+        ☰
+      </button>
+
+    </div>
+     
+       <!-- Account button -->
+      <a href="../../html/account.html" class="account-btn" id="accountBtn">
+  <img src="../Hôm/images/ic_account.png" alt="Account" class="account-icon" />
+</a>
+
+<a href="/html/cart.html" class="account-btn">
+    <img src="../Hôm/images/buy.png" alt="Account" class="account-icon"/>
+</a>
+
+    <!-- Account (drawer giữ nguyên) -->
+    <aside
+      id="accountModal"
+      class="drawer"
+      role="dialog"
+      aria-modal="true"
+      aria-label="Thông tin tài khoản"
+      aria-labelledby="accountTitle"
+      hidden
+    >
+      <div class="drawer__panel">
+        <div class="drawer__head">
+          <h3 id="accountTitle">Tài khoản</h3>
+          <button class="btn btn--icon" id="accountCloseBtn" aria-label="Đóng">Đóng</button>
+        </div>
+        <div class="account-tabs">
+          <nav class="account-nav">
+            <button class="account-item active" id="acctNavProfile">
+              <span>Sửa thông tin cá nhân</span>
+              <span>›</span>
+            </button>
+            <button class="account-item" id="acctNavOrders">
+              <span>Đơn hàng từng mua</span>
+              <span>›</span>
+            </button>
+            <button class="account-item" id="acctNavSecurity">
+              <span>Đổi mật khẩu</span>
+              <span>›</span>
+            </button>
+          </nav>
+          <div class="account-content">
+            <section id="accountProfilePanel" class="account-panel">
+              <form id="accountForm" class="contact" style="padding: 16px">
+                <input class="input" type="text" name="name" placeholder="Họ và tên" autocomplete="name" required />
+                <input class="input" type="email" name="email" placeholder="Email (không thay đổi sau đăng ký)" autocomplete="email" readonly aria-readonly="true" />
+                <input class="input" type="tel" name="phone" placeholder="Số điện thoại (không thay đổi sau đăng ký)" autocomplete="tel" inputmode="numeric" pattern="\d{9,11}" title="Nhập 9–11 chữ số" readonly aria-readonly="true" />
+                <p class="muted" id="acctAddrInline" role="status" aria-live="polite">Địa chỉ mặc định: </p>
+                <textarea class="input" name="address" rows="3" placeholder="Địa chỉ giao hàng..." autocomplete="street-address" required></textarea>
+                <button class="btn btn--pri" type="submit">Lưu thông tin</button>
+                <p class="muted" id="accountMsg" role="status" aria-live="polite"></p>
+              </form>
+            </section>
+            <section id="accountOrdersPanel" class="account-panel" hidden>
+              <div id="accountOrdersBody" class="orders-body" style="padding: 16px"></div>
+            </section>
+            <section id="accountPasswordPanel" class="account-panel" hidden>
+              <form id="changePasswordForm" class="contact" style="padding: 16px">
+                <input class="input" type="password" name="current" placeholder="Mật khẩu hiện tại" autocomplete="current-password" required />
+                <input class="input" type="password" name="new" placeholder="Mật khẩu mới" autocomplete="new-password" required />
+                <input class="input" type="password" name="confirm" placeholder="Xác nhận mật khẩu mới" autocomplete="new-password" required />
+                <button class="btn btn--pri" type="submit">Đổi mật khẩu</button>
+                <p class="muted" id="pwMsg" role="status" aria-live="polite"></p>
+              </form>
+            </section>
+          </div>
+        </div>
+        <div class="drawer__foot">
+          <button class="btn btn--danger" id="btnLogout">Đăng xuất</button>
+        </div>
+      </div>
+      <div class="drawer__overlay" id="accountOverlay" tabindex="-1"></div>
+    </aside>
+  </header>
+
+  <!-- ===== MAIN CONTENT ===== -->
+  <main>
+    <!-- ===== HERO ===== -->
+   
+      
+     
+        <img
+          src="images/Nội dung đoạn văn bản của bạn (3).png"
+  
+          loading="eager"
+        />
+      </figure>
+    </section>
+    
+<!-- Chất Vựa Vui Vẻ -->
+<section class="culture">
+ <h2 style="color: green;">Chất Vui Vẻ</h2>
+  <div class="flip-container">
+
+    <div class="flip-card" onclick="flipCard(this)">
+      <div class="flip-inner">
+        <div class="flip-front">
+          <img src="images/Nội dung đoạn văn bản của bạn (2).png" alt="Biểu tượng 1">
+          <h3>Tận tâm</h3>
+        </div>
+        <div class="flip-back">
+          <p>Chúng tôi đặt tâm huyết trong từng hành động, hướng đến chất lượng và sự tin yêu của khách hàng.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="flip-card" onclick="flipCard(this)">
+      <div class="flip-inner">
+        <div class="flip-front">
+          <img src="images/15.png" alt="Biểu tượng 2">
+          <h3>Sáng tạo</h3>
+        </div>
+        <div class="flip-back">
+          <p>Không ngừng đổi mới trong công việc, dám nghĩ dám làm để tạo ra giá trị vượt trội.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="flip-card" onclick="flipCard(this)">
+      <div class="flip-inner">
+        <div class="flip-front">
+          <img src="images/16.png" alt="Biểu tượng 3">
+          <h3>Hợp tác</h3>
+        </div>
+        <div class="flip-back">
+          <p>Tinh thần đồng đội, gắn kết và cùng nhau phát triển là nền tảng trong văn hóa Vựa Vui Vẻ.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="flip-card" onclick="flipCard(this)">
+      <div class="flip-inner">
+        <div class="flip-front">
+          <img src="images/17.png" alt="Biểu tượng 4">
+          <h3>Phát triển </h3>
+        </div>
+        <div class="flip-back">
+          <p>Hướng đến sự cân bằng giữa tăng trưởng kinh doanh, bảo vệ môi trường và trách nhiệm xã hội.</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+     <!-- Phần 1: Đội ngũ tại Vựa Vui Vẻ -->
+  <section class="team-section">
+    <h1 class="team-title">Đội ngũ Vui Vẻ</h1>
+    <div class="team-grid">
+      <div class="team-card">
+        <span class="team-number">01</span>
+        <h2>Bán hàng trực tiếp đến người tiêu dùng</h2>
+        <p class="team-sub">5 vị trí đang tuyển</p>
+        <p class="team-desc">
+          Quản lý các kênh bán lẻ trực tiếp như chuỗi cửa hàng Vựa Vui Vẻ và thương mại điện tử. 
+          Tập trung cá nhân hóa trải nghiệm khách hàng, gia tăng sự tương tác và chuyển đổi mua hàng từ các điểm chạm trực tiếp.
+        </p>
+        
+
+      </div>
+
+      <div class="team-card">
+        <span class="team-number">02</span>
+        <h2>Hoạch định Chiến lược & Đổi mới sáng tạo</h2>
+        <p class="team-sub">1 vị trí đang tuyển</p>
+        <p class="team-desc">
+          Dẫn dắt quá trình hoạch định chiến lược dài hạn cho toàn công ty, 
+          phân tích xu hướng thị trường và khởi xướng các sáng kiến đổi mới. 
+          Đảm bảo Vựa Vui Vẻ không ngừng thích ứng, phát triển bền vững và giữ vững vị thế dẫn đầu ngành.
+        </p>
+      </div>
+
+      <div class="team-card">
+        <span class="team-number">03</span>
+        <h2>Kinh doanh (Nội địa & Quốc tế)</h2>
+        <p class="team-sub">14 vị trí đang tuyển</p>
+        <p class="team-desc">
+          Tổ chức và phát triển hoạt động kinh doanh trên toàn thị trường trong và ngoài nước. 
+          Tối ưu hệ thống phân phối, xây dựng mối quan hệ chiến lược với khách hàng và đối tác để mở rộng thị phần và tăng trưởng doanh thu bền vững.
+        </p>
+      </div>
+
+      <div class="team-card">
+        <span class="team-number">04</span>
+        <h2>Chuyển đổi số</h2>
+        <p class="team-sub">1 vị trí đang tuyển</p>
+        <p class="team-desc">
+          Trung tâm công nghệ số toàn diện của Vựa Vui Vẻ, bao gồm CNTT, dữ liệu, sản phẩm số và tiếp thị số. 
+          Thúc đẩy hiện đại hóa quy trình, khai thác sức mạnh dữ liệu và chuyển đổi cách thức vận hành để tạo lợi thế cạnh tranh số.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Phần 2: Phiên bản mới -->
+  <section class="version-section">
+    <div class="version-text">
+      <h2>Phiên bản mới.</h2>
+      <h1>Chưa từng nghĩ tới.</h1>
+      <p>
+        Bạn nghĩ mình có bao nhiêu phiên bản? Xông xáo, thâm lặng, quyết liệt, hiền hòa? 
+        Tại Vựa Vui Vẻ, khi bung hết sức giải để bài mới mỗi ngày, 
+        tất cả phiên bản bạn từng nghĩ về mình chỉ là số ít. 
+        Cùng nhau cầu tiến không ngừng, khám phá những khả năng bản thân bạn chưa từng biết là mình có.
+      </p>
+    </div>
+    <div class="version-image">
+      <img src="images/team.jpg" alt="Nhân viên Vựa Vui Vẻ" />
+    </div>
+  </section>
+  <!-- HERO – Để tâm, cùng nhau làm nên lịch sử -->
+<section class="history-hero" id="history">
+  <div class="history-wrap">
+    <!-- Cụm ảnh collage bên trái -->
+    <div class="history-left" data-anim>
+      <span class="history-badge">LIFE AT VỰA VUI VẺ</span>
+
+      <figure class="polaroid pic-main tilt-1">
+        <img src="images/team4.jpg" alt="Team tại nông trại">
+      </figure>
+
+      <figure class="polaroid pic-top tilt-2">
+        <img src="images/team3.jpg" alt="Nụ cười Vựa Vui Vẻ">
+      </figure>
+
+      <figure class="polaroid pic-bottom tilt-3">
+        <img src="images/vuavuiveTeam.jpg" alt="Khoảnh khắc đời thường">
+      </figure>
+
+      <!-- chấm nền -->
+      <div class="confetti"></div>
+      <!-- nét vẽ cong -->
+      <div class="scribble s1"></div>
+      <div class="scribble s2"></div>
+    </div>
+
+    <!-- Nội dung tiêu đề bên phải -->
+    <div class="history-right" data-anim>
+      <h2 class="history-title">
+        Để tâm, cùng<br>
+        nhau làm nên lịch<br>
+        sử
+      </h2>
+      <p class="history-desc">
+        Cùng nhau, nhiều thế hệ người Vựa Vui Vẻ đã làm nên một Vựa Vui Vẻ táo bạo, quyết tâm,
+        cầu tiến không ngừng. Chúng tôi mong cùng bạn sánh vai, tiếp bước hành trình lịch sử
+        gần nửa thế kỷ. Chỉ cần bạn và Vựa Vui Vẻ có chung quyết tâm, chung chí hướng, chúng ta
+        sẽ làm nên những điều không tưởng.
+      </p>
+    </div>
+  </div>
+</section>
+
+
+<!-- NHỊP SỐNG Vựa Vui Vẻ -->
+<section class="life" id="life">
+  <div class="life__wrap">
+    <h2 class="life__title">Nhịp sống Vui Vẻ</h2>
+
+    <div class="life__grid" data-anim="fade-up">
+      <!-- Ảnh lớn (trái) -->
+      <a class="life__item life__item--lg" href="#"
+         aria-label="Trang trại bò sữa">
+        <img loading="lazy" src="images/farm.jpg" alt="Trang trại bò sữa">
+      </a>
+
+      <!-- 4 ảnh bên phải -->
+      <a class="life__item life__item--a" href="#" aria-label="Văn phòng Vựa Vui Vẻ">
+        <img loading="lazy" src="images/office.jpg" alt="Văn phòng Vựa Vui Vẻ">
+      </a>
+
+      <a class="life__item life__item--b" href="#" aria-label="Nhà máy">
+        <img loading="lazy" src="images/factory.jpg" alt="Nhà máy">
+      </a>
+
+      <a class="life__item life__item--c" href="#" aria-label="Team building">
+        <img loading="lazy" src="images/teamă.jpg" alt="Team building">
+      </a>
+
+      <a class="life__item life__item--d" href="#" aria-label="Kiểm tra chất lượng">
+        <img loading="lazy" src="images/1.jpg" alt="Kiểm tra chất lượng">
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer">
+      <div class="container">
+        <div class="sf-grid">
+          <div class="sf-cols">
+            <div class="sf-col">
+              <h4>Trang chủ</h4>
+              <ul>
+                <li><a href="#catalog">Sản phẩm</a></li>
+                <li><a href="#flashsale">Flash Sale</a></li>
+                <li><a href="#cart">Giỏ hàng</a></li>
+              </ul>
+            </div>
+            <div class="sf-col">
+              <h4>Về Vựa Vui Vẻ</h4>
+              <ul>
+                <li><a href="aboutus.html">Câu chuyện chúng tôi</a></li>
+                <li><a href="#values">Giá trị mang đến</a></li>
+                <li><a href="#mission">Sứ mệnh</a></li>
+              </ul>
+            </div>
+            <div class="sf-col">
+              <h4>Tài khoản</h4>
+              <ul>
+                <li><a href="../client/register.html">Đăng ký</a></li>
+                <li><a href="../client/login.html">Đăng nhập</a></li>
+              </ul>
+            </div>
+            <div class="sf-col">
+              <h4>Liên hệ</h4>
+              <ul>
+                <li>Hotline</li>
+                <li>Địa chỉ</li>
+              </ul>
+            </div>
+            <div class="sf-legal">Điều khoản dịch vụ | Chính sách giao hàng | Chính sách đổi trả</div>
+          </div>
+          <div class="sf-brand">
+    
+            <div class="sf-contact">
+              <div>Hotline: <span>012345678</span></div>
+              <div>Địa chỉ liên hệ: <span>Vựa Vui Vẻ</span></div>
+              <div>© <span id="year"></span> vựa vui vẻ</div>
+            </div>
+            <div class="sf-social">
+              <div class="sf-social__label">Theo dõi chúng tôi</div>
+              <a href="#" aria-label="Facebook" class="sf-social__btn">f</a>
+              <a href="#" aria-label="Instagram" class="sf-social__btn">IG</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
+    <img class="sf-logo" src="../Hôm/images/LogoVVV1.jpg"  alt="Vựa Vui Vẻ" />
+
+  <script src="job.js" defer></script>
+</body>
+</html>

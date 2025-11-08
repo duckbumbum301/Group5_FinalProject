@@ -1,0 +1,426 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Vựa Vui Vẻ — Tìm hiểu thêm</title>
+  <link rel="stylesheet" href="about.css" />
+</head>
+<body>
+  <!-- ===== HEADER (nền trắng, chữ xanh lá, thu nhỏ khi cuộn) ===== -->
+  <header class="header" id="site-header">
+    <div class="header-wrap container">
+      <a class="logo" href="../Hôm/index.html">
+
+        <img src="images/logo.png.png" alt="Vựa Vui Vẻ Logo" class="logo-img"/>
+</a>
+      
+      <nav class="mainnav" id="mainnav" aria-label="Chính">
+        <a href="../../html/index.html">Sản phẩm</a>
+        <a href="../../html/recipes.html">Công thức</a>
+        <a href="../../html/aboutus.html">Giới thiệu</a>
+
+      <button class="burger" aria-controls="mainnav" aria-expanded="false" onclick="toggleMenu()">
+        ☰
+      </button>
+
+    </div>
+     
+       <!-- Account button -->
+      <a href="../../html/account.html" class="account-btn" id="accountBtn">
+  <img src="../Hôm/images/ic_account.png" alt="Account" class="account-icon" />
+</a>
+
+<a href="/html/cart.html" class="account-btn">
+    <img src="../Hôm/images/buy.png" alt="Account" class="account-icon"/>
+</a>
+
+    <!-- Account (drawer giữ nguyên) -->
+    <aside
+      id="accountModal"
+      class="drawer"
+      role="dialog"
+      aria-modal="true"
+      aria-label="Thông tin tài khoản"
+      aria-labelledby="accountTitle"
+      hidden
+    >
+      <div class="drawer__panel">
+        <div class="drawer__head">
+          <h3 id="accountTitle">Tài khoản</h3>
+          <button class="btn btn--icon" id="accountCloseBtn" aria-label="Đóng">Đóng</button>
+        </div>
+        <div class="account-tabs">
+          <nav class="account-nav">
+            <button class="account-item active" id="acctNavProfile">
+              <span>Sửa thông tin cá nhân</span>
+              <span>›</span>
+            </button>
+            <button class="account-item" id="acctNavOrders">
+              <span>Đơn hàng từng mua</span>
+              <span>›</span>
+            </button>
+            <button class="account-item" id="acctNavSecurity">
+              <span>Đổi mật khẩu</span>
+              <span>›</span>
+            </button>
+          </nav>
+          <div class="account-content">
+            <section id="accountProfilePanel" class="account-panel">
+              <form id="accountForm" class="contact" style="padding: 16px">
+                <input class="input" type="text" name="name" placeholder="Họ và tên" autocomplete="name" required />
+                <input class="input" type="email" name="email" placeholder="Email (không thay đổi sau đăng ký)" autocomplete="email" readonly aria-readonly="true" />
+                <input class="input" type="tel" name="phone" placeholder="Số điện thoại (không thay đổi sau đăng ký)" autocomplete="tel" inputmode="numeric" pattern="\d{9,11}" title="Nhập 9–11 chữ số" readonly aria-readonly="true" />
+                <p class="muted" id="acctAddrInline" role="status" aria-live="polite">Địa chỉ mặc định: </p>
+                <textarea class="input" name="address" rows="3" placeholder="Địa chỉ giao hàng..." autocomplete="street-address" required></textarea>
+                <button class="btn btn--pri" type="submit">Lưu thông tin</button>
+                <p class="muted" id="accountMsg" role="status" aria-live="polite"></p>
+              </form>
+            </section>
+            <section id="accountOrdersPanel" class="account-panel" hidden>
+              <div id="accountOrdersBody" class="orders-body" style="padding: 16px"></div>
+            </section>
+            <section id="accountPasswordPanel" class="account-panel" hidden>
+              <form id="changePasswordForm" class="contact" style="padding: 16px">
+                <input class="input" type="password" name="current" placeholder="Mật khẩu hiện tại" autocomplete="current-password" required />
+                <input class="input" type="password" name="new" placeholder="Mật khẩu mới" autocomplete="new-password" required />
+                <input class="input" type="password" name="confirm" placeholder="Xác nhận mật khẩu mới" autocomplete="new-password" required />
+                <button class="btn btn--pri" type="submit">Đổi mật khẩu</button>
+                <p class="muted" id="pwMsg" role="status" aria-live="polite"></p>
+              </form>
+            </section>
+          </div>
+        </div>
+        <div class="drawer__foot">
+          <button class="btn btn--danger" id="btnLogout">Đăng xuất</button>
+        </div>
+      </div>
+      <div class="drawer__overlay" id="accountOverlay" tabindex="-1"></div>
+    </aside>
+  </header>
+
+  <!-- ===== MAIN CONTENT ===== -->
+  <main>
+    <!-- ===== HERO ===== -->
+    <section class="hero" id="hero">
+      <div class="hero__inner container">
+        <p class="eyebrow">CÔNG NGHỆ TẠI VỰA VUI VẺ</p>
+        <h1>Để tâm. Cải tiến</h1>
+        <p class="sub">
+          Chúng mình không ngừng nghiên cứu và áp dụng công nghệ hiện đại
+          để tạo ra sản phẩm ngon – sạch – lành cho mọi nhà.
+        </p>
+      </div>
+      <figure class="hero-media">
+        <img
+          src="images/xe.jpg"
+          alt="Dây chuyền công nghệ"
+          loading="eager"
+        />
+      </figure>
+    </section>
+ <!-- TECH: Công nghệ sản xuất chuẩn quốc tế -->
+    <section class="tech" id="tech">
+      <div class="container">
+        <h2 class="title">Công nghệ sản xuất chuẩn quốc tế</h2>
+        <p class="subtitle">
+          Nhà máy Vựa Vui Vẻ hoạt động trên dây chuyền khép kín, tự động hoá 100%
+          từ khâu nguyên liệu đầu vào đến đầu ra sản phẩm.
+        </p>
+
+        <div class="tech-grid">
+
+          <!-- Card 1 -->
+          <article class="tcard">
+            <figure class="tmedia">
+              <img src="images/snack.jpg">
+            </figure>
+            <header class="thead">
+              <h3>Bí kíp giữ trọn
+                 niềm vui</h3>
+            </header>
+            <div class="tbody">
+              <p>
+                Mỗi gói snack được đóng gói bằng công nghệ chống ẩm hiện đại,
+    giữ trọn độ giòn rụm và hương vị “vui miệng” khó cưỡng ngay từ lần mở đầu tiên.
+      </p>
+            </div>
+          </article>
+            <article class="tcard">
+            <figure class="tmedia">
+              <img src="images/sprite.jpg">
+            </figure>
+            <header class="thead">
+              <h3>Hương vị khuấy động cuộc vui</h3>
+            </header>
+            <div class="tbody">
+              <p>
+               Pha trộn tinh tế giữa vị ngọt nhẹ và hương trái cây tươi, mỗi ngụm là một nguồn năng lượng mới.  
+      Dành cho những ai thích bật mood và vui trọn từng khoảnh khắc!</p>
+                </div>
+          </article>
+
+          <!-- Card 2 -->
+          <article class="tcard">
+            <figure class="tmedia">
+              <img src="images/fanta.jpg">
+            </figure>
+            <header class="thead">
+              <h3>Đóng chai trọn vị tươi mới</h3>
+            </header>
+            <div class="tbody">
+              <p>
+                 Quy trình đóng chai hiện đại giúp giữ nguyên hương vị tươi mát và bọt ga tự nhiên.  
+      Mỗi chai đều như vừa mới “ra lò” — sảng khoái từ ngụm đầu tiên!           </p>
+            </div>
+          </article>
+
+        
+        </div>
+
+        <!-- progress 4 gạch mảnh -->
+        <div class="tech-progress" id="techProgress"></div>
+      </div>
+    </section>
+  </main>
+
+<!-- LGV: Hệ thống robot thông minh tự động 100% -->
+<section class="lgv" id="lgv">
+  <div class="container lgv-grid">
+    <!-- media -->
+    <figure class="lgv-media" data-anim="up">
+      <img
+        src="../Hôm/images/system.jpg"
+        alt="Robot LGV vận hành trong nhà máy"
+        loading="lazy"
+      />
+    </figure>
+
+    <!-- text -->
+    <div class="lgv-text">
+      <p class="lgv-kicker" data-anim="fade">CÔNG NGHỆ TẠI VỰA VUI VẺ</p>
+      <h3 class="lgv-title" data-anim="up">
+       <span> Hệ thống robot LGV thông minh <br />tự động <span>100%</span></span>
+      </h3>
+      <p class="lgv-lead" data-anim="up">
+        Robot LGV được lập trình điều khiển từ hệ thống trung tâm để tối ưu nhân lực,
+        nâng cao hiệu suất và đồng bộ chất lượng sản phẩm trong toàn nhà máy.
+      </p>
+
+      <ul class="lgv-features">
+        <li class="lgv-row" data-anim="up">
+          <div class="lgv-key">VẬN CHUYỂN PALLET</div>
+          <div class="lgv-val">
+            Tự động vận chuyển pallet thành phẩm đến kho chứa thông minh.
+          </div>
+        </li>
+        <li class="lgv-row" data-anim="up">
+          <div class="lgv-key">VẬN CHUYỂN VẬT LIỆU</div>
+          <div class="lgv-val">
+            Vận chuyển các cuộn bao bì và vật liệu bao gói đến các máy sản xuất.
+          </div>
+        </li>
+        <li class="lgv-row" data-anim="up">
+          <div class="lgv-key">TỰ SẠC PIN</div>
+          <div class="lgv-val">
+            Tự sạc pin ngay khi hết mà không cần sự can thiệp của con người.
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>
+<!-- WAREHOUSE: Kho thông minh lớn nhất Việt Nam -->
+
+  <!-- nền ảnh (parallax nhẹ) -->
+<img src="../About/images/Nội dung đoạn văn bản của bạn.png">
+
+
+    <!-- ===== ABOUT FEATURE ===== -->
+    <section class="about-feature">
+      <div class="about-feature__content">
+        <h5 class="about-feature__tag">TETRA PLANT MASTER</h5>
+        <h2 class="about-feature__title">Hệ thống vận hành 100% tự động</h2>
+        <p class="about-feature__text">
+          Hệ thống vận hành dựa trên giải pháp tự động hoá Tetra Plant Master cho phép kết nối và tích hợp toàn bộ nhà máy từ nguyên liệu đầu vào cho đến thành phẩm.
+          Nhờ đó Vựa Vui Vẻ có thể điều khiển mọi hoạt động diễn ra trong nhà máy, theo dõi và kiểm soát chất lượng một cách liên tục.
+        </p>
+        <p class="about-feature__text">
+          Ngoài ra, hệ thống quản lý kho Wamas tích hợp hệ thống quản lý ERP và giải pháp tự động hoá Tetra Plant Master mang đến sự liền mạch thông suốt
+          trong hoạt động của nhà máy với các hoạt động từ lập kế hoạch sản xuất, nhập nguyên liệu đến xuất kho thành phẩm của toàn công ty.
+        </p>
+      </div>
+
+      <div class="about-feature__image">
+        <img src="../Hôm/images/robot.jpg" alt="Hệ thống vận hành tự động của nhà máy" loading="lazy">
+      </div>
+    </section>
+<!-- ============== ACHIEVEMENTS ============== -->
+<section class="achieve" id="achieve">
+  <div class="container">
+    <h2 class="title">Thành tựu</h2>
+
+    <div class="achieve-grid">
+      <!-- Card 1 -->
+      <article class="acard">
+        <header class="acard-head">
+          <span class="acard-no">01</span>
+          <h4>
+            Tại Vựa Vui Vẻ, chúng tôi không ngừng đầu tư vào nghiên cứu, cải tiến
+            chất lượng sản phẩm
+          </h4>
+        </header>
+        <figure class="acard-media">
+          <img src="images/search.jpg" alt="">
+        </figure>
+      </article>
+
+      <!-- Card 2 -->
+      <article class="acard">
+        <header class="acard-head">
+          <span class="acard-no">02</span>
+          <h4>
+            Đội ngũ kiểm nghiệm gồm Trung tâm R&D, Bộ phận An toàn thực phẩm &
+            Tác nghiệp sản xuất
+          </h4>
+        </header>
+        <figure class="acard-media">
+          <img src="images/s1.jpg" alt="">
+        </figure>
+      </article>
+
+      <!-- Card 3 -->
+      <article class="acard">
+        <header class="acard-head">
+          <span class="acard-no">03</span>
+          <h4>
+            Hợp tác cùng các viện/trung tâm kiểm nghiệm để phát triển quy trình
+            đạt chuẩn vệ sinh an toàn thực phẩm
+          </h4>
+        </header>
+        <figure class="acard-media">
+          <img src="images/s2.jpg" alt="">
+        </figure>
+      </article>
+
+      <!-- Card 4 -->
+      <article class="acard">
+        <header class="acard-head">
+          <span class="acard-no">04</span>
+          <h4>100% phòng thí nghiệm đáp ứng yêu cầu tiêu chuẩn ISO/IEC 17025 khắc khe và đảm bảo chất lượng</h4>
+        </header>
+        <figure class="acard-media">
+          <img src="images/s3.jpg" alt="">
+        </figure>
+      </article>
+    </div>
+  </div>
+</section>
+
+    <!-- ===== STANDARDS (ISO ACCORDION) ===== -->
+    <section class="standards" id="standards">
+      <div class="container">
+        <h3 class="title">Đạt chuẩn quốc tế về hệ thống quản lý môi trường, năng lượng</h3>
+        <div class="iso-acc">
+          <button class="iso-item" aria-expanded="false">
+            <span>HALAL – Chứng nhận thực phẩm cho người Hồi giáo</span>
+            <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          </button>
+          <div class="iso-panel"><p>Áp dụng cho chuỗi sản xuất/kiểm soát nguyên liệu – quy trình – phân phối.</p></div>
+
+          <button class="iso-item" aria-expanded="false">
+            <span>ISO 14001 – Hệ thống quản lý & bảo vệ môi trường</span>
+            <svg viewBox="0 0 24 24" width="18" height="18"><path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          </button>
+          <div class="iso-panel"><p>Tối ưu tiêu thụ năng lượng, nước và giảm phát thải.</p></div>
+
+          <button class="iso-item" aria-expanded="false">
+            <span>FSSC 22000 – Hệ thống an toàn thực phẩm</span>
+            <svg viewBox="0 0 24 24" width="18" height="18"><path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          </button>
+          <div class="iso-panel"><p>Quản trị rủi ro ATTP theo chuẩn quốc tế.</p></div>
+
+          <button class="iso-item" aria-expanded="false">
+            <span>ISO 50001 – Hệ thống quản lý năng lượng</span>
+            <svg viewBox="0 0 24 24" width="18" height="18"><path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          </button>
+          <div class="iso-panel"><p>Giảm chi phí vận hành – tăng hiệu suất sử dụng năng lượng.</p></div>
+
+          <button class="iso-item" aria-expanded="false">
+            <span>BRCGS – Quản lý chất lượng & an toàn thực phẩm theo chuẩn Anh</span>
+            <svg viewBox="0 0 24 24" width="18" height="18"><path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          </button>
+          <div class="iso-panel"><p>Trấn an nhà bán lẻ toàn cầu về chất lượng & truy xuất nguồn gốc.</p></div>
+
+          <button class="iso-item" aria-expanded="false">
+            <span>ISO/IEC 17025 – Năng lực phòng thử nghiệm</span>
+            <svg viewBox="0 0 24 24" width="18" height="18"><path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          </button>
+          <div class="iso-panel"><p>Chuẩn hóa phương pháp đo – đảm bảo kết quả đáng tin cậy.</p></div>
+
+          <button class="iso-item" aria-expanded="false">
+            <span>ISO 9001 – Hệ thống quản lý chất lượng</span>
+            <svg viewBox="0 0 24 24" width="18" height="18"><path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          </button>
+          <div class="iso-panel"><p>Thiết lập – vận hành – cải tiến liên tục quy trình chất lượng.</p></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+<footer class="site-footer">
+      <div class="container">
+        <div class="sf-grid">
+          <div class="sf-cols">
+            <div class="sf-col">
+              <h4>Trang chủ</h4>
+              <ul>
+                <li><a href="#catalog">Sản phẩm</a></li>
+                <li><a href="#flashsale">Flash Sale</a></li>
+                <li><a href="#cart">Giỏ hàng</a></li>
+              </ul>
+            </div>
+            <div class="sf-col">
+              <h4>Về Vựa Vui Vẻ</h4>
+              <ul>
+                <li><a href="aboutus.html">Câu chuyện chúng tôi</a></li>
+                <li><a href="#values">Giá trị mang đến</a></li>
+                <li><a href="#mission">Sứ mệnh</a></li>
+              </ul>
+            </div>
+            <div class="sf-col">
+              <h4>Tài khoản</h4>
+              <ul>
+                <li><a href="../client/register.html">Đăng ký</a></li>
+                <li><a href="../client/login.html">Đăng nhập</a></li>
+              </ul>
+            </div>
+            <div class="sf-col">
+              <h4>Liên hệ</h4>
+              <ul>
+                <li>Hotline</li>
+                <li>Địa chỉ</li>
+              </ul>
+            </div>
+            <div class="sf-legal">Điều khoản dịch vụ | Chính sách giao hàng | Chính sách đổi trả</div>
+          </div>
+          <div class="sf-brand">
+    
+            <div class="sf-contact">
+              <div>Hotline: <span>012345678</span></div>
+              <div>Địa chỉ liên hệ: <span>Vựa Vui Vẻ</span></div>
+              <div>© <span id="year"></span> vựa vui vẻ</div>
+            </div>
+            <div class="sf-social">
+              <div class="sf-social__label">Theo dõi chúng tôi</div>
+              <a href="#" aria-label="Facebook" class="sf-social__btn">f</a>
+              <a href="#" aria-label="Instagram" class="sf-social__btn">IG</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
+    <img class="sf-logo" src="../Hôm/images/LogoVVV1.jpg"  alt="Vựa Vui Vẻ" />
+  <script src="about.js" defer></script>
+</body>
+</html>

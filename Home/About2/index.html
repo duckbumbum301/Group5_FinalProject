@@ -1,0 +1,390 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Tìm hiểu thêm</title>
+  <link rel="stylesheet" href="about1.css" />
+</head>
+<body>
+  <!-- ===== HEADER (nền trắng, chữ xanh lá, thu nhỏ khi cuộn) ===== -->
+ <!-- ===== HEADER (nền trắng, chữ xanh lá, thu nhỏ khi cuộn) ===== -->
+  <header class="header" id="site-header">
+    <div class="header-wrap container">
+      <a class="logo" href="../Hôm/index.html">
+
+        <img src="images/logo.png.png" alt="Vựa Vui Vẻ Logo" class="logo-img"/>
+</a>
+      
+      <nav class="mainnav" id="mainnav" aria-label="Chính">
+        <a href="../../html/index.html">Sản phẩm</a>
+        <a href="../../html/recipes.html">Công thức</a>
+        <a href="../../html/aboutus.html">Giới thiệu</a>
+
+      <button class="burger" aria-controls="mainnav" aria-expanded="false" onclick="toggleMenu()">
+        ☰
+      </button>
+
+    </div>
+     
+       <!-- Account button -->
+        <a href="../../html/account.html" class="account-btn" id="accountBtn">
+  <img src="../Hôm/images/ic_account.png" alt="Account" class="account-icon" />
+</a>
+
+<a href="/html/cart.html" class="account-btn">
+    <img src="../Hôm/images/buy.png" alt="Account" class="account-icon"/>
+</a>
+
+    <!-- Account (drawer giữ nguyên) -->
+    <aside
+      id="accountModal"
+      class="drawer"
+      role="dialog"
+      aria-modal="true"
+      aria-label="Thông tin tài khoản"
+      aria-labelledby="accountTitle"
+      hidden
+    >
+      <div class="drawer__panel">
+        <div class="drawer__head">
+          <h3 id="accountTitle">Tài khoản</h3>
+          <button class="btn btn--icon" id="accountCloseBtn" aria-label="Đóng">Đóng</button>
+        </div>
+        <div class="account-tabs">
+          <nav class="account-nav">
+            <button class="account-item active" id="acctNavProfile">
+              <span>Sửa thông tin cá nhân</span>
+              <span>›</span>
+            </button>
+            <button class="account-item" id="acctNavOrders">
+              <span>Đơn hàng từng mua</span>
+              <span>›</span>
+            </button>
+            <button class="account-item" id="acctNavSecurity">
+              <span>Đổi mật khẩu</span>
+              <span>›</span>
+            </button>
+          </nav>
+          <div class="account-content">
+            <section id="accountProfilePanel" class="account-panel">
+              <form id="accountForm" class="contact" style="padding: 16px">
+                <input class="input" type="text" name="name" placeholder="Họ và tên" autocomplete="name" required />
+                <input class="input" type="email" name="email" placeholder="Email (không thay đổi sau đăng ký)" autocomplete="email" readonly aria-readonly="true" />
+                <input class="input" type="tel" name="phone" placeholder="Số điện thoại (không thay đổi sau đăng ký)" autocomplete="tel" inputmode="numeric" pattern="\d{9,11}" title="Nhập 9–11 chữ số" readonly aria-readonly="true" />
+                <p class="muted" id="acctAddrInline" role="status" aria-live="polite">Địa chỉ mặc định: </p>
+                <textarea class="input" name="address" rows="3" placeholder="Địa chỉ giao hàng..." autocomplete="street-address" required></textarea>
+                <button class="btn btn--pri" type="submit">Lưu thông tin</button>
+                <p class="muted" id="accountMsg" role="status" aria-live="polite"></p>
+              </form>
+            </section>
+            <section id="accountOrdersPanel" class="account-panel" hidden>
+              <div id="accountOrdersBody" class="orders-body" style="padding: 16px"></div>
+            </section>
+            <section id="accountPasswordPanel" class="account-panel" hidden>
+              <form id="changePasswordForm" class="contact" style="padding: 16px">
+                <input class="input" type="password" name="current" placeholder="Mật khẩu hiện tại" autocomplete="current-password" required />
+                <input class="input" type="password" name="new" placeholder="Mật khẩu mới" autocomplete="new-password" required />
+                <input class="input" type="password" name="confirm" placeholder="Xác nhận mật khẩu mới" autocomplete="new-password" required />
+                <button class="btn btn--pri" type="submit">Đổi mật khẩu</button>
+                <p class="muted" id="pwMsg" role="status" aria-live="polite"></p>
+              </form>
+            </section>
+          </div>
+        </div>
+        <div class="drawer__foot">
+          <button class="btn btn--danger" id="btnLogout">Đăng xuất</button>
+        </div>
+      </div>
+      <div class="drawer__overlay" id="accountOverlay" tabindex="-1"></div>
+    </aside>
+  </header>
+
+  <!-- ===== MAIN CONTENT ===== -->
+  <main>
+    <!-- ===== HERO ===== -->
+    <section class="hero" id="hero">
+      <div class="hero__inner container">
+        <p class="eyebrow">Phát triển bền vững</p>
+        <h1>Để tâm. Bền vững</h1>
+        <p class="sub">
+         Ngay từ đầu, Vựa Vui Vẻ đã xác định rõ vai trò tiên phong và trách nhiệm của một doanh nghiệp đầu ngành; cả trong sản xuất kinh doanh và trên hành trình kiến tạo giá trị bền vững cho con người, cộng đồng và hành tinh. Chúng tôi quan tâm đến môi trường; kiên định với sứ mệnh phát triển sinh kế và không ngừng lan tỏa yêu thương. Mọi hành động, nỗ lực đều nhằm kiến tạo tương lai bền vững cho chính chúng ta và cho thế hệ mai sau.
+        </p>
+      </div>
+      <figure class="hero-media">
+        <img
+          src="images/ptbv_home_banner_desktop_c62cda042a.webp"
+  
+          loading="eager"
+        />
+      </figure>
+    </section>
+    <!-- IMPACT: Số liệu đóng góp -->
+<section class="impact" id="impact">
+  <div class="container">
+    <ul class="impact-grid" data-anim="up">
+      <!-- Item 1 -->
+      <li class="impact-item">
+        <div class="impact-num">
+          <span class="impact-sign">+</span>
+          <span class="impact-val" data-to="1" data-suffix=" triệu"></span>
+        </div>
+        <p class="impact-kicker">CÂY XANH</p>
+        <p class="impact-desc">
+          được Vựa Vui Vẻ trồng trên khắp Việt Nam từ 2012 tới nay
+        </p>
+      </li>
+
+      <!-- Item 2 -->
+      <li class="impact-item">
+        <div class="impact-num">
+          <span class="impact-sign">+</span>
+          <span class="impact-val" data-to="45" data-suffix=" triệu"></span>
+        </div>
+        <p class="impact-kicker">LY SỮA</p>
+        <p class="impact-desc">
+          được Quỹ sữa Vươn cao Việt Nam trao tặng tới hơn
+          500.000 trẻ em từ năm 2008
+        </p>
+      </li>
+
+      <!-- Item 3 -->
+      <li class="impact-item">
+        <div class="impact-num">
+          <span class="impact-sign">+</span>
+          <span class="impact-val" data-to="75" data-suffix=" tỷ đồng"></span>
+        </div>
+        <p class="impact-kicker">TÀI TRỢ CÁC HOẠT ĐỘNG</p>
+        <p class="impact-desc">
+          đóng góp cho cộng đồng
+        </p>
+      </li>
+    </ul>
+  </div>
+</section>
+
+     <!-- ===== ABOUT FEATURE ===== -->
+    <section class="about-feature">
+      <div class="about-feature__content">
+
+        <h2 class="about-feature__title">“Để tâm hiện tại. Vững vàng tương lai”</h2>
+        <p class="about-feature__text">
+         “Chúng tôi nhận thức rõ ràng thách thức về biến đổi khí hậu và sự cạn kiệt tài nguyên thiên nhiên đang đe dọa tương lai của chúng ta. Vì vậy, chúng tôi đã đặt ra mục tiêu và hành động cụ thể để giảm thiểu tác động của hoạt động chuỗi giá trị lên môi trường và xã hội.​
+
+Chúng tôi nhận thức rằng hành trình phát triển bền vững là một quá trình liên tục và đòi hỏi sự nỗ lực không ngừng. Chỉ khi chung tay, chúng ta mới có thể tạo ra một tương lai bền vững cho chính chúng ta và cho thế hệ mai sau.”   </p>
+       <br/>
+      <h3>Tổng Giám Đốc Nguyễn Chí Đức</h3> 
+      </div>
+
+      <div class="about-feature__image">
+        <img src="images/Screenshot 2025-11-06 181837.png" alt="Hệ thống vận hành tự động của nhà máy" loading="lazy">
+      </div>
+    </section>
+ 
+<!-- PILLARS: Để tâm: 3 yếu tố cốt lõi -->
+<section class="pillars" id="pillars">
+  <div class="container pillars-head" data-anim="fade-up">
+    <h2 class="pillars-title">Để tâm: 3 yếu tố cốt lõi</h2>
+    <p class="pillars-subtitle">
+      Trong nỗ lực hướng tới một tương lai bền vững, chúng tôi xác định Thiên nhiên, Con người và Sức khỏe là
+      những yếu tố cốt lõi đồng hành cùng mình trên con đường tạo dựng giá trị bền vững cho cộng đồng.
+    </p>
+  </div>
+
+  <!-- 01 -->
+  <article class="pillar" data-anim="fade-up">
+    <figure class="pillar-figure">
+      <img src="images/TD.jpg"
+           alt="Yêu Trái Đất">
+    </figure>
+    <div class="pillar-card">
+      <h3>Yêu Trái Đất</h3>
+      <p>
+        Với Vựa Vui Vẻ, Trái Đất là bạn đồng hành trong hành trình phát triển bền vững. Chúng tôi giảm dấu
+        chân carbon, ưu tiên năng lượng & công nghệ xanh; chủ động quản lý nguồn lực tự nhiên có trách nhiệm,
+        quản lý hiệu quả nguồn thải và trồng cây phủ xanh đất nước.
+      </p>
+    </div>
+  </article>
+
+  <!-- 02 -->
+  <article class="pillar" data-anim="fade-up">
+    <figure class="pillar-figure">
+      <img src="images/com.jpg"
+           alt="Quan tâm cộng đồng">
+    </figure>
+    <div class="pillar-card">
+      <h3>Quan tâm cộng đồng</h3>
+      <p>
+        Chúng tôi tin rằng phát triển con người là nền tảng cho xã hội bền vững: chăm sóc dinh dưỡng học đường,
+        đóng góp cho cộng đồng, và thúc đẩy tăng trưởng địa phương một cách toàn diện.
+      </p>
+    </div>
+  </article>
+
+  <!-- 03 -->
+  <article class="pillar" data-anim="fade-up">
+    <figure class="pillar-figure">
+      <img src="images/h.jpg"
+           alt="Hành động vì sức khỏe">
+    </figure>
+    <div class="pillar-card">
+      <h3>Hành động vì sức khỏe</h3>
+      <p>
+        Chúng tôi chọn những gì tốt nhất cho sức khỏe của bạn và những người thân yêu: chuẩn hóa nguyên liệu
+        an toàn, nâng chuẩn chất lượng quốc tế, cải tiến quy trình sản xuất để mang đến sản phẩm tốt nhất.
+      </p>
+    </div>
+  </article>
+</section>
+
+
+
+<!-- TECH: Công nghệ sản xuất chuẩn quốc tế -->
+    <section class="tech" id="tech">
+      <div class="container">
+        <h2 class="title">Quyết tâm tiến tới tương lai bền vững
+</h2>
+        
+
+        <div class="tech-grid">
+
+          <!-- Card 1 -->
+          <article class="tcard">
+            <figure class="tmedia">
+              <img src="images/or.jpg" alt="Chiết rót vô trùng">
+            </figure>
+            <header class="thead">
+              <h3>Nguyên liệu tươi – chọn kỹ từng món</h3>
+            </header>
+            <div class="tbody">
+              <p>
+                Từ trái cây, hạt, đến nguyên liệu thiên nhiên đều được chọn lựa cẩn thận mỗi ngày, giữ trọn vị ngon tươi mới trong từng sản phẩm.
+      </p>
+            </div>
+          </article>
+
+          <!-- Card 2 -->
+          <article class="tcard">
+            <figure class="tmedia">
+              <img src="images/congnghe.jpg" alt="Tiệt trùng UHT">
+            </figure>
+            <header class="thead">
+              <h3>Công nghệ chế biến sạch</h3>
+            </header>
+            <div class="tbody">
+              <p>
+                   Mọi sản phẩm tại Vựa Vui Vẻ đều được sản xuất trong quy trình khép kín, đảm bảo an toàn vệ sinh, không chất bảo quản và giữ hương vị tự nhiên nhất.            </p>
+            </div>
+          </article>
+
+          <!-- Card 3 -->
+          <article class="tcard">
+            <figure class="tmedia">
+              <img src="images/pack.jpg" alt="Chuỗi lạnh">
+            </figure>
+            <header class="thead">
+              <h3>Bao bì xanh – lan tỏa niềm vui bền vững</h3>
+            </header>
+            <div class="tbody">
+              <p>
+                     Chúng tôi ưu tiên sử dụng bao bì tái chế và vật liệu thân thiện môi trường, để mỗi sản phẩm không chỉ ngon mà còn góp phần lan tỏa lối sống xanh.
+   </p>
+            </div>
+          </article>
+
+        </div>
+
+        <!-- progress 4 gạch mảnh -->
+        <div class="tech-progress" id="techProgress"></div>
+      </div>
+    </section>
+  </main>
+
+  <section class="sustain-news">
+  <div class="container">
+    <div class="news-header">
+      <h2>Tin tức bền vững</h2>
+      
+    </div>
+
+    <div class="news-grid">
+      <div class="news-item">
+        <img src="images/dongvat.jpg" alt="Phúc lợi động vật">
+        <h3>Chính sách phúc lợi động vật</h3>
+        <p class="date">29/04/2025</p>
+      </div>
+
+      <div class="news-item">
+        <img src="images/thu mua.jpg" alt="Thu mua sữa tươi nguyên liệu">
+        <h3>Chính sách thu mua bền vững</h3>
+        <p class="date">29/04/2025</p>
+      </div>
+
+      <div class="news-item">
+        <img src="images/bo.jpg" alt="Sản xuất nông nghiệp bền vững">
+        <h3>Chính sách thực hành sản xuất nông nghiệp bền vững</h3>
+        <p class="date">29/04/2025</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<footer class="site-footer">
+      <div class="container">
+        <div class="sf-grid">
+          <div class="sf-cols">
+            <div class="sf-col">
+              <h4>Trang chủ</h4>
+              <ul>
+                <li><a href="#catalog">Sản phẩm</a></li>
+                <li><a href="#flashsale">Flash Sale</a></li>
+                <li><a href="#cart">Giỏ hàng</a></li>
+              </ul>
+            </div>
+            <div class="sf-col">
+              <h4>Về Vựa Vui Vẻ</h4>
+              <ul>
+                <li><a href="aboutus.html">Câu chuyện chúng tôi</a></li>
+                <li><a href="#values">Giá trị mang đến</a></li>
+                <li><a href="#mission">Sứ mệnh</a></li>
+              </ul>
+            </div>
+            <div class="sf-col">
+              <h4>Tài khoản</h4>
+              <ul>
+                <li><a href="../client/register.html">Đăng ký</a></li>
+                <li><a href="../client/login.html">Đăng nhập</a></li>
+              </ul>
+            </div>
+            <div class="sf-col">
+              <h4>Liên hệ</h4>
+              <ul>
+                <li>Hotline</li>
+                <li>Địa chỉ</li>
+              </ul>
+            </div>
+            <div class="sf-legal">Điều khoản dịch vụ | Chính sách giao hàng | Chính sách đổi trả</div>
+          </div>
+          <div class="sf-brand">
+    
+            <div class="sf-contact">
+              <div>Hotline: <span>012345678</span></div>
+              <div>Địa chỉ liên hệ: <span>Vựa Vui Vẻ</span></div>
+              <div>© <span id="year"></span> vựa vui vẻ</div>
+            </div>
+            <div class="sf-social">
+              <div class="sf-social__label">Theo dõi chúng tôi</div>
+              <a href="#" aria-label="Facebook" class="sf-social__btn">f</a>
+              <a href="#" aria-label="Instagram" class="sf-social__btn">IG</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
+    <img class="sf-logo" src="../Hôm/images/LogoVVV1.jpg"  alt="Vựa Vui Vẻ" />
+
+  <script src="about1.js" defer></script>
+</body>
+</html>
