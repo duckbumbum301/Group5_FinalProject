@@ -79,25 +79,33 @@ img{max-width:100%;display:block}
 .illus__emoji{font-size:80px}
 
 /* Sections */
-.section{padding:36px 0}
+.section {
+  display: flex;
+  justify-content: center; /* căn giữa ngang */
+  align-items: center;     /* căn giữa dọc */
+  min-height: 200px;       /* hoặc chiều cao bạn muốn */
+}
 .title{display:flex;align-items:center;justify-content:space-between;margin:0 0 16px}
 .title h2{margin:0;font-size:34px;line-height:1.2;display:inline-block;padding-right:4px;font-family:'Blenda Script',cursive;color:var(--green-2)}
 @supports ((-webkit-background-clip:text) or (background-clip:text)) {
-  .title h2{
-    background:linear-gradient(180deg,#1b5223 0%,#72c97a 100%);
-    -webkit-background-clip:text;
-    background-clip:text;
-    color:transparent;
-    -webkit-text-fill-color:transparent;
-  }
+  .title h2 {
+  margin: 0;
+  font-size: 36px;
+  font-weight: 800;
+  color: #065f46;
+  text-align: center;
+  transform: translateX(170px); /* 👉 chỉnh con số này để dịch sang phải nhiều/ít hơn */
 }
 /* Generic gradient text for headings with fallback */
-.gradient-title {
-  color: var(--green-2);
-  font-family: 'Blenda Script', cursive;
-  text-align: center;   /* 👉 Căn chữ giữa ngang */
-}
-
+.gradient-title{ color: var(--green-2); font-family:'Blenda Script',cursive; }
+/* Make gradient titles more prominent (e.g., Giỏ hàng in recipes) */
+.gradient-title{ font-size:32px; line-height:1.2; }
+@supports (-webkit-background-clip: text) {
+  .gradient-title{
+    background:linear-gradient(180deg,#1f5a27 0%,#66c372 100%);
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+  }
 }
 /* Pastel gradient variant for special CTA text */
 .gradient-title--pastel{ color:#fff; }
