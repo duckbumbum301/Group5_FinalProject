@@ -19,8 +19,8 @@ function buildHeaderHTML() {
       <line x1="16.65" y1="16.65" x2="21" y2="21" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
     </svg>`;
 
-  // Chuẩn lấy từ trang chủ
-  const homeHref = "/html/index.html";
+  // Trang chủ mong muốn: Home/Hôm
+  const homeHref = "/Home/H%C3%B4m/index.html";
   const isHome = /\/html\/index\.html$/i.test(location.pathname);
   const catalogHref = isHome ? "#catalog" : "/html/index.html#catalog";
   const makeProductHref = (id) => {
@@ -32,17 +32,18 @@ function buildHeaderHTML() {
 
   return `
     <div class="container header__row">
-      <a href="${homeHref}" class="logo" aria-label="Trang chủ Vựa Vui Vẻ"><img src="../images/brand/LogoVVV.png" alt="Vựa Vui Vẻ" class="logo__img" /></a>
+      <a href="${homeHref}" class="logo" aria-label="Trang chủ Vựa Vui Vẻ"><img src="/images/brand/LogoVVV.png" alt="Vựa Vui Vẻ" class="logo__img" /></a>
       <nav class="nav" aria-label="Điều hướng chính">
-        <div class="nav-item nav-item--dropdown">
+        <div class="nav-item nav-item--dropdown" aria-expanded="false">
+          <a href="/html/index.html" class="nav-link" id="productsMenuLink">Sản phẩm</a>
           <button
             class="nav-link nav-link--dropdown"
             id="productsMenuToggle"
             aria-expanded="false"
             aria-haspopup="true"
             aria-controls="productsMegaMenu"
+            aria-label="Mở menu Sản phẩm"
           >
-            Sản phẩm
             <svg
               class="nav-arrow"
               width="12"

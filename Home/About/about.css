@@ -833,5 +833,9 @@ main {
 }
 /* --- Header link color overrides for About page --- */
 header.header .nav .nav-link,
-header.header .nav a { color: #000 !important; }
-#accountBtn { color: #000 !important; }
+header.header .nav a {
+  color: #000 !important;
+}
+#accountBtn {
+  color: #000 !important;
+}
