@@ -79,22 +79,17 @@ img{max-width:100%;display:block}
 .illus__emoji{font-size:80px}
 
 /* Sections */
-.section {
-  display: flex;
-  justify-content: center; /* căn giữa ngang */
-  align-items: center;     /* căn giữa dọc */
-  min-height: 200px;       /* hoặc chiều cao bạn muốn */
-}
+.section{padding:36px 0}
 .title{display:flex;align-items:center;justify-content:space-between;margin:0 0 16px}
 .title h2{margin:0;font-size:34px;line-height:1.2;display:inline-block;padding-right:4px;font-family:'Blenda Script',cursive;color:var(--green-2)}
 @supports ((-webkit-background-clip:text) or (background-clip:text)) {
-  .title h2 {
-  margin: 0;
-  font-size: 36px;
-  font-weight: 800;
-  color: #065f46;
-  text-align: center;
-  transform: translateX(170px); /* 👉 chỉnh con số này để dịch sang phải nhiều/ít hơn */
+  .title h2{
+    background:linear-gradient(180deg,#1b5223 0%,#72c97a 100%);
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+    -webkit-text-fill-color:transparent;
+  }
 }
 /* Generic gradient text for headings with fallback */
 .gradient-title{ color: var(--green-2); font-family:'Blenda Script',cursive; }
