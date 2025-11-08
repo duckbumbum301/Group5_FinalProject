@@ -92,15 +92,12 @@ img{max-width:100%;display:block}
   }
 }
 /* Generic gradient text for headings with fallback */
-.gradient-title{ color: var(--green-2); font-family:'Blenda Script',cursive; }
-/* Make gradient titles more prominent (e.g., Giỏ hàng in recipes) */
-.gradient-title{ font-size:32px; line-height:1.2; }
-@supports (-webkit-background-clip: text) {
-  .gradient-title{
-    background:linear-gradient(180deg,#1f5a27 0%,#66c372 100%);
-    -webkit-background-clip:text;
-    -webkit-text-fill-color:transparent;
-  }
+.gradient-title {
+  color: var(--green-2);
+  font-family: 'Blenda Script', cursive;
+  text-align: center;   /* 👉 Căn chữ giữa ngang */
+}
+
 }
 /* Pastel gradient variant for special CTA text */
 .gradient-title--pastel{ color:#fff; }
