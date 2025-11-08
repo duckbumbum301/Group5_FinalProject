@@ -4,100 +4,12 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Tìm hiểu thêm</title>
+  <link rel="stylesheet" href="../../css/style.css" />
   <link rel="stylesheet" href="job.css" />
 </head>
 <body>
-  <!-- ===== HEADER (nền trắng, chữ xanh lá, thu nhỏ khi cuộn) ===== -->
-  <header class="header" id="site-header">
-    <div class="header-wrap container">
-      <a class="logo" href="../Hôm/index.html">
-
-        <img src="images/logo.png.png" alt="Vựa Vui Vẻ Logo" class="logo-img"/>
-</a>
-      
-      <nav class="mainnav" id="mainnav" aria-label="Chính">
-        <a href="../../html/index.html">Sản phẩm</a>
-        <a href="../../html/recipes.html">Công thức</a>
-        <a href="../../html/aboutus.html">Giới thiệu</a>
-
-      <button class="burger" aria-controls="mainnav" aria-expanded="false" onclick="toggleMenu()">
-        ☰
-      </button>
-
-    </div>
-     
-       <!-- Account button -->
-      <a href="../../html/account.html" class="account-btn" id="accountBtn">
-  <img src="../Hôm/images/ic_account.png" alt="Account" class="account-icon" />
-</a>
-
-<a href="/html/cart.html" class="account-btn">
-    <img src="../Hôm/images/buy.png" alt="Account" class="account-icon"/>
-</a>
-
-    <!-- Account (drawer giữ nguyên) -->
-    <aside
-      id="accountModal"
-      class="drawer"
-      role="dialog"
-      aria-modal="true"
-      aria-label="Thông tin tài khoản"
-      aria-labelledby="accountTitle"
-      hidden
-    >
-      <div class="drawer__panel">
-        <div class="drawer__head">
-          <h3 id="accountTitle">Tài khoản</h3>
-          <button class="btn btn--icon" id="accountCloseBtn" aria-label="Đóng">Đóng</button>
-        </div>
-        <div class="account-tabs">
-          <nav class="account-nav">
-            <button class="account-item active" id="acctNavProfile">
-              <span>Sửa thông tin cá nhân</span>
-              <span>›</span>
-            </button>
-            <button class="account-item" id="acctNavOrders">
-              <span>Đơn hàng từng mua</span>
-              <span>›</span>
-            </button>
-            <button class="account-item" id="acctNavSecurity">
-              <span>Đổi mật khẩu</span>
-              <span>›</span>
-            </button>
-          </nav>
-          <div class="account-content">
-            <section id="accountProfilePanel" class="account-panel">
-              <form id="accountForm" class="contact" style="padding: 16px">
-                <input class="input" type="text" name="name" placeholder="Họ và tên" autocomplete="name" required />
-                <input class="input" type="email" name="email" placeholder="Email (không thay đổi sau đăng ký)" autocomplete="email" readonly aria-readonly="true" />
-                <input class="input" type="tel" name="phone" placeholder="Số điện thoại (không thay đổi sau đăng ký)" autocomplete="tel" inputmode="numeric" pattern="\d{9,11}" title="Nhập 9–11 chữ số" readonly aria-readonly="true" />
-                <p class="muted" id="acctAddrInline" role="status" aria-live="polite">Địa chỉ mặc định: </p>
-                <textarea class="input" name="address" rows="3" placeholder="Địa chỉ giao hàng..." autocomplete="street-address" required></textarea>
-                <button class="btn btn--pri" type="submit">Lưu thông tin</button>
-                <p class="muted" id="accountMsg" role="status" aria-live="polite"></p>
-              </form>
-            </section>
-            <section id="accountOrdersPanel" class="account-panel" hidden>
-              <div id="accountOrdersBody" class="orders-body" style="padding: 16px"></div>
-            </section>
-            <section id="accountPasswordPanel" class="account-panel" hidden>
-              <form id="changePasswordForm" class="contact" style="padding: 16px">
-                <input class="input" type="password" name="current" placeholder="Mật khẩu hiện tại" autocomplete="current-password" required />
-                <input class="input" type="password" name="new" placeholder="Mật khẩu mới" autocomplete="new-password" required />
-                <input class="input" type="password" name="confirm" placeholder="Xác nhận mật khẩu mới" autocomplete="new-password" required />
-                <button class="btn btn--pri" type="submit">Đổi mật khẩu</button>
-                <p class="muted" id="pwMsg" role="status" aria-live="polite"></p>
-              </form>
-            </section>
-          </div>
-        </div>
-        <div class="drawer__foot">
-          <button class="btn btn--danger" id="btnLogout">Đăng xuất</button>
-        </div>
-      </div>
-      <div class="drawer__overlay" id="accountOverlay" tabindex="-1"></div>
-    </aside>
-  </header>
+  <!-- ===== HEADER chuẩn đồng bộ như Hôm/ABout ===== -->
+  <header class="header"></header>
 
   <!-- ===== MAIN CONTENT ===== -->
   <main>
@@ -106,7 +18,7 @@
       
      
         <img
-          src="images/Nội dung đoạn văn bản của bạn (3).png"
+          src="images/Nội%20dung%20đoạn%20văn%20bản%20của%20bạn%20(3).png"
   
           loading="eager"
         />
@@ -121,7 +33,7 @@
     <div class="flip-card" onclick="flipCard(this)">
       <div class="flip-inner">
         <div class="flip-front">
-          <img src="images/Nội dung đoạn văn bản của bạn (2).png" alt="Biểu tượng 1">
+          <img src="images/Nội%20dung%20đoạn%20văn%20bản%20của%20bạn%20(2).png" alt="Biểu tượng 1">
           <h3>Tận tâm</h3>
         </div>
         <div class="flip-back">
@@ -365,6 +277,15 @@
     </footer>
     <img class="sf-logo" src="../Hôm/images/LogoVVV1.jpg"  alt="Vựa Vui Vẻ" />
 
+  <!-- Gắn header chuẩn và fix liên kết cho trang con -->
+  <script type="module" src="../../js/header.js"></script>
+  <script type="module">
+    // Điều chỉnh href cho các liên kết header ở trang nằm sâu
+    document.querySelectorAll('header.header a[href="recipes.html"]').forEach((a) => a.setAttribute('href', '/html/recipes.html'));
+    document.querySelectorAll('header.header a[href="aboutus.html"]').forEach((a) => a.setAttribute('href', '/html/aboutus.html'));
+    const logoImg = document.querySelector('header.header .logo__img');
+    if (logoImg) logoImg.src = '/images/brand/LogoVVV.png';
+  </script>
   <script src="job.js" defer></script>
 </body>
 </html>

@@ -76,7 +76,7 @@
       "subcategory": "root",
       "price": 18000,
       "unit": "gói",
-      "stock": 50,
+      "stock": 49,
       "image": "../images/VEG/root/Bí Đỏ.jpg",
       "description": "Bí Đỏ (500g) - Sản phẩm chất lượng cao",
       "popular": 94
@@ -148,7 +148,7 @@
       "subcategory": "herb",
       "price": 8000,
       "unit": "gói",
-      "stock": 37,
+      "stock": 36,
       "image": "../images/VEG/herb/hành lá.jpg",
       "description": "Hành Lá (100g) - Sản phẩm chất lượng cao",
       "popular": 99
@@ -316,7 +316,7 @@
       "subcategory": "pork",
       "price": 70000,
       "unit": "gói",
-      "stock": 22,
+      "stock": 21,
       "image": "../images/MEAT/pork/baroi.jpg",
       "description": "Thịt heo ba rọi (500g) - Sản phẩm chất lượng cao",
       "popular": 89
@@ -700,7 +700,7 @@
       "subcategory": "sauce",
       "price": 25000,
       "unit": "gói",
-      "stock": 28,
+      "stock": 26,
       "image": "../images/SPICE/Sauce/nuocmam.jpg",
       "description": "Nước mắm Nam Ngư (500ml) - Sản phẩm chất lượng cao",
       "popular": 105
@@ -2686,6 +2686,129 @@
           "at": null
         }
       ]
+    },
+    {
+      "id": "ORD-20251108-154804-6HQWVV",
+      "customerName": "Quốc Việt",
+      "phone": "0973654843",
+      "address": "hùng vương street\nhùng vương street",
+      "email": "huynhquocviet0609@gmail.com",
+      "user": {
+        "name": "Quốc Việt",
+        "phone": "0973654843",
+        "address": "hùng vương street\nhùng vương street"
+      },
+      "slot": "2025-11-07_09:00-11:00",
+      "voucher": "FREESHIP",
+      "paymentMethod": "COD",
+      "note": "",
+      "status": "placed",
+      "delivery_status": "placed",
+      "payment_status": "pending",
+      "subtotal": 25000,
+      "shipping_fee": 0,
+      "discount": 0,
+      "totalAmount": 25000,
+      "total": 25000,
+      "items": {
+        "600": 1
+      },
+      "created_at": "2025-11-08T08:48:04.899Z",
+      "tracking": [
+        {
+          "code": "placed",
+          "label": "Đã đặt hàng",
+          "at": "2025-11-08T08:48:04.899Z"
+        },
+        {
+          "code": "preparing",
+          "label": "Đang chuẩn bị",
+          "at": null
+        },
+        {
+          "code": "ready",
+          "label": "Sẵn sàng giao",
+          "at": null
+        },
+        {
+          "code": "pickup",
+          "label": "Shipper đã nhận",
+          "at": null
+        },
+        {
+          "code": "delivering",
+          "label": "Đang giao",
+          "at": null
+        },
+        {
+          "code": "delivered",
+          "label": "Giao thành công",
+          "at": null
+        }
+      ]
+    },
+    {
+      "id": "ORD-20251108-154825-RNWXN7",
+      "customerName": "Quốc Việt",
+      "phone": "0973654843",
+      "address": "hùng vương street\nhùng vương street",
+      "email": "huynhquocviet0609@gmail.com",
+      "user": {
+        "name": "Quốc Việt",
+        "phone": "0973654843",
+        "address": "hùng vương street\nhùng vương street"
+      },
+      "slot": "2025-11-07_09:00-11:00",
+      "voucher": "FREESHIP",
+      "paymentMethod": "QR",
+      "note": "GỌI TRƯỚC NHA ĐAN NGỦ",
+      "status": "placed",
+      "delivery_status": "placed",
+      "payment_status": "pending",
+      "subtotal": 121000,
+      "shipping_fee": 0,
+      "discount": 0,
+      "totalAmount": 121000,
+      "total": 121000,
+      "items": {
+        "112": 1,
+        "140": 1,
+        "300": 1,
+        "600": 1
+      },
+      "created_at": "2025-11-08T08:48:25.311Z",
+      "tracking": [
+        {
+          "code": "placed",
+          "label": "Đã đặt hàng",
+          "at": "2025-11-08T08:48:25.311Z"
+        },
+        {
+          "code": "preparing",
+          "label": "Đang chuẩn bị",
+          "at": null
+        },
+        {
+          "code": "ready",
+          "label": "Sẵn sàng giao",
+          "at": null
+        },
+        {
+          "code": "pickup",
+          "label": "Shipper đã nhận",
+          "at": null
+        },
+        {
+          "code": "delivering",
+          "label": "Đang giao",
+          "at": null
+        },
+        {
+          "code": "delivered",
+          "label": "Giao thành công",
+          "at": null
+        }
+      ]
     }
   ],
   "users": [
@@ -3277,6 +3400,61 @@
         "userId": "1762589889193"
       },
       "timestamp": "2025-11-08T08:34:18.767Z"
+    },
+    {
+      "id": "1762591656629yetfk",
+      "action": "user.login",
+      "who": "huynhquocviet0609@gmail.com",
+      "metadata": {
+        "userId": "1762589889193"
+      },
+      "timestamp": "2025-11-08T08:47:36.629Z"
+    },
+    {
+      "id": "1762591684868fbpxd",
+      "action": "profile.update",
+      "who": "huynhquocviet0609@gmail.com",
+      "metadata": {
+        "userId": "1762589889193",
+        "changes": {
+          "name": "Quốc Việt",
+          "address": "hùng vương street\nhùng vương street"
+        }
+      },
+      "timestamp": "2025-11-08T08:48:04.868Z"
+    },
+    {
+      "id": "1762591684986gpfsz",
+      "action": "order.create",
+      "who": "huynhquocviet0609@gmail.com",
+      "metadata": {
+        "orderId": "ORD-20251108-154804-6HQWVV",
+        "total": 25000
+      },
+      "timestamp": "2025-11-08T08:48:04.986Z"
+    },
+    {
+      "id": "1762591705277f1psb",
+      "action": "profile.update",
+      "who": "huynhquocviet0609@gmail.com",
+      "metadata": {
+        "userId": "1762589889193",
+        "changes": {
+          "name": "Quốc Việt",
+          "address": "hùng vương street\nhùng vương street"
+        }
+      },
+      "timestamp": "2025-11-08T08:48:25.277Z"
+    },
+    {
+      "id": "1762591705342qdtdl",
+      "action": "order.create",
+      "who": "huynhquocviet0609@gmail.com",
+      "metadata": {
+        "orderId": "ORD-20251108-154825-RNWXN7",
+        "total": 121000
+      },
+      "timestamp": "2025-11-08T08:48:25.342Z"
     }
   ]
 }

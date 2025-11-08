@@ -37,16 +37,13 @@ img { max-width: 100%; display: block; }
    HEADER
    ========================================================= */
 .header {
-  position: fixed;
-  top: 0; left: 0; right: 0;
-  height: var(--header-h);
-  background: #fff;
-  color: var(--green-dark);
-  display: flex;
-  align-items: center;
-  z-index: 999;
-  border-bottom: 2px solid var(--line);
-  transition: all 0.35s ease;
+  position: static; /* dùng header chung, không fixed */
+  height: auto;     /* theo css/style.css */
+  background: var(--cream);
+  color: inherit;
+  display: block;
+  border-bottom: none;
+  transition: none;
 }
 .header-wrap {
   width: 100%;
@@ -70,12 +67,12 @@ main img {
   align-items: center;
 }
 .mainnav a {
-  color: var(--green-dark);
+  color: #000; /* menu màu đen theo yêu cầu */
   font-size: 1.05rem;
   font-weight: 500;
   transition: color 0.25s ease;
 }
-.mainnav a:hover { color: var(--green-main); }
+.mainnav a:hover { color: #333; }
 .burger {
   display: none;
   background: none;
@@ -898,3 +895,8 @@ html { overflow-x: hidden; }
   margin-top: 35px;   /* 🔹 hạ xuống 10px */
   transition: margin-top 0.35s ease;
 }
+
+/* --- Override màu chữ cho header dựng bởi header.js --- */
+header.header .nav .nav-link,
+header.header .nav a { color: #000 !important; }
+#accountBtn { color: #000 !important; }

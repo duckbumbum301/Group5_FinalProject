@@ -530,17 +530,17 @@ hero-left,
 }
 
 
-.nav{
+.showcase .nav{
   position:absolute; top:50%; transform:translateY(-50%);
   width:44px; height:44px; border-radius:12px; background:#fff;
   border:1px solid #c9f4b5; box-shadow:var(--shadow);
   display:grid; place-items:center; cursor:pointer; font-size:24px; user-select:none;
   transition:transform .15s ease, opacity .15s ease;
 }
-.nav.left{left:-6px} .nav.right{right:-6px}
-@media (min-width:768px){.nav.left{left:-12px}.nav.right{right:-12px}}
-@media (hover:hover){.nav:hover{transform:translateY(-50%) scale(1.05)}}
-.nav[aria-disabled="true"]{opacity:.35; pointer-events:none}
+.showcase .nav.left{left:-6px} .showcase .nav.right{right:-6px}
+@media (min-width:768px){.showcase .nav.left{left:-12px}.showcase .nav.right{right:-12px}}
+@media (hover:hover){.showcase .nav:hover{transform:translateY(-50%) scale(1.05)}}
+.showcase .nav[aria-disabled="true"]{opacity:.35; pointer-events:none}
 
 /* pill gợi ý dưới */
 .hover-pill{
@@ -557,7 +557,7 @@ hero-left,
 
 /* giảm chuyển động nếu người dùng chọn */
 @media (prefers-reduced-motion:reduce){
-  .pcard, .media img, .pop, .bar, .nav, .hover-pill{transition:none !important}
+  .pcard, .media img, .pop, .bar, .showcase .nav, .hover-pill{transition:none !important}
 }
 /* -------------------- 8) TECH -------------------- */
 .tech {
@@ -980,4 +980,47 @@ html { overflow-x: hidden; }
     height: 30px;
     font-size: 13px;
   }
+}
+
+/* =========================================================
+   🔧 Chuẩn hoá header để GIỐNG hệt trang chính
+   (không override style chung của site)
+   ========================================================= */
+header.header {
+  top: 0;                 /* giống trang chính */
+  background: #fff7e4;    /* nền kem chuẩn */
+  transform: none;        /* bỏ dịch chuyển gây overlay khác biệt */
+  box-shadow: var(--shadow);
+}
+header.header .logo__img {
+  height: 72px;           /* kích thước logo chuẩn */
+  transform: none;
+  filter: none;
+}
+
+/* Overlay nhẹ ở đầu trang, không phá bố cục chuẩn */
+header.header.header--overlay {
+  background: rgba(255, 247, 228, 0.6);
+  backdrop-filter: saturate(1.1) blur(2px);
+}
+header.header.header--overlay:hover {
+  background: #fff7e4;
+  backdrop-filter: none;
+}
+/* Khi đã scroll, dùng nền đặc như trang chính */
+body.header-solid header.header {
+  background: #fff7e4;
+  backdrop-filter: none;
+}
+
+/* ===== Đồng bộ màu chữ header (menu + nút tài khoản) như trang chính ===== */
+header.header .nav a,
+header.header .actions .btn:not(.btn--pri),
+header.header #accountBtn {
+  color: #000 !important;
+}
+/* Giữ chữ trắng cho nút Giỏ hàng */
+header.header .actions .btn.btn--pri,
+header.header #cartOpenBtn {
+  color: #fff !important;
 }

@@ -1,13 +1,15 @@
 // js/header.js — Inject a consistent site header across pages
-import { bindMegaMenu } from './menu.js';
-import { getCart } from './cart.js';
-import { apiListProducts, apiCurrentUser } from './api.js';
+import { bindMegaMenu } from "./menu.js";
+import { getCart } from "./cart.js";
+import { apiListProducts, apiCurrentUser } from "./api.js";
 
 function sumCartQty() {
   try {
     const entries = Object.entries(getCart()).filter(([, q]) => q > 0);
     return entries.reduce((s, [, q]) => s + q, 0);
-  } catch { return 0; }
+  } catch {
+    return 0;
+  }
 }
 
 function buildHeaderHTML() {
@@ -18,9 +20,9 @@ function buildHeaderHTML() {
     </svg>`;
 
   // Chuẩn lấy từ trang chủ
-  const homeHref = '/html/index.html';
+  const homeHref = "/html/index.html";
   const isHome = /\/html\/index\.html$/i.test(location.pathname);
-  const catalogHref = isHome ? '#catalog' : '/html/index.html#catalog';
+  const catalogHref = isHome ? "#catalog" : "/html/index.html#catalog";
   const makeProductHref = (id) => {
     const pid = String(id);
     return isHome
@@ -518,8 +520,8 @@ function buildHeaderHTML() {
             </div>
           </div>
         </div>
-        <a href="recipes.html">Công thức</a>
-        <a href="aboutus.html">Giới thiệu</a>
+        <a href="/html/recipes.html">Công thức</a>
+        <a href="/html/aboutus.html">Giới thiệu</a>
       </nav>
       <div class="searchbox" role="search">
         <input id="searchInput" class="searchbox__input" type="search" placeholder="Search" aria-label="Tìm kiếm sản phẩm" autocomplete="on" />
@@ -533,7 +535,9 @@ function buildHeaderHTML() {
 }
 
 function mountHeader() {
-  const container = document.querySelector('#siteHeader') || document.querySelector('header.header');
+  const container =
+    document.querySelector("#siteHeader") ||
+    document.querySelector("header.header");
   if (!container) return;
   container.innerHTML = buildHeaderHTML();
   const isHome = /\/html\/index\.html$/i.test(location.pathname);
@@ -541,92 +545,107 @@ function mountHeader() {
   requestAnimationFrame(() => {
     try {
       const h = container.offsetHeight || 60;
-      document.documentElement.style.setProperty('--header-h', h + 'px');
-      document.body.classList.add('has-fixed-header');
+      document.documentElement.style.setProperty("--header-h", h + "px");
+      document.body.classList.add("has-fixed-header");
     } catch {}
   });
   // Bind mega menu hover/click interactions (links already point đúng bằng catalogHref)
   bindMegaMenu();
   // Update cart badge immediately and on cart changes
-  const badge = document.getElementById('cartBadge');
+  const badge = document.getElementById("cartBadge");
   if (badge) badge.textContent = String(sumCartQty());
-  document.addEventListener('cart:changed', () => {
-    const b = document.getElementById('cartBadge');
+  document.addEventListener("cart:changed", () => {
+    const b = document.getElementById("cartBadge");
     if (b) b.textContent = String(sumCartQty());
   });
 
   // Cart button: trên trang khác không có drawer, điều hướng về cart.html
-  const cartBtn = document.getElementById('cartOpenBtn');
+  const cartBtn = document.getElementById("cartOpenBtn");
   if (cartBtn) {
-    cartBtn.addEventListener('click', (ev) => {
+    cartBtn.addEventListener("click", (ev) => {
       ev.preventDefault();
-      const url = new URL('/html/cart.html', location.href).toString();
+      const url = new URL("/html/cart.html", location.href).toString();
       location.href = url;
     });
   }
 
   // Account button: nếu đã đăng nhập -> account.html; nếu chưa -> login.html
-  const accountBtn = document.getElementById('accountBtn');
+  const accountBtn = document.getElementById("accountBtn");
   if (accountBtn) {
     // Cập nhật href ban đầu theo trạng thái hiện tại
     (async () => {
       try {
         const u = await apiCurrentUser();
-        accountBtn.setAttribute('href', u ? '/html/account.html' : '/client/login.html');
+        accountBtn.setAttribute(
+          "href",
+          u ? "/html/account.html" : "/client/login.html"
+        );
       } catch {}
     })();
-    accountBtn.addEventListener('click', async (ev) => {
+    accountBtn.addEventListener("click", async (ev) => {
       ev.preventDefault();
       try {
         const u = await apiCurrentUser();
-        const url = new URL(u ? '/html/account.html' : '/client/login.html', location.href);
+        const url = new URL(
+          u ? "/html/account.html" : "/client/login.html",
+          location.href
+        );
         location.href = url.toString();
       } catch {
-        location.href = new URL('/client/login.html', location.href).toString();
+        location.href = new URL("/client/login.html", location.href).toString();
       }
     });
   }
 
   // Search: từ bất kỳ trang nào, điều hướng về trang sản phẩm
-  const searchBtn = document.querySelector('.searchbox__btn');
-  const searchInput = document.getElementById('searchInput');
+  const searchBtn = document.querySelector(".searchbox__btn");
+  const searchInput = document.getElementById("searchInput");
   let _productsCache = null;
   const ensureProducts = async () => {
-    if (Array.isArray(_productsCache) && _productsCache.length) return _productsCache;
-    try { _productsCache = await apiListProducts(); } catch { _productsCache = []; }
+    if (Array.isArray(_productsCache) && _productsCache.length)
+      return _productsCache;
+    try {
+      _productsCache = await apiListProducts();
+    } catch {
+      _productsCache = [];
+    }
     return _productsCache;
   };
   const goHomeWithQuery = async (ev) => {
-    const q = (searchInput?.value || '').trim();
+    const q = (searchInput?.value || "").trim();
     if (!isHome) {
       ev?.preventDefault?.();
-      const url = new URL('/html/index.html#catalog', location.href);
+      const url = new URL("/html/index.html#catalog", location.href);
       // Nếu khớp chính xác tên sản phẩm, điều hướng bằng ?product=ID để hiển thị đúng 1 sản phẩm
       if (q) {
         const list = await ensureProducts();
-        const found = list.find(p => (p?.name || '').trim().toLowerCase() === q.toLowerCase());
-        if (found && found.id) url.searchParams.set('product', found.id);
-        else url.searchParams.set('q', q);
+        const found = list.find(
+          (p) => (p?.name || "").trim().toLowerCase() === q.toLowerCase()
+        );
+        if (found && found.id) url.searchParams.set("product", found.id);
+        else url.searchParams.set("q", q);
       }
       location.href = url.toString();
     }
     // Nếu đang ở trang chủ, để main.js xử lý lọc mà không reload
   };
-  if (searchBtn) searchBtn.addEventListener('click', goHomeWithQuery);
+  if (searchBtn) searchBtn.addEventListener("click", goHomeWithQuery);
   if (searchInput) {
-    searchInput.addEventListener('keydown', (ev) => {
-      if (ev.key === 'Enter') goHomeWithQuery(ev);
+    searchInput.addEventListener("keydown", (ev) => {
+      if (ev.key === "Enter") goHomeWithQuery(ev);
     });
     // Khi chọn từ droplist trên trang khác, điều hướng ngay nếu tên khớp chính xác
     if (!isHome) {
-      searchInput.addEventListener('input', async () => {
-        const q = (searchInput?.value || '').trim();
+      searchInput.addEventListener("input", async () => {
+        const q = (searchInput?.value || "").trim();
         if (!q) return;
         const list = await ensureProducts();
-        const found = list.find(p => (p?.name || '').trim().toLowerCase() === q.toLowerCase());
+        const found = list.find(
+          (p) => (p?.name || "").trim().toLowerCase() === q.toLowerCase()
+        );
         if (found && found.id) {
-          const url = new URL('/html/index.html#catalog', location.href);
-          url.searchParams.set('product', found.id);
+          const url = new URL("/html/index.html#catalog", location.href);
+          url.searchParams.set("product", found.id);
           location.href = url.toString();
         }
       });
@@ -635,8 +654,12 @@ function mountHeader() {
 }
 
 // Mount header càng sớm càng tốt để các module khác có thể bắt DOM refs
-(function initHeaderMount(){
-  const run = () => { try { mountHeader(); } catch {} };
-  if (document.readyState !== 'loading') run();
-  else document.addEventListener('DOMContentLoaded', run);
+(function initHeaderMount() {
+  const run = () => {
+    try {
+      mountHeader();
+    } catch {}
+  };
+  if (document.readyState !== "loading") run();
+  else document.addEventListener("DOMContentLoaded", run);
 })();

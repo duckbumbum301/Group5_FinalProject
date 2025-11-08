@@ -7,6 +7,7 @@
   --text: #222;
   --muted: #6b7280;
   --bg: #fff7e4;
+  --cream: #fff7e4; /* màu nền header thống nhất */
   --white: #fff;
   --border: #e5e7eb;
   --shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
@@ -59,8 +60,10 @@ img {
   left: 0;
   right: 0;
   z-index: 50;
-  background: #fff7e4;
+  background: var(--cream);
   box-shadow: var(--shadow);
+  /* Đảm bảo chiều cao header theo nội dung (chuẩn như trang Hôm) */
+  height: auto;
 }
 .header__row {
   display: flex;
