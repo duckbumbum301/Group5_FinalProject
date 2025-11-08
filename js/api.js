@@ -87,7 +87,9 @@ function stripDiacritics(str) {
       .toLowerCase()
       .trim();
   } catch {
-    return String(str || "").toLowerCase().trim();
+    return String(str || "")
+      .toLowerCase()
+      .trim();
   }
 }
 

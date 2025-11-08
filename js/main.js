@@ -393,9 +393,7 @@ let productMap = {};
 function applyFilters() {
   // Nếu đã chọn sản phẩm cụ thể (dropdown/header/search), bỏ qua các filter khác
   if (filters.pid) {
-    const one = productIndex.find(
-      (p) => String(p.id) === String(filters.pid)
-    );
+    const one = productIndex.find((p) => String(p.id) === String(filters.pid));
     return one ? [one] : [];
   }
 
@@ -772,18 +770,36 @@ function handleMegaMenuLinkClick(e) {
     filters.cat = "all";
     filters.sub = "all";
     renderWithPagination();
-    try { openProductModal(pid); } catch {}
+    try {
+      openProductModal(pid);
+    } catch {}
     closeMegaMenu();
     document.getElementById("catalog")?.scrollIntoView({ behavior: "smooth" });
     return;
   }
   const catAttr = link.getAttribute("data-category") || "all";
   const subAttr = link.getAttribute("data-sub") || "all";
+  // Chuẩn hoá các key sub để khớp dữ liệu thực tế
+  const normalizeSubForCat = (cat, sub) => {
+    const maps = {
+      dry: { "beans-nuts": "beans", "flour-mix": "flour" },
+      spice: { herbs: "powder", condiment: "sauce" },
+      household: {
+        "laundry-cleaning": "laundry",
+        "kitchen-storage": "kitchenware",
+        "bags-packaging": "bags",
+        "personal-care": "personal",
+      },
+    };
+    const m = maps[cat] || {};
+    return m[sub] || sub;
+  };
+  const subNorm = normalizeSubForCat(catAttr, subAttr);
   filters.nameOnly = false;
   filters.nameTerm = "";
   filters.nameTokens = [];
   filters.cat = catAttr;
-  filters.sub = subAttr;
+  filters.sub = subNorm;
   // Đồng bộ dropdown danh mục theo lựa chọn Mega Menu (9 mục)
   if (catFilter) {
     const selectValueFor = (cat /*, sub*/) => {
@@ -1493,7 +1509,9 @@ function init() {
       .map((p) => `<option value="${p.name}"></option>`)
       .join("");
     // Ẩn các mục Mega Menu không có sản phẩm tương ứng
-    try { syncMegaMenuWithProducts(allProducts); } catch {}
+    try {
+      syncMegaMenuWithProducts(allProducts);
+    } catch {}
     renderWithPagination();
 
     // Nếu có tham số ?q= từ các trang khác, áp dụng bộ lọc và cuộn tới catalog
@@ -1508,7 +1526,9 @@ function init() {
         filters.nameTerm = "";
         filters.nameTokens = [];
         renderWithPagination();
-        document.getElementById("catalog")?.scrollIntoView({ behavior: "smooth" });
+        document
+          .getElementById("catalog")
+          ?.scrollIntoView({ behavior: "smooth" });
       }
     } catch {}
 
@@ -1522,7 +1542,9 @@ function init() {
       })();
       const pidFromURL = pidFromSearch || pidFromHash;
       if (pidFromURL && !hasUserFilterInteraction) {
-        try { openProductModal(pidFromURL); } catch {}
+        try {
+          openProductModal(pidFromURL);
+        } catch {}
         filters.pid = String(pidFromURL);
         filters.q = "";
         filters.qNorm = "";
@@ -1532,7 +1554,9 @@ function init() {
         filters.cat = "all";
         filters.sub = "all";
         renderWithPagination();
-        document.getElementById("catalog")?.scrollIntoView({ behavior: "smooth" });
+        document
+          .getElementById("catalog")
+          ?.scrollIntoView({ behavior: "smooth" });
       }
     } catch {}
 
@@ -1605,19 +1629,17 @@ function syncMegaMenuWithProducts(list) {
     if (link.hasAttribute("data-product-id")) return;
     const cat = link.getAttribute("data-category") || "all";
     const sub = link.getAttribute("data-sub") || "all";
-    const hasAnyInCat = byCat[cat] && byCat[cat].size > 0;
+    // Luôn hiển thị liên kết; nếu chưa có hàng, đánh dấu nhẹ bằng class
     const hasExact = byCat[cat] && byCat[cat].has(sub);
-    const shouldShow = sub === "all" ? hasAnyInCat : hasExact;
-    if (!shouldShow) {
-      const li = link.closest("li") || link;
-      li?.setAttribute("hidden", "");
-      li?.setAttribute("aria-hidden", "true");
-      link.setAttribute("aria-disabled", "true");
-      link.classList.add("is-disabled");
-      link.addEventListener("click", (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-      });
+    if (!hasExact && sub !== "all") {
+      link.classList.add("is-empty");
+      link.setAttribute(
+        "aria-label",
+        `${(link.textContent || "").trim()} — chưa có hàng`
+      );
+    } else {
+      link.classList.remove("is-empty");
+      link.removeAttribute("aria-label");
     }
   });
 }

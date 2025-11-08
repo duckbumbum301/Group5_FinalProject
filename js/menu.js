@@ -4,87 +4,97 @@ let _productsMenuToggle;
 let _navItem;
 
 export function openMegaMenu() {
-  const productsMegaMenu = _productsMegaMenu || document.getElementById('productsMegaMenu');
-  const productsMenuToggle = _productsMenuToggle || document.getElementById('productsMenuToggle');
-  const navItem = _navItem || document.querySelector('.nav-item--dropdown');
+  const productsMegaMenu =
+    _productsMegaMenu || document.getElementById("productsMegaMenu");
+  const productsMenuToggle =
+    _productsMenuToggle || document.getElementById("productsMenuToggle");
+  const navItem = _navItem || document.querySelector(".nav-item--dropdown");
   if (!productsMegaMenu || !productsMenuToggle || !navItem) return;
-  productsMegaMenu.removeAttribute('hidden');
+  productsMegaMenu.removeAttribute("hidden");
   // Hiển thị bằng CSS: aria-hidden="false"
-  productsMegaMenu.setAttribute('aria-hidden', 'false');
-  productsMenuToggle.setAttribute('aria-expanded', 'true');
-  navItem.setAttribute('aria-expanded', 'true');
-  const firstLink = productsMegaMenu.querySelector('.mega-menu__link');
+  productsMegaMenu.setAttribute("aria-hidden", "false");
+  productsMenuToggle.setAttribute("aria-expanded", "true");
+  navItem.setAttribute("aria-expanded", "true");
+  const firstLink = productsMegaMenu.querySelector(".mega-menu__link");
   if (firstLink) firstLink.focus();
 }
 
 export function closeMegaMenu() {
-  const productsMegaMenu = _productsMegaMenu || document.getElementById('productsMegaMenu');
-  const productsMenuToggle = _productsMenuToggle || document.getElementById('productsMenuToggle');
-  const navItem = _navItem || document.querySelector('.nav-item--dropdown');
+  const productsMegaMenu =
+    _productsMegaMenu || document.getElementById("productsMegaMenu");
+  const productsMenuToggle =
+    _productsMenuToggle || document.getElementById("productsMenuToggle");
+  const navItem = _navItem || document.querySelector(".nav-item--dropdown");
   if (!productsMegaMenu || !productsMenuToggle || !navItem) return;
   // Trả focus về toggle trước khi ẩn để tránh cảnh báo aria-hidden
   productsMenuToggle.focus();
-  productsMegaMenu.setAttribute('hidden', '');
-  productsMegaMenu.setAttribute('aria-hidden', 'true');
-  productsMenuToggle.setAttribute('aria-expanded', 'false');
-  navItem.setAttribute('aria-expanded', 'false');
+  productsMegaMenu.setAttribute("hidden", "");
+  productsMegaMenu.setAttribute("aria-hidden", "true");
+  productsMenuToggle.setAttribute("aria-expanded", "false");
+  navItem.setAttribute("aria-expanded", "false");
 }
 
 export function toggleMegaMenu() {
-  const productsMegaMenu = _productsMegaMenu || document.getElementById('productsMegaMenu');
+  const productsMegaMenu =
+    _productsMegaMenu || document.getElementById("productsMegaMenu");
   if (!productsMegaMenu) return;
-  const isOpen = !productsMegaMenu.hasAttribute('hidden');
+  const isOpen = !productsMegaMenu.hasAttribute("hidden");
   if (isOpen) closeMegaMenu();
   else openMegaMenu();
 }
 
 export function handleMegaMenuKeydown(e) {
-  if (e.key === 'Escape') {
+  if (e.key === "Escape") {
     closeMegaMenu();
-    const productsMenuToggle = _productsMenuToggle || document.getElementById('productsMenuToggle');
+    const productsMenuToggle =
+      _productsMenuToggle || document.getElementById("productsMenuToggle");
     if (productsMenuToggle) productsMenuToggle.focus();
   }
 }
 
 export function bindMegaMenu(onLinkClick) {
-  const productsMenuToggle = document.getElementById('productsMenuToggle');
-  const productsMegaMenu = document.getElementById('productsMegaMenu');
-  const navItem = document.querySelector('.nav-item--dropdown');
+  const productsMenuToggle = document.getElementById("productsMenuToggle");
+  const productsMegaMenu = document.getElementById("productsMegaMenu");
+  const navItem = document.querySelector(".nav-item--dropdown");
   if (!productsMenuToggle || !productsMegaMenu || !navItem) return;
-  if (productsMegaMenu.hasAttribute('data-bound')) return;
 
-  // cache refs for exported helpers
+  // cache refs cho helpers
   _productsMenuToggle = productsMenuToggle;
   _productsMegaMenu = productsMegaMenu;
   _navItem = navItem;
 
-  productsMenuToggle.addEventListener('click', toggleMegaMenu);
-  productsMenuToggle.addEventListener('keydown', (e) => {
-    if (e.key === 'Enter' || e.key === ' ') {
-      e.preventDefault();
-      toggleMegaMenu();
-    }
-  });
+  // Chỉ bind các tương tác cơ bản 1 lần
+  const alreadyBound = productsMegaMenu.hasAttribute("data-bound");
+  if (!alreadyBound) {
+    productsMenuToggle.addEventListener("click", toggleMegaMenu);
+    productsMenuToggle.addEventListener("keydown", (e) => {
+      if (e.key === "Enter" || e.key === " ") {
+        e.preventDefault();
+        toggleMegaMenu();
+      }
+    });
 
-  let hoverTimeout;
-  navItem.addEventListener('mouseenter', () => {
-    clearTimeout(hoverTimeout);
-    openMegaMenu();
-  });
-  navItem.addEventListener('mouseleave', () => {
-    hoverTimeout = setTimeout(closeMegaMenu, 150);
-  });
+    let hoverTimeout;
+    navItem.addEventListener("mouseenter", () => {
+      clearTimeout(hoverTimeout);
+      openMegaMenu();
+    });
+    navItem.addEventListener("mouseleave", () => {
+      hoverTimeout = setTimeout(closeMegaMenu, 150);
+    });
 
-  productsMegaMenu.addEventListener('mouseenter', () => {
-    clearTimeout(hoverTimeout);
-  });
-  productsMegaMenu.addEventListener('mouseleave', () => {
-    hoverTimeout = setTimeout(closeMegaMenu, 150);
-  });
-  productsMegaMenu.addEventListener('keydown', handleMegaMenuKeydown);
-  if (typeof onLinkClick === 'function') {
-    productsMegaMenu.addEventListener('click', onLinkClick);
+    productsMegaMenu.addEventListener("mouseenter", () => {
+      clearTimeout(hoverTimeout);
+    });
+    productsMegaMenu.addEventListener("mouseleave", () => {
+      hoverTimeout = setTimeout(closeMegaMenu, 150);
+    });
+    productsMegaMenu.addEventListener("keydown", handleMegaMenuKeydown);
+    productsMegaMenu.setAttribute("data-bound", "true");
   }
 
-  productsMegaMenu.setAttribute('data-bound', 'true');
+  // Cho phép thêm handler click bất kỳ lúc nào (để main.js đồng bộ filter)
+  if (typeof onLinkClick === "function") {
+    productsMegaMenu.addEventListener("click", onLinkClick);
+  }
 }

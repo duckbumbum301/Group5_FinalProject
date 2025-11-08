@@ -154,16 +154,44 @@ function buildHeaderHTML() {
                       href="${catalogHref}"
                       class="mega-menu__link"
                       data-category="fruit"
-                      data-sub="mixed"
-                      >Trái cây các loại</a
+                      data-sub="fresh"
+                      >Trái cây tươi</a
                     >
                   </li>
                   <li>
                     <a
-                      href="${makeProductHref(210)}"
+                      href="${catalogHref}"
                       class="mega-menu__link"
-                      data-product-id="210"
-                      >Giỏ quà</a
+                      data-category="fruit"
+                      data-sub="imported"
+                      >Trái cây nhập khẩu</a
+                    >
+                  </li>
+                  <li>
+                    <a
+                      href="${catalogHref}"
+                      class="mega-menu__link"
+                      data-category="fruit"
+                      data-sub="seasonal"
+                      >Trái cây theo mùa</a
+                    >
+                  </li>
+                  <li>
+                    <a
+                      href="${catalogHref}"
+                      class="mega-menu__link"
+                      data-category="fruit"
+                      data-sub="dried"
+                      >Trái cây sấy & đóng gói</a
+                    >
+                  </li>
+                  <li>
+                    <a
+                      href="${catalogHref}"
+                      class="mega-menu__link"
+                      data-category="fruit"
+                      data-sub="gift"
+                      >Giỏ quà - Combo trái cây</a
                     >
                   </li>
                 </ul>
@@ -606,4 +634,9 @@ function mountHeader() {
   }
 }
 
-document.addEventListener('DOMContentLoaded', mountHeader);
+// Mount header càng sớm càng tốt để các module khác có thể bắt DOM refs
+(function initHeaderMount(){
+  const run = () => { try { mountHeader(); } catch {} };
+  if (document.readyState !== 'loading') run();
+  else document.addEventListener('DOMContentLoaded', run);
+})();

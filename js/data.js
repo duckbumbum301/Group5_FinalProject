@@ -144,6 +144,62 @@ const VEG_PROCESSED = makeProducts(170, "veg", "processed", [
 // TRÁI CÂY
 // ====================================================
 
+// Nhóm trái cây tươi
+const FRUIT_FRESH = makeProducts(220, "fruit", "fresh", [
+  {
+    name: "Táo tươi (1kg)",
+    price: 85000,
+    image: "",
+  },
+  {
+    name: "Cam tươi (1kg)",
+    price: 35000,
+    image: "",
+  },
+]);
+
+// Nhóm trái cây nhập khẩu
+const FRUIT_IMPORTED = makeProducts(230, "fruit", "imported", [
+  {
+    name: "Táo Mỹ nhập khẩu (1kg)",
+    price: 99000,
+    image: "",
+  },
+  {
+    name: "Nho nhập khẩu (500g)",
+    price: 120000,
+    image: "",
+  },
+]);
+
+// Nhóm trái cây theo mùa
+const FRUIT_SEASONAL = makeProducts(240, "fruit", "seasonal", [
+  {
+    name: "Chuối Laba mùa vụ (1kg)",
+    price: 28000,
+    image: "",
+  },
+  {
+    name: "Cam sành theo mùa (1kg)",
+    price: 35000,
+    image: "",
+  },
+]);
+
+// Nhóm trái cây sấy & đóng gói
+const FRUIT_DRIED = makeProducts(250, "fruit", "dried", [
+  {
+    name: "Chuối sấy (100g)",
+    price: 45000,
+    image: "",
+  },
+  {
+    name: "Mít sấy (100g)",
+    price: 50000,
+    image: "",
+  },
+]);
+
 const FRUIT_MIXED = makeProducts(200, "fruit", "mixed", [
   {
     name: "Táo Mỹ (1kg)",
@@ -387,6 +443,17 @@ const DRY_CANNED = makeProducts(550, "dry", "canned", [
   },
 ]);
 
+// Bổ sung các sub-key theo HTML
+const DRY_BEANS_NUTS = makeProducts(560, "dry", "beans-nuts", [
+  { name: "Hạt đậu phộng rang (200g)", price: 22000, image: "" },
+  { name: "Hạt hạnh nhân (100g)", price: 65000, image: "" },
+]);
+
+const DRY_FLOUR_MIX = makeProducts(570, "dry", "flour-mix", [
+  { name: "Bột chiên giòn (200g)", price: 18000, image: "" },
+  { name: "Bột tẩm tempura (200g)", price: 25000, image: "" },
+]);
+
 // ====================================================
 // GIA VỊ
 // ====================================================
@@ -423,6 +490,16 @@ const SPICE_POWDER = makeProducts(620, "spice", "powder", [
     price: 12000,
     image: "../images/SPICE/Powder/botngot.jpg",
   },
+]);
+
+const SPICE_HERBS = makeProducts(630, "spice", "herbs", [
+  { name: "Lá húng quế sấy (20g)", price: 19000, image: "" },
+  { name: "Lá rosemary sấy (20g)", price: 25000, image: "" },
+]);
+
+const SPICE_CONDIMENT = makeProducts(640, "spice", "condiment", [
+  { name: "Gia vị nướng BBQ (50g)", price: 32000, image: "" },
+  { name: "Gia vị lẩu thái (50g)", price: 35000, image: "" },
 ]);
 
 // ====================================================
@@ -512,6 +589,26 @@ const HOUSEHOLD_PERSONAL = makeProducts(750, "household", "personal", [
   },
 ]);
 
+const HOUSEHOLD_LAUNDRY_CLEANING = makeProducts(715, "household", "laundry-cleaning", [
+  { name: "Combo giặt & tẩy (2 món)", price: 89000, image: "" },
+  { name: "Nước lau đa năng (1L)", price: 55000, image: "" },
+]);
+
+const HOUSEHOLD_KITCHEN_STORAGE = makeProducts(722, "household", "kitchen-storage", [
+  { name: "Hộp bảo quản thực phẩm (2 chiếc)", price: 59000, image: "" },
+  { name: "Bộ hũ gia vị (3 chiếc)", price: 49000, image: "" },
+]);
+
+const HOUSEHOLD_BAGS_PACKAGING = makeProducts(702, "household", "bags-packaging", [
+  { name: "Cuộn túi rác 60L", price: 38000, image: "" },
+  { name: "Túi hút chân không (10 chiếc)", price: 69000, image: "" },
+]);
+
+const HOUSEHOLD_PERSONAL_CARE = makeProducts(753, "household", "personal-care", [
+  { name: "Bàn chải đánh răng (2 chiếc)", price: 26000, image: "" },
+  { name: "Sữa dưỡng thể (200ml)", price: 79000, image: "" },
+]);
+
 // ====================================================
 // ĐỒ NGỌT
 // ====================================================
@@ -586,6 +683,10 @@ export const PRODUCTS = [
   ...VEG_CABBAGE,
   ...VEG_ORGANIC,
   ...VEG_PROCESSED,
+  ...FRUIT_FRESH,
+  ...FRUIT_IMPORTED,
+  ...FRUIT_SEASONAL,
+  ...FRUIT_DRIED,
   ...FRUIT_MIXED,
   ...FRUIT_GIFT,
   ...MEAT_PORK,
@@ -604,15 +705,23 @@ export const PRODUCTS = [
   ...DRY_FLOUR,
   ...DRY_SEAWEED,
   ...DRY_CANNED,
+  ...DRY_BEANS_NUTS,
+  ...DRY_FLOUR_MIX,
   ...SPICE_SAUCE,
   ...SPICE_OIL,
   ...SPICE_POWDER,
+  ...SPICE_HERBS,
+  ...SPICE_CONDIMENT,
   ...HOUSEHOLD_BAGS,
   ...HOUSEHOLD_CLEANING,
   ...HOUSEHOLD_PERSONAL,
   ...HOUSEHOLD_KITCHENWARE,
   ...HOUSEHOLD_LAUNDRY,
   ...HOUSEHOLD_PAPER,
+  ...HOUSEHOLD_LAUNDRY_CLEANING,
+  ...HOUSEHOLD_KITCHEN_STORAGE,
+  ...HOUSEHOLD_BAGS_PACKAGING,
+  ...HOUSEHOLD_PERSONAL_CARE,
   ...SWEET_SNACK,
   ...SWEET_CHOCOLATE,
   ...SWEET_CANDY,
