@@ -15,7 +15,8 @@
   --shadow:0 18px 50px rgba(0,0,0,.08);
 
   --topbar-h: 36px;  
-  --header-h: 64px;
+  /* Đồng bộ với trang chủ: mặc định 60px, sẽ được cập nhật động bởi header.js */
+  --header-h: 60px;
 }
 
 /* FONT MẢNH, THANH LỊCH */
@@ -991,6 +992,25 @@ header.header {
   background: #fff7e4;    /* nền kem chuẩn */
   transform: none;        /* bỏ dịch chuyển gây overlay khác biệt */
   box-shadow: var(--shadow);
+}
+/* Font & spacing của header: đồng bộ với css/style.css (Montserrat, kích thước 16px) */
+header.header,
+header.header .nav,
+header.header .nav a,
+header.header .actions,
+header.header .actions .btn,
+header.header .searchbox,
+header.header .searchbox__input {
+  font-family: "Montserrat", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif !important;
+}
+header.header .header__row {
+  padding: 14px 0 !important;
+  gap: 12px !important;
+}
+header.header .nav a,
+header.header .actions .btn,
+header.header .nav-link {
+  font-size: 16px !important;
 }
 header.header .logo__img {
   height: 72px;           /* kích thước logo chuẩn */
