@@ -21,6 +21,14 @@
 
 /* FONT MẢNH, THANH LỊCH */
 @import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500&display=swap");
+@font-face {
+  font-family: "Merriweather";
+  src: url("../../assets/font/Merriweather-VariableFont_opsz,wdth,wght.ttf") format("truetype");
+  font-weight: 100 900;
+  font-stretch: 75% 125%;
+  font-style: normal;
+  font-display: swap;
+}
 
 * {
   box-sizing: border-box;
@@ -31,7 +39,8 @@ body {
 }
 body {
   margin: 0;
-  font-family: "Cormorant Garamond", serif;
+  font-family: "Merriweather", serif;
+  font-size: 15px;
   font-weight: 400;
   color: var(--ink);
   background: var(--paper);
@@ -891,6 +900,65 @@ hero-left,
   background: var(--paper);
 }
 
+/* =======================
+   Blenda Script for home titles (scoped)
+   ======================= */
+@font-face {
+  font-family: "Blenda Script";
+  src: url("../../assets/font/1FTV-blenda-script.otf") format("opentype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Gradient palette */
+:root {
+  --home-grad-from: #1f5a27;
+  --home-grad-to: #66c372;
+}
+
+/* Shop section title: Sắp ra mắt !!! */
+.shop .title {
+  font-family: "Blenda Script", cursive;
+}
+@supports ((-webkit-background-clip: text) or (background-clip: text)) {
+  .shop .title {
+    background-image: linear-gradient(180deg, var(--home-grad-from) 0%, var(--home-grad-to) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+  }
+}
+
+/* Tech section headings: Cầu tiến là bí quyết, Để tâm hành động */
+.tech .tech-text h2 {
+  font-family: "Blenda Script", cursive;
+}
+@supports ((-webkit-background-clip: text) or (background-clip: text)) {
+  .tech .tech-text h2 {
+    background-image: linear-gradient(180deg, var(--home-grad-from) 0%, var(--home-grad-to) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+  }
+}
+
+/* Join section title: Mời vào đội */
+.join .join-title {
+  font-family: "Blenda Script", cursive;
+}
+@supports ((-webkit-background-clip: text) or (background-clip: text)) {
+  .join .join-title {
+    background-image: linear-gradient(180deg, var(--home-grad-from) 0%, var(--home-grad-to) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+  }
+}
+
 /* (tuỳ chọn) đảm bảo không xuất hiện thanh kéo ngang toàn trang */
 html {
   overflow-x: hidden;
@@ -1132,7 +1200,7 @@ header.header .actions,
 header.header .actions .btn,
 header.header .searchbox,
 header.header .searchbox__input {
-  font-family: "Montserrat", system-ui, -apple-system, "Segoe UI", Roboto, Arial,
+  font-family: "Merriweather", serif,
     sans-serif !important;
 }
 header.header .header__row {

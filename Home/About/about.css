@@ -30,7 +30,8 @@ body {
   scroll-behavior: smooth;
 }
 body {
-  font-family: "Cormorant Garamond", serif;
+  font-family: "Merriweather", serif;
+  font-size: 15px;
   color: var(--ink);
   background: var(--paper);
   line-height: 1.5;

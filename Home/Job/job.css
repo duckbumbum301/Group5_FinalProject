@@ -1,6 +1,18 @@
 /* =========================================================
    🌿 VỰA VUI VẺ — JOB PAGE (Vinamilk Green Farm Style)
    ========================================================= */
+@font-face {
+  font-family: "Blenda Script";
+  src: url("../../assets/font/1FTV-blenda-script.otf") format("opentype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  --vvv-grad-from: #1f5a27;
+  --vvv-grad-to: #66c372;
+}
 
 /* ===== ROOT ===== */
 :root {
@@ -32,7 +44,8 @@ body {
   scroll-behavior: smooth;
 }
 body {
-  font-family: "Cormorant Garamond", serif;
+  font-family: "Merriweather", serif;
+  font-size: 15px;
   color: var(--ink);
   background: var(--paper);
   line-height: 1.5;
@@ -49,6 +62,11 @@ img {
   width: min(1240px, 90%);
   margin: 0 auto;
 }
+
+/* ===== HERO banner đầu trang ===== */
+.hero-banner { margin: 0; padding: 0; }
+.hero-banner figure { margin: 0; }
+.hero-banner img { width: 100%; height: auto; display: block; object-fit: cover; }
 
 /* =========================================================
    HEADER
@@ -129,7 +147,7 @@ main img {
   background: #fdfdf9;
 }
 .culture h2 {
-  font-size: 42px;
+  font-size: 2.5rem;
   margin-bottom: 50px;
 }
 /* --- Phần Đội ngũ tại Vinamilk --- */
@@ -147,8 +165,12 @@ body {
   text-align: center;
   font-size: 2.5rem;
   font-weight: 700;
-  color: #3c6e2a;
   margin-bottom: 40px;
+  font-family: "Blenda Script", cursive;
+  background: linear-gradient(90deg, var(--vvv-grad-from), var(--vvv-grad-to));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
 }
 
 .team-grid {
@@ -199,9 +221,13 @@ body {
 }
 
 .culture h2 {
-  font-size: 2em;
+  font-size: 2.5rem;
   margin-bottom: 40px;
-  color: #222;
+  font-family: "Blenda Script", cursive;
+  background: linear-gradient(90deg, var(--vvv-grad-from), var(--vvv-grad-to));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent !important;
 }
 
 .flip-container {
@@ -310,10 +336,14 @@ body {
   transform: none;
 }
 .history-title {
-  color: var(--green-dark);
   text-align: center;
   margin-bottom: 20px;
   font-size: 2.5rem;
+  font-family: "Blenda Script", cursive;
+  background: linear-gradient(90deg, var(--vvv-grad-from), var(--vvv-grad-to));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
 }
 .history-desc {
   color: var(--ink);
@@ -364,6 +394,11 @@ body {
 .version-text h2 {
   font-size: 1.8rem;
   margin-bottom: 10px;
+  font-family: "Blenda Script", cursive;
+  color: #fff7e4;
+  background: none;
+  -webkit-background-clip: initial;
+  background-clip: initial;
 }
 
 .version-text h1 {
@@ -371,6 +406,11 @@ body {
   line-height: 1.1;
   margin-bottom: 25px;
   font-weight: 700;
+  font-family: "Blenda Script", cursive;
+  color: #fff7e4;
+  background: none;
+  -webkit-background-clip: initial;
+  background-clip: initial;
 }
 
 .version-text p {
@@ -592,11 +632,15 @@ body {
 /* ====== Nội dung phải ====== */
 .history-title {
   margin: 0 0 18px;
-  color: #4f9a28;
   font-weight: 800;
   line-height: 1.05;
   font-size: clamp(36px, 6.4vw, 72px);
   letter-spacing: 0.01em;
+  font-family: "Blenda Script", cursive;
+  background: linear-gradient(90deg, var(--vvv-grad-from), var(--vvv-grad-to));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
 }
 .history-desc {
   margin: 0;
@@ -663,6 +707,11 @@ body {
   font-weight: 700;
   letter-spacing: 0.02em;
   margin: 0 0 clamp(28px, 4vw, 44px);
+  font-family: "Blenda Script", cursive;
+  color: #fff7e4;
+  background: none;
+  -webkit-background-clip: initial;
+  background-clip: initial;
 }
 
 /* Lưới 3 cột, 2 hàng; CHIỀU CAO track cố định bằng biến --row */
