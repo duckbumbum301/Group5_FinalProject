@@ -168,7 +168,7 @@ main {
   background: var(--paper);
 }
 .hero__inner {
-  padding: 42px 0 26px;
+  padding: 80px 0 60px; /* ↑ tăng thêm không gian trên dưới */
 }
 .hero__inner .eyebrow {
   color: var(--green);
@@ -178,13 +178,14 @@ main {
 }
 .hero__inner h1 {
   font-family: "Blenda Script", cursive;
-  font-size: clamp(2.2rem, 6vw, 3.8rem);
-  margin: 6px 0;
-  /* Match the Home/Hôm “Sắp ra mắt !!!” gradient */
+  font-size: clamp(2.8rem, 7vw, 4.6rem); /* bự hơn rõ, nhưng vẫn responsive */
+  margin: 10px 0 20px; /* thêm khoảng cách dưới chữ */
   background: linear-gradient(180deg, #1f5a27 0%, #66c372 100%);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
+  overflow: visible; /* tránh cắt chữ g, y, p */
+  line-height: 1.05; /* giảm giãn dòng, cân đẹp với font script */
 }
 .hero__inner .sub {
   color: var(--ink);
@@ -823,4 +824,31 @@ header.header .nav a {
 }
 #accountBtn {
   color: #000 !important;
+}
+/* Hero About: phóng to chữ "Để tâm. Cải tiến" */
+section.hero#hero .hero__inner h1 {
+  font-size: clamp(2.4rem, 5.5vw, 4rem) !important;
+  line-height: 0.9;
+  font-family: "Blenda Script", cursive;
+  margin: 6px 0;
+}
+/* Tăng khoảng cách giữa "Để tâm. Bền vững" và đoạn văn mô tả */
+section.hero#hero .hero__inner h1 {
+  margin-bottom: 30px; /* trước đang rất nhỏ, cho xuống thêm chút */
+}
+
+/* (tuỳ chọn) đảm bảo đoạn mô tả không dính lên trên */
+section.hero#hero .hero__inner .sub {
+  margin-top: 0;      /* nếu đang có margin-top thì reset về 0 */
+  line-height: 1.7;   /* cho đoạn văn đọc thoáng hơn */
+}
+/* --- Fix hero text bị cắt chữ g / y / p --- */
+.hero,
+.hero__inner {
+  overflow: visible !important; /* cho phép phần đuôi chữ hiển thị ra ngoài */
+}
+
+.hero__inner h1 {
+  line-height: 1.1; /* giữ khoảng dòng hợp lý */
+  padding-bottom: 10px; /* thêm khoảng trống nhỏ để tránh va đáy */
 }

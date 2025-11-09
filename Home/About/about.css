@@ -166,10 +166,12 @@ main {
 }
 .hero__inner h1 {
   color: var(--green); /* fallback */
-  font-size: clamp(5rem, 11vw, 10rem);
+  font-size: clamp(6rem, 13vw, 11rem); /* 👉 bự hơn rõ ràng */
   margin: 6px 0;
   font-family: "Blenda Script", cursive;
+  line-height: 0.9; /* chữ sát nhau, nhìn “hero” hơn */
 }
+
 .hero__inner .sub {
   color: var(--ink);
   max-width: 780px;
@@ -706,4 +708,11 @@ header.header .nav a {
 }
 #accountBtn {
   color: #000 !important;
+}
+/* Hero About: phóng to chữ "Để tâm. Cải tiến" */
+section.hero#hero .hero__inner h1 {
+  font-size: clamp(4rem, 9vw, 6.5rem) !important;
+  line-height: 0.9;
+  font-family: "Blenda Script", cursive;
+  margin: 6px 0;
 }
