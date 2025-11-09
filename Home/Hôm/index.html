@@ -353,47 +353,44 @@
   </div>
 </section>
 
-<footer class="site-footer">
-      <div class="container">
+<footer class="site-footer" style="background:url('../../images/brand/footer.png') center/cover no-repeat; color:#fff7e4; width:100vw; max-width:100vw; margin:0;  padding:40px 0; box-sizing:border-box; position:relative;">
+      <div style="max-width:1200px; width:100%; margin:0 auto; padding:0;">
         <div class="sf-grid">
           <div class="sf-cols">
             <div class="sf-col">
               <h4>Trang chủ</h4>
               <ul>
-                <li><a href="#catalog">Sản phẩm</a></li>
-                <li><a href="#flashsale">Flash Sale</a></li>
-                <li><a href="#cart">Giỏ hàng</a></li>
+                <li><a href="../../html/index.html#catalog">Sản phẩm</a></li>
+                <li><a href="../../html/index.html#flashsale">Flash Sale</a></li>
+                <li><a href="../../html/cart.html">Giỏ hàng</a></li>
               </ul>
             </div>
             <div class="sf-col">
               <h4>Về Vựa Vui Vẻ</h4>
               <ul>
-                <li><a href="aboutus.html">Câu chuyện chúng tôi</a></li>
-                <li><a href="#values">Giá trị mang đến</a></li>
-                <li><a href="#mission">Sứ mệnh</a></li>
+                <li><a href="../../html/aboutus.html">Câu chuyện chúng tôi</a></li>
+                <li><a href="../../html/aboutus.html#values">Giá trị mang đến</a></li>
+                <li><a href="../../html/aboutus.html#mission">Sứ mệnh</a></li>
               </ul>
             </div>
             <div class="sf-col">
               <h4>Tài khoản</h4>
               <ul>
-                <li><a href="../client/register.html">Đăng ký</a></li>
-                <li><a href="../client/login.html">Đăng nhập</a></li>
+                <li><a href="../../client/register.html">Đăng ký</a></li>
+                <li><a href="../../client/login.html">Đăng nhập</a></li>
               </ul>
             </div>
             <div class="sf-col">
               <h4>Liên hệ</h4>
               <ul>
-                <li>Hotline</li>
-                <li>Địa chỉ</li>
+                <li>Hotline: 012345678</li>
+                <li>Địa chỉ liên hệ: Vựa Vui Vẻ</li>
               </ul>
             </div>
             <div class="sf-legal">Điều khoản dịch vụ | Chính sách giao hàng | Chính sách đổi trả</div>
           </div>
           <div class="sf-brand">
-    
             <div class="sf-contact">
-              <div>Hotline: <span>012345678</span></div>
-              <div>Địa chỉ liên hệ: <span>Vựa Vui Vẻ</span></div>
               <div>© <span id="year"></span> vựa vui vẻ</div>
             </div>
             <div class="sf-social">
@@ -405,10 +402,11 @@
         </div>
       </div>
     </footer>
-    <img class="sf-logo" src="../Hôm/images/LogoVVV1.jpg"  alt="Vựa Vui Vẻ" />
 
-  <!-- Gắn header chuẩn và fix các liên kết cho trang nằm sâu -->
-  <script type="module" src="../../js/header.js"></script>
+    <script type="module" src="../../js/header.js"></script>
+    <script>
+      document.getElementById("year").textContent = new Date().getFullYear();
+    </script>
   <script type="module">
     // Điều chỉnh đường dẫn cho các trang con
     document.querySelectorAll('header.header a[href="recipes.html"]').forEach((a) => a.setAttribute('href', '/html/recipes.html'));
