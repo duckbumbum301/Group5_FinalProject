@@ -49,36 +49,6 @@ img {
   margin: 0 auto;
 }
 
-/* =========================================================
-   HEADER
-   ========================================================= */
-.header {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: var(--header-h);
-  background: white;
-  color: var(--green);
-  display: flex;
-  align-items: center;
-  z-index: 999;
-  transition: all 0.35s ease;
-  box-shadow: none;
-  overflow: hidden; /* tránh header phóng ra */
-
-  /* ✅ Thêm border xanh lá nhạt */
-  border-bottom: 2px solid #72cc3b;
-}
-
-.header-wrap {
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 14px 6%; /* mặc định */
-  transition: padding 0.35s ease;
-}
 
 .logo {
   font-weight: 700;

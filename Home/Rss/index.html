@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Luôn vui khỏe — Tổng hợp RSS (Vựa Vui Vẻ)</title>
+
+  <!-- CSS chung -->
+  <link rel="stylesheet" href="about.css" />
+  <link rel="stylesheet" href="../../css/style.css" />
+  <!-- CSS riêng trang tin -->
+  <link rel="stylesheet" href="news.css" />
+</head>
+<body>
+  <!-- Header chuẩn -->
+  <header class="header" id="siteHeader"></header>
+
+  <!-- TIÊU ĐỀ TRANG -->
+  <div class="page-title-wrap">
+    <h1 class="page-title">Luôn vui vẻ</h1>
+  </div>
+
+  <main class="container" id="app">
+    <!-- NAV tabs (anchor tới section) -->
+    <nav class="tabs" aria-label="Chuyên mục" id="tabs">
+      <a class="tab is-active" href="#depda">Sức khỏe</a>
+      <a class="tab" href="#dinhduong">Công nghệ</a>
+      <a class="tab" href="#chuyengia">Giáo dục</a>
+      <a class="tab" href="#congnghe">Du lịch</a>
+      <a class="tab" href="#monngon">Đời sống</a>
+      <div class="indicator" aria-hidden="true"></div>
+    </nav>
+
+    <!-- Section SỨC KHỎE (suc-khoe.rss) -->
+    <section id="depda" data-section>
+      <div class="row-head">
+        <h2>Sức khỏe</h2>
+        <a class="more" target="_blank" id="more-depda" rel="noopener">
+          Xem thêm
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <path d="M5 12h14M13 5l7 7-7 7"
+                  stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+        </a>
+      </div>
+      <div class="lead-grid" data-mount="depda"></div>
+    </section>
+
+    <!-- Section CÔNG NGHỆ (cong-nghe.rss) -->
+    <section id="dinhduong" data-section>
+      <div class="row-head">
+        <h2>Công nghệ</h2>
+        <a class="more" target="_blank" id="more-dinhduong" rel="noopener">
+          Xem thêm
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <path d="M5 12h14M13 5l7 7-7 7"
+                  stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+        </a>
+      </div>
+      <div class="mini-grid" data-mount="dinhduong"></div>
+    </section>
+
+    <!-- Section GIÁO DỤC (giao-duc.rss) -->
+    <section id="chuyengia" data-section>
+      <div class="row-head">
+        <h2>Giáo dục</h2>
+        <a class="more" target="_blank" id="more-chuyengia" rel="noopener">
+          Xem thêm
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <path d="M5 12h14M13 5l7 7-7 7"
+                  stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+        </a>
+      </div>
+      <div class="mini-grid" data-mount="chuyengia"></div>
+    </section>
+
+    <!-- Section DU LỊCH (du-lich.rss) -->
+    <section id="congnghe" data-section>
+      <div class="row-head">
+        <h2>Du lịch</h2>
+        <a class="more" target="_blank" id="more-congnghe" rel="noopener">
+          Xem thêm
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <path d="M5 12h14M13 5l7 7-7 7"
+                  stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+        </a>
+      </div>
+      <div class="mini-grid" data-mount="congnghe"></div>
+    </section>
+
+    <!-- Section ĐỜI SỐNG (doi-song.rss) -->
+    <section id="monngon" data-section>
+      <div class="row-head">
+        <h2>Đời sống</h2>
+        <a class="more" target="_blank" id="more-monngon" rel="noopener">
+          Xem thêm
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <path d="M5 12h14M13 5l7 7-7 7"
+                  stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+        </a>
+      </div>
+      <div class="mini-grid" data-mount="monngon"></div>
+    </section>
+  </main>
+
+  
+<footer class="site-footer" style="background:url('../../images/brand/footer.png') center/cover no-repeat; color:#fff7e4; width:100vw; max-width:100vw; margin:0;  padding:40px 0; box-sizing:border-box; position:relative;">
+      <div style="max-width:1200px; width:100%; margin:0 auto; padding:0;">
+        <div class="sf-grid">
+          <div class="sf-cols">
+            <div class="sf-col">
+              <h4>Trang chủ</h4>
+              <ul>
+                <li><a href="../../html/index.html#catalog">Sản phẩm</a></li>
+                <li><a href="../../html/index.html#flashsale">Flash Sale</a></li>
+                <li><a href="../../html/cart.html">Giỏ hàng</a></li>
+              </ul>
+            </div>
+            <div class="sf-col">
+              <h4>Về Vựa Vui Vẻ</h4>
+              <ul>
+                <li><a href="../../html/aboutus.html">Câu chuyện chúng tôi</a></li>
+                <li><a href="../../html/aboutus.html#values">Giá trị mang đến</a></li>
+                <li><a href="../../html/aboutus.html#mission">Sứ mệnh</a></li>
+              </ul>
+            </div>
+            <!-- ✅ Cột mới: Luôn vui khỏe -->
+<div class="sf-col">
+  <h4>
+    <a href="../news/index.html" class="sf-heading-link">
+      Luôn vui khỏe
+    </a>
+  </h4>
+  <ul>
+    <!-- link vào chính trang RSS, cuộn tới từng mục -->
+    <li><a href="#depda">Sức khỏe</a></li>
+    <li><a href="#dinhduong">Công nghệ</a></li>
+    <li><a href="#chuyengia">Giáo dục</a></li>
+    <li><a href="#connghe">Du lịch</a></li>
+    <li><a href="#monngon">Đời sống</a></li>
+  </ul>
+</div>
+
+            <div class="sf-col">
+              <h4>Tài khoản</h4>
+              <ul>
+                <li><a href="../../client/register.html">Đăng ký</a></li>
+                <li><a href="../../client/login.html">Đăng nhập</a></li>
+              </ul>
+            </div>
+            <div class="sf-col">
+              <h4>Liên hệ</h4>
+              <ul>
+                <li>Hotline: 012345678</li>
+                <li>Địa chỉ liên hệ: Vựa Vui Vẻ</li>
+              </ul>
+            </div>
+            <div class="sf-legal">Điều khoản dịch vụ | Chính sách giao hàng | Chính sách đổi trả</div>
+          </div>
+          <div class="sf-brand">
+            <div class="sf-contact">
+              <div>© <span id="year"></span> vựa vui vẻ</div>
+            </div>
+            <div class="sf-social">
+              <div class="sf-social__label">Theo dõi chúng tôi</div>
+              <a href="#" aria-label="Facebook" class="sf-social__btn">f</a>
+              <a href="#" aria-label="Instagram" class="sf-social__btn">IG</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+  <!-- JS chung -->
+  <script type="module" src="../../js/header.js"></script>
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
+  <!-- JS riêng RSS -->
+  <script src="news.js"></script>
+</body>
+</html>

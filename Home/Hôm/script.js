@@ -223,3 +223,34 @@ function handleScrollHeader() {
 // chạy khi load và khi cuộn
 window.addEventListener("scroll", handleScrollHeader);
 window.addEventListener("load", handleScrollHeader);
+/* ===== Header Home: ẩn nền khi ở đầu trang ===== */
+(() => {
+  const header = document.querySelector("header.header");
+  if (!header) return;
+
+  const toggleHeader = () => {
+    if (window.scrollY > 40) {
+      header.classList.add("header--solid");
+    } else {
+      header.classList.remove("header--solid");
+    }
+  };
+
+})();
+(() => {
+  window.addEventListener("load", () => {
+    const logoImg = document.querySelector("header.header .logo__img");
+    if (!logoImg) return;
+
+    // Đổi logo riêng cho trang Home
+    logoImg.src = "../../images/brand/logo.png.png";
+    logoImg.alt = "Vựa Vui Vẻ - Home";
+
+    // ✅ Làm logo nhìn bự hơn + xích xuống, nhưng KHÔNG làm header cao lên
+    logoImg.style.transform = "scale(1.86) translateY(8px)";
+    logoImg.style.transformOrigin = "left center"; // phóng từ bên trái, không lệch nhiều
+
+    // Nếu muốn mượt hơn:
+    logoImg.style.transition = "transform 0.35s ease";
+  });
+})();

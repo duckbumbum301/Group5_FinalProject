@@ -412,13 +412,12 @@ hero-left,
   padding: 30px 0 20px;
   background: var(--paper);
 }
-.title {
+.shop .title {
   text-align: center;
-  color: var(--vin-blue);
-  font-size: clamp(26px, 5vw, 48px);
-  margin: 18px 0 10px;
-  font-weight: 500;
-  line-height: 1.1;
+  margin-left: auto;
+  margin-right: auto;
+   font-size: 46px;
+  transform: translateX(500px); /* dịch sang phải 40px */
 }
 
 .showcase {
@@ -503,56 +502,6 @@ hero-left,
     transform: translateX(0);
   }
 }
-/* ===================== POP info (viết lại đầy đủ, fix đè progress) ===================== */
-
-/* Bố cục stacking context để pop không bị che */
-.showcase {
-  position: relative;
-  isolation: isolate; /* tạo lớp riêng để z-index hoạt động chuẩn */
-}
-.scroller {
-  position: relative;
-  z-index: 3;
-  overflow-y: visible; /* cho phép phần pop tràn xuống dưới */
-}
-.progress {
-  position: absolute;
-  z-index: 1; /* nằm dưới cùng */
-}
-.pcard {
-  position: relative;
-  z-index: 4;
-}
-.pcard:hover,
-.pcard:focus-within {
-  z-index: 6; /* card đang được hover/focus nổi lên cao hơn */
-}
-
-/* ---------------- POP + stacking patch (hoàn chỉnh) ---------------- */
-
-/* Patch nhỏ để pop không bị che/cắt */
-.showcase {
-  position: relative;
-  isolation: isolate;
-}
-.scroller {
-  position: relative;
-  overflow-y: visible;
-  z-index: 10;
-}
-.progress {
-  position: absolute;
-  z-index: 1;
-  pointer-events: none;
-}
-.pcard {
-  position: relative;
-  z-index: 20;
-}
-.pcard:hover,
-.pcard:focus-within {
-  z-index: 30;
-}
 
 /* ---------------- POP + stacking patch (hoàn chỉnh) ---------------- */
 
@@ -623,10 +572,53 @@ hero-left,
   border-top: 1px solid #c5f1b3;
   rotate: 45deg;
 }
-.nav.left,
-.nav.right {
-  display: none;
+/* Giữ layout độc lập */
+#shop .showcase {
+  position: relative; /* để nút nav định vị theo showcase */
 }
+
+/* Nút điều hướng trái/phải */
+#shop .showcase {
+  position: relative;
+  overflow: visible; /* Cho phép nút nằm ra ngoài mà không bị che */
+}
+
+/* Nút điều hướng */
+#shop .nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 30;
+  background: rgba(255, 255, 255, 0.9);
+  border: 2px solid #16a34a;
+  color: #16a34a;
+  font-size: 26px;
+  font-weight: bold;
+  border-radius: 50%;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+#shop .nav:hover {
+  background: #16a34a;
+  color: #fff;
+}
+
+/* Đẩy hai nút ra ngoài */
+#shop .nav.left {
+  left: -25px; /* đẩy ra ngoài khung một chút */
+}
+
+#shop .nav.right {
+  right: -25px; /* đẩy ra ngoài khung một chút */
+}
+
 
 /* Hiệu ứng hiện pop */
 @media (hover: hover) {
@@ -859,11 +851,14 @@ hero-left,
 
 /* Ảnh minh họa */
 .tech-img img {
-  width: 100%;
-  max-width: 1000px;
+  width: 180%;
+  max-width: 1200px;
+  max-height: 400px;
+  object-fit: cover;
   border-radius: 16px;
   border: 1px solid #d7efbb;
   box-shadow: var(--shadow);
+  margin-left: -180px; /* 👈 Dịch sang trái, chỉnh số tùy ý */
 }
 
 /* -------------------- Responsive -------------------- */
@@ -1185,62 +1180,75 @@ html {
 /* =========================================================
    🔧 Chuẩn hoá header để GIỐNG hệt trang chính
    (không override style chung của site)
-   ========================================================= */
+/* ===== Header Home: trong suốt ở đầu trang & hạ thấp nhẹ ===== */
+
+/* Trạng thái đầu trang (chưa cuộn) */
 header.header {
-  top: 0; /* giống trang chính */
-  background: #fff7e4; /* nền kem chuẩn */
-  transform: none; /* bỏ dịch chuyển gây overlay khác biệt */
+  position: fixed;
+  top: 20px; /* hạ thấp để không che banner */
+  left: 0;
+  right: 0;
+  background: transparent;
+  box-shadow: none;
+  z-index: 100;
+  padding: 12px 0; /* 🔹 mảnh hơn */
+  transition:
+    background 0.35s ease,
+    box-shadow 0.35s ease,
+    top 0.35s ease,
+    padding 0.35s ease;
+}
+
+/* Khi cuộn xuống */
+header.header.header--solid {
+  top: 0; /* trở lại sát mép trên */
+  background: #fff7e4; /* nền vàng kem */
   box-shadow: var(--shadow);
-}
-/* Font & spacing của header: đồng bộ với css/style.css (Montserrat, kích thước 16px) */
-header.header,
-header.header .nav,
-header.header .nav a,
-header.header .actions,
-header.header .actions .btn,
-header.header .searchbox,
-header.header .searchbox__input {
-  font-family: "Merriweather", serif,
-    sans-serif !important;
-}
-header.header .header__row {
-  padding: 14px 0 !important;
-  gap: 12px !important;
-}
-header.header .nav a,
-header.header .actions .btn,
-header.header .nav-link {
-  font-size: 16px !important;
-}
-header.header .logo__img {
-  height: 72px; /* kích thước logo chuẩn */
-  transform: none;
-  filter: none;
+  padding: 20px 0; /* 🔹 cao hơn một xíu */
 }
 
-/* Overlay nhẹ ở đầu trang, không phá bố cục chuẩn */
-header.header.header--overlay {
-  background: rgba(255, 247, 228, 0.6);
-  backdrop-filter: saturate(1.1) blur(2px);
-}
-header.header.header--overlay:hover {
-  background: #fff7e4;
-  backdrop-filter: none;
-}
-/* Khi đã scroll, dùng nền đặc như trang chính */
-body.header-solid header.header {
-  background: #fff7e4;
-  backdrop-filter: none;
+/* Màu chữ khi trong suốt */
+header.header:not(.header--solid) .nav a,
+header.header:not(.header--solid) .dd-btn,
+header.header:not(.header--solid) .searchbox__btn svg,
+header.header:not(.header--solid) .searchbox__input::placeholder,
+header.header:not(.header--solid) .nav-cart span,
+header.header:not(.header--solid) .nav-user span {
+  color: var(--blue) !important; /* hoặc #0a66ff hay #6CBF3F */
+  fill: var(--blue) !important;
 }
 
-/* ===== Đồng bộ màu chữ header (menu + nút tài khoản) như trang chính ===== */
-header.header .nav a,
-header.header .actions .btn:not(.btn--pri),
-header.header #accountBtn {
+/* Khi cuộn xuống: chữ đen */
+header.header.header--solid .nav a,
+header.header.header--solid .dd-btn,
+header.header.header--solid .searchbox__btn svg,
+header.header.header--solid .nav-cart span,
+header.header.header--solid .nav-user span {
   color: #000 !important;
+  fill: #000 !important;
 }
-/* Giữ chữ trắng cho nút Giỏ hàng */
-header.header .actions .btn.btn--pri,
-header.header #cartOpenBtn {
-  color: #fff !important;
+
+/* Logo giữ kích thước, có thể làm sáng nhẹ ở đầu trang */
+header.header .logo__img {
+  height: 72px;
+  background: none !important; /* 🔹 xoá nền nếu logo nằm trong khung */
+  transition:
+    transform 0.4s ease,
+    filter 0.3s ease,
+    height 0.3s ease;
+}
+header.header:not(.header--solid) .logo__img {
+  transform: translateY(6px); /* 🔹 đẩy logo xuống 6px */
+  filter: brightness(1.1);
+}
+/* Logo Home: cho nó bự hơn & xích xuống xíu ở đầu trang */
+header.header:not(.header--solid) .logo__img--home {
+  height: 96px !important;     /* 🔹 to hơn logo mặc định (72–88px) */
+  transform: translateY(12px); /* 🔹 đẩy nhẹ xuống */
+  filter: brightness(1.1);
+  transition: all 0.4s ease;
+}
+/* Ẩn pop info trên từng lon nước, chỉ dùng pill dưới */
+.shop .pcard .pop {
+  display: none !important;
 }

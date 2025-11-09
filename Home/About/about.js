@@ -183,7 +183,6 @@ function handleScrollHeader() {
   }
 }
 
-
 // chạy khi load và khi cuộn
 window.addEventListener("scroll", handleScrollHeader);
 window.addEventListener("load", handleScrollHeader);/* ===== Account button ===== */
