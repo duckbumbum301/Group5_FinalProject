@@ -101,13 +101,14 @@
           <div style="max-width: 900px; margin: 0 auto">
             <div class="title" style="margin-bottom: 32px; text-align: center">
               <h2
-                class="gradient-title"
-                style="
-                  font-size: 36px;
-                  font-weight: 800;
-                  margin: 0;
-                  text-align: center;
-                "
+            
+              style="
+  font-size: 36px;
+  font-weight: 800;
+  margin: 0;
+  text-align: center;
+  transform: translateX(320px); /* 👈 dịch sang phải 30px */
+"
               >
                 Tìm món ăn của bạn
               </h2>
@@ -534,18 +535,23 @@
             "
           >
             <a
-              href="#recipeInput"
-              class="btn btn--pri"
-              style="
-                background: white;
-                color: #065f46;
-                min-width: 200px;
-                font-size: 18px;
-                padding: 16px 32px;
-              "
-            >
-              Thử ngay
-            </a>
+  href="#recipeInput"
+  class="btn btn--pri"
+  style="
+    background: white;
+    color: #065f46;
+    min-width: 200px;
+    font-size: 18px;
+    padding: 16px 32px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;   /* 👈 căn giữa chữ */
+    text-align: center;         /* dự phòng cho text nhiều dòng */
+    border-radius: 8px;         /* (gợi ý) bo nhẹ nút cho đẹp */
+  "
+>
+  Thử ngay
+</a>
             <a
               href="index.html"
               class="btn"
