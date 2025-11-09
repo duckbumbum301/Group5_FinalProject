@@ -119,17 +119,6 @@ main {
 /* =========================================================
    GLOBAL SCROLL ANIMATION
    ========================================================= */
-section,
-footer {
-  opacity: 0;
-  transform: translateY(20px);
-  transition: all 0.8s ease;
-}
-section.visible,
-footer.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
 
 /* =========================================================
    HERO

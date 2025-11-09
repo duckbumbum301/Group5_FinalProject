@@ -7,7 +7,7 @@
 
 /* Nền toàn trang + chuyển động nhẹ (main lắc theo chuột) */
 body {
-  font-family: inherit;
+
   background-color: var(--paper);
 }
 
