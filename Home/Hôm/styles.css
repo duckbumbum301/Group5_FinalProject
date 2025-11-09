@@ -588,8 +588,7 @@ hero-left,
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  z-index: 100; /* đảm bảo ở trên các lớp pop/scroller */
-  pointer-events: auto; /* chắc chắn nhận click */
+  z-index: 30;
   background: rgba(255, 255, 255, 0.9);
   border: 2px solid #16a34a;
   color: #16a34a;
@@ -719,8 +718,6 @@ hero-left,
   cursor: pointer;
   font-size: 24px;
   user-select: none;
-  z-index: 100;
-  pointer-events: auto;
   transition: transform 0.15s ease, opacity 0.15s ease;
 }
 .showcase .nav.left {
@@ -946,7 +943,9 @@ hero-left,
 /* Join section title: Mời vào đội */
 .join .join-title {
   font-family: "Blenda Script", cursive;
+  text-align: left;
 }
+
 @supports ((-webkit-background-clip: text) or (background-clip: text)) {
   .join .join-title {
     background-image: linear-gradient(180deg, var(--home-grad-from) 0%, var(--home-grad-to) 100%);
@@ -954,6 +953,8 @@ hero-left,
     background-clip: text;
     color: transparent;
     -webkit-text-fill-color: transparent;
+    text-align: left;
+    /* ❌ bỏ translateX để không lệch lung tung */
   }
 }
 
@@ -1060,10 +1061,12 @@ html {
 /* ===== JOIN (clean like Vinamilk) ===== */
 
 .join {
-  width: 100vw; /* phủ toàn màn hình ngang */
-  margin-left: calc(50% - 30vw); /* kéo phần nền ra khỏi giới hạn container */
-  padding: 30px 0 30px; /* thêm khoảng dưới cho nút */
+  width: 100dvw; /* full chiều ngang viewport, giống .stories */
+  margin-left: calc(50% - 50dvw); /* căn đúng giữa, không chừa khoảng trống bên trái */
+  padding: 40px 0 40px;
+  background: var(--paper);
 }
+
 .join-wrap {
   width: min(1240px, 94%);
   margin: auto;
