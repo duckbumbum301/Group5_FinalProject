@@ -152,6 +152,30 @@ const CATEGORIES = [
   "Đồ gia dụng",
   "Đồ ngọt",
 ];
+
+// Category mapping (English to Vietnamese)
+const CATEGORY_MAP = {
+  veg: "Rau củ",
+  fruit: "Trái cây",
+  meat: "Thịt cá",
+  dry: "Đồ khô",
+  drink: "Đồ uống",
+  spice: "Gia vị",
+  household: "Đồ gia dụng",
+  sweet: "Đồ ngọt",
+};
+
+// Normalize category (support both English and Vietnamese)
+function normalizeCategory(cat) {
+  if (!cat) return "";
+  // If it's English, convert to Vietnamese
+  if (CATEGORY_MAP[cat.toLowerCase()]) {
+    return CATEGORY_MAP[cat.toLowerCase()];
+  }
+  // Otherwise return as-is (Vietnamese)
+  return cat;
+}
+
 function loadDB() {
   try {
     return JSON.parse(localStorage.getItem(LS.db));
@@ -954,6 +978,7 @@ async function renderOrders() {
         <select id="st">
           <option value="">Tất cả trạng thái</option>
           <option value="pending">Chờ xử lý</option>
+          <option value="placed">Đã đặt</option>
           <option value="confirmed">Đã xác nhận</option>
           <option value="preparing">Đang chuẩn bị</option>
           <option value="ready">Sẵn sàng</option>
@@ -1008,7 +1033,7 @@ async function renderOrders() {
   }
 
   function filtered() {
-    return allOrders
+    const result = allOrders
       .filter((o) => {
         // Support both old and new schema
         const user = o.user || {};
@@ -1019,8 +1044,8 @@ async function renderOrders() {
         const text =
           `${o.id} ${customerName} ${customerPhone} ${customerEmail}`.toLowerCase();
 
-        // Support both status fields
-        const orderStatus = o.status || o.delivery_status || "";
+        // Support both status fields - NORMALIZE TO LOWERCASE
+        const orderStatus = (o.status || o.delivery_status || "").toLowerCase();
         const inSt = !st || orderStatus === st;
         const inQ = !q || text.includes(q.toLowerCase());
 
@@ -1035,6 +1060,15 @@ async function renderOrders() {
         const dateB = b.createdAt || b.created_at;
         return new Date(dateB) - new Date(dateA);
       });
+
+    // Debug log
+    if (st) {
+      console.log(
+        `📊 Filtered ${result.length}/${allOrders.length} orders with status="${st}"`
+      );
+    }
+
+    return result;
   }
 
   function renderPage() {
@@ -1343,6 +1377,7 @@ async function renderOrders() {
   }, 250);
   el("#st").onchange = (e) => {
     st = e.target.value;
+    console.log("🔍 Filter by status:", st || "ALL");
     page = 1;
     renderPage();
   };
@@ -1408,9 +1443,12 @@ function renderProducts() {
     <div class="card">
       <div class="row controls">
         <input id="pq" placeholder="Tìm sản phẩm..." autocomplete="off" />
-        <select id="pcat"><option value="">Tất cả danh mục</option>${CATEGORIES.map(
-          (c) => `<option>${c}</option>`
-        ).join("")}</select>
+        <select id="pcat">
+          <option value="">Tất cả danh mục</option>
+          ${CATEGORIES.map((c) => `<option value="${c}">${c}</option>`).join(
+            ""
+          )}
+        </select>
         <button class="btn primary right" id="newP">+ Thêm</button>
       </div>
       <div style="max-height:60vh; overflow:auto">
@@ -1457,11 +1495,24 @@ function renderProducts() {
   }
 
   function rows() {
-    return allProducts.filter(
-      (p) =>
-        (!q || p.name.toLowerCase().includes(q.toLowerCase())) &&
-        (!cat || p.category === cat)
-    );
+    const filtered = allProducts.filter((p) => {
+      const matchName = !q || p.name.toLowerCase().includes(q.toLowerCase());
+
+      // Normalize category from product (support both English and Vietnamese)
+      const productCategory = normalizeCategory(p.category);
+      const matchCategory = !cat || productCategory === cat;
+
+      return matchName && matchCategory;
+    });
+
+    // Debug log
+    if (cat) {
+      console.log(
+        `📊 Filtered ${filtered.length}/${allProducts.length} products in category="${cat}"`
+      );
+    }
+
+    return filtered;
   }
 
   function renderRows() {
@@ -1476,9 +1527,9 @@ function renderProducts() {
       .map(
         (p) => `
       <tr>
-        <td>${p.id}</td><td>${p.name}</td><td><span class="tag">${
-          p.category
-        }</span></td>
+        <td>${p.id}</td><td>${
+          p.name
+        }</td><td><span class="tag">${normalizeCategory(p.category)}</span></td>
         <td>${fmt.money(p.price)}</td><td>${p.stock || 0}</td><td>${
           p.status || "active"
         }</td>
@@ -1590,10 +1641,12 @@ function renderProducts() {
 
   el("#pq").oninput = debounce((e) => {
     q = e.target.value.trim().toLowerCase();
+    console.log("🔍 Search products:", q || "ALL");
     renderRows();
   }, 250);
   el("#pcat").onchange = (e) => {
     cat = e.target.value;
+    console.log("🔍 Filter by category:", cat || "ALL");
     renderRows();
   };
   el("#newP").onclick = () => edit("NEW");

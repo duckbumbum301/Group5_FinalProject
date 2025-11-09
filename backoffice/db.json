@@ -5386,8 +5386,8 @@
       "voucher": "FREESHIP",
       "paymentMethod": "VNPAY",
       "note": "",
-      "status": "placed",
-      "delivery_status": "placed",
+      "status": "pickup",
+      "delivery_status": "pickup",
       "payment_status": "pending",
       "subtotal": 18000,
       "shipping_fee": 0,
@@ -5407,17 +5407,17 @@
         {
           "code": "preparing",
           "label": "Đang chuẩn bị",
-          "at": null
+          "at": "2025-11-09T05:58:08.346Z"
         },
         {
           "code": "ready",
           "label": "Sẵn sàng giao",
-          "at": null
+          "at": "2025-11-09T05:58:10.181Z"
         },
         {
           "code": "pickup",
           "label": "Shipper đã nhận",
-          "at": null
+          "at": "2025-11-09T05:58:11.489Z"
         },
         {
           "code": "delivering",
@@ -5429,7 +5429,10 @@
           "label": "Giao thành công",
           "at": null
         }
-      ]
+      ],
+      "updatedAt": "2025-11-09T05:58:11.489Z",
+      "updated_at": "2025-11-09T05:58:11.489Z",
+      "updated_by": "ilovetranduythanh@gmail.com"
     },
     {
       "id": "ORD-20251109-111031-378ADK",
@@ -5446,8 +5449,8 @@
       "voucher": "FREESHIP",
       "paymentMethod": "VNPAY",
       "note": "",
-      "status": "placed",
-      "delivery_status": "placed",
+      "status": "delivered",
+      "delivery_status": "delivered",
       "payment_status": "pending",
       "subtotal": 12000,
       "shipping_fee": 0,
@@ -5467,29 +5470,32 @@
         {
           "code": "preparing",
           "label": "Đang chuẩn bị",
-          "at": null
+          "at": "2025-11-09T05:57:55.000Z"
         },
         {
           "code": "ready",
           "label": "Sẵn sàng giao",
-          "at": null
+          "at": "2025-11-09T05:57:58.370Z"
         },
         {
           "code": "pickup",
           "label": "Shipper đã nhận",
-          "at": null
+          "at": "2025-11-09T05:58:00.378Z"
         },
         {
           "code": "delivering",
           "label": "Đang giao",
-          "at": null
+          "at": "2025-11-09T05:58:02.448Z"
         },
         {
           "code": "delivered",
           "label": "Giao thành công",
-          "at": null
+          "at": "2025-11-09T05:58:04.399Z"
         }
-      ]
+      ],
+      "updatedAt": "2025-11-09T05:58:04.399Z",
+      "updated_at": "2025-11-09T05:58:04.399Z",
+      "updated_by": "ilovetranduythanh@gmail.com"
     }
   ],
   "users": [
@@ -7074,6 +7080,94 @@
         "total": 12000
       },
       "timestamp": "2025-11-09T04:10:31.900Z"
+    },
+    {
+      "id": "1762667875045s4k4z",
+      "action": "update_order_status",
+      "who": "ilovetranduythanh@gmail.com",
+      "metadata": {
+        "orderId": "ORD-20251109-111031-378ADK",
+        "oldStatus": "placed",
+        "newStatus": "preparing"
+      },
+      "timestamp": "2025-11-09T05:57:55.045Z"
+    },
+    {
+      "id": "1762667878403jkhgq",
+      "action": "update_order_status",
+      "who": "ilovetranduythanh@gmail.com",
+      "metadata": {
+        "orderId": "ORD-20251109-111031-378ADK",
+        "oldStatus": "preparing",
+        "newStatus": "ready"
+      },
+      "timestamp": "2025-11-09T05:57:58.403Z"
+    },
+    {
+      "id": "1762667880413iz7rr",
+      "action": "update_order_status",
+      "who": "ilovetranduythanh@gmail.com",
+      "metadata": {
+        "orderId": "ORD-20251109-111031-378ADK",
+        "oldStatus": "ready",
+        "newStatus": "pickup"
+      },
+      "timestamp": "2025-11-09T05:58:00.413Z"
+    },
+    {
+      "id": "1762667882484m46w0",
+      "action": "update_order_status",
+      "who": "ilovetranduythanh@gmail.com",
+      "metadata": {
+        "orderId": "ORD-20251109-111031-378ADK",
+        "oldStatus": "pickup",
+        "newStatus": "delivering"
+      },
+      "timestamp": "2025-11-09T05:58:02.484Z"
+    },
+    {
+      "id": "1762667884434m7hfc",
+      "action": "update_order_status",
+      "who": "ilovetranduythanh@gmail.com",
+      "metadata": {
+        "orderId": "ORD-20251109-111031-378ADK",
+        "oldStatus": "delivering",
+        "newStatus": "delivered"
+      },
+      "timestamp": "2025-11-09T05:58:04.434Z"
+    },
+    {
+      "id": "1762667888385qpk5r",
+      "action": "update_order_status",
+      "who": "ilovetranduythanh@gmail.com",
+      "metadata": {
+        "orderId": "ORD-20251109-110616-48DR06",
+        "oldStatus": "placed",
+        "newStatus": "preparing"
+      },
+      "timestamp": "2025-11-09T05:58:08.385Z"
+    },
+    {
+      "id": "1762667890216trfg0",
+      "action": "update_order_status",
+      "who": "ilovetranduythanh@gmail.com",
+      "metadata": {
+        "orderId": "ORD-20251109-110616-48DR06",
+        "oldStatus": "preparing",
+        "newStatus": "ready"
+      },
+      "timestamp": "2025-11-09T05:58:10.216Z"
+    },
+    {
+      "id": "17626678915222i85a",
+      "action": "update_order_status",
+      "who": "ilovetranduythanh@gmail.com",
+      "metadata": {
+        "orderId": "ORD-20251109-110616-48DR06",
+        "oldStatus": "ready",
+        "newStatus": "pickup"
+      },
+      "timestamp": "2025-11-09T05:58:11.522Z"
     }
   ]
 }
