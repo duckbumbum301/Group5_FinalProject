@@ -5,7 +5,7 @@ color 0A
 
 echo.
 echo ╔══════════════════════════════════════════════════════════════╗
-echo ║          🚀 VỰA VUI VẺ - KHỞI ĐỘNG DỰ ÁN                    ║
+echo ║           VỰA VUI VẺ - KHỞI ĐỘNG DỰ ÁN                    ║
 echo ╚══════════════════════════════════════════════════════════════╝
 echo.
 
@@ -110,7 +110,7 @@ timeout /t 5 /nobreak >nul
 
 REM Kiểm tra các ports
 echo.
-echo 📊 Trạng thái services:
+echo  Trạng thái services:
 netstat -ano | findstr ":8888 :3000 :8000" | findstr "LISTENING" >nul
 if %errorlevel% equ 0 (
     echo ✅ Services đang chạy tốt!

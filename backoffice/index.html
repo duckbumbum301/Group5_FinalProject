@@ -5,17 +5,71 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Vựa Vui Vẻ — Back Office</title>
     <link rel="stylesheet" href="styles.css" />
-    <!-- Chart.js (optional) -->
+    <link rel="stylesheet" href="animations.css" />
+    <!-- Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
   </head>
   <body>
+    <!-- ⚡ Loading Screen -->
+    <div
+      id="loadingScreen"
+      style="
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(135deg, #10b981 0%, #06b6d4 100%);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        z-index: 99999;
+        transition: opacity 0.3s ease-out;
+      "
+    >
+      <div style="text-align: center; color: white">
+        <div style="font-size: 48px; margin-bottom: 16px">🍀</div>
+        <h2 style="margin: 0 0 8px 0; font-weight: 600">Vựa Vui Vẻ</h2>
+        <p style="margin: 0; opacity: 0.9; font-size: 14px">
+          Đang tải Back Office...
+        </p>
+        <div style="margin-top: 24px">
+          <div
+            class="spinner"
+            style="
+              width: 40px;
+              height: 40px;
+              border: 3px solid rgba(255, 255, 255, 0.3);
+              border-top-color: white;
+              border-radius: 50%;
+              animation: spin 0.8s linear infinite;
+            "
+          ></div>
+        </div>
+      </div>
+    </div>
+    <style>
+      @keyframes spin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+    </style>
+
     <div id="app">
       <!-- Header -->
       <header class="topbar">
-        <div class="brand">🍀 Vựa Vui Vẻ • Back Office</div>
+        <div class="brand">
+          <span>🍀</span>
+          <span>Vựa Vui Vẻ • Back Office</span>
+        </div>
         <div class="top-actions">
           <span id="userBadge"></span>
           <button id="btnLogout" class="btn btn-outline small">
+            <i data-lucide="log-out" style="width: 16px; height: 16px"></i>
             Đăng xuất
           </button>
         </div>
@@ -25,12 +79,39 @@
       <div class="layout">
         <aside class="sidebar">
           <nav>
-            <a href="#/dashboard" class="nav-item"> Dashboard</a>
-            <a href="#/orders" class="nav-item"> Đơn hàng</a>
-            <a href="#/products" class="nav-item"> Sản phẩm</a>
-            <a href="#/reports" class="nav-item"> Báo cáo</a>
-            <a href="#/audit" class="nav-item admin-only"> Audit Log</a>
-            <a href="#/users" class="nav-item admin-only"> Người dùng</a>
+            <a href="#/dashboard" class="nav-item">
+              <i
+                data-lucide="layout-dashboard"
+                style="width: 18px; height: 18px"
+              ></i>
+              Dashboard
+            </a>
+            <a href="#/orders" class="nav-item">
+              <i
+                data-lucide="shopping-bag"
+                style="width: 18px; height: 18px"
+              ></i>
+              Đơn hàng
+            </a>
+            <a href="#/products" class="nav-item">
+              <i data-lucide="package" style="width: 18px; height: 18px"></i>
+              Sản phẩm
+            </a>
+            <a href="#/reports" class="nav-item">
+              <i
+                data-lucide="bar-chart-3"
+                style="width: 18px; height: 18px"
+              ></i>
+              Báo cáo
+            </a>
+            <a href="#/audit" class="nav-item admin-only">
+              <i data-lucide="file-text" style="width: 18px; height: 18px"></i>
+              Audit Log
+            </a>
+            <a href="#/users" class="nav-item admin-only">
+              <i data-lucide="users" style="width: 18px; height: 18px"></i>
+              Người dùng
+            </a>
           </nav>
         </aside>
         <main id="view" class="view"></main>
@@ -42,40 +123,109 @@
 
     <!-- Login Screen -->
     <div id="loginScreen" class="login-screen">
-      <!-- ✅ thêm novalidate + prefill email/password -->
       <form id="loginForm" class="card login-card" novalidate>
         <h1>Đăng nhập Back Office</h1>
 
-        <label>Email</label>
+        <label>
+          <i
+            data-lucide="mail"
+            style="
+              width: 14px;
+              height: 14px;
+              display: inline-block;
+              vertical-align: middle;
+            "
+          ></i>
+          Email
+        </label>
         <input
           type="email"
           name="email"
           required
           value="ilovetranduythanh@gmail.com"
           autocomplete="username"
+          placeholder="your@email.com"
         />
 
-        <label>Mật khẩu</label>
+        <label>
+          <i
+            data-lucide="lock"
+            style="
+              width: 14px;
+              height: 14px;
+              display: inline-block;
+              vertical-align: middle;
+            "
+          ></i>
+          Mật khẩu
+        </label>
         <input
           type="password"
           name="password"
           required
           value="10diem10diem"
           autocomplete="current-password"
+          placeholder="••••••••"
         />
 
-        <label>Vai trò</label>
+        <label>
+          <i
+            data-lucide="shield"
+            style="
+              width: 14px;
+              height: 14px;
+              display: inline-block;
+              vertical-align: middle;
+            "
+          ></i>
+          Vai trò
+        </label>
         <select name="role">
           <option>Admin</option>
           <option>Manager</option>
           <option>Staff</option>
         </select>
 
-        <button class="btn primary" type="submit">Đăng nhập</button>
-        <p class="muted small">*Mock login – bất kỳ email/mật khẩu đều được.</p>
+        <button class="btn primary" type="submit">
+          <i data-lucide="arrow-right" style="width: 18px; height: 18px"></i>
+          Đăng nhập
+        </button>
       </form>
     </div>
 
     <script type="module" src="app.js"></script>
+    <script>
+      // Hide loading screen after page loads
+      window.addEventListener("load", () => {
+        const loadingScreen = document.getElementById("loadingScreen");
+        if (loadingScreen) {
+          setTimeout(() => {
+            loadingScreen.style.opacity = "0";
+            setTimeout(() => {
+              loadingScreen.style.display = "none";
+            }, 300);
+          }, 500); // Small delay to ensure everything is ready
+        }
+      });
+
+      // Initialize Lucide icons
+      document.addEventListener("DOMContentLoaded", () => {
+        lucide.createIcons();
+      });
+
+      // Re-initialize icons on content change (optimized with debounce)
+      let iconUpdateTimeout;
+      const observer = new MutationObserver(() => {
+        clearTimeout(iconUpdateTimeout);
+        iconUpdateTimeout = setTimeout(() => {
+          lucide.createIcons();
+        }, 100);
+      });
+
+      observer.observe(document.body, {
+        childList: true,
+        subtree: true,
+      });
+    </script>
   </body>
 </html>

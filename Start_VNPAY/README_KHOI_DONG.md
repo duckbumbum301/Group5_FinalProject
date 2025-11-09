@@ -13,13 +13,30 @@
 
 ### Cách 1: Sử dụng Script Tự Động (⭐ Khuyên Dùng)
 
-```bash
-# Bước 1: Double-click vào file
-start-all.bat
+#### 🎯 **Từ VS Code Terminal (PowerShell)**
 
-# Hoặc chạy từ Command Prompt
-start-all.bat
+```powershell
+# Bước 1: Mở Terminal trong VS Code (Ctrl + `)
+# Bước 2: Đảm bảo bạn đang ở thư mục gốc của project
+cd E:\the_last_final\Group5_FinalProject
+
+# Bước 3: Chạy script khởi động
+.\start-all.bat
 ```
+
+#### 🖱️ **Hoặc Double-click (Đơn giản nhất)**
+
+1. Mở File Explorer
+2. Vào thư mục `E:\the_last_final\Group5_FinalProject`
+3. **Double-click** vào file `start-all.bat`
+4. Chờ script tự động khởi động (3 cửa sổ terminal sẽ mở)
+
+#### 📝 **Lưu ý quan trọng:**
+
+- ✅ **Phải ở thư mục gốc** (`Group5_FinalProject`) mới chạy được
+- ✅ Dùng **PowerShell** hoặc **Command Prompt** (cmd)
+- ❌ **KHÔNG dùng Git Bash** (file .bat không tương thích)
+- ⚠️ Nếu gặp lỗi "không thể chạy script", thử: `powershell -ExecutionPolicy Bypass .\start-all.bat`
 
 **Script sẽ tự động:**
 
@@ -100,6 +117,31 @@ Mã OTP:       123456
 ---
 
 ## 🔥 XỬ LÝ LỖI THƯỜNG GẶP
+
+### ❌ Lỗi: "Không thể chạy script" hoặc Exit Code 1
+
+**Nguyên nhân:**
+
+- Chạy sai thư mục
+- PowerShell ExecutionPolicy bị chặn
+- Thiếu quyền Administrator
+
+**Giải pháp:**
+
+```powershell
+# Kiểm tra bạn đang ở đâu
+pwd
+# Phải hiển thị: E:\the_last_final\Group5_FinalProject
+
+# Nếu sai thư mục, cd về đúng
+cd E:\the_last_final\Group5_FinalProject
+
+# Thử chạy với Bypass ExecutionPolicy
+powershell -ExecutionPolicy Bypass .\start-all.bat
+
+# Hoặc chạy trực tiếp bằng cmd
+cmd /c start-all.bat
+```
 
 ### ❌ Lỗi: "Port đã được sử dụng"
 
