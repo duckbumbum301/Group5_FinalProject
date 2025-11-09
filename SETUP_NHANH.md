@@ -1,0 +1,66 @@
+# 🚀 SETUP DỰ ÁN - HƯỚNG DẪN NHANH
+
+## 📋 Yêu cầu
+
+- Node.js >= 16.0.0
+- npm
+- Port 3000, 8000, 8888 trống
+
+## ⚡ 3 BƯỚC SETUP
+
+### 1️⃣ Clone dự án
+
+```bash
+git clone https://github.com/duckbumbum301/Group5_FinalProject.git
+cd Group5_FinalProject
+```
+
+### 2️⃣ Cài đặt
+
+```bash
+.\setup.bat
+```
+
+### 3️⃣ Chạy
+
+```bash
+.\start-all.bat
+```
+
+## 🌐 Truy cập
+
+- **Trang chủ**: http://localhost:8000/html/index.html
+- **Admin**: http://localhost:8000/backoffice/
+- **Test VNPay**: http://localhost:8000/test-vnpay-flow.html
+
+## 🛑 Dừng
+
+```bash
+.\stop-all.bat
+```
+
+## 🔧 Lỗi thường gặp
+
+**Port bị chiếm:**
+
+```bash
+taskkill /F /IM node.exe
+```
+
+**Thiếu module:**
+
+```bash
+npm install
+cd vnpay_nodejs
+npm install
+```
+
+**Script không chạy:**
+
+```bash
+powershell -ExecutionPolicy Bypass .\start-all.bat
+```
+
+---
+
+**Xem chi tiết:** `doc/SETUP_GUIDE.md` hoặc `Start_VNPAY/README_KHOI_DONG.md`

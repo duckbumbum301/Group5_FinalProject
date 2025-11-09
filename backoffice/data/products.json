@@ -2,11 +2,14 @@
   {
     "id": "100",
     "name": "Rau muống (500g)",
-    "category": "Rau củ",
+    "category": "veg",
+    "subcategory": "leaf",
     "price": 15000,
-    "stock": 12,
+    "unit": "gói",
+    "stock": 19,
     "image": "../images/VEG/leaf/raumuong.jpg",
-    "status": "active"
+    "description": "Rau muống (500g) - Sản phẩm chất lượng cao",
+    "popular": 23
   },
   {
     "id": "101",
@@ -15,10 +18,10 @@
     "subcategory": "leaf",
     "price": 18000,
     "unit": "gói",
-    "stock": 47,
+    "stock": 31,
     "image": "../images/VEG/leaf/caibexanh.jpg",
     "description": "Cải bẹ xanh (500g) - Sản phẩm chất lượng cao",
-    "popular": 101
+    "popular": 100
   },
   {
     "id": "102",
@@ -27,10 +30,10 @@
     "subcategory": "leaf",
     "price": 16000,
     "unit": "gói",
-    "stock": 29,
+    "stock": 30,
     "image": "../images/VEG/leaf/rau-mong-toi-goi-300g_202506020917306037.jpg",
     "description": "Rau mồng tơi (500g) - Sản phẩm chất lượng cao",
-    "popular": 92
+    "popular": 78
   },
   {
     "id": "103",
@@ -39,10 +42,10 @@
     "subcategory": "leaf",
     "price": 18000,
     "unit": "gói",
-    "stock": 49,
+    "stock": 15,
     "image": "../images/VEG/cabbage/cải thìa.jpg",
     "description": "Cải Thia (500g) - Sản phẩm chất lượng cao",
-    "popular": 76
+    "popular": 13
   },
   {
     "id": "110",
@@ -51,10 +54,10 @@
     "subcategory": "root",
     "price": 15000,
     "unit": "gói",
-    "stock": 37,
+    "stock": 32,
     "image": "../images/VEG/root/Cà Rốt.jpg",
     "description": "Cà rốt (500g) - Sản phẩm chất lượng cao",
-    "popular": 27
+    "popular": 79
   },
   {
     "id": "111",
@@ -63,10 +66,10 @@
     "subcategory": "root",
     "price": 20000,
     "unit": "gói",
-    "stock": 11,
+    "stock": 14,
     "image": "../images/VEG/root/Khoai Tây.jpg",
     "description": "Khoai tây (1kg) - Sản phẩm chất lượng cao",
-    "popular": 54
+    "popular": 71
   },
   {
     "id": "112",
@@ -75,10 +78,10 @@
     "subcategory": "root",
     "price": 18000,
     "unit": "gói",
-    "stock": 51,
+    "stock": 27,
     "image": "../images/VEG/root/Bí Đỏ.jpg",
     "description": "Bí Đỏ (500g) - Sản phẩm chất lượng cao",
-    "popular": 94
+    "popular": 58
   },
   {
     "id": "120",
@@ -87,7 +90,7 @@
     "subcategory": "fruit",
     "price": 12000,
     "unit": "gói",
-    "stock": 47,
+    "stock": 11,
     "image": "../images/VEG/fruit/bausao.jpg",
     "description": "Bầu sao (500g) - Sản phẩm chất lượng cao",
     "popular": 66
@@ -99,10 +102,10 @@
     "subcategory": "fruit",
     "price": 25000,
     "unit": "gói",
-    "stock": 33,
+    "stock": 45,
     "image": "../images/VEG/fruit/bi-xanh-trai-202403181357319493.jpg",
     "description": "Bí xanh (1kg) - Sản phẩm chất lượng cao",
-    "popular": 10
+    "popular": 31
   },
   {
     "id": "122",
@@ -111,10 +114,10 @@
     "subcategory": "fruit",
     "price": 15000,
     "unit": "gói",
-    "stock": 56,
+    "stock": 54,
     "image": "../images/VEG/fruit/ca-chua-bi-hop-300g_202504140839559740.jpg",
     "description": "Cà chua bi (500g) - Sản phẩm chất lượng cao",
-    "popular": 93
+    "popular": 24
   },
   {
     "id": "130",
@@ -123,10 +126,10 @@
     "subcategory": "mushroom",
     "price": 20000,
     "unit": "gói",
-    "stock": 57,
+    "stock": 41,
     "image": "../images/VEG/mushroom/namrom.jpg",
     "description": "Nấm rơm (200g) - Sản phẩm chất lượng cao",
-    "popular": 93
+    "popular": 27
   },
   {
     "id": "131",
@@ -135,10 +138,10 @@
     "subcategory": "mushroom",
     "price": 18000,
     "unit": "gói",
-    "stock": 28,
+    "stock": 21,
     "image": "../images/VEG/mushroom/namkimcham.jpg",
     "description": "Nấm kim châm (200g) - Sản phẩm chất lượng cao",
-    "popular": 76
+    "popular": 105
   },
   {
     "id": "140",
@@ -147,10 +150,10 @@
     "subcategory": "herb",
     "price": 8000,
     "unit": "gói",
-    "stock": 37,
+    "stock": 15,
     "image": "../images/VEG/herb/hành lá.jpg",
     "description": "Hành Lá (100g) - Sản phẩm chất lượng cao",
-    "popular": 99
+    "popular": 45
   },
   {
     "id": "141",
@@ -159,10 +162,10 @@
     "subcategory": "herb",
     "price": 10000,
     "unit": "gói",
-    "stock": 44,
+    "stock": 34,
     "image": "../images/VEG/herb/hẹ lá.jpg",
     "description": "Hẹ Lá (100g) - Sản phẩm chất lượng cao",
-    "popular": 50
+    "popular": 92
   },
   {
     "id": "142",
@@ -171,10 +174,10 @@
     "subcategory": "herb",
     "price": 4000,
     "unit": "gói",
-    "stock": 51,
+    "stock": 13,
     "image": "../images/VEG/herb/ngò gai.jpg",
     "description": "Ngò Gai (100g) - Sản phẩm chất lượng cao",
-    "popular": 65
+    "popular": 94
   },
   {
     "id": "150",
@@ -183,10 +186,10 @@
     "subcategory": "cabbage",
     "price": 25000,
     "unit": "gói",
-    "stock": 51,
+    "stock": 41,
     "image": "../images/VEG/cabbage/cải bẹ dún.jpg",
     "description": "Cải bẹ dún (1kg) - Sản phẩm chất lượng cao",
-    "popular": 80
+    "popular": 70
   },
   {
     "id": "151",
@@ -195,10 +198,10 @@
     "subcategory": "cabbage",
     "price": 30000,
     "unit": "gói",
-    "stock": 44,
+    "stock": 49,
     "image": "../images/VEG/cabbage/cải ngồng.jpg",
     "description": "Cải ngồng (500g) - Sản phẩm chất lượng cao",
-    "popular": 81
+    "popular": 104
   },
   {
     "id": "152",
@@ -207,10 +210,10 @@
     "subcategory": "cabbage",
     "price": 25000,
     "unit": "gói",
-    "stock": 36,
+    "stock": 18,
     "image": "../images/VEG/cabbage/cải ngọt.jpg",
     "description": "Cải ngọt (500g) - Sản phẩm chất lượng cao",
-    "popular": 35
+    "popular": 67
   },
   {
     "id": "153",
@@ -219,10 +222,10 @@
     "subcategory": "cabbage",
     "price": 15000,
     "unit": "gói",
-    "stock": 48,
+    "stock": 38,
     "image": "../images/VEG/cabbage/cải thìa.jpg",
     "description": "Cải thìa (500g) - Sản phẩm chất lượng cao",
-    "popular": 101
+    "popular": 42
   },
   {
     "id": "160",
@@ -231,10 +234,10 @@
     "subcategory": "organic",
     "price": 30000,
     "unit": "gói",
-    "stock": 53,
+    "stock": 32,
     "image": "../images/VEG/organic/xà lách thuỷ canh.jpg",
     "description": "Xà lách thuỷ tinh thuỷ canh - Sản phẩm chất lượng cao",
-    "popular": 30
+    "popular": 66
   },
   {
     "id": "170",
@@ -243,10 +246,106 @@
     "subcategory": "processed",
     "price": 30000,
     "unit": "gói",
-    "stock": 11,
+    "stock": 25,
     "image": "../images/VEG/processed/khổ qua sơ chế.jpg",
     "description": "Khổ qua sơ chế - Sản phẩm chất lượng cao",
-    "popular": 66
+    "popular": 54
+  },
+  {
+    "id": "220",
+    "name": "Táo tươi (1kg)",
+    "category": "fruit",
+    "subcategory": "fresh",
+    "price": 85000,
+    "unit": "gói",
+    "stock": 22,
+    "image": "",
+    "description": "Táo tươi (1kg) - Sản phẩm chất lượng cao",
+    "popular": 11
+  },
+  {
+    "id": "221",
+    "name": "Cam tươi (1kg)",
+    "category": "fruit",
+    "subcategory": "fresh",
+    "price": 35000,
+    "unit": "gói",
+    "stock": 57,
+    "image": "",
+    "description": "Cam tươi (1kg) - Sản phẩm chất lượng cao",
+    "popular": 62
+  },
+  {
+    "id": "230",
+    "name": "Táo Mỹ nhập khẩu (1kg)",
+    "category": "fruit",
+    "subcategory": "imported",
+    "price": 99000,
+    "unit": "gói",
+    "stock": 25,
+    "image": "",
+    "description": "Táo Mỹ nhập khẩu (1kg) - Sản phẩm chất lượng cao",
+    "popular": 38
+  },
+  {
+    "id": "231",
+    "name": "Nho nhập khẩu (500g)",
+    "category": "fruit",
+    "subcategory": "imported",
+    "price": 120000,
+    "unit": "gói",
+    "stock": 59,
+    "image": "",
+    "description": "Nho nhập khẩu (500g) - Sản phẩm chất lượng cao",
+    "popular": 40
+  },
+  {
+    "id": "240",
+    "name": "Chuối Laba mùa vụ (1kg)",
+    "category": "fruit",
+    "subcategory": "seasonal",
+    "price": 28000,
+    "unit": "gói",
+    "stock": 32,
+    "image": "",
+    "description": "Chuối Laba mùa vụ (1kg) - Sản phẩm chất lượng cao",
+    "popular": 72
+  },
+  {
+    "id": "241",
+    "name": "Cam sành theo mùa (1kg)",
+    "category": "fruit",
+    "subcategory": "seasonal",
+    "price": 35000,
+    "unit": "gói",
+    "stock": 51,
+    "image": "",
+    "description": "Cam sành theo mùa (1kg) - Sản phẩm chất lượng cao",
+    "popular": 53
+  },
+  {
+    "id": "250",
+    "name": "Chuối sấy (100g)",
+    "category": "fruit",
+    "subcategory": "dried",
+    "price": 45000,
+    "unit": "gói",
+    "stock": 22,
+    "image": "",
+    "description": "Chuối sấy (100g) - Sản phẩm chất lượng cao",
+    "popular": 73
+  },
+  {
+    "id": "251",
+    "name": "Mít sấy (100g)",
+    "category": "fruit",
+    "subcategory": "dried",
+    "price": 50000,
+    "unit": "gói",
+    "stock": 15,
+    "image": "",
+    "description": "Mít sấy (100g) - Sản phẩm chất lượng cao",
+    "popular": 25
   },
   {
     "id": "200",
@@ -255,10 +354,10 @@
     "subcategory": "mixed",
     "price": 85000,
     "unit": "gói",
-    "stock": 14,
+    "stock": 9,
     "image": "../images/FRUIT/Mixed/Táo.jpg",
     "description": "Táo Mỹ (1kg) - Sản phẩm chất lượng cao",
-    "popular": 48
+    "popular": 61
   },
   {
     "id": "201",
@@ -267,10 +366,10 @@
     "subcategory": "mixed",
     "price": 28000,
     "unit": "gói",
-    "stock": 22,
+    "stock": 15,
     "image": "../images/FRUIT/Mixed/Chuối.jpg",
     "description": "Chuối Laba (1kg) - Sản phẩm chất lượng cao",
-    "popular": 40
+    "popular": 97
   },
   {
     "id": "202",
@@ -279,10 +378,10 @@
     "subcategory": "mixed",
     "price": 35000,
     "unit": "gói",
-    "stock": 44,
+    "stock": 36,
     "image": "../images/FRUIT/Mixed/Cam.jpg",
     "description": "Cam sành (1kg) - Sản phẩm chất lượng cao",
-    "popular": 98
+    "popular": 77
   },
   {
     "id": "210",
@@ -291,10 +390,10 @@
     "subcategory": "gift",
     "price": 250000,
     "unit": "gói",
-    "stock": 59,
+    "stock": 25,
     "image": "../images/FRUIT/gift/mix.jpg",
     "description": "Giỏ trái cây Mix - Sản phẩm chất lượng cao",
-    "popular": 85
+    "popular": 107
   },
   {
     "id": "211",
@@ -303,10 +402,10 @@
     "subcategory": "gift",
     "price": 480000,
     "unit": "gói",
-    "stock": 36,
+    "stock": 50,
     "image": "../images/FRUIT/gift/caocap.jpg",
     "description": "Giỏ quà cao cấp - Sản phẩm chất lượng cao",
-    "popular": 63
+    "popular": 47
   },
   {
     "id": "300",
@@ -315,10 +414,10 @@
     "subcategory": "pork",
     "price": 70000,
     "unit": "gói",
-    "stock": 22,
+    "stock": 46,
     "image": "../images/MEAT/pork/baroi.jpg",
     "description": "Thịt heo ba rọi (500g) - Sản phẩm chất lượng cao",
-    "popular": 89
+    "popular": 31
   },
   {
     "id": "301",
@@ -327,10 +426,10 @@
     "subcategory": "pork",
     "price": 85000,
     "unit": "gói",
-    "stock": 44,
+    "stock": 34,
     "image": "../images/MEAT/pork/suon.jpg",
     "description": "Sườn non (500g) - Sản phẩm chất lượng cao",
-    "popular": 51
+    "popular": 54
   },
   {
     "id": "310",
@@ -339,7 +438,7 @@
     "subcategory": "fish",
     "price": 55000,
     "unit": "gói",
-    "stock": 34,
+    "stock": 50,
     "image": "../images/MEAT/fish/ca-basa-cat-lat_202505260007155939.jpg",
     "description": "Cá basa phi lê (500g) - Sản phẩm chất lượng cao",
     "popular": 76
@@ -351,10 +450,10 @@
     "subcategory": "fish",
     "price": 95000,
     "unit": "gói",
-    "stock": 51,
+    "stock": 44,
     "image": "../images/MEAT/fish/cahoi.jpg",
     "description": "Cá hồi cắt lát (200g) - Sản phẩm chất lượng cao",
-    "popular": 17
+    "popular": 85
   },
   {
     "id": "320",
@@ -363,10 +462,10 @@
     "subcategory": "poultry",
     "price": 60000,
     "unit": "gói",
-    "stock": 45,
+    "stock": 56,
     "image": "../images/MEAT/poultry/ucga.jpg",
     "description": "Ức gà phi lê (500g) - Sản phẩm chất lượng cao",
-    "popular": 35
+    "popular": 27
   },
   {
     "id": "321",
@@ -375,10 +474,10 @@
     "subcategory": "poultry",
     "price": 85000,
     "unit": "gói",
-    "stock": 33,
+    "stock": 19,
     "image": "../images/MEAT/poultry/dui.jpg",
     "description": "Đùi gà ta (1kg) - Sản phẩm chất lượng cao",
-    "popular": 11
+    "popular": 51
   },
   {
     "id": "330",
@@ -387,10 +486,10 @@
     "subcategory": "redmeat",
     "price": 60000,
     "unit": "gói",
-    "stock": 12,
+    "stock": 33,
     "image": "../images/MEAT/redmeat/bapbo.jpg",
     "description": "Bắp bò - Sản phẩm chất lượng cao",
-    "popular": 49
+    "popular": 68
   },
   {
     "id": "331",
@@ -399,10 +498,10 @@
     "subcategory": "redmeat",
     "price": 85000,
     "unit": "gói",
-    "stock": 34,
+    "stock": 41,
     "image": "../images/MEAT/redmeat/nambo.jpg",
     "description": "Nạm bò - Sản phẩm chất lượng cao",
-    "popular": 22
+    "popular": 62
   },
   {
     "id": "340",
@@ -411,10 +510,10 @@
     "subcategory": "seafood",
     "price": 60000,
     "unit": "gói",
-    "stock": 56,
+    "stock": 51,
     "image": "../images/MEAT/seafood/bachtuoc.jpg",
     "description": "Bạch tuộc - Sản phẩm chất lượng cao",
-    "popular": 31
+    "popular": 28
   },
   {
     "id": "341",
@@ -423,10 +522,10 @@
     "subcategory": "seafood",
     "price": 85000,
     "unit": "gói",
-    "stock": 14,
+    "stock": 19,
     "image": "../images/MEAT/seafood/râu mực.jpg",
     "description": "Râu mực - Sản phẩm chất lượng cao",
-    "popular": 15
+    "popular": 103
   },
   {
     "id": "400",
@@ -435,10 +534,10 @@
     "subcategory": "juice",
     "price": 12000,
     "unit": "gói",
-    "stock": 44,
+    "stock": 12,
     "image": "../images/DRINK/juice/epcam.jpg",
     "description": "Nước cam ép Twister (330ml) - Sản phẩm chất lượng cao",
-    "popular": 89
+    "popular": 30
   },
   {
     "id": "401",
@@ -447,10 +546,10 @@
     "subcategory": "juice",
     "price": 15000,
     "unit": "gói",
-    "stock": 34,
+    "stock": 45,
     "image": "../images/DRINK/juice/eptao.jpg",
     "description": "Nước ép táo (350ml) - Sản phẩm chất lượng cao",
-    "popular": 62
+    "popular": 102
   },
   {
     "id": "410",
@@ -459,10 +558,10 @@
     "subcategory": "milk",
     "price": 9000,
     "unit": "gói",
-    "stock": 21,
+    "stock": 44,
     "image": "../images/DRINK/milk/vinamilk.jpg",
     "description": "Sữa tươi Vinamilk (180ml) - Sản phẩm chất lượng cao",
-    "popular": 62
+    "popular": 65
   },
   {
     "id": "411",
@@ -471,10 +570,10 @@
     "subcategory": "milk",
     "price": 8000,
     "unit": "gói",
-    "stock": 48,
+    "stock": 41,
     "image": "../images/DRINK/milk/fami.jpg",
     "description": "Sữa đậu nành Fami (200ml) - Sản phẩm chất lượng cao",
-    "popular": 48
+    "popular": 57
   },
   {
     "id": "420",
@@ -483,10 +582,10 @@
     "subcategory": "tea",
     "price": 10000,
     "unit": "gói",
-    "stock": 54,
+    "stock": 24,
     "image": "../images/DRINK/tea/olong.jpg",
     "description": "Trà ô long Tea Plus (500ml) - Sản phẩm chất lượng cao",
-    "popular": 54
+    "popular": 67
   },
   {
     "id": "421",
@@ -495,10 +594,10 @@
     "subcategory": "tea",
     "price": 9000,
     "unit": "gói",
-    "stock": 51,
+    "stock": 58,
     "image": "../images/DRINK/tea/c2.jpg",
     "description": "Trà chanh C2 (500ml) - Sản phẩm chất lượng cao",
-    "popular": 73
+    "popular": 56
   },
   {
     "id": "430",
@@ -507,10 +606,10 @@
     "subcategory": "can",
     "price": 10000,
     "unit": "gói",
-    "stock": 38,
+    "stock": 17,
     "image": "../images/DRINK/can/7upsodachanh.jpg",
     "description": "Soda chanh 7 Up (320ml) - Sản phẩm chất lượng cao",
-    "popular": 78
+    "popular": 41
   },
   {
     "id": "431",
@@ -519,10 +618,10 @@
     "subcategory": "can",
     "price": 9000,
     "unit": "gói",
-    "stock": 55,
+    "stock": 35,
     "image": "../images/DRINK/can/fantadau.jpg",
     "description": "Nước ngọt Fanta hương dâu lon (320ml) - Sản phẩm chất lượng cao",
-    "popular": 99
+    "popular": 35
   },
   {
     "id": "440",
@@ -531,10 +630,10 @@
     "subcategory": "coffee",
     "price": 10000,
     "unit": "gói",
-    "stock": 43,
+    "stock": 40,
     "image": "../images/DRINK/coffee/caphephin.jpg",
     "description": "Cà phê phin đậm truyền thống Phương Vy 500g - Sản phẩm chất lượng cao",
-    "popular": 52
+    "popular": 64
   },
   {
     "id": "441",
@@ -543,10 +642,10 @@
     "subcategory": "coffee",
     "price": 9000,
     "unit": "gói",
-    "stock": 46,
+    "stock": 49,
     "image": "../images/DRINK/coffee/caphetrungnguyen.jpg",
     "description": "Cà phê Trung Nguyên S chinh phục thành công 100g - Sản phẩm chất lượng cao",
-    "popular": 19
+    "popular": 52
   },
   {
     "id": "500",
@@ -555,10 +654,10 @@
     "subcategory": "rice",
     "price": 38000,
     "unit": "gói",
-    "stock": 12,
+    "stock": 30,
     "image": "../images/DRY/rice/st25.jpg",
     "description": "Gạo ST25 (1kg) - Sản phẩm chất lượng cao",
-    "popular": 64
+    "popular": 44
   },
   {
     "id": "501",
@@ -567,10 +666,10 @@
     "subcategory": "rice",
     "price": 32000,
     "unit": "gói",
-    "stock": 27,
+    "stock": 39,
     "image": "../images/DRY/rice/gaothom.jpg",
     "description": "Gạo thơm Jasmine (1kg) - Sản phẩm chất lượng cao",
-    "popular": 76
+    "popular": 109
   },
   {
     "id": "510",
@@ -579,10 +678,10 @@
     "subcategory": "noodle",
     "price": 24000,
     "unit": "gói",
-    "stock": 30,
+    "stock": 38,
     "image": "../images/DRY/noodle/haohao.jpg",
     "description": "Mì Hảo Hảo (5 gói) - Sản phẩm chất lượng cao",
-    "popular": 80
+    "popular": 49
   },
   {
     "id": "511",
@@ -591,10 +690,10 @@
     "subcategory": "noodle",
     "price": 22000,
     "unit": "gói",
-    "stock": 22,
+    "stock": 36,
     "image": "../images/DRY/noodle/bunkho.jpg",
     "description": "Bún khô (500g) - Sản phẩm chất lượng cao",
-    "popular": 16
+    "popular": 84
   },
   {
     "id": "520",
@@ -603,10 +702,10 @@
     "subcategory": "beans",
     "price": 26000,
     "unit": "gói",
-    "stock": 15,
+    "stock": 25,
     "image": "../images/DRY/beans/dauxanh.jpg",
     "description": "Đậu xanh (500g) - Sản phẩm chất lượng cao",
-    "popular": 79
+    "popular": 70
   },
   {
     "id": "521",
@@ -615,10 +714,10 @@
     "subcategory": "beans",
     "price": 25000,
     "unit": "gói",
-    "stock": 44,
+    "stock": 50,
     "image": "../images/DRY/beans/daudo.jpg",
     "description": "Đậu đỏ (500g) - Sản phẩm chất lượng cao",
-    "popular": 11
+    "popular": 87
   },
   {
     "id": "530",
@@ -627,10 +726,10 @@
     "subcategory": "flour",
     "price": 26000,
     "unit": "gói",
-    "stock": 51,
+    "stock": 37,
     "image": "../images/DRY/flour/bột phô mai.jpg",
     "description": "Bột phô mai StFood gói 100g - Sản phẩm chất lượng cao",
-    "popular": 90
+    "popular": 28
   },
   {
     "id": "531",
@@ -639,10 +738,10 @@
     "subcategory": "flour",
     "price": 25000,
     "unit": "gói",
-    "stock": 27,
+    "stock": 19,
     "image": "../images/DRY/flour/bột bánh rán doraemon.jpg",
     "description": "Bột bánh rán Ajinomoto vị truyền thống gói 200g - Sản phẩm chất lượng cao",
-    "popular": 67
+    "popular": 62
   },
   {
     "id": "540",
@@ -651,10 +750,10 @@
     "subcategory": "seaweed",
     "price": 26000,
     "unit": "gói",
-    "stock": 35,
+    "stock": 34,
     "image": "../images/DRY/seaweed/rong biển giòn.jpg",
     "description": "Rong biển rắc giòn trộn gia vị - Sản phẩm chất lượng cao",
-    "popular": 16
+    "popular": 84
   },
   {
     "id": "541",
@@ -663,10 +762,10 @@
     "subcategory": "seaweed",
     "price": 25000,
     "unit": "gói",
-    "stock": 52,
+    "stock": 42,
     "image": "../images/DRY/seaweed/rong biển.jpg",
     "description": "Rong biển nướng giòn trộn chà bông cá hồi  - Sản phẩm chất lượng cao",
-    "popular": 23
+    "popular": 60
   },
   {
     "id": "550",
@@ -675,10 +774,10 @@
     "subcategory": "canned",
     "price": 25000,
     "unit": "gói",
-    "stock": 26,
+    "stock": 47,
     "image": "../images/DRY/canned/vissan bò 2 lát.png",
     "description": "Pate thịt bò Vissan  - Sản phẩm chất lượng cao",
-    "popular": 30
+    "popular": 33
   },
   {
     "id": "551",
@@ -687,10 +786,58 @@
     "subcategory": "canned",
     "price": 35000,
     "unit": "gói",
-    "stock": 19,
+    "stock": 47,
     "image": "../images/DRY/canned/vissan heo 2 lát.png",
     "description": "Thịt heo hai lát Vissan (150g) - Sản phẩm chất lượng cao",
-    "popular": 71
+    "popular": 90
+  },
+  {
+    "id": "560",
+    "name": "Hạt đậu phộng rang (200g)",
+    "category": "dry",
+    "subcategory": "beans-nuts",
+    "price": 22000,
+    "unit": "gói",
+    "stock": 40,
+    "image": "",
+    "description": "Hạt đậu phộng rang (200g) - Sản phẩm chất lượng cao",
+    "popular": 51
+  },
+  {
+    "id": "561",
+    "name": "Hạt hạnh nhân (100g)",
+    "category": "dry",
+    "subcategory": "beans-nuts",
+    "price": 65000,
+    "unit": "gói",
+    "stock": 16,
+    "image": "",
+    "description": "Hạt hạnh nhân (100g) - Sản phẩm chất lượng cao",
+    "popular": 109
+  },
+  {
+    "id": "570",
+    "name": "Bột chiên giòn (200g)",
+    "category": "dry",
+    "subcategory": "flour-mix",
+    "price": 18000,
+    "unit": "gói",
+    "stock": 24,
+    "image": "",
+    "description": "Bột chiên giòn (200g) - Sản phẩm chất lượng cao",
+    "popular": 85
+  },
+  {
+    "id": "571",
+    "name": "Bột tẩm tempura (200g)",
+    "category": "dry",
+    "subcategory": "flour-mix",
+    "price": 25000,
+    "unit": "gói",
+    "stock": 43,
+    "image": "",
+    "description": "Bột tẩm tempura (200g) - Sản phẩm chất lượng cao",
+    "popular": 27
   },
   {
     "id": "600",
@@ -699,10 +846,10 @@
     "subcategory": "sauce",
     "price": 25000,
     "unit": "gói",
-    "stock": 29,
+    "stock": 40,
     "image": "../images/SPICE/Sauce/nuocmam.jpg",
     "description": "Nước mắm Nam Ngư (500ml) - Sản phẩm chất lượng cao",
-    "popular": 105
+    "popular": 28
   },
   {
     "id": "601",
@@ -711,10 +858,10 @@
     "subcategory": "sauce",
     "price": 23000,
     "unit": "gói",
-    "stock": 41,
+    "stock": 22,
     "image": "../images/SPICE/Sauce/nuoctuong.jpg",
     "description": "Nước tương Maggi (500ml) - Sản phẩm chất lượng cao",
-    "popular": 99
+    "popular": 70
   },
   {
     "id": "610",
@@ -723,10 +870,10 @@
     "subcategory": "oil",
     "price": 55000,
     "unit": "gói",
-    "stock": 51,
+    "stock": 50,
     "image": "../images/SPICE/Oil/226995-thumb-moi_202411071422115102.jpg",
     "description": "Dầu ăn Neptune (1L) - Sản phẩm chất lượng cao",
-    "popular": 67
+    "popular": 103
   },
   {
     "id": "620",
@@ -735,10 +882,10 @@
     "subcategory": "powder",
     "price": 6000,
     "unit": "gói",
-    "stock": 22,
+    "stock": 26,
     "image": "../images/SPICE/Powder/muoi.jpg",
     "description": "Muối i-ốt (200g) - Sản phẩm chất lượng cao",
-    "popular": 57
+    "popular": 101
   },
   {
     "id": "621",
@@ -747,10 +894,58 @@
     "subcategory": "powder",
     "price": 12000,
     "unit": "gói",
-    "stock": 46,
+    "stock": 41,
     "image": "../images/SPICE/Powder/botngot.jpg",
     "description": "Bột ngọt Ajinomoto (200g) - Sản phẩm chất lượng cao",
-    "popular": 57
+    "popular": 105
+  },
+  {
+    "id": "630",
+    "name": "Lá húng quế sấy (20g)",
+    "category": "spice",
+    "subcategory": "herbs",
+    "price": 19000,
+    "unit": "gói",
+    "stock": 41,
+    "image": "",
+    "description": "Lá húng quế sấy (20g) - Sản phẩm chất lượng cao",
+    "popular": 99
+  },
+  {
+    "id": "631",
+    "name": "Lá rosemary sấy (20g)",
+    "category": "spice",
+    "subcategory": "herbs",
+    "price": 25000,
+    "unit": "gói",
+    "stock": 56,
+    "image": "",
+    "description": "Lá rosemary sấy (20g) - Sản phẩm chất lượng cao",
+    "popular": 79
+  },
+  {
+    "id": "640",
+    "name": "Gia vị nướng BBQ (50g)",
+    "category": "spice",
+    "subcategory": "condiment",
+    "price": 32000,
+    "unit": "gói",
+    "stock": 47,
+    "image": "",
+    "description": "Gia vị nướng BBQ (50g) - Sản phẩm chất lượng cao",
+    "popular": 63
+  },
+  {
+    "id": "641",
+    "name": "Gia vị lẩu thái (50g)",
+    "category": "spice",
+    "subcategory": "condiment",
+    "price": 35000,
+    "unit": "gói",
+    "stock": 28,
+    "image": "",
+    "description": "Gia vị lẩu thái (50g) - Sản phẩm chất lượng cao",
+    "popular": 41
   },
   {
     "id": "700",
@@ -762,7 +957,7 @@
     "stock": 26,
     "image": "../images/HOUSEHOLD/bags/tuidungracden.jpg",
     "description": "Túi đựng rác đen - Sản phẩm chất lượng cao",
-    "popular": 25
+    "popular": 95
   },
   {
     "id": "701",
@@ -771,10 +966,10 @@
     "subcategory": "bags",
     "price": 22000,
     "unit": "gói",
-    "stock": 39,
+    "stock": 35,
     "image": "../images/HOUSEHOLD/bags/túi đựng rác màu.jpg",
     "description": "Túi đựng rác màu - Sản phẩm chất lượng cao",
-    "popular": 64
+    "popular": 89
   },
   {
     "id": "710",
@@ -783,10 +978,10 @@
     "subcategory": "cleaning",
     "price": 10000,
     "unit": "gói",
-    "stock": 18,
+    "stock": 24,
     "image": "../images/HOUSEHOLD/cleaning/sunlight gói.jpg",
     "description": "Nước rửa chén Sunlight gói - Sản phẩm chất lượng cao",
-    "popular": 79
+    "popular": 15
   },
   {
     "id": "711",
@@ -795,10 +990,10 @@
     "subcategory": "cleaning",
     "price": 35000,
     "unit": "gói",
-    "stock": 35,
+    "stock": 27,
     "image": "../images/HOUSEHOLD/cleaning/sunlight.jpg",
     "description": "Nước rửa chén Sunlight - Sản phẩm chất lượng cao",
-    "popular": 91
+    "popular": 81
   },
   {
     "id": "750",
@@ -807,10 +1002,10 @@
     "subcategory": "personal",
     "price": 32000,
     "unit": "gói",
-    "stock": 45,
+    "stock": 38,
     "image": "../images/HOUSEHOLD/personal/closeup.jpg",
     "description": "Kem đánh răng Closeup - Sản phẩm chất lượng cao",
-    "popular": 102
+    "popular": 49
   },
   {
     "id": "751",
@@ -819,10 +1014,10 @@
     "subcategory": "personal",
     "price": 95000,
     "unit": "gói",
-    "stock": 14,
+    "stock": 55,
     "image": "../images/HOUSEHOLD/personal/nivea.jpg",
     "description": "Kem dưỡng da Nivea - Sản phẩm chất lượng cao",
-    "popular": 97
+    "popular": 24
   },
   {
     "id": "752",
@@ -831,10 +1026,10 @@
     "subcategory": "personal",
     "price": 75000,
     "unit": "gói",
-    "stock": 19,
+    "stock": 14,
     "image": "../images/HOUSEHOLD/personal/sunsilk.jpg",
     "description": "Dầu gội Sunsilk - Sản phẩm chất lượng cao",
-    "popular": 72
+    "popular": 79
   },
   {
     "id": "720",
@@ -843,10 +1038,10 @@
     "subcategory": "kitchenware",
     "price": 40000,
     "unit": "gói",
-    "stock": 33,
+    "stock": 16,
     "image": "../images/HOUSEHOLD/kitchenware/dao bào.jpg",
     "description": "Dao bào - Sản phẩm chất lượng cao",
-    "popular": 35
+    "popular": 47
   },
   {
     "id": "721",
@@ -855,10 +1050,10 @@
     "subcategory": "kitchenware",
     "price": 50000,
     "unit": "gói",
-    "stock": 33,
+    "stock": 36,
     "image": "../images/HOUSEHOLD/kitchenware/hộp đựng thực phẩm.jpg",
     "description": "Hộp đựng thực phẩm - Sản phẩm chất lượng cao",
-    "popular": 89
+    "popular": 63
   },
   {
     "id": "730",
@@ -867,10 +1062,10 @@
     "subcategory": "laundry",
     "price": 65000,
     "unit": "gói",
-    "stock": 16,
+    "stock": 54,
     "image": "../images/HOUSEHOLD/laundry/aba.jpg",
     "description": "Bột giặt Aba - Sản phẩm chất lượng cao",
-    "popular": 28
+    "popular": 103
   },
   {
     "id": "731",
@@ -879,10 +1074,10 @@
     "subcategory": "laundry",
     "price": 70000,
     "unit": "gói",
-    "stock": 45,
+    "stock": 24,
     "image": "../images/HOUSEHOLD/laundry/omo.jpg",
     "description": "Bột giặt Omo - Sản phẩm chất lượng cao",
-    "popular": 23
+    "popular": 40
   },
   {
     "id": "740",
@@ -894,7 +1089,7 @@
     "stock": 28,
     "image": "../images/HOUSEHOLD/paper/khăn tắm.jpg",
     "description": "Khăn tắm - Sản phẩm chất lượng cao",
-    "popular": 59
+    "popular": 91
   },
   {
     "id": "741",
@@ -903,10 +1098,106 @@
     "subcategory": "paper",
     "price": 30000,
     "unit": "gói",
-    "stock": 33,
+    "stock": 20,
     "image": "../images/HOUSEHOLD/paper/puri.jpg",
     "description": "Giấy vệ sinh Puri - Sản phẩm chất lượng cao",
-    "popular": 19
+    "popular": 90
+  },
+  {
+    "id": "715",
+    "name": "Combo giặt & tẩy (2 món)",
+    "category": "household",
+    "subcategory": "laundry-cleaning",
+    "price": 89000,
+    "unit": "gói",
+    "stock": 32,
+    "image": "",
+    "description": "Combo giặt & tẩy (2 món) - Sản phẩm chất lượng cao",
+    "popular": 36
+  },
+  {
+    "id": "716",
+    "name": "Nước lau đa năng (1L)",
+    "category": "household",
+    "subcategory": "laundry-cleaning",
+    "price": 55000,
+    "unit": "gói",
+    "stock": 38,
+    "image": "",
+    "description": "Nước lau đa năng (1L) - Sản phẩm chất lượng cao",
+    "popular": 55
+  },
+  {
+    "id": "722",
+    "name": "Hộp bảo quản thực phẩm (2 chiếc)",
+    "category": "household",
+    "subcategory": "kitchen-storage",
+    "price": 59000,
+    "unit": "gói",
+    "stock": 36,
+    "image": "",
+    "description": "Hộp bảo quản thực phẩm (2 chiếc) - Sản phẩm chất lượng cao",
+    "popular": 54
+  },
+  {
+    "id": "723",
+    "name": "Bộ hũ gia vị (3 chiếc)",
+    "category": "household",
+    "subcategory": "kitchen-storage",
+    "price": 49000,
+    "unit": "gói",
+    "stock": 46,
+    "image": "",
+    "description": "Bộ hũ gia vị (3 chiếc) - Sản phẩm chất lượng cao",
+    "popular": 22
+  },
+  {
+    "id": "702",
+    "name": "Cuộn túi rác 60L",
+    "category": "household",
+    "subcategory": "bags-packaging",
+    "price": 38000,
+    "unit": "gói",
+    "stock": 12,
+    "image": "",
+    "description": "Cuộn túi rác 60L - Sản phẩm chất lượng cao",
+    "popular": 46
+  },
+  {
+    "id": "703",
+    "name": "Túi hút chân không (10 chiếc)",
+    "category": "household",
+    "subcategory": "bags-packaging",
+    "price": 69000,
+    "unit": "gói",
+    "stock": 50,
+    "image": "",
+    "description": "Túi hút chân không (10 chiếc) - Sản phẩm chất lượng cao",
+    "popular": 11
+  },
+  {
+    "id": "753",
+    "name": "Bàn chải đánh răng (2 chiếc)",
+    "category": "household",
+    "subcategory": "personal-care",
+    "price": 26000,
+    "unit": "gói",
+    "stock": 37,
+    "image": "",
+    "description": "Bàn chải đánh răng (2 chiếc) - Sản phẩm chất lượng cao",
+    "popular": 27
+  },
+  {
+    "id": "754",
+    "name": "Sữa dưỡng thể (200ml)",
+    "category": "household",
+    "subcategory": "personal-care",
+    "price": 79000,
+    "unit": "gói",
+    "stock": 29,
+    "image": "",
+    "description": "Sữa dưỡng thể (200ml) - Sản phẩm chất lượng cao",
+    "popular": 78
   },
   {
     "id": "800",
@@ -915,10 +1206,10 @@
     "subcategory": "snack",
     "price": 15000,
     "unit": "gói",
-    "stock": 58,
+    "stock": 30,
     "image": "../images/SWEET/SNACK/oreo.jpg",
     "description": "Bánh Oreo (133g) - Sản phẩm chất lượng cao",
-    "popular": 19
+    "popular": 52
   },
   {
     "id": "801",
@@ -927,10 +1218,10 @@
     "subcategory": "snack",
     "price": 18000,
     "unit": "gói",
-    "stock": 20,
+    "stock": 47,
     "image": "../images/SWEET/SNACK/oneone.jpg",
     "description": "Bánh gạo One One (100g) - Sản phẩm chất lượng cao",
-    "popular": 67
+    "popular": 48
   },
   {
     "id": "810",
@@ -939,10 +1230,10 @@
     "subcategory": "chocolate",
     "price": 25000,
     "unit": "gói",
-    "stock": 21,
+    "stock": 30,
     "image": "../images/SWEET/CHOCOLATE/snickers.jpg",
     "description": "Socola Snickers (40g) - Sản phẩm chất lượng cao",
-    "popular": 87
+    "popular": 103
   },
   {
     "id": "820",
@@ -951,10 +1242,10 @@
     "subcategory": "candy",
     "price": 18000,
     "unit": "gói",
-    "stock": 45,
+    "stock": 35,
     "image": "../images/SWEET/CANDY/alpenliebe.jpg",
     "description": "Kẹo Alpenliebe (120g) - Sản phẩm chất lượng cao",
-    "popular": 27
+    "popular": 60
   },
   {
     "id": "821",
@@ -963,10 +1254,10 @@
     "subcategory": "candy",
     "price": 15000,
     "unit": "gói",
-    "stock": 33,
+    "stock": 30,
     "image": "../images/SWEET/CANDY/mentos.jpg",
     "description": "Kẹo bạc hà Mentos (38g) - Sản phẩm chất lượng cao",
-    "popular": 92
+    "popular": 76
   },
   {
     "id": "830",
@@ -975,10 +1266,10 @@
     "subcategory": "cereal",
     "price": 95000,
     "unit": "gói",
-    "stock": 28,
+    "stock": 15,
     "image": "../images/SWEET/cereal/ngũ cốc granola.jpg",
     "description": "Ngũ cốc Granola - Sản phẩm chất lượng cao",
-    "popular": 39
+    "popular": 61
   },
   {
     "id": "840",
@@ -987,10 +1278,10 @@
     "subcategory": "dried",
     "price": 45000,
     "unit": "gói",
-    "stock": 30,
+    "stock": 44,
     "image": "../images/SWEET/dried/chuối sấy.jpg",
     "description": "Chuối sấy - Sản phẩm chất lượng cao",
-    "popular": 32
+    "popular": 69
   },
   {
     "id": "841",
@@ -999,10 +1290,10 @@
     "subcategory": "dried",
     "price": 50000,
     "unit": "gói",
-    "stock": 19,
+    "stock": 17,
     "image": "../images/SWEET/dried/mít sấy.jpg",
     "description": "Mít sấy - Sản phẩm chất lượng cao",
-    "popular": 104
+    "popular": 68
   },
   {
     "id": "842",
@@ -1011,50 +1302,9 @@
     "subcategory": "dried",
     "price": 60000,
     "unit": "gói",
-    "stock": 13,
+    "stock": 17,
     "image": "../images/SWEET/dried/xoài sấy.jpg",
     "description": "Xoài sấy - Sản phẩm chất lượng cao",
-    "popular": 45
-  },
-  {
-    "id": "P7293",
-    "name": "Nước gạo rang Woongjin 1.5 lít",
-    "category": "drink",
-    "price": 69500,
-    "stock": 6,
-    "status": "active"
-  },
-  {
-    "id": "999",
-    "name": "lạp xưởng nướng đá",
-    "category": "dry",
-    "price": 56000,
-    "stock": 53,
-    "status": "active"
-  },
-  {
-    "id": "998",
-    "name": "bánh tacos",
-    "category": "dry",
-    "price": 39000,
-    "stock": 36,
-    "status": "active"
-  },
-  {
-    "id": "997",
-    "name": "lạp xưởng nướng đá",
-    "category": "dry",
-    "price": 69000,
-    "stock": 69,
-    "image": "../images/testaddP/lapxuonh.jpg",
-    "status": "active"
-  },
-  {
-    "id": "996",
-    "name": "bánh cá",
-    "category": "dry",
-    "price": 29000,
-    "stock": 29,
-    "status": "active"
+    "popular": 27
   }
 ]

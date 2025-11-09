@@ -31,7 +31,7 @@
       "subcategory": "leaf",
       "price": 16000,
       "unit": "gói",
-      "stock": 31,
+      "stock": 30,
       "image": "../images/VEG/leaf/rau-mong-toi-goi-300g_202506020917306037.jpg",
       "description": "Rau mồng tơi (500g) - Sản phẩm chất lượng cao",
       "popular": 78
@@ -5496,6 +5496,130 @@
       "updatedAt": "2025-11-09T05:58:04.399Z",
       "updated_at": "2025-11-09T05:58:04.399Z",
       "updated_by": "ilovetranduythanh@gmail.com"
+    },
+    {
+      "id": "ORD-20251109-152602-ML8AVQ",
+      "customerName": "Quốc Việt",
+      "phone": "0973654843",
+      "address": "hùng vương street\nhùng vương street",
+      "email": "huynhquocviet0609@gmail.com",
+      "user": {
+        "name": "Quốc Việt",
+        "phone": "0973654843",
+        "address": "hùng vương street\nhùng vương street"
+      },
+      "slot": "2025-11-08_09:00-11:00",
+      "voucher": "",
+      "paymentMethod": "VNPAY",
+      "note": "",
+      "status": "placed",
+      "delivery_status": "placed",
+      "payment_status": "pending",
+      "subtotal": 90000,
+      "shipping_fee": 20000,
+      "discount": 0,
+      "totalAmount": 110000,
+      "total": 110000,
+      "items": {
+        "1000": 9
+      },
+      "created_at": "2025-11-09T08:26:02.375Z",
+      "tracking": [
+        {
+          "code": "placed",
+          "label": "Đã đặt hàng",
+          "at": "2025-11-09T08:26:02.375Z"
+        },
+        {
+          "code": "preparing",
+          "label": "Đang chuẩn bị",
+          "at": null
+        },
+        {
+          "code": "ready",
+          "label": "Sẵn sàng giao",
+          "at": null
+        },
+        {
+          "code": "pickup",
+          "label": "Shipper đã nhận",
+          "at": null
+        },
+        {
+          "code": "delivering",
+          "label": "Đang giao",
+          "at": null
+        },
+        {
+          "code": "delivered",
+          "label": "Giao thành công",
+          "at": null
+        }
+      ]
+    },
+    {
+      "id": "ORD-20251109-152653-9UOBT0",
+      "customerName": "Quoc Viet",
+      "phone": "0973654843",
+      "address": "lê trọng tấn",
+      "email": "huynhquocviet0609@gmail.com",
+      "user": {
+        "name": "Quoc Viet",
+        "phone": "0973654843",
+        "address": "lê trọng tấn"
+      },
+      "slot": "2025-11-08_09:00-11:00",
+      "voucher": "FREESHIP",
+      "paymentMethod": "VNPAY",
+      "note": "",
+      "status": "pickup",
+      "delivery_status": "pickup",
+      "payment_status": "pending",
+      "subtotal": 96000,
+      "shipping_fee": 0,
+      "discount": 0,
+      "totalAmount": 96000,
+      "total": 96000,
+      "items": {
+        "102": 1,
+        "1000": 8
+      },
+      "created_at": "2025-11-09T08:26:53.566Z",
+      "tracking": [
+        {
+          "code": "placed",
+          "label": "Đã đặt hàng",
+          "at": "2025-11-09T08:26:53.566Z"
+        },
+        {
+          "code": "preparing",
+          "label": "Đang chuẩn bị",
+          "at": "2025-11-09T08:30:08.343Z"
+        },
+        {
+          "code": "ready",
+          "label": "Sẵn sàng giao",
+          "at": "2025-11-09T08:30:24.761Z"
+        },
+        {
+          "code": "pickup",
+          "label": "Shipper đã nhận",
+          "at": "2025-11-09T08:30:47.189Z"
+        },
+        {
+          "code": "delivering",
+          "label": "Đang giao",
+          "at": null
+        },
+        {
+          "code": "delivered",
+          "label": "Giao thành công",
+          "at": null
+        }
+      ],
+      "updatedAt": "2025-11-09T08:30:47.189Z",
+      "updated_at": "2025-11-09T08:30:47.189Z",
+      "updated_by": "ilovetranduythanh@gmail.com"
     }
   ],
   "users": [
@@ -7168,6 +7292,85 @@
         "newStatus": "pickup"
       },
       "timestamp": "2025-11-09T05:58:11.522Z"
+    },
+    {
+      "id": "1762676762359d2gf6",
+      "action": "profile.update",
+      "who": "huynhquocviet0609@gmail.com",
+      "metadata": {
+        "userId": "1762617382052",
+        "changes": {
+          "name": "Quốc Việt",
+          "address": "hùng vương street\nhùng vương street"
+        }
+      },
+      "timestamp": "2025-11-09T08:26:02.359Z"
+    },
+    {
+      "id": "1762676762423z81zr",
+      "action": "order.create",
+      "who": "huynhquocviet0609@gmail.com",
+      "metadata": {
+        "orderId": "ORD-20251109-152602-ML8AVQ",
+        "total": 110000
+      },
+      "timestamp": "2025-11-09T08:26:02.423Z"
+    },
+    {
+      "id": "1762676813550rv82t",
+      "action": "profile.update",
+      "who": "huynhquocviet0609@gmail.com",
+      "metadata": {
+        "userId": "1762660299729",
+        "changes": {
+          "name": "Quoc Viet",
+          "address": "lê trọng tấn"
+        }
+      },
+      "timestamp": "2025-11-09T08:26:53.550Z"
+    },
+    {
+      "id": "1762676813583tkehx",
+      "action": "order.create",
+      "who": "huynhquocviet0609@gmail.com",
+      "metadata": {
+        "orderId": "ORD-20251109-152653-9UOBT0",
+        "total": 96000
+      },
+      "timestamp": "2025-11-09T08:26:53.583Z"
+    },
+    {
+      "id": "17626770083793ka78",
+      "action": "update_order_status",
+      "who": "ilovetranduythanh@gmail.com",
+      "metadata": {
+        "orderId": "ORD-20251109-152653-9UOBT0",
+        "oldStatus": "placed",
+        "newStatus": "preparing"
+      },
+      "timestamp": "2025-11-09T08:30:08.379Z"
+    },
+    {
+      "id": "1762677024795ab1ou",
+      "action": "update_order_status",
+      "who": "ilovetranduythanh@gmail.com",
+      "metadata": {
+        "orderId": "ORD-20251109-152653-9UOBT0",
+        "oldStatus": "preparing",
+        "newStatus": "ready"
+      },
+      "timestamp": "2025-11-09T08:30:24.795Z"
+    },
+    {
+      "id": "1762677047223avyl2",
+      "action": "update_order_status",
+      "who": "ilovetranduythanh@gmail.com",
+      "metadata": {
+        "orderId": "ORD-20251109-152653-9UOBT0",
+        "oldStatus": "ready",
+        "newStatus": "pickup"
+      },
+      "timestamp": "2025-11-09T08:30:47.223Z"
     }
   ]
 }
