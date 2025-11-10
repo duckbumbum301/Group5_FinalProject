@@ -2,6 +2,15 @@
    🌿 VỰA VUI VẺ — ABOUT PAGE
    ========================================================= */
 
+/* ====== FONT FACE: Blenda Script ====== */
+@font-face {
+  font-family: "Blenda Script";
+  src: url("../../assets/font/1FTV-blenda-script.otf") format("opentype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
 /* ====== ROOT COLORS ====== */
 :root {
   --blue: #6cbf3f; /* xanh lá tươi chủ đạo */
@@ -168,9 +177,14 @@ main {
   font-size: 0.9rem;
 }
 .hero__inner h1 {
-  color: var(--green);
+  font-family: "Blenda Script", cursive;
   font-size: clamp(2.2rem, 6vw, 3.8rem);
   margin: 6px 0;
+  /* Match the Home/Hôm “Sắp ra mắt !!!” gradient */
+  background: linear-gradient(180deg, #1f5a27 0%, #66c372 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
 }
 .hero__inner .sub {
   color: var(--ink);
@@ -196,9 +210,13 @@ main {
 }
 .title {
   text-align: center;
-  color: var(--vin-blue);
+  font-family: "Blenda Script", cursive;
   font-size: clamp(28px, 4vw, 42px);
   margin: 8px 0 2px;
+  background: linear-gradient(90deg, #3f7d3a, #6cbf3f, #4f9a28);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
 }
 .subtitle {
   text-align: center;
@@ -439,8 +457,13 @@ main {
   color: var(--green);
 }
 .about-feature__title {
+  font-family: "Blenda Script", cursive;
   font-size: clamp(1.8rem, 4vw, 2.6rem);
   margin-bottom: 12px;
+  background: linear-gradient(90deg, #3f7d3a, #6cbf3f, #4f9a28);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
 }
 .about-feature__text {
   margin: 0;
@@ -463,11 +486,15 @@ main {
 }
 
 .pillars-title {
-  color: var(--vin-blue);
+  font-family: "Blenda Script", cursive;
   font-weight: 800;
   font-size: clamp(28px, 4.4vw, 48px);
   margin: 0 0 8px;
   line-height: 1.2;
+  background: linear-gradient(90deg, #3f7d3a, #6cbf3f, #4f9a28);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
 }
 
 .pillars-subtitle {
@@ -557,6 +584,14 @@ main {
   border-top: 1px solid #ddd;
   border-bottom: 1px solid #ddd;
   font-family: "Arial", sans-serif;
+}
+
+.sustain-news h2 {
+  font-family: "Blenda Script", cursive;
+  background: linear-gradient(90deg, #3f7d3a, #6cbf3f, #4f9a28);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
 }
 
 .sustain-news .container {

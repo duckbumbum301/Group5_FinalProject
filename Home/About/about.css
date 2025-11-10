@@ -49,6 +49,33 @@ img {
   margin: 0 auto;
 }
 
+/* ====== Custom heading font: Blenda Script (scoped to About) ====== */
+@font-face {
+  font-family: "Blenda Script";
+  src: url("../../assets/font/1FTV-blenda-script.otf") format("opentype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* ====== Merriweather Variable (local asset) ====== */
+@font-face {
+  font-family: "Merriweather";
+  src: url("../../assets/font/Merriweather-VariableFont_opsz,wdth,wght.ttf") format("truetype");
+  font-weight: 100 900;
+  font-stretch: 75% 125%;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Force Merriweather Variable for ISO accordion text */
+.standards .iso-item,
+.standards .iso-item span,
+.standards .iso-panel,
+.standards .iso-panel p {
+  font-family: "Merriweather", serif;
+}
+
 
 .logo {
   font-weight: 700;
@@ -138,9 +165,10 @@ main {
   font-size: 0.9rem;
 }
 .hero__inner h1 {
-  color: var(--green);
-  font-size: clamp(2.2rem, 6vw, 3.8rem);
+  color: var(--green); /* fallback */
+  font-size: clamp(5rem, 11vw, 10rem);
   margin: 6px 0;
+  font-family: "Blenda Script", cursive;
 }
 .hero__inner .sub {
   color: var(--ink);
@@ -170,9 +198,10 @@ main {
 }
 .title {
   text-align: center;
-  color: var(--vin-blue);
+  color: var(--vin-blue); /* fallback */
   font-size: clamp(28px, 4vw, 42px);
   margin: 8px 0 2px;
+  font-family: "Blenda Script", cursive;
 }
 .subtitle {
   text-align: center;
@@ -321,10 +350,11 @@ main {
   margin: 0 0 10px;
   font-size: clamp(28px, 4.2vw, 56px);
   line-height: 1.06;
-  color: #0d2d0f;
+  color: #0d2d0f; /* fallback */
+  font-family: "Blenda Script", cursive;
 }
 .lgv-title span {
-  color: var(--vin-blue);
+  color: inherit; /* kế thừa để không phá gradient */
 }
 .lgv-lead {
   margin: 0 0 18px;
@@ -419,6 +449,7 @@ main {
 .about-feature__title {
   font-size: clamp(1.8rem, 4vw, 2.6rem);
   margin-bottom: 12px;
+  font-family: "Blenda Script", cursive;
 }
 .about-feature__text {
   margin: 0;
@@ -436,9 +467,12 @@ main {
   background: var(--paper);
 }
 .achieve .title {
-  color: var(--vin-blue);
+  color: var(--vin-blue); /* fallback */
   text-align: center;
   margin-bottom: 22px;
+  display: inline-block;
+  margin-left: auto;
+  margin-right: auto;
 }
 .achieve-grid {
   display: grid;
@@ -516,8 +550,24 @@ main {
 }
 .standards .title {
   text-align: center;
-  color: var(--green);
+  color: var(--green); /* fallback */
   margin-bottom: 20px;
+}
+
+/* ====== Gradient xanh lá cho các tiêu đề yêu cầu ====== */
+@supports ((-webkit-background-clip: text) or (background-clip: text)) {
+  .hero__inner h1,
+  #tech .title,
+  .lgv-title,
+  .about-feature__title,
+  #achieve .title,
+  .standards .title {
+    background: linear-gradient(180deg, #1f5a27 0%, #66c372 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+  }
 }
 .iso-acc {
   max-width: 960px;

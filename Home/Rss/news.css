@@ -5,6 +5,15 @@
   --tilt-y:  0px;
 }
 
+/* Font tiêu đề: Blenda Script */
+@font-face {
+  font-family: "Blenda Script";
+  src: url("../../assets/font/1FTV-blenda-script.otf") format("opentype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
 /* Nền toàn trang + chuyển động nhẹ (main lắc theo chuột) */
 body {
 
@@ -35,7 +44,8 @@ main.container {
   font-weight: 800;
   letter-spacing: .02em;
   font-size: clamp(42px, 8vw, 96px);
-  color: var(--vin-blue);
+  color: var(--vin-blue); /* fallback */
+  font-family: "Blenda Script", cursive;
     margin-top: 90px; /* đẩy chữ xuống dưới 40px */
 }
 
@@ -58,9 +68,10 @@ main.container {
 .tab {
   position: relative;
   padding: 6px 2px;
-  color: var(--vin-blue);
+  color: var(--vin-blue); /* fallback */
   font-weight: 700;
   text-decoration: none;
+  font-family: "Blenda Script", cursive;
 }
 
 .tab.is-active {
@@ -92,8 +103,22 @@ main.container {
   text-align: center;
   justify-self: center;
   font-size: clamp(22px, 3.6vw, 34px);
-  color: var(--vin-blue);
+  color: var(--vin-blue); /* fallback */
   font-weight: 800;
+  font-family: "Blenda Script", cursive;
+}
+
+/* Gradient xanh lá cho các tiêu đề/tabs yêu cầu */
+@supports ((-webkit-background-clip: text) or (background-clip: text)) {
+  .page-title,
+  .tabs .tab,
+  .row-head h2 {
+    background: linear-gradient(180deg, #1f5a27 0%, #66c372 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+  }
 }
 
 .more {
