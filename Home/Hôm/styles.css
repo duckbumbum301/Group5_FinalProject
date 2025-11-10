@@ -588,7 +588,8 @@ hero-left,
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  z-index: 30;
+  z-index: 100; /* đảm bảo ở trên các lớp pop/scroller */
+  pointer-events: auto; /* chắc chắn nhận click */
   background: rgba(255, 255, 255, 0.9);
   border: 2px solid #16a34a;
   color: #16a34a;
@@ -718,6 +719,8 @@ hero-left,
   cursor: pointer;
   font-size: 24px;
   user-select: none;
+  z-index: 100;
+  pointer-events: auto;
   transition: transform 0.15s ease, opacity 0.15s ease;
 }
 .showcase .nav.left {

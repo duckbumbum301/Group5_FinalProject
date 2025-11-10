@@ -94,8 +94,83 @@ const SECTIONS = {
   }
 };
 
-const proxify = url =>
-  `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`;
+/* Fetch helpers: cache + timeout + proxy fallbacks for faster loads */
+const CACHE_TTL = 10 * 60 * 1000; // 10 minutes
+
+function getCache(url) {
+  try {
+    const raw = sessionStorage.getItem(`rss:${url}`);
+    if (!raw) return null;
+    const obj = JSON.parse(raw);
+    if (!obj || !obj.ts || !obj.data) return null;
+    if (Date.now() - obj.ts > CACHE_TTL) return null;
+    return obj.data;
+  } catch (_) {
+    return null;
+  }
+}
+
+function setCache(url, data) {
+  try {
+    sessionStorage.setItem(`rss:${url}`,(JSON.stringify({ ts: Date.now(), data })));
+  } catch (_) {}
+}
+
+function withTimeout(promise, ms, controller) {
+  return Promise.race([
+    promise,
+    new Promise((_, reject) => {
+      const id = setTimeout(() => {
+        clearTimeout(id);
+        controller?.abort?.();
+        reject(new Error('timeout'));
+      }, ms);
+    })
+  ]);
+}
+
+async function fetchRSS(url) {
+  const cached = getCache(url);
+  if (cached) return cached;
+
+  // ưu tiên proxy nội bộ để vượt CORS ổn định nhất, sau đó mới đến public proxies
+  const localProxy = (u) => `http://localhost:3000/proxy/rss?url=${encodeURIComponent(u)}`;
+  const proxiesPrimary = [
+    localProxy,
+    (u) => `https://api.allorigins.win/raw?url=${encodeURIComponent(u)}`,
+    (u) => `https://cors.isomorphic-git.org/${u}`,
+    (u) => `https://thingproxy.freeboard.io/fetch/${u}`,
+  ];
+  // lượt thử thứ hai đảo thứ tự để tăng xác suất thành công
+  const proxiesSecondary = [
+    (u) => `https://api.allorigins.win/raw?url=${encodeURIComponent(u)}`,
+    localProxy,
+    (u) => `https://cors.isomorphic-git.org/${u}`,
+    (u) => `https://thingproxy.freeboard.io/fetch/${u}`,
+  ];
+
+  async function tryList(list) {
+    for (const to of list) {
+      try {
+        const controller = new AbortController();
+        const res = await withTimeout(fetch(to(url), { signal: controller.signal }), 6000, controller);
+        if (!res || !res.ok) throw new Error('bad response');
+        const text = await res.text();
+        setCache(url, text);
+        return text;
+      } catch (_) {
+        // thử proxy kế tiếp
+      }
+    }
+    return null;
+  }
+
+  let xml = await tryList(proxiesPrimary);
+  if (xml) return xml;
+  xml = await tryList(proxiesSecondary);
+  if (xml) return xml;
+  throw new Error('Fetch RSS failed');
+}
 
 function parseRSS(xmlStr) {
   const doc = new DOMParser().parseFromString(xmlStr, 'text/xml');
@@ -150,7 +225,7 @@ function render(items, mount, small, label) {
     .map(
       x => `
     <a class="card ${small ? 'card--sm' : ''}" href="${x.link}" target="_blank" rel="noopener">
-      <div class="thumb">${x.img ? `<img loading="lazy" src="${x.img}" alt="">` : ''}</div>
+      <div class="thumb">${x.img ? `<img loading="lazy" decoding="async" referrerpolicy="no-referrer" data-src="${x.img}" alt="">` : ''}</div>
       <div class="pad">
         <div class="cat">${label || ''}</div>
         <div class="title">${x.title || 'Không có tiêu đề'}</div>
@@ -159,6 +234,21 @@ function render(items, mount, small, label) {
     </a>`
     )
     .join('');
+
+  // progressive lazy-load: only assign src when near viewport
+  const imgs = mount.querySelectorAll('img[data-src]');
+  if (imgs.length) {
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(en => {
+        if (!en.isIntersecting) return;
+        const img = en.target;
+        img.src = img.getAttribute('data-src');
+        img.removeAttribute('data-src');
+        io.unobserve(img);
+      });
+    }, { rootMargin: '200px 0px', threshold: 0.01 });
+    imgs.forEach(img => io.observe(img));
+  }
 }
 
 async function loadSection(key) {
@@ -177,9 +267,7 @@ async function loadSection(key) {
   }
 
   try {
-    const res = await fetch(proxify(conf.rss));
-    if (!res.ok) throw 0;
-    const xml = await res.text();
+    const xml = await fetchRSS(conf.rss);
     const items = parseRSS(xml).slice(0, target);
     if (items.length) {
       render(items, mount, !isLead, conf.label);

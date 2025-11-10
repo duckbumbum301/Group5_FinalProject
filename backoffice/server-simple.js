@@ -74,6 +74,47 @@ router.render = (req, res) => {
   res.jsonp(res.locals.data);
 };
 
+// ====== RSS CORS Proxy (GET /proxy/rss?url=...) ======
+server.get("/proxy/rss", async (req, res) => {
+  const url = req.query.url;
+  if (!url) {
+    return res.status(400).json({ error: "Missing url query" });
+  }
+
+  try {
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 6000);
+    const upstream = await fetch(url, {
+      signal: controller.signal,
+      headers: {
+        // Một số nguồn RSS yêu cầu UA hợp lệ
+        "user-agent":
+          "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0 Safari/537.36",
+        accept: "application/rss+xml,text/xml,application/xml;q=0.9,*/*;q=0.8",
+      },
+    });
+    clearTimeout(timeout);
+
+    if (!upstream.ok) {
+      return res
+        .status(upstream.status)
+        .json({ error: `Upstream ${upstream.status} ${upstream.statusText}` });
+    }
+
+    const contentType =
+      upstream.headers.get("content-type") || "application/rss+xml; charset=utf-8";
+    const buffer = Buffer.from(await upstream.arrayBuffer());
+
+    // CORS + cache
+    res.setHeader("Access-Control-Allow-Origin", "*");
+    res.setHeader("Cache-Control", "public, max-age=300"); // cache 5 phút
+    res.setHeader("Content-Type", contentType);
+    return res.status(200).send(buffer);
+  } catch (err) {
+    return res.status(502).json({ error: "Proxy fetch failed", detail: err.message });
+  }
+});
+
 server.use(router);
 
 server.listen(PORT, () => {
@@ -81,4 +122,5 @@ server.listen(PORT, () => {
   console.log(` Products: http://localhost:${PORT}/products`);
   console.log(` Orders: http://localhost:${PORT}/orders`);
   console.log(` Users: http://localhost:${PORT}/users\n`);
+  console.log(` RSS Proxy: http://localhost:${PORT}/proxy/rss?url=<encoded_url>`);
 });

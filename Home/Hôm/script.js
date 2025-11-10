@@ -112,7 +112,7 @@ function autoTick(ts){
   if (atStart){ scroller.scrollLeft = 0;   dir = 1;  }
 
   setBarByScroll();
-  rafId = requestAnimationFrame(autoTick);
+rafId = requestAnimationFrame(autoTick);
 }
 
 function startAuto(){ if (!rafId) rafId = requestAnimationFrame(autoTick); }
@@ -152,10 +152,47 @@ if (scroller){
 /* Expose nếu muốn gọi inline từ HTML (nav trái/phải) */
 function scrollByX(px){
   if (!scroller) return;
-  scroller.scrollBy({ left: px, behavior: 'smooth' });
-  setTimeout(setBarByScroll, 180);
+  const prevLeft = scroller.scrollLeft;
+  try {
+    scroller.scrollBy({ left: px, behavior: 'smooth' });
+  } catch (e) {
+    // fallback nếu scrollBy không khả dụng
+    scroller.scrollLeft = Math.min(getMaxScroll(), Math.max(0, prevLeft + px));
+  }
+  // nếu sau một nhịp mà không dịch chuyển, ép dịch chuyển trực tiếp
+  setTimeout(() => {
+    if (Math.abs(scroller.scrollLeft - prevLeft) < 1) {
+      scroller.scrollLeft = Math.min(getMaxScroll(), Math.max(0, prevLeft + px));
+    }
+    setBarByScroll();
+  }, 180);
 }
 window.scrollByX = scrollByX;
+
+// Gắn listener trực tiếp để không phụ thuộc vào DOMContentLoaded
+(() => {
+  try {
+    const leftBtn = document.querySelector('#shop .nav.left');
+    const rightBtn = document.querySelector('#shop .nav.right');
+
+    if (leftBtn) {
+      leftBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        scrollByX(-360);
+      });
+    }
+    if (rightBtn) {
+      rightBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        scrollByX(360);
+      });
+    }
+  } catch (err) {
+    console.warn('Shop nav attach error:', err);
+  }
+})();
 
 /* ===== Hover pill ===== */
 const pill     = $('#hover-pill');
@@ -196,7 +233,7 @@ if (pill){
     if (window.scrollY > 10) header.classList.add('scrolled');
     else header.classList.remove('scrolled');
   }
-  window.addEventListener('load',  ()=> { syncVars(); onScroll(); });
+window.addEventListener('load',  ()=> { syncVars(); onScroll(); });
   window.addEventListener('resize', syncVars, {passive:true});
   window.addEventListener('scroll', onScroll, {passive:true});
 })();

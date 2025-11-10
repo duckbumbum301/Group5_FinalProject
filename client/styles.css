@@ -1,4 +1,13 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&display=swap');
+/* Merriweather variable font for buttons */
+@font-face {
+  font-family: 'Merriweather';
+  src: url('../assets/font/Merriweather-VariableFont_opsz,wdth,wght.ttf') format('truetype');
+  font-weight: 100 900;
+  font-stretch: 75% 125%;
+  font-style: normal;
+  font-display: swap;
+}
 /* ==========================================================================
    VỰA VUI VẺ — CLIENT UI
    Tập trung cho 3 trang auth (index, login, register) + 1 trang profile
@@ -118,6 +127,7 @@ h2 {
   border: 0;
   border-radius: 12px;
   padding: 12px 14px;
+  font-family: 'Merriweather', serif;
   font-weight: 700;
   cursor: pointer;
   transition: transform 0.08s ease, filter 0.2s ease;

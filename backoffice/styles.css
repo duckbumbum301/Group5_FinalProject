@@ -1262,3 +1262,17 @@ img[loading="lazy"][src] {
     border: 1px solid #000;
   }
 }
+/* Merriweather variable font for buttons */
+@font-face {
+  font-family: 'Merriweather';
+  src: url('../assets/font/Merriweather-VariableFont_opsz,wdth,wght.ttf') format('truetype');
+  font-weight: 100 900;
+  font-stretch: 75% 125%;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Force buttons to use Merriweather without affecting functionality */
+.btn {
+  font-family: 'Merriweather', serif;
+}
