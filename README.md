@@ -229,7 +229,7 @@ This project is developed by **Group 5** for the final project.
 | 2   | Huynh Quoc Viet        | K234111457 | viethq234112e@st.uel.edu.vn   | Member |
 | 3   | Nguyen Vo Thanh Thao   | K234111451 | thaonvt234112e@st.uel.edu.vn   | Member |
 | 4   | Nguyen Ngoc Thanh Ngan | K234111402 | ngannnt234111e@st.uel.edu.vn | Member |
-| 5   | Tran Hac Huong Thu     | K234111414 | thuthh234112e@st.uel.edu.vn   | Member |
+| 5   | Tran Hac Huong Thu     | K234111454 | thuthh234112e@st.uel.edu.vn   | Member |
 
 
 ## Contributing
