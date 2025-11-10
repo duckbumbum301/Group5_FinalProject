@@ -1018,6 +1018,37 @@ input::placeholder {
   border-color: #db2777;
 }
 
+/* Payment Status Badges */
+.tag.payment-paid {
+  background: var(--success-bg);
+  color: var(--success);
+  border: 1px solid var(--success);
+}
+
+.tag.payment-pending {
+  background: #fef3c7;
+  color: #d97706;
+  border: 1px solid #fbbf24;
+}
+
+.tag.payment-cod {
+  background: #dbeafe;
+  color: #2563eb;
+  border: 1px solid #60a5fa;
+}
+
+.tag.payment-failed {
+  background: var(--error-bg);
+  color: var(--error);
+  border: 1px solid var(--error);
+}
+
+.tag.payment-cancelled {
+  background: #f3f4f6;
+  color: #6b7280;
+  border: 1px solid #9ca3af;
+}
+
 /* ============================================
    💀 SKELETON LOADING
    ============================================ */

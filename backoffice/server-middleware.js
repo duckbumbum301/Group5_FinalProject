@@ -31,6 +31,17 @@ export function stockDeductionMiddleware(req, res, next) {
       });
     }
 
+    //KIỂM TRA: Nếu thanh toán pending (VNPay chưa thanh toán), KHÔNG trừ stock
+    const isPendingPayment = order.payment_status === "pending";
+
+    if (isPendingPayment) {
+      console.log(
+        ` Order with pending payment (VNPay) - Stock will be deducted after payment success`
+      );
+      // Tiếp tục tạo order nhưng KHÔNG trừ stock
+      return next();
+    }
+
     try {
       // Lấy database từ json-server router (trong memory)
       const db = req.app.db;

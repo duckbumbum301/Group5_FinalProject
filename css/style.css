@@ -1042,7 +1042,7 @@ input[type="range"] {
 .mega-menu__title {
   font-size: 16px;
   font-weight: 700;
-  color: var(--text);
+  color: #000;
   margin: 0;
   padding-bottom: 8px;
   border-bottom: 2px solid var(--green);
@@ -1061,7 +1061,7 @@ input[type="range"] {
   display: block;
   padding: 8px 12px;
   border-radius: 8px;
-  color: var(--muted);
+  color: #000;
   text-decoration: none;
   font-size: 14px;
   transition: var(--trans);
@@ -1071,7 +1071,7 @@ input[type="range"] {
 .mega-menu__link:hover,
 .mega-menu__link:focus {
   background: #f0f9f4;
-  color: var(--green);
+  color: #000;
   outline: none;
 }
 
@@ -2146,7 +2146,7 @@ input[type="range"] {
 .mega-menu__title {
   font-size: 16px;
   font-weight: 700;
-  color: var(--text);
+  color: #000;
   margin: 0;
   padding-bottom: 8px;
   border-bottom: 2px solid var(--green);
@@ -2165,7 +2165,7 @@ input[type="range"] {
   display: block;
   padding: 8px 12px;
   border-radius: 8px;
-  color: var(--muted);
+  color: #000;
   text-decoration: none;
   font-size: 14px;
   transition: var(--trans);
@@ -2175,7 +2175,7 @@ input[type="range"] {
 .mega-menu__link:hover,
 .mega-menu__link:focus {
   background: #f0f9f4;
-  color: var(--green);
+  color: #000;
   outline: none;
 }
 

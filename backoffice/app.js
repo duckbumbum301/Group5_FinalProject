@@ -1090,8 +1090,14 @@ async function renderOrders() {
           o.delivery_status ||
           "pending"
         ).toLowerCase();
-        const paymentStatus =
+
+        // ✅ ÉP LOGIC: Nếu đơn hàng "delivered" → thanh toán = "paid"
+        let paymentStatus =
           o.payment_status || (o.paymentMethod === "cod" ? "pending" : "paid");
+        if (orderStatus === "delivered") {
+          paymentStatus = "paid"; // Bắt buộc hiển thị "Đã thanh toán"
+        }
+
         const orderTotal = o.totalAmount || o.total || 0;
         const orderDate = o.createdAt || o.created_at;
 
@@ -1111,6 +1117,8 @@ async function renderOrders() {
           pending: "Chờ thanh toán",
           paid: "Đã thanh toán",
           cod: "COD",
+          failed: "Thanh toán thất bại",
+          cancelled: "Đã hủy",
           banking: "Chuyển khoản",
         };
         return `<tr>
@@ -1122,7 +1130,7 @@ async function renderOrders() {
         <td><span class="status ${orderStatus}">${
           statusLabels[orderStatus] || orderStatus
         }</span></td>
-        <td><span class="tag">${
+        <td><span class="tag payment-${paymentStatus}">${
           paymentLabels[paymentStatus] || paymentStatus
         }</span></td>
         <td>${fmt.date(orderDate)}</td>

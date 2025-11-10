@@ -428,10 +428,10 @@ export async function apiReturnOrder(orderId, returnedBy = "Customer") {
 // Đánh dấu đơn đã thanh toán (giả lập online)
 export async function apiMarkOrderPaid(orderId) {
   try {
-    const response = await fetch(`${API_BASE}/orders/${orderId}`, {
+    // Gọi endpoint mới để xử lý thanh toán và trừ stock
+    const response = await fetch(`${API_BASE}/orders/${orderId}/paid`, {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ payment_status: "paid" }),
     });
     if (!response.ok) throw new Error("Update failed");
 
@@ -441,11 +441,52 @@ export async function apiMarkOrderPaid(orderId) {
     return await response.json();
   } catch (error) {
     console.error("Failed to mark order paid via API:", error);
+    // Fallback to localStorage
     const orders = lsGet(LS_ORDERS, []);
     const idx = orders.findIndex((o) => o.id === orderId);
     if (idx === -1) return null;
     const o = orders[idx];
     o.payment_status = "paid";
+    o.paid_at = new Date().toISOString();
+    lsSet(LS_ORDERS, orders);
+    return o;
+  }
+}
+
+// Đánh dấu thanh toán thất bại
+export async function apiMarkOrderPaymentFailed(
+  orderId,
+  reason = "Payment failed"
+) {
+  try {
+    const response = await fetch(
+      `${API_BASE}/orders/${orderId}/payment-failed`,
+      {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ reason }),
+      }
+    );
+    if (!response.ok) throw new Error("Update failed");
+
+    // Create audit log
+    await apiCreateAuditLog("mark_payment_failed", "System", {
+      orderId,
+      reason,
+    });
+
+    return await response.json();
+  } catch (error) {
+    console.error("Failed to mark order payment failed via API:", error);
+    // Fallback to localStorage
+    const orders = lsGet(LS_ORDERS, []);
+    const idx = orders.findIndex((o) => o.id === orderId);
+    if (idx === -1) return null;
+    const o = orders[idx];
+    o.payment_status = "failed";
+    o.status = "cancelled";
+    o.delivery_status = "cancelled";
+    o.payment_failed_reason = reason;
     lsSet(LS_ORDERS, orders);
     return o;
   }

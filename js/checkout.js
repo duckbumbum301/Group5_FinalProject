@@ -61,9 +61,8 @@ function ensureCheckoutModal() {
             <div class="co-field">
               <label>Phương thức thanh toán</label>
               <select name="payment" class="input" id="coPaymentMethod">
-                <option value="COD">💵 COD - Tiền mặt khi nhận hàng</option>
-                <option value="VNPAY">💳 VNPay - Thanh toán online</option>
-                <option value="QR">📱 QR Code (Demo)</option>
+                <option value="COD"> COD - Tiền mặt khi nhận hàng</option>
+                <option value="VNPAY"> VNPay - Thanh toán online</option>
               </select>
             </div>
             <div class="co-field">
@@ -265,12 +264,7 @@ export async function openCheckoutModal(selected) {
         note,
         status: "placed",
         delivery_status: "placed",
-        payment_status:
-          payment === "VNPAY"
-            ? "pending"
-            : payment === "QR"
-            ? "pending"
-            : "cod",
+        payment_status: payment === "VNPAY" ? "pending" : "cod",
         subtotal,
         shipping_fee: shipping,
         discount: discountNow,
@@ -332,19 +326,15 @@ export async function openCheckoutModal(selected) {
       }
 
       closeCheckoutModal();
-      if (payment === "QR") {
-        openQRModal(newOrder);
-      } else {
-        document.dispatchEvent(
-          new CustomEvent("order:confirmed", {
-            detail: { orderId: newOrder.id },
-          })
-        );
-        try {
-          const mod = await import("./orders.js");
-          mod.openOrderSuccessModal(newOrder.id);
-        } catch {}
-      }
+      document.dispatchEvent(
+        new CustomEvent("order:confirmed", {
+          detail: { orderId: newOrder.id },
+        })
+      );
+      try {
+        const mod = await import("./orders.js");
+        mod.openOrderSuccessModal(newOrder.id);
+      } catch {}
     } catch (err) {
       const msg =
         err && err.message === "EMPTY_ORDER"
@@ -630,71 +620,4 @@ export async function openAddressPicker(targetForm) {
 export function closeAddressPicker() {
   const m = document.getElementById("addressPickerModal");
   if (m) m.hidden = true;
-}
-
-// ====== QR Pay (giả lập) ======
-function ensureQRModal() {
-  let m = document.getElementById("qrPayModal");
-  if (!m) {
-    m = document.createElement("section");
-    m.id = "qrPayModal";
-    m.className = "modal";
-    m.hidden = true;
-    m.innerHTML = `
-      <div class="modal__overlay" id="qrOverlay"></div>
-      <div class="modal__panel qr-panel">
-        <header class="modal__head qr-head">
-          <h3>Quét mã QR để thanh toán</h3>
-          <button class="btn btn--icon" id="qrClose" aria-label="Đóng">✕</button>
-        </header>
-        <div class="qr-body" style="text-align:center">
-          <p class="muted">Dùng ứng dụng ngân hàng quét mã để thanh toán.</p>
-          <img id="qrImg" alt="Mã QR thanh toán" style="max-width:260px; width:100%; height:auto; border:1px solid #eee; display:block; margin:0 auto;" />
-          <div style="margin-top:12px">
-            <button class="btn btn--pri" id="qrDone">Đã thanh toán</button>
-          </div>
-        </div>
-      </div>`;
-    document.body.appendChild(m);
-  }
-  return m;
-}
-
-function openQRModal(order) {
-  const m = ensureQRModal();
-  m.hidden = false;
-  m.dataset.orderId = String(order.id);
-  const amount = order.total || 0;
-  const payload = `VUA VUI VE | ORDER #${order.id} | ${amount}`;
-  const img = document.getElementById("qrImg");
-  img.src = `https://api.qrserver.com/v1/create-qr-code/?size=240x240&data=${encodeURIComponent(
-    payload
-  )}`;
-
-  const finalize = async () => {
-    const id = m.dataset.orderId;
-    try {
-      await apiMarkOrderPaid(id);
-    } catch {}
-    closeQRModal();
-    document.dispatchEvent(
-      new CustomEvent("order:confirmed", { detail: { orderId: id } })
-    );
-    try {
-      const mod = await import("./orders.js");
-      mod.openOrderSuccessModal(id);
-    } catch {}
-  };
-  const overlay = document.getElementById("qrOverlay");
-  const closeBtn = document.getElementById("qrClose");
-  const doneBtn = document.getElementById("qrDone");
-  overlay.onclick = finalize;
-  closeBtn.onclick = finalize;
-  doneBtn.onclick = finalize;
-}
-
-function closeQRModal() {
-  const m = document.getElementById("qrPayModal");
-  if (!m) return;
-  m.hidden = true;
 }

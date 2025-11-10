@@ -170,7 +170,7 @@
             stroke-linejoin="round"
           />
         </svg>
-        <h2 class="success">✅ Thanh toán thành công!</h2>
+        <h2 class="success">Thanh toán thành công!</h2>
         <p>Đơn hàng của bạn đã được xác nhận và sẽ sớm được giao đến.</p>
         <div id="orderInfo" class="order-info"></div>
         <a href="./index.html" class="btn">Về trang chủ</a>
@@ -209,7 +209,11 @@
 
     <script type="module">
       import { parseVNPayReturn } from "../js/vnpay-api.js";
-      import { apiMarkOrderPaid, apiGetOrderById } from "../js/api.js";
+      import {
+        apiMarkOrderPaid,
+        apiMarkOrderPaymentFailed,
+        apiGetOrderById,
+      } from "../js/api.js";
 
       let processed = false;
       const loadingState = document.getElementById("loadingState");
@@ -226,7 +230,7 @@
         try {
           // Parse VNPay response
           const vnpayData = parseVNPayReturn();
-          console.log("📥 VNPay Response:", vnpayData);
+          console.log(" VNPay Response:", vnpayData);
 
           const {
             responseCode,
@@ -319,11 +323,26 @@
             }
           } else {
             // ❌ THANH TOÁN THẤT BẠI
+            try {
+              // Đánh dấu đơn hàng thanh toán thất bại
+              await apiMarkOrderPaymentFailed(
+                orderId,
+                message || "Giao dịch không thành công"
+              );
+              console.log(`❌ Order ${orderId} marked as payment failed`);
+            } catch (error) {
+              console.error("Error marking order as payment failed:", error);
+            }
+
             errorMessage.textContent = message || "Giao dịch không thành công";
             errorDetails.innerHTML = `
             <div>
               <span>Mã đơn hàng:</span>
               <strong>#${orderId}</strong>
+            </div>
+            <div>
+              <span>Trạng thái:</span>
+              <strong class="error">Chưa thanh toán - Đơn hàng đã bị hủy</strong>
             </div>
             <div>
               <span>Mã lỗi:</span>
@@ -332,6 +351,10 @@
             <div>
               <span>Lý do:</span>
               <strong>${message}</strong>
+            </div>
+            <div style="margin-top: 12px; padding: 12px; background: #fff3cd; border-radius: 4px;">
+              <strong>⚠️ Lưu ý:</strong> Đơn hàng của bạn chưa được thanh toán và không trừ số lượng hàng trong kho. 
+              Vui lòng đặt hàng lại nếu bạn vẫn muốn mua.
             </div>
           `;
 
@@ -342,10 +365,10 @@
             localStorage.removeItem("vvv_pending_order");
             localStorage.removeItem("vvv_pending_order_time");
 
-            // Auto redirect sau 7 giây
+            // Auto redirect sau 10 giây
             setTimeout(() => {
               window.location.href = "./index.html";
-            }, 7000);
+            }, 10000);
           }
         } catch (error) {
           console.error("Process VNPay Return Error:", error);

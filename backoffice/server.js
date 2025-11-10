@@ -194,6 +194,33 @@ app.delete("/api/orders/:id", async (req, res) => {
   }
 });
 
+// PATCH /api/orders/:id/paid - Đánh dấu đã thanh toán và trừ stock
+app.patch("/api/orders/:id/paid", async (req, res) => {
+  try {
+    const user = req.headers["x-user"] || "PaymentSystem";
+    const order = await ordersAPI.markAsPaid(req.params.id, user);
+    res.json(order);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+});
+
+// PATCH /api/orders/:id/payment-failed - Đánh dấu thanh toán thất bại
+app.patch("/api/orders/:id/payment-failed", async (req, res) => {
+  try {
+    const user = req.headers["x-user"] || "PaymentSystem";
+    const { reason } = req.body;
+    const order = await ordersAPI.markAsPaymentFailed(
+      req.params.id,
+      reason || "Payment failed",
+      user
+    );
+    res.json(order);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+});
+
 // ============ USERS ENDPOINTS ============
 
 // GET /api/users - Lấy tất cả users

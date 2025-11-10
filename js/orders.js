@@ -21,6 +21,18 @@ function fmtDate(iso) {
   }
 }
 
+// Helper function để hiển thị payment status
+function getPaymentStatusLabel(status) {
+  const labels = {
+    paid: "Đã thanh toán",
+    pending: "Chờ thanh toán",
+    cod: "COD",
+    failed: "❌ Thất bại",
+    cancelled: "❌ Đã hủy",
+  };
+  return labels[status] || status;
+}
+
 // === Tracking helpers ===
 function computeDerivedTracking(order) {
   const base =
@@ -35,8 +47,10 @@ function computeDerivedTracking(order) {
           { code: "delivered", label: "Giao thành công", at: null },
         ];
   try {
-    // Nếu đơn đã hủy, không tự động điền thời gian cho các bước.
-    const hasCancelled = base.some((s) => s.code === "cancelled");
+    // Nếu đơn đã hủy hoặc thanh toán thất bại, không tự động điền thời gian cho các bước.
+    const hasCancelled = base.some(
+      (s) => s.code === "cancelled" || s.code === "payment_failed"
+    );
     if (!hasCancelled) {
       const created = new Date(order.created_at).getTime();
       const mins = Math.floor((Date.now() - created) / 60000);
@@ -138,9 +152,11 @@ export async function openOrdersModal() {
             <div><strong>Mã đơn:</strong> ${o.id}</div>
             <div class="muted">${fmtDate(o.created_at)}</div>
           </div>
-          <div class="muted">Thanh toán: ${o.payment || "COD"} · TT: ${
-            o.payment_status || "pending"
-          } · Giao: ${currentDeliveryLabel(o)} · Khung giờ: ${
+          <div class="muted">Thanh toán: ${
+            o.payment || "COD"
+          } · TT: ${getPaymentStatusLabel(
+            o.payment_status
+          )} · Giao: ${currentDeliveryLabel(o)} · Khung giờ: ${
             o.slot || "-"
           }</div>
           <div class="order-items">${itemsHtml || "(Không có mục hàng)"}</div>
@@ -253,11 +269,32 @@ export function openOrderConfirmModal(orderId) {
     const remain = Math.max(0, (ord.total || 0) - paid);
     const pmText =
       ord.payment === "COD" ? "Tiền mặt khi nhận hàng" : ord.payment || "Khác";
+
+    // Hiển thị cảnh báo nếu thanh toán thất bại
+    const paymentWarning =
+      ord.payment_status === "failed" || ord.payment_status === "cancelled"
+        ? `<div style="margin: 16px 0; padding: 12px; background: #fee; border: 1px solid #fcc; border-radius: 4px; color: #c00;">
+          <strong>⚠️ Đơn hàng chưa được thanh toán</strong><br>
+          ${
+            ord.payment_failed_reason
+              ? `Lý do: ${ord.payment_failed_reason}<br>`
+              : ""
+          }
+          Đơn hàng này đã bị hủy do thanh toán không thành công. Số lượng sản phẩm không bị trừ trong kho.
+        </div>`
+        : ord.payment_status === "pending"
+        ? `<div style="margin: 16px 0; padding: 12px; background: #fffbeb; border: 1px solid #fde68a; border-radius: 4px; color: #92400e;">
+          <strong>⏳ Đang chờ thanh toán</strong><br>
+          Vui lòng hoàn tất thanh toán để đơn hàng được xử lý.
+        </div>`
+        : "";
+
     body.innerHTML = `
       <div class="order-head">
         <div><strong>Mã đơn:</strong> ${ord.id}</div>
         <div class="muted">${fmtDate(ord.created_at)}</div>
       </div>
+      ${paymentWarning}
       <div class="oc-items">${itemRows}</div>
       <div class="oc-pay">
         <h4 class="oc-section-title">Thông tin thanh toán</h4>
@@ -268,6 +305,9 @@ export function openOrderConfirmModal(orderId) {
           ord.shipping_fee || 0
         )}</div></div>
         <div class="oc-row"><div>Thanh toán</div><div>${pmText}</div></div>
+        <div class="oc-row"><div>Trạng thái TT</div><div><strong>${getPaymentStatusLabel(
+          ord.payment_status
+        )}</strong></div></div>
         <div class="oc-row oc-total"><div>Tổng đơn</div><div>${money(
           ord.total || 0
         )}</div></div>

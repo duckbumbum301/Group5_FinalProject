@@ -340,8 +340,11 @@ export const ordersAPI = {
       total: newOrder.totalAmount,
     });
 
-    // Giảm stock của sản phẩm
-    if (Array.isArray(newOrder.items)) {
+    // Chỉ giảm stock nếu KHÔNG phải thanh toán online (pending)
+    // Với VNPay pending, sẽ trừ stock khi thanh toán thành công
+    const isPendingPayment = newOrder.payment_status === "pending";
+
+    if (!isPendingPayment && Array.isArray(newOrder.items)) {
       for (const item of newOrder.items) {
         try {
           await productsAPI.updateStock(
@@ -381,6 +384,43 @@ export const ordersAPI = {
     order.delivery_status = newStatus;
     order.updatedAt = new Date().toISOString();
     order.updated_by = user;
+
+    // ✅ Tự động đổi payment_status sang "paid" khi giao hàng thành công (delivered)
+    // Áp dụng cho COD (chờ thanh toán → đã thanh toán khi giao thành công)
+    if (newStatus === "delivered") {
+      console.log(
+        ` [DEBUG] Order ${id} delivered - Checking payment status...`
+      );
+
+      const paymentMethod = (
+        order.paymentMethod ||
+        order.payment ||
+        ""
+      ).toUpperCase();
+      const currentPaymentStatus = order.payment_status || "pending";
+
+      console.log(
+        ` [DEBUG] paymentMethod: "${paymentMethod}", payment_status: "${currentPaymentStatus}"`
+      );
+
+      // Nếu là COD hoặc không có payment method (mặc định COD) và chưa paid → đổi thành paid
+      const isCOD =
+        paymentMethod === "COD" || paymentMethod === "" || !paymentMethod;
+      const notPaidYet = currentPaymentStatus !== "paid";
+
+      console.log(` [DEBUG] isCOD: ${isCOD}, notPaidYet: ${notPaidYet}`);
+
+      if (isCOD && notPaidYet) {
+        order.payment_status = "paid";
+        order.paid_at = new Date().toISOString();
+        console.log(` Order ${id}: Auto-marked as paid (COD delivered)`);
+      } else {
+        console.log(
+          ` Order ${id}: NOT marking as paid (isCOD: ${isCOD}, notPaidYet: ${notPaidYet})`
+        );
+      }
+      // VNPay thì đã được xử lý bởi vnpay-return.html, không cần xử lý ở đây
+    }
 
     // Update tracking
     if (!order.tracking) order.tracking = [];
@@ -474,6 +514,106 @@ export const ordersAPI = {
     await logAction("delete_order", user, { orderId: id });
 
     return true;
+  },
+
+  /**
+   * Đánh dấu đơn hàng đã thanh toán và trừ stock
+   * @param {string} id - Order ID
+   * @param {string} user - User thực hiện
+   * @returns {Promise<object>}
+   */
+  async markAsPaid(id, user = "System") {
+    const orders = await readJSON(DATA_FILES.orders);
+    const index = orders.findIndex((o) => o.id === id);
+
+    if (index === -1) {
+      throw new Error(`Order ${id} not found`);
+    }
+
+    const order = orders[index];
+
+    // Kiểm tra nếu đã thanh toán rồi thì không xử lý nữa
+    if (order.payment_status === "paid") {
+      console.log(`Order ${id} already paid, skipping stock deduction`);
+      return order;
+    }
+
+    // Cập nhật payment status
+    order.payment_status = "paid";
+    order.updatedAt = new Date().toISOString();
+    order.paid_at = new Date().toISOString();
+    order.updated_by = user;
+
+    // Trừ stock của các sản phẩm
+    if (Array.isArray(order.items)) {
+      for (const item of order.items) {
+        try {
+          await productsAPI.updateStock(
+            item.productId,
+            -item.quantity,
+            "PaymentSystem"
+          );
+          console.log(
+            `✅ Reduced stock for ${item.productId}: -${item.quantity}`
+          );
+        } catch (error) {
+          console.error(
+            `❌ Could not update stock for ${item.productId}:`,
+            error.message
+          );
+        }
+      }
+    }
+
+    await writeJSON(DATA_FILES.orders, orders);
+    await logAction("mark_order_paid", user, {
+      orderId: id,
+      totalAmount: order.totalAmount,
+    });
+
+    return order;
+  },
+
+  /**
+   * Đánh dấu đơn hàng thanh toán thất bại/hủy
+   * @param {string} id - Order ID
+   * @param {string} reason - Lý do thất bại
+   * @param {string} user - User thực hiện
+   * @returns {Promise<object>}
+   */
+  async markAsPaymentFailed(id, reason = "Payment failed", user = "System") {
+    const orders = await readJSON(DATA_FILES.orders);
+    const index = orders.findIndex((o) => o.id === id);
+
+    if (index === -1) {
+      throw new Error(`Order ${id} not found`);
+    }
+
+    const order = orders[index];
+
+    // Cập nhật trạng thái
+    order.payment_status = "failed";
+    order.status = "cancelled";
+    order.delivery_status = "cancelled";
+    order.payment_failed_reason = reason;
+    order.updatedAt = new Date().toISOString();
+    order.updated_by = user;
+
+    // Thêm vào tracking
+    if (!order.tracking) order.tracking = [];
+    order.tracking.push({
+      code: "payment_failed",
+      label: `Thanh toán thất bại: ${reason}`,
+      at: new Date().toISOString(),
+    });
+
+    await writeJSON(DATA_FILES.orders, orders);
+    await logAction("mark_order_payment_failed", user, {
+      orderId: id,
+      reason,
+    });
+
+    return order;
   },
 };
 
