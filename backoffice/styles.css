@@ -102,8 +102,7 @@ html {
 body {
   height: 100%;
   margin: 0;
-  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-    "Helvetica Neue", Arial, sans-serif;
+  font-family: "Merriweather", serif;
   font-size: 14px;
   line-height: 1.6;
   color: var(--text-primary);
@@ -120,7 +119,6 @@ body {
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
 }
-
 
 a {
   color: inherit;
@@ -300,11 +298,12 @@ a {
   z-index: 100;
   animation: slideInRight 0.4s ease-out;
   box-shadow: var(--shadow-sm);
+  font-family: "Blenda Script", cursive;
 }
 
 .brand {
-  font-size: 18px;
-  font-weight: 800;
+  font-size: 24px;
+  font-weight: 400;
   background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -314,6 +313,7 @@ a {
   align-items: center;
   gap: 8px;
   transition: all var(--transition);
+  font-family: "Blenda Script", cursive;
 }
 
 .brand:hover {
@@ -355,6 +355,7 @@ a {
   padding: 16px 0;
   animation: slideInLeft 0.4s ease-out;
   overflow-y: auto;
+  font-family: "Blenda Script", cursive;
 }
 
 .nav-item {
@@ -365,11 +366,12 @@ a {
   margin: 4px 12px;
   border-radius: var(--radius);
   color: var(--text-secondary);
-  font-weight: 500;
-  font-size: 14px;
+  font-weight: 400;
+  font-size: 18px;
   transition: all var(--transition);
   position: relative;
   overflow: hidden;
+  font-family: "Blenda Script", cursive;
 }
 
 .nav-item::before {
@@ -468,13 +470,14 @@ h1,
 h2,
 h3 {
   margin: 0 0 16px;
-  font-weight: 700;
+  font-weight: 400;
   color: var(--text-primary);
   letter-spacing: -0.5px;
+  font-family: "Blenda Script", cursive;
 }
 
 h1 {
-  font-size: 28px;
+  font-size: 36px;
   background: linear-gradient(
     135deg,
     var(--text-primary),
@@ -486,11 +489,11 @@ h1 {
 }
 
 h2 {
-  font-size: 20px;
+  font-size: 28px;
 }
 
 h3 {
-  font-size: 16px;
+  font-size: 22px;
 }
 
 /* ============================================
@@ -807,38 +810,52 @@ input::placeholder {
    🔐 LOGIN SCREEN
    ============================================ */
 
+#modal {
+  position: fixed;
+  inset: 0;
+  z-index: 10000; /* 👈 Đảm bảo modal container có z-index cao nhất */
+  pointer-events: none; /* 👈 Cho phép click through khi modal rỗng */
+}
+
+#modal > * {
+  pointer-events: auto; /* 👈 Nhưng các element con vẫn nhận click */
+}
+
 .login-screen {
   position: fixed;
   inset: 0;
   display: none;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, var(--bg-primary), var(--bg-secondary));
-  background-image: radial-gradient(
-      at 20% 30%,
-      rgba(16, 185, 129, 0.1) 0px,
-      transparent 50%
-    ),
-    radial-gradient(at 80% 70%, rgba(6, 182, 212, 0.1) 0px, transparent 50%);
+  background: rgba(15, 23, 42, 0.75); /* 👈 Overlay tối hơn để modal nổi bật */
+  backdrop-filter: blur(8px); /* 👈 Blur background */
+  -webkit-backdrop-filter: blur(8px);
   animation: fadeIn 0.3s ease-out;
+  z-index: 10000; /* 👈 Đảm bảo modal hiển thị trên tất cả elements khác */
+  pointer-events: auto; /* 👈 Login screen nhận được clicks */
 }
 
 .login-card {
   width: min(440px, 92vw);
+  max-height: 90vh; /* 👈 Giới hạn chiều cao để không bị tràn màn hình */
+  overflow-y: auto; /* 👈 Cho phép scroll nếu nội dung quá dài */
   padding: 32px;
   border-radius: var(--radius-xl);
-  background: var(--surface-glass);
-  backdrop-filter: var(--blur);
-  -webkit-backdrop-filter: var(--blur);
+  background: var(--surface); /* 👈 Background đặc hơn để dễ đọc */
   border: 1px solid var(--border);
-  box-shadow: var(--shadow-xl);
-  animation: scaleIn 0.4s ease-out;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5); /* 👈 Shadow đậm hơn */
+  animation: scaleIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1); /* 👈 Bounce effect */
+  position: relative; /* 👈 Đảm bảo z-index hoạt động */
+  z-index: 10001; /* 👈 Card nằm trên overlay */
+  transform-origin: center; /* 👈 Scale từ center */
 }
 
 .login-card h1 {
-  font-size: 26px;
+  font-size: 32px;
   margin-bottom: 24px;
   text-align: center;
+  font-family: "Blenda Script", cursive;
+  font-weight: 400;
 }
 
 .login-card label {
@@ -875,6 +892,23 @@ input::placeholder {
 .login-card .btn.primary {
   box-shadow: var(--shadow-lg);
   animation: glow 2s ease-in-out infinite;
+}
+
+/* 👇 Thêm CSS cho row button trong modal */
+.login-card .row {
+  display: flex;
+  gap: 12px;
+  margin-top: 24px;
+  align-items: center;
+}
+
+.login-card .row .btn {
+  flex: 1;
+}
+
+.login-card .row .btn.right {
+  margin-left: auto;
+  flex: 0 1 auto; /* Không chiếm toàn bộ space */
 }
 
 /* ============================================
@@ -1262,10 +1296,20 @@ img[loading="lazy"][src] {
     border: 1px solid #000;
   }
 }
-/* Merriweather variable font for buttons */
+/* Blenda Script font for headers */
 @font-face {
-  font-family: 'Merriweather';
-  src: url('../assets/font/Merriweather-VariableFont_opsz,wdth,wght.ttf') format('truetype');
+  font-family: "Blenda Script";
+  src: url("../assets/font/1FTV-blenda-script.otf") format("opentype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Merriweather variable font for content and buttons */
+@font-face {
+  font-family: "Merriweather";
+  src: url("../assets/font/Merriweather-VariableFont_opsz,wdth,wght.ttf")
+    format("truetype");
   font-weight: 100 900;
   font-stretch: 75% 125%;
   font-style: normal;
@@ -1274,5 +1318,5 @@ img[loading="lazy"][src] {
 
 /* Force buttons to use Merriweather without affecting functionality */
 .btn {
-  font-family: 'Merriweather', serif;
+  font-family: "Merriweather", serif;
 }

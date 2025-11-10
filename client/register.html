@@ -6,7 +6,10 @@
     <title>Đăng ký — Vựa Vui Vẻ</title>
     <link rel="stylesheet" href="styles.css" />
     <!-- Cache busting + no-cache for go live -->
-    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta
+      http-equiv="Cache-Control"
+      content="no-cache, no-store, must-revalidate"
+    />
     <meta http-equiv="Pragma" content="no-cache" />
     <meta http-equiv="Expires" content="0" />
     <style>
@@ -83,20 +86,22 @@
       <!-- Trang: Register -->
       <style>
         /* Chỉ áp dụng cho tiêu đề trang Register */
-        @font-face{
-          font-family:'Blenda Script';
-          src:url('../assets/font/1FTV-blenda-script.otf') format('opentype');
-          font-weight:400; font-style:normal; font-display:swap;
+        @font-face {
+          font-family: "Blenda Script";
+          src: url("../assets/font/1FTV-blenda-script.otf") format("opentype");
+          font-weight: 400;
+          font-style: normal;
+          font-display: swap;
         }
-        .auth-title{
-          font-family:'Blenda Script', cursive;
-          font-weight:800;
-          font-size:34px;
-          color:#2f7f31; /* fallback nếu không hỗ trợ gradient */
-          margin:0;
+        .auth-title {
+          font-family: "Blenda Script", cursive;
+          font-weight: 800;
+          font-size: 34px;
+          color: #2f7f31; /* fallback nếu không hỗ trợ gradient */
+          margin: 0;
         }
         @supports (-webkit-background-clip: text) {
-          .auth-title{
+          .auth-title {
             background: linear-gradient(180deg, #1f5a27 0%, #66c372 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -124,7 +129,15 @@
           </tr>
           <tr>
             <td><label for="reDob">Ngày sinh</label></td>
-            <td><input id="reDob" name="dob" type="date" autocomplete="bday" required /></td>
+            <td>
+              <input
+                id="reDob"
+                name="dob"
+                type="date"
+                autocomplete="bday"
+                required
+              />
+            </td>
           </tr>
           <tr>
             <td><label for="reEmail">Email</label></td>
@@ -277,7 +290,9 @@
         </table>
         <div class="nav-actions" aria-label="điều hướng">
           <a class="btn btn-ghost" href="index.html">Trang chủ</a>
-          <a class="btn btn-ghost" href="login.html">Đã có tài khoản? Đăng nhập</a>
+          <a class="btn btn-ghost" href="login.html"
+            >Đã có tài khoản? Đăng nhập</a
+          >
         </div>
         <div class="register-actions">
           <button class="btn btn-primary" type="submit">Đăng ký</button>
@@ -326,6 +341,11 @@
     <!-- Core auth dùng chung -->
     <script src="auth.js?v=flowfix1"></script>
     <script type="module">
+      // XÓA vvv_return_to ngay khi vào trang đăng ký để tránh redirect tự động
+      try {
+        localStorage.removeItem("vvv_return_to");
+      } catch {}
+
       import { apiRegisterUser } from "../js/api.js?v=flowfix1";
       import { clearCart } from "../js/cart.js?v=flowfix1";
       /* ===========================
@@ -368,10 +388,15 @@
         boxes.forEach((b) => (b.value = ""));
         // clear thông báo cũ nếu có
         const vm = document.getElementById("verifyMsg");
-        if (vm) { vm.textContent = ""; vm.style.display = "none"; }
+        if (vm) {
+          vm.textContent = "";
+          vm.style.display = "none";
+        }
 
         // mã 6 số giả lập
-        currentCode = Array.from({ length: 6 }, () => Math.floor(Math.random() * 10)).join("");
+        currentCode = Array.from({ length: 6 }, () =>
+          Math.floor(Math.random() * 10)
+        ).join("");
         expireAt = Date.now() + 60_000;
         console.log("[VERIFY] Code:", currentCode);
         let left = 60;
@@ -384,31 +409,44 @@
         }, 1000);
         const btnResend = document.getElementById("btnResend");
         btnResend.disabled = resendLeft <= 0;
-        document.getElementById("verifyInfo").textContent = `Mã đã gửi đến ${email}.`;
+        document.getElementById(
+          "verifyInfo"
+        ).textContent = `Mã đã gửi đến ${email}.`;
       }
       function closeVerify() {
         const ov = document.getElementById("verifyOverlay");
         ov.style.display = "none";
         clearInterval(timerId);
         const vm = document.getElementById("verifyMsg");
-        if (vm) { vm.textContent = ""; vm.style.display = "none"; }
+        if (vm) {
+          vm.textContent = "";
+          vm.style.display = "none";
+        }
       }
 
       // Cho phép click ra ngoài để đóng và chỉnh sửa lại email
-      document.getElementById("verifyOverlay").addEventListener("click", (e) => {
-        if (e.target && e.target.id === "verifyOverlay") {
-          closeVerify();
-          const emailInput = document.getElementById("reEmail");
-          if (emailInput) { emailInput.focus(); emailInput.select?.(); }
-        }
-      });
+      document
+        .getElementById("verifyOverlay")
+        .addEventListener("click", (e) => {
+          if (e.target && e.target.id === "verifyOverlay") {
+            closeVerify();
+            const emailInput = document.getElementById("reEmail");
+            if (emailInput) {
+              emailInput.focus();
+              emailInput.select?.();
+            }
+          }
+        });
       // ESC cũng đóng overlay để sửa email
       document.addEventListener("keydown", (e) => {
         const ov = document.getElementById("verifyOverlay");
         if (e.key === "Escape" && ov && ov.style.display === "grid") {
           closeVerify();
           const emailInput = document.getElementById("reEmail");
-          if (emailInput) { emailInput.focus(); emailInput.select?.(); }
+          if (emailInput) {
+            emailInput.focus();
+            emailInput.select?.();
+          }
         }
       });
 
@@ -449,15 +487,17 @@
               vm.style.display = "block";
               return;
             }
-            // Thêm dob vào session (phục vụ hiển thị ở profile)
+            // XÓA session cũ (nếu có) và xóa vvv_return_to để tránh redirect tự động
             try {
-              const sess = getSession();
-              setSession({ ...(sess || {}), dob: pendingUser.dob });
+              clearSession();
+              localStorage.removeItem("vvv_return_to");
             } catch {}
             closeVerify();
-            try { clearCart(); } catch {}
-            alert("Xác minh thành công! Đăng ký hoàn tất.");
-            go("login.html");
+            try {
+              clearCart();
+            } catch {}
+            alert("🎉 Đăng ký thành công! Vui lòng đăng nhập để tiếp tục.");
+            window.location.href = "login.html";
           } catch (err) {
             vm.textContent = "Có lỗi xảy ra. Vui lòng thử lại.";
             vm.style.display = "block";

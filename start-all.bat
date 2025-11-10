@@ -81,7 +81,8 @@ echo ║          ✅ HOÀN TẤT! DỰ ÁN ĐANG CHẠY                      �
 echo ╚══════════════════════════════════════════════════════════════╝
 echo.
 echo 🌐 Truy cập ứng dụng:
-echo    ├─ 🏠 Trang chủ:        http://localhost:8000/html/index.html
+echo    ├─ 🏠 Trang chủ:        http://localhost:8000/Home/Hôm/index.html
+echo    ├─ 🛒 Sản phẩm:         http://localhost:8000/html/index.html
 echo    ├─ 🛒 Giỏ hàng:         http://localhost:8000/html/cart.html
 echo    ├─ 👤 Tài khoản:        http://localhost:8000/html/account.html
 echo    ├─ 📊 Backoffice:       http://localhost:8000/backoffice/
@@ -127,7 +128,7 @@ echo.
 REM Mở browser tự động
 timeout /t 3 /nobreak >nul
 echo 🌐 Đang mở browser...
-start http://localhost:8000/html/index.html
+start http://localhost:8000/Home/Hôm/index.html
 
 echo.
 echo 💡 Cửa sổ này có thể đóng. Services sẽ tiếp tục chạy.

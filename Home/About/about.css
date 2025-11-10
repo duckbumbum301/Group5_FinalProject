@@ -61,7 +61,8 @@ img {
 /* ====== Merriweather Variable (local asset) ====== */
 @font-face {
   font-family: "Merriweather";
-  src: url("../../assets/font/Merriweather-VariableFont_opsz,wdth,wght.ttf") format("truetype");
+  src: url("../../assets/font/Merriweather-VariableFont_opsz,wdth,wght.ttf")
+    format("truetype");
   font-weight: 100 900;
   font-stretch: 75% 125%;
   font-style: normal;
@@ -75,7 +76,6 @@ img {
 .standards .iso-panel p {
   font-family: "Merriweather", serif;
 }
-
 
 .logo {
   font-weight: 700;
@@ -481,9 +481,8 @@ main {
   color: var(--vin-blue); /* fallback */
   text-align: center;
   margin-bottom: 22px;
-  display: inline-block;
-  margin-left: auto;
-  margin-right: auto;
+  display: block;
+  width: 100%;
 }
 .achieve-grid {
   display: grid;

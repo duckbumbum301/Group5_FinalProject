@@ -92,7 +92,7 @@
          </tr>
           <tr> <!-- Ghi nhớ tài khoản -->
             <td ><label id="capsHint" class="small muted" style="display:none">Caps Lock đang bật</label></td>
-            <td align="center">
+            <td align="left">
               <label class="show-pass">
                 <input type="checkbox" id="rememberAccount" /> Ghi nhớ tài khoản
               </label>
@@ -140,7 +140,7 @@
             localStorage.removeItem("vvv_return_to");
             go(ret);
           } else {
-            go("../html/index.html");
+            go("../Home/Hôm/index.html");
           }
         }
       })();
@@ -235,10 +235,10 @@
               localStorage.removeItem("vvv_return_to");
               go(ret);
             } else {
-              go("../html/index.html");
+              go("../Home/Hôm/index.html");
             }
           } catch {
-            go("../html/index.html");
+            go("../Home/Hôm/index.html");
           }
         } catch (err) {
           msg.textContent = "Có lỗi xảy ra. Vui lòng thử lại.";

@@ -1,7 +1,8 @@
-/* Removed Google Fonts Montserrat import — dùng Merriweather local */
+﻿/* Removed Google Fonts Montserrat import — dùng Merriweather local */
 @font-face {
   font-family: "Merriweather";
-  src: url("../assets/font/Merriweather-VariableFont_opsz,wdth,wght.ttf") format("truetype");
+  src: url("../assets/font/Merriweather-VariableFont_opsz,wdth,wght.ttf")
+    format("truetype");
   font-weight: 100 900;
   font-stretch: 75% 125%;
   font-style: normal;
@@ -38,6 +39,18 @@ body {
   color: var(--text);
   background: var(--bg);
   line-height: 1.6;
+  display: flex; /* 👈 Sử dụng flexbox */
+  flex-direction: column; /* 👈 Xếp theo chiều dọc */
+}
+
+/* 👇 Main content chiếm hết không gian còn lại */
+main {
+  flex: 1 0 auto; /* 👈 Grow to fill space, không shrink, auto basis */
+}
+
+/* 👇 Footer luôn nằm dưới cùng */
+.site-footer {
+  flex-shrink: 0; /* 👈 Footer không bị thu nhỏ */
 }
 a {
   color: inherit;
@@ -186,6 +199,7 @@ img {
   white-space: nowrap;
   line-height: 1;
   min-height: 42px;
+  font-family: "Merriweather", serif; /* 👈 Đảm bảo button dùng Merriweather */
 }
 .btn--pri {
   background: linear-gradient(90deg, var(--green), var(--green-2));

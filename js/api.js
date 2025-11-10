@@ -527,12 +527,14 @@ export async function apiRegisterUser({
   };
   users.push(user);
   setUsers(users);
-  lsSet(LS_SESSION, {
-    id: user.id,
-    email: user.email,
-    phone: user.phone,
-    name: user.name,
-  });
+
+  // KHÔNG tự động tạo session sau khi đăng ký - người dùng phải đăng nhập lại
+  // lsSet(LS_SESSION, {
+  //   id: user.id,
+  //   email: user.email,
+  //   phone: user.phone,
+  //   name: user.name,
+  // });
 
   // Log audit
   await apiCreateAuditLog("user.register", user.email || user.phone, {

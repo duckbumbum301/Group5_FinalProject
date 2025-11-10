@@ -462,7 +462,7 @@ async function renderDashboard() {
           <td style="border: none; padding: 20px; vertical-align: top; width: 25%;">
             <div class="kpi" style="text-align: center;">
               <div style="font-size: 14px; color: var(--text-secondary); margin-bottom: 8px; font-weight: 500;">Doanh thu hôm nay</div>
-              <div class="icon" style="font-size: 32px; margin: 12px 0;">💰</div>
+              <div class="image" style="font-size: 32px; margin: 12px 0;"><img src="/images/icon/DoanhThuHomNay.png" alt="Revenue" style="height: 48px; object-fit: contain;"></div>
               <span class="val count-up" style="display: block; font-size: 24px; font-weight: 700; color: var(--primary); margin-bottom: 4px;">${fmt.money(
                 revToday
               )}</span>
@@ -472,15 +472,15 @@ async function renderDashboard() {
           <td style="border: none; padding: 20px; vertical-align: top; width: 25%;">
             <div class="kpi" style="text-align: center;">
               <div style="font-size: 14px; color: var(--text-secondary); margin-bottom: 8px; font-weight: 500;">Đơn hàng hôm nay</div>
-              <div class="icon" style="font-size: 32px; margin: 12px 0;">📦</div>
+              <div class="image" style="font-size: 32px; margin: 12px 0;"><img src="/images/icon/DonHangHomNay.png" alt="Orders" style="height: 48px; object-fit: contain;"></div>
               <span class="val count-up" style="display: block; font-size: 24px; font-weight: 700; color: var(--primary); margin-bottom: 4px;">${orderToday}</span>
-              <span class="label" style="font-size: 12px; color: var(--text-tertiary); text-transform: uppercase;">ĐÕN HÀNG</span>
+              <span class="label" style="font-size: 12px; color: var(--text-tertiary); text-transform: uppercase;">ĐƠN HÀNG</span>
             </div>
           </td>
           <td style="border: none; padding: 20px; vertical-align: top; width: 25%;">
             <div class="kpi" style="text-align: center;">
               <div style="font-size: 14px; color: var(--text-secondary); margin-bottom: 8px; font-weight: 500;">AOV (tháng)</div>
-              <div class="icon" style="font-size: 32px; margin: 12px 0;">💳</div>
+              <div class="image" style="font-size: 32px; margin: 12px 0;"><img src="/images/icon/AOV.png" alt="AOV" style="height: 48px; object-fit: contain;"></div>
               <span class="val count-up" style="display: block; font-size: 24px; font-weight: 700; color: var(--primary); margin-bottom: 4px;">${fmt.money(
                 aov
               )}</span>
@@ -490,7 +490,7 @@ async function renderDashboard() {
           <td style="border: none; padding: 20px; vertical-align: top; width: 25%;">
             <div class="kpi" style="text-align: center;">
               <div style="font-size: 14px; color: var(--text-secondary); margin-bottom: 8px; font-weight: 500;">Tỷ lệ hoàn</div>
-              <div class="icon" style="font-size: 32px; margin: 12px 0;">↩️</div>
+              <div class="image" style="font-size: 32px; margin: 12px 0;"><img src="/images/icon/TyLeHoan.png" alt="Refund Rate" style="height: 48px; object-fit: contain;"></div>
               <span class="val count-up" style="display: block; font-size: 24px; font-weight: 700; color: var(--primary); margin-bottom: 4px;">${refundRate.toFixed(
                 1
               )}%</span>

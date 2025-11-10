@@ -101,14 +101,13 @@
           <div style="max-width: 900px; margin: 0 auto">
             <div class="title" style="margin-bottom: 32px; text-align: center">
               <h2
-            
-              style="
-  font-size: 36px;
-  font-weight: 800;
-  margin: 0;
-  text-align: center;
-  transform: translateX(320px); /* 👈 dịch sang phải 30px */
-"
+                style="
+                  font-size: 36px;
+                  font-weight: 800;
+                  margin: 0;
+                  text-align: center;
+                  transform: translateX(320px); /* 👈 dịch sang phải 30px */
+                "
               >
                 Tìm món ăn của bạn
               </h2>
@@ -167,7 +166,7 @@
                 class="muted"
                 style="text-align: center; font-size: 16px; margin: 0"
               >
-                💡 Mẹo: Chọn món trong gợi ý để đúng với công thức dữ liệu mẫu
+                Mẹo: Chọn món trong gợi ý để đúng với công thức dữ liệu mẫu
               </p>
             </div>
           </div>
@@ -175,7 +174,10 @@
       </section>
 
       <!-- How It Works -->
-      <section class="section">
+      <section
+        class="section"
+        style="background: linear-gradient(180deg, #ffffff 0%, #f0fdf4 100%)"
+      >
         <div class="container">
           <div style="text-align: center; margin-bottom: 60px">
             <h2
@@ -187,7 +189,7 @@
             <p
               style="
                 font-size: 18px;
-                color: #666;
+                color: #6b7280;
                 max-width: 700px;
                 margin: 0 auto;
               "
@@ -201,95 +203,150 @@
             style="
               display: grid;
               grid-template-columns: repeat(3, 1fr);
-              gap: 32px;
+              gap: 40px;
               max-width: 1200px;
               margin: 0 auto;
             "
           >
+            <!-- Bước 1 - Xanh lá nhạt -->
             <div
+              class="step-card"
               style="
                 text-align: center;
-                padding: 32px 24px;
-                background: white;
-                border-radius: 20px;
-                box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+                padding: 40px 28px;
+                background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+                border-radius: 24px;
+                box-shadow: 0 10px 30px rgba(34, 197, 94, 0.15);
+                transition: all 0.3s ease;
+                border: 2px solid #bbf7d0;
               "
+              onmouseover="this.style.transform='translateY(-8px)'; this.style.boxShadow='0 15px 40px rgba(34, 197, 94, 0.25)';"
+              onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 10px 30px rgba(34, 197, 94, 0.15)';"
             >
               <div
                 style="
-                  width: 80px;
-                  height: 80px;
-                  background: linear-gradient(135deg, #31cf7e, #16a34a);
+                  width: 90px;
+                  height: 90px;
+                  background: linear-gradient(135deg, #22c55e, #16a34a);
                   border-radius: 50%;
                   display: inline-flex;
                   align-items: center;
                   justify-content: center;
-                  font-size: 36px;
-                  margin-bottom: 20px;
+                  margin-bottom: 24px;
+                  box-shadow: 0 8px 20px rgba(34, 197, 94, 0.3);
                 "
               >
-                🔍
+                <img
+                  src="../images/icon/chonmon.png"
+                  alt="Chọn món"
+                  style="
+                    width: 48px;
+                    height: 48px;
+                    filter: brightness(0) invert(1);
+                  "
+                />
+              </div>
+              <div
+                style="
+                  background: linear-gradient(135deg, #22c55e, #16a34a);
+                  -webkit-background-clip: text;
+                  -webkit-text-fill-color: transparent;
+                  background-clip: text;
+                  font-size: 48px;
+                  font-weight: 800;
+                  margin-bottom: 12px;
+                "
+              >
+                Chọn Món
               </div>
               <h3
                 style="
-                  font-size: 20px;
+                  font-size: 22px;
                   font-weight: 700;
                   color: #065f46;
-                  margin: 0 0 12px;
+                  margin: 0 0 16px;
                 "
               >
-                Bước 1: Chọn món
+                Chọn món
               </h3>
               <p
                 style="
                   font-size: 16px;
-                  color: #666;
-                  line-height: 1.6;
+                  color: #166534;
+                  line-height: 1.7;
                   margin: 0;
                 "
               >
                 Gõ tên món ăn bạn muốn nấu hoặc chọn từ danh sách gợi ý
               </p>
             </div>
+
+            <!-- Bước 2 - Xanh ngọc -->
             <div
+              class="step-card"
               style="
                 text-align: center;
-                padding: 32px 24px;
-                background: white;
-                border-radius: 20px;
-                box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+                padding: 40px 28px;
+                background: linear-gradient(135deg, #ecfeff 0%, #cffafe 100%);
+                border-radius: 24px;
+                box-shadow: 0 10px 30px rgba(6, 182, 212, 0.15);
+                transition: all 0.3s ease;
+                border: 2px solid #a5f3fc;
               "
+              onmouseover="this.style.transform='translateY(-8px)'; this.style.boxShadow='0 15px 40px rgba(6, 182, 212, 0.25)';"
+              onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 10px 30px rgba(6, 182, 212, 0.15)';"
             >
               <div
                 style="
-                  width: 80px;
-                  height: 80px;
-                  background: linear-gradient(135deg, #31cf7e, #16a34a);
+                  width: 90px;
+                  height: 90px;
+                  background: linear-gradient(135deg, #06b6d4, #0891b2);
                   border-radius: 50%;
                   display: inline-flex;
                   align-items: center;
                   justify-content: center;
-                  font-size: 36px;
-                  margin-bottom: 20px;
+                  margin-bottom: 24px;
+                  box-shadow: 0 8px 20px rgba(6, 182, 212, 0.3);
                 "
               >
-                🛒
+                <img
+                  src="../images/icon/themvaogio.png"
+                  alt="Thêm vào giỏ"
+                  style="
+                    width: 48px;
+                    height: 48px;
+                    filter: brightness(0) invert(1);
+                  "
+                />
+              </div>
+              <div
+                style="
+                  background: linear-gradient(135deg, #06b6d4, #0891b2);
+                  -webkit-background-clip: text;
+                  -webkit-text-fill-color: transparent;
+                  background-clip: text;
+                  font-size: 48px;
+                  font-weight: 800;
+                  margin-bottom: 12px;
+                "
+              >
+                02
               </div>
               <h3
                 style="
-                  font-size: 20px;
+                  font-size: 22px;
                   font-weight: 700;
-                  color: #065f46;
-                  margin: 0 0 12px;
+                  color: #0e7490;
+                  margin: 0 0 16px;
                 "
               >
-                Bước 2: Thêm vào giỏ
+                Thêm vào giỏ
               </h3>
               <p
                 style="
                   font-size: 16px;
-                  color: #666;
-                  line-height: 1.6;
+                  color: #155e75;
+                  line-height: 1.7;
                   margin: 0;
                 "
               >
@@ -297,45 +354,73 @@
                 hàng
               </p>
             </div>
+
+            <!-- Bước 3 - Cam vàng -->
             <div
+              class="step-card"
               style="
                 text-align: center;
-                padding: 32px 24px;
-                background: white;
-                border-radius: 20px;
-                box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+                padding: 40px 28px;
+                background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
+                border-radius: 24px;
+                box-shadow: 0 10px 30px rgba(245, 158, 11, 0.15);
+                transition: all 0.3s ease;
+                border: 2px solid #fde68a;
               "
+              onmouseover="this.style.transform='translateY(-8px)'; this.style.boxShadow='0 15px 40px rgba(245, 158, 11, 0.25)';"
+              onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 10px 30px rgba(245, 158, 11, 0.15)';"
             >
               <div
                 style="
-                  width: 80px;
-                  height: 80px;
-                  background: linear-gradient(135deg, #31cf7e, #16a34a);
+                  width: 90px;
+                  height: 90px;
+                  background: linear-gradient(135deg, #f59e0b, #d97706);
                   border-radius: 50%;
                   display: inline-flex;
                   align-items: center;
                   justify-content: center;
-                  font-size: 36px;
-                  margin-bottom: 20px;
+                  margin-bottom: 24px;
+                  box-shadow: 0 8px 20px rgba(245, 158, 11, 0.3);
                 "
               >
-                ✨
+                <img
+                  src="../images/icon/thanhtoan2.png"
+                  alt="Thanh toán"
+                  style="
+                    width: 48px;
+                    height: 48px;
+                    filter: brightness(0) invert(1);
+                  "
+                />
+              </div>
+              <div
+                style="
+                  background: linear-gradient(135deg, #f59e0b, #d97706);
+                  -webkit-background-clip: text;
+                  -webkit-text-fill-color: transparent;
+                  background-clip: text;
+                  font-size: 48px;
+                  font-weight: 800;
+                  margin-bottom: 12px;
+                "
+              >
+                03
               </div>
               <h3
                 style="
-                  font-size: 20px;
+                  font-size: 22px;
                   font-weight: 700;
-                  color: #065f46;
-                  margin: 0 0 12px;
+                  color: #92400e;
+                  margin: 0 0 16px;
                 "
               >
-                Bước 3: Thanh toán
+                Thanh toán
               </h3>
               <p
                 style="
                   font-size: 16px;
-                  color: #666;
-                  line-height: 1.6;
+                  color: #b45309;
+                  line-height: 1.7;
                   margin: 0;
                 "
               >
@@ -535,23 +620,23 @@
             "
           >
             <a
-  href="#recipeInput"
-  class="btn btn--pri"
-  style="
-    background: white;
-    color: #065f46;
-    min-width: 200px;
-    font-size: 18px;
-    padding: 16px 32px;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;   /* 👈 căn giữa chữ */
-    text-align: center;         /* dự phòng cho text nhiều dòng */
-    border-radius: 8px;         /* (gợi ý) bo nhẹ nút cho đẹp */
-  "
->
-  Thử ngay
-</a>
+              href="#recipeInput"
+              class="btn btn--pri"
+              style="
+                background: white;
+                color: #065f46;
+                min-width: 200px;
+                font-size: 18px;
+                padding: 16px 32px;
+                display: inline-flex;
+                align-items: center;
+                justify-content: center; /* 👈 căn giữa chữ */
+                text-align: center; /* dự phòng cho text nhiều dòng */
+                border-radius: 8px; /* (gợi ý) bo nhẹ nút cho đẹp */
+              "
+            >
+              Thử ngay
+            </a>
             <a
               href="index.html"
               class="btn"

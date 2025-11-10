@@ -508,8 +508,7 @@ export async function openProductModal(productId, opts = {}) {
       ? getFlashEffectivePrice(p)
       : p.price;
   $("#pmPrice", modal).textContent = money(eff);
-  $("#pmDesc", modal).textContent =
-    useSmartDescription(p);
+  $("#pmDesc", modal).textContent = useSmartDescription(p);
   const pmThumb = $("#pmThumb", modal);
   pmThumb.innerHTML = "";
   if (p.image) {
@@ -583,7 +582,12 @@ function genProductDescription(p) {
   const cat = String(p?.cat || p?.category || "").toLowerCase();
   const sub = String(p?.sub || p?.subcategory || "").toLowerCase();
   const h = hashCode(String(p?.id || name));
-  const adjVeg = ["tươi mỗi ngày", "giòn ngọt tự nhiên", "sạch, an toàn", "hái mới"];
+  const adjVeg = [
+    "tươi mỗi ngày",
+    "giòn ngọt tự nhiên",
+    "sạch, an toàn",
+    "hái mới",
+  ];
   const adjFruit = ["chín vừa", "ngọt thanh", "giòn mọng", "hương thơm dịu"];
   const adjDrink = ["đậm đà", "thanh mát", "cân bằng vị", "dễ pha chế"];
   const adjDry = ["tiện lợi dự trữ", "chế biến nhanh", "đa dụng", "giữ vị tốt"];
@@ -604,21 +608,41 @@ function genProductDescription(p) {
 
   switch (cat) {
     case "veg":
-      return `${name} ${pick(adjVeg)}. Phù hợp nấu canh, xào, luộc. ${pack ? `Đóng gói ${pack}. ` : ""}${store}`;
+      return `${name} ${pick(adjVeg)}. Phù hợp nấu canh, xào, luộc. ${
+        pack ? `Đóng gói ${pack}. ` : ""
+      }${store}`;
     case "fruit":
-      return `${name} ${pick(adjFruit)}. Ăn trực tiếp, làm salad hoặc ép nước. ${pack ? `Khối lượng ${pack}. ` : ""}${store}`;
+      return `${name} ${pick(
+        adjFruit
+      )}. Ăn trực tiếp, làm salad hoặc ép nước. ${
+        pack ? `Khối lượng ${pack}. ` : ""
+      }${store}`;
     case "meat":
-      return `${name} ${pick(adjMeat)}. Thích hợp kho, xào, nướng, hầm. ${store}`;
+      return `${name} ${pick(
+        adjMeat
+      )}. Thích hợp kho, xào, nướng, hầm. ${store}`;
     case "drink":
-      return `${name} vị ${pick(adjDrink)}. Dùng trực tiếp hoặc pha chế theo sở thích. ${pack ? `Dung tích ${pack}. ` : ""}${store}`;
+      return `${name} vị ${pick(
+        adjDrink
+      )}. Dùng trực tiếp hoặc pha chế theo sở thích. ${
+        pack ? `Dung tích ${pack}. ` : ""
+      }${store}`;
     case "dry":
-      return `${name} ${pick(adjDry)}. Nguyên liệu sẵn sàng cho bữa ăn nhanh. ${store}`;
+      return `${name} ${pick(
+        adjDry
+      )}. Nguyên liệu sẵn sàng cho bữa ăn nhanh. ${store}`;
     case "spice":
-      return `${name} ${pick(adjSpice)}. Giúp món ăn cân bằng hương vị, dễ kết hợp. ${store}`;
+      return `${name} ${pick(
+        adjSpice
+      )}. Giúp món ăn cân bằng hương vị, dễ kết hợp. ${store}`;
     case "household":
-      return `${name} ${pick(adjHouse)}. Phục vụ tiện ích gia đình hằng ngày. ${store}`;
+      return `${name} ${pick(
+        adjHouse
+      )}. Phục vụ tiện ích gia đình hằng ngày. ${store}`;
     case "sweet":
-      return `${name} ${pick(adjSweet)}. Phù hợp ăn vặt hoặc tráng miệng. ${store}`;
+      return `${name} ${pick(
+        adjSweet
+      )}. Phù hợp ăn vặt hoặc tráng miệng. ${store}`;
     default:
       return `${name} chất lượng, nguồn gốc rõ ràng, phù hợp nhiều mục đích sử dụng. ${store}`;
   }
@@ -1246,12 +1270,19 @@ function setupListeners() {
       const res = await apiRegisterUser(payload);
       if (res?.ok) {
         if (registerMsg)
-          registerMsg.textContent = "Đăng ký thành công — đã đăng nhập.";
-        await refreshCurrentUser();
-        // Xóa giỏ hàng cũ sau khi tạo tài khoản và đăng nhập phiên mới
+          registerMsg.textContent =
+            "Đăng ký thành công! Chuyển đến trang đăng nhập...";
+        // Xóa giỏ hàng cũ sau khi tạo tài khoản
         clearCart();
-        closeAuthModal();
-        openAccountDrawer();
+        // Xóa session cũ (nếu có) và xóa vvv_return_to để tránh redirect tự động
+        try {
+          clearSession();
+          localStorage.removeItem("vvv_return_to");
+        } catch {}
+        // Đợi 1.5 giây để người dùng thấy thông báo, sau đó chuyển đến trang login
+        setTimeout(() => {
+          window.location.href = "../client/login.html";
+        }, 1500);
       } else {
         if (registerMsg)
           registerMsg.textContent = res?.message || "Đăng ký thất bại.";

@@ -96,15 +96,6 @@ function buildHeaderHTML() {
                       href="${catalogHref}"
                       class="mega-menu__link"
                       data-category="veg"
-                      data-sub="fruit"
-                      >Quả rau</a
-                    >
-                  </li>
-                  <li>
-                    <a
-                      href="${catalogHref}"
-                      class="mega-menu__link"
-                      data-category="veg"
                       data-sub="cabbage"
                       >Họ cải</a
                     >
@@ -115,7 +106,7 @@ function buildHeaderHTML() {
                       class="mega-menu__link"
                       data-category="veg"
                       data-sub="mushroom"
-                      >Nấm</a
+                      >Nấm Các Loại</a
                     >
                   </li>
                   <li>
@@ -124,25 +115,7 @@ function buildHeaderHTML() {
                       class="mega-menu__link"
                       data-category="veg"
                       data-sub="herb"
-                      >Rau thơm & gia vị</a
-                    >
-                  </li>
-                  <li>
-                    <a
-                      href="${catalogHref}"
-                      class="mega-menu__link"
-                      data-category="veg"
-                      data-sub="processed"
-                      >Đã sơ chế</a
-                    >
-                  </li>
-                  <li>
-                    <a
-                      href="${catalogHref}"
-                      class="mega-menu__link"
-                      data-category="veg"
-                      data-sub="organic"
-                      >Hữu cơ</a
+                      >Rau thơm</a
                     >
                   </li>
                 </ul>
@@ -200,19 +173,10 @@ function buildHeaderHTML() {
                 </ul>
               </div>
 
-              <!-- Thịt cá -->
+              <!-- Thịt - Cá -->
               <div class="mega-menu__column">
-                <h3 class="mega-menu__title">Thịt Cá</h3>
+                <h3 class="mega-menu__title">Thịt - Cá</h3>
                 <ul class="mega-menu__list">
-                  <li>
-                    <a
-                      href="${catalogHref}"
-                      class="mega-menu__link"
-                      data-category="meat"
-                      data-sub="redmeat"
-                      >Thịt đỏ</a
-                    >
-                  </li>
                   <li>
                     <a
                       href="${catalogHref}"
@@ -227,25 +191,17 @@ function buildHeaderHTML() {
                       href="${catalogHref}"
                       class="mega-menu__link"
                       data-category="meat"
+                      data-sub="redmeat"
+                      >Thịt bò & Thịt đỏ</a
+                    >
+                  </li>
+                  <li>
+                    <a
+                      href="${catalogHref}"
+                      class="mega-menu__link"
+                      data-category="meat"
                       data-sub="poultry"
-                      >Gia cầm</a
-                    >
-                  </li>
-                  <!-- Sản phẩm cụ thể thuộc Gia cầm -->
-                  <li>
-                    <a
-                      href="${makeProductHref(320)}"
-                      class="mega-menu__link"
-                      data-product-id="320"
-                      >Ức gà</a
-                    >
-                  </li>
-                  <li>
-                    <a
-                      href="${makeProductHref(321)}"
-                      class="mega-menu__link"
-                      data-product-id="321"
-                      >Đùi gà</a
+                      >Gia cầm (Gà, Vịt)</a
                     >
                   </li>
                   <li>
@@ -284,9 +240,10 @@ function buildHeaderHTML() {
                   </li>
                   <li>
                     <a
-                      href="${makeProductHref(400)}"
+                      href="${catalogHref}"
                       class="mega-menu__link"
-                      data-product-id="400"
+                      data-category="drink"
+                      data-sub="juice"
                       >Nước ép & sinh tố</a
                     >
                   </li>
@@ -330,7 +287,7 @@ function buildHeaderHTML() {
                       class="mega-menu__link"
                       data-category="dry"
                       data-sub="rice"
-                      >Gạo & ngũ cốc</a
+                      >Gạo & Ngũ cốc</a
                     >
                   </li>
                   <li>
@@ -339,7 +296,7 @@ function buildHeaderHTML() {
                       class="mega-menu__link"
                       data-category="dry"
                       data-sub="noodle"
-                      >Mì/Bún/Phở khô</a
+                      >Mì / Bún / Phở khô</a
                     >
                   </li>
                   <li>
@@ -347,8 +304,8 @@ function buildHeaderHTML() {
                       href="${catalogHref}"
                       class="mega-menu__link"
                       data-category="dry"
-                      data-sub="beans"
-                      >Đậu & hạt</a
+                      data-sub="beans-nuts"
+                      >Đậu & Hạt</a
                     >
                   </li>
                   <li>
@@ -356,8 +313,8 @@ function buildHeaderHTML() {
                       href="${catalogHref}"
                       class="mega-menu__link"
                       data-category="dry"
-                      data-sub="flour"
-                      >Bột, bột trộn</a
+                      data-sub="flour-mix"
+                      >Bột & Hỗn hợp nấu ăn</a
                     >
                   </li>
                   <li>
@@ -366,16 +323,7 @@ function buildHeaderHTML() {
                       class="mega-menu__link"
                       data-category="dry"
                       data-sub="canned"
-                      >Đồ hộp</a
-                    >
-                  </li>
-                  <li>
-                    <a
-                      href="${catalogHref}"
-                      class="mega-menu__link"
-                      data-category="dry"
-                      data-sub="seaweed"
-                      >Rong biển & nấm khô</a
+                      >Đồ hộp & Đóng gói</a
                     >
                   </li>
                 </ul>
@@ -391,7 +339,7 @@ function buildHeaderHTML() {
                       class="mega-menu__link"
                       data-category="spice"
                       data-sub="oil"
-                      >Dầu ăn</a
+                      >Dầu ăn & Mỡ</a
                     >
                   </li>
                   <li>
@@ -400,7 +348,7 @@ function buildHeaderHTML() {
                       class="mega-menu__link"
                       data-category="spice"
                       data-sub="sauce"
-                      >Nước chấm</a
+                      >Nước chấm & Sốt</a
                     >
                   </li>
                   <li>
@@ -409,7 +357,25 @@ function buildHeaderHTML() {
                       class="mega-menu__link"
                       data-category="spice"
                       data-sub="powder"
-                      >Bột nêm & gia vị</a
+                      >Bột nêm & Gia vị khô</a
+                    >
+                  </li>
+                  <li>
+                    <a
+                      href="${catalogHref}"
+                      class="mega-menu__link"
+                      data-category="spice"
+                      data-sub="herbs"
+                      >Thảo mộc & Gia vị tươi</a
+                    >
+                  </li>
+                  <li>
+                    <a
+                      href="${catalogHref}"
+                      class="mega-menu__link"
+                      data-category="spice"
+                      data-sub="condiment"
+                      >Gia vị đặc biệt & Hỗn hợp nấu ăn</a
                     >
                   </li>
                 </ul>
@@ -424,7 +390,7 @@ function buildHeaderHTML() {
                       href="${catalogHref}"
                       class="mega-menu__link"
                       data-category="sweet"
-                      data-sub="candy"
+                      data-sub="snack"
                       >Bánh snack</a
                     >
                   </li>
@@ -434,7 +400,7 @@ function buildHeaderHTML() {
                       class="mega-menu__link"
                       data-category="sweet"
                       data-sub="chocolate"
-                      >Chocolate</a
+                      >Socola & Bánh kẹo socola</a
                     >
                   </li>
                   <li>
@@ -442,17 +408,8 @@ function buildHeaderHTML() {
                       href="${catalogHref}"
                       class="mega-menu__link"
                       data-category="sweet"
-                      data-sub="snack"
-                      >Snack</a
-                    >
-                  </li>
-                  <li>
-                    <a
-                      href="${catalogHref}"
-                      class="mega-menu__link"
-                      data-category="sweet"
-                      data-sub="cereal"
-                      >Ngũ cốc</a
+                      data-sub="candy"
+                      >Kẹo ngọt</a
                     >
                   </li>
                   <li>
@@ -461,7 +418,16 @@ function buildHeaderHTML() {
                       class="mega-menu__link"
                       data-category="sweet"
                       data-sub="dried"
-                      >Trái cây sấy</a
+                      >Mứt & Trái cây sấy</a
+                    >
+                  </li>
+                  <li>
+                    <a
+                      href="${catalogHref}"
+                      class="mega-menu__link"
+                      data-category="sweet"
+                      data-sub="cereal"
+                      >Ngũ cốc & Granola</a
                     >
                   </li>
                 </ul>
@@ -476,8 +442,8 @@ function buildHeaderHTML() {
                       href="${catalogHref}"
                       class="mega-menu__link"
                       data-category="household"
-                      data-sub="cleaning"
-                      >Giấy & khăn</a
+                      data-sub="paper"
+                      >Giấy & Khăn</a
                     >
                   </li>
                   <li>
@@ -485,8 +451,8 @@ function buildHeaderHTML() {
                       href="${catalogHref}"
                       class="mega-menu__link"
                       data-category="household"
-                      data-sub="laundry"
-                      >Giặt giũ</a
+                      data-sub="laundry-cleaning"
+                      >Giặt giũ & Vệ sinh</a
                     >
                   </li>
                   <li>
@@ -494,8 +460,8 @@ function buildHeaderHTML() {
                       href="${catalogHref}"
                       class="mega-menu__link"
                       data-category="household"
-                      data-sub="kitchenware"
-                      >Dụng cụ nhà bếp</a
+                      data-sub="kitchen-storage"
+                      >Dụng cụ bếp & Lưu trữ</a
                     >
                   </li>
                   <li>
@@ -503,17 +469,17 @@ function buildHeaderHTML() {
                       href="${catalogHref}"
                       class="mega-menu__link"
                       data-category="household"
-                      data-sub="personal"
+                      data-sub="bags-packaging"
+                      >Túi, Bao bì & Rác</a
+                    >
+                  </li>
+                  <li>
+                    <a
+                      href="${catalogHref}"
+                      class="mega-menu__link"
+                      data-category="household"
+                      data-sub="personal-care"
                       >Chăm sóc cá nhân</a
-                    >
-                  </li>
-                  <li>
-                    <a
-                      href="${catalogHref}"
-                      class="mega-menu__link"
-                      data-category="household"
-                      data-sub="bags"
-                      >Túi & bao bì</a
                     >
                   </li>
                 </ul>
@@ -659,7 +625,9 @@ function mountHeader() {
   const run = () => {
     try {
       // Đảm bảo nạp giỏ hàng từ localStorage trước khi dựng header và tính badge
-      try { loadCart(); } catch {}
+      try {
+        loadCart();
+      } catch {}
       mountHeader();
     } catch {}
   };
