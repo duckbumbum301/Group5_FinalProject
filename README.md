@@ -169,7 +169,7 @@ For Windows:
 .\start-all.bat
 ```
 
-For Linux/macOS (or using npm):
+**For Linux/macOS (or using npm):**
 ```bash
 npm start
 ```
@@ -177,29 +177,52 @@ This will start:
 -   **Backend API** on `http://localhost:3000`
 -   **Frontend Server** on `http://localhost:8000`
 
-To run with the VNPay service as well:
+To run with the VNPay service as well, use:
 ```bash
 npm run dev:vnpay
 ```
 
-Once running, you can access the application:
--   **Homepage**: `http://localhost:8000/html/index.html`
--   **Admin Panel**: `http://localhost:8000/backoffice/`
+### Manual Startup (For Debugging)
+
+If you need to run each service individually, open a separate terminal for each command:
+
+1.  **Start Backend API:**
+    ```bash
+    npm run start:backend
+    # API will be available at http://localhost:3000
+    ```
+
+2.  **Start Frontend Server:**
+    ```bash
+    npm run start:frontend
+    # Client will be available at http://localhost:8000
+    ```
+
+3.  **Start VNPay Service (Optional):**
+    ```bash
+    npm run start:vnpay
+    # VNPay service will be available at http://localhost:8888
+    ```
 
 ## Usage Guide
 
+Once the application is running, you can access it via your browser:
+
+-   **Homepage**: [http://localhost:8000/html/index.html](http://localhost:8000/html/index.html)
+-   **Admin Panel**: [http://localhost:8000/backoffice/](http://localhost:8000/backoffice/)
+
 ### For Customers
 -   **Browse Products**: Navigate through the homepage or categories.
--   **Add to Cart**: Click the "Thêm vào giỏ" button on products.
--   **Checkout**: Go to your cart, review the items, and proceed to checkout.
+// ...existing code...
 -   **Login/Register**: Access your account page to view order history.
 
 ### For Administrators
--   **Login**: Navigate to the [Backoffice](http://localhost:8000/backoffice/) and log in.
+-   **Login**: Navigate to the [Admin Panel](http://localhost:8000/backoffice/) and use the default credentials:
+    -   **Username**: `admin`
+    -   **Password**: `admin`
 -   **Dashboard**: View an overview of sales and product statistics.
 -   **Manage Products**: Go to the "Products" section to add, edit, or delete items.
--   **Manage Orders**: Go to the "Orders" section to view and update the status of customer orders.
-
+// ...existing code...
 ## API Documentation
 
 The backend API is powered by JSON Server and is available at `http://localhost:3000`.
@@ -223,6 +246,14 @@ The backend API is powered by JSON Server and is available at `http://localhost:
 ## Team Members
 
 This project is developed by **Group 5** for the final project.
+| No  | Name                   | Student ID | Email                        | Role   |
+| :-- | :--------------------- | :--------- | :--------------------------- | :----- |
+| 1   | Nguyen Chi Duc         | K234111429 | ducnc234112e@st.uel.edu.vn   | Leader |
+| 2   | Huynh Quoc Viet        | K234111457 | viethq234112e@st.uel.edu.vn   | Member |
+| 3   | Nguyen Vo Thanh Thao   | K234111451 | thaonvt234112e@st.uel.edu.vn   | Member |
+| 4   | Nguyen Ngoc Thanh Ngan | K234111402 | ngannnt234111e@st.uel.edu.vn | Member |
+| 5   | Tran Hac Huong Thu     | K234111454 | thuthh234112e@st.uel.edu.vn   | Member |
+
 
 ## Contributing
 
