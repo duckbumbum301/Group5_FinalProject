@@ -230,6 +230,8 @@ a {
   cursor: pointer;
 }
 
+/* (Hoàn tác) đã gỡ popup vào trang */
+
 /* Account tabs & orders embed */
 .account-tabs {
   display: grid;
@@ -353,26 +355,34 @@ hero-left,
 
 /* -------------------- 5) AWARDS -------------------- */
 .awards {
-  background: var(--vin-blue);
+  background: #2f6b2d; /* xanh lá đậm như mẫu */
   color: #fff;
   overflow: hidden; /* để nội dung cuộn không vượt ra ngoài */
+  border-top: 1px solid rgba(255,255,255,0.18);
+  border-bottom: 1px solid rgba(255,255,255,0.18);
 }
 .awards-row {
   display: flex;
   align-items: center;
-  gap: 40px;
-  padding: 40px 0;
+  gap: 64px; /* khoảng cách lớn như mẫu */
+  padding: 18px 0; /* độ cao thanh marquee */
+  font-size: 26px; /* chữ to dễ đọc */
+  font-weight: 700;
   flex-wrap: nowrap;        /* marquee cần không xuống dòng */
   white-space: nowrap;      /* giữ các mục trên 1 dòng */
 }
 .awards-row > div {
   opacity: 0.95;
   flex: 0 0 auto;           /* tránh co giãn gây giật khi cuộn */
+  background: rgba(255,255,255,0.15);
+  border: 1px solid rgba(255,255,255,0.35);
+  border-radius: 6px;
+  padding: 8px 14px;
 }
 
 /* Hiệu ứng marquee vô hạn */
 .awards-row.marquee {
-  animation: awards-marquee 28s linear infinite;
+  animation: awards-marquee 24s linear infinite; /* tốc độ cuộn */
 }
 
 @keyframes awards-marquee {
@@ -384,6 +394,7 @@ hero-left,
 .ice-visual {
   display: grid;
   grid-template-columns: 1fr 1fr;
+  margin-top: 40px;
 }
 .ice-left img,
 .ice-right img {
@@ -1270,3 +1281,43 @@ header.header:not(.header--solid) .logo__img--home {
 .shop .pcard .pop {
   display: none !important;
 }
+
+/* ===== Popup vào trang (nhỏ gọn) ===== */
+.popup-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.45);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 1500;
+}
+.popup-backdrop.show { display: flex; }
+
+.popup-modal {
+  position: relative;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 20px 45px rgba(0,0,0,0.22);
+  overflow: hidden;
+  max-width: min(90vw, 420px);
+}
+.popup-image {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: 60vh;
+}
+.popup-close {
+  position: absolute;
+  top: 8px; right: 8px;
+  width: 32px; height: 32px;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(0,0,0,0.6);
+  color: #fff;
+  font-size: 20px;
+  line-height: 32px;
+  cursor: pointer;
+}
+.popup-close:hover { background: rgba(0,0,0,0.75); }

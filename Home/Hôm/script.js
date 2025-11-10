@@ -194,6 +194,45 @@ window.scrollByX = scrollByX;
   }
 })();
 
+// (Hoàn tác) đã gỡ logic popup vào trang
+
+/* ===== Popup: mở khi vào trang, đóng bằng X/ESC/nhấn ngoài ===== */
+(() => {
+  const backdrop = document.getElementById('entry-popup');
+  if (!backdrop) return;
+
+  const closeBtn = backdrop.querySelector('.popup-close');
+  const modal    = backdrop.querySelector('.popup-modal');
+
+  const open = () => {
+    backdrop.classList.add('show');
+    document.documentElement.style.overflow = 'hidden';
+  };
+  const close = () => {
+    backdrop.classList.remove('show');
+    document.documentElement.style.overflow = '';
+  };
+
+  // Hiển thị ngay sau khi DOM sẵn sàng
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', open);
+  } else {
+    open();
+  }
+
+  // Đóng bằng nút X
+  if (closeBtn) closeBtn.addEventListener('click', close);
+  // Đóng khi bấm ra ngoài modal
+  backdrop.addEventListener('click', (e) => {
+    if (!modal) return;
+    if (!modal.contains(e.target)) close();
+  });
+  // Đóng bằng phím ESC
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') close();
+  });
+})();
+
 /* ===== Awards marquee (cuộn vô hạn) ===== */
 (() => {
   const row = document.querySelector('.awards-row');
