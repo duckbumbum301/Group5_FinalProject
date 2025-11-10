@@ -9,8 +9,14 @@
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-
-  
+  <!-- Pop-up vào trang: ảnh PopUp.png + nút đóng -->
+  <div id="entry-popup" class="popup-backdrop" role="dialog" aria-modal="true" aria-label="Chào mừng">
+    <div class="popup-modal">
+      <button class="popup-close" type="button" aria-label="Đóng">×</button>
+      <img class="popup-image" src="../../images/brand/PopUp.png" alt="Pop-up" />
+    </div>
+  </div>
+ 
 
  <!-- HEADER chuẩn đồng bộ với trang chính -->
  <header class="header"></header>
@@ -43,27 +49,27 @@
     <button class="hero-nav prev" onclick="heroPrev()">‹</button>
     <button class="hero-nav next" onclick="heroNext()">›</button>
   </div>
+  <!-- Pagination gạch-gạch -->
+  <div class="hero-pagination" id="hero-pagi">
+    <span data-i="0"></span>
+    <span data-i="1"></span>
+    <span data-i="2"></span>
+    <span data-i="3"></span>
+    <span data-i="4"></span>
+  </div>
 </section>
-
-
-    <!-- Pagination gạch-gạch -->
-    <div class="hero-pagination" id="hero-pagi">
-      <span data-i="0"></span>
-      <span data-i="1"></span>
-      <span data-i="2"></span>
-      <span data-i="3"></span>
-      <span data-i="4"></span>
-    </div>
-  </section>
 
   <!-- AWARDS -->
   <section class="awards">
     <div class="container awards-row">
-      <div>🏆 SUPERIOR TASTE</div>
-      <div>🏆 MONDE SELECTION</div>
-      <div>🏆 WORLD DAIRY INNOVATION 2025</div>
-      <div>🏆 PURITY AWARD</div>
-      <div>🏆 CARBON NEUTRALITY 2060</div>
+      <div>✅ Sản phẩm sạch, nguồn gốc rõ ràng</div>
+      <div>✅ Giá tốt minh bạch</div>
+      <div>✅ Giao nhanh trong ngày</div>
+      <div>✅ Thanh toán VNPAY an toàn</div>
+      <div>✅ Đổi trả dễ trong 7 ngày</div>
+      <div>✅ Trải nghiệm thân thiện, responsive</div>
+      <div>✅ Backoffice quản trị đầy đủ</div>
+      <div>✅ Công thức nấu ăn gợi ý thông minh</div>
     </div>
   </section>
 
