@@ -194,6 +194,26 @@ window.scrollByX = scrollByX;
   }
 })();
 
+/* ===== Awards marquee (cuộn vô hạn) ===== */
+(() => {
+  const row = document.querySelector('.awards-row');
+  if (!row) return;
+  // Nhân đôi nội dung để cuộn seamless
+  const items = Array.from(row.children);
+  // Clone cho đến khi chiều rộng >= 2x chiều rộng hiển thị
+  const container = row.parentElement;
+  const needWidth = () => (container ? container.clientWidth * 2 : 0);
+  const fillTrack = () => {
+    let guard = 0;
+    while (row.scrollWidth < needWidth() && guard < 50) {
+      items.forEach((el) => row.appendChild(el.cloneNode(true)));
+      guard++;
+    }
+  };
+  fillTrack();
+  row.classList.add('marquee');
+})();
+
 /* ===== Hover pill ===== */
 const pill     = $('#hover-pill');
 const pillName = $('#pill-name');

@@ -62,6 +62,14 @@
   /* Input */
   --chat--textarea--height: 44px;
 }
+/* Bỏ viền trắng của chatbot (bubble bot + khung) */
+:root{
+  --chat--message--bot--border: none;
+  --chat--window--border: none; /* nếu thư viện hỗ trợ */
+}
+/* Phòng trường hợp biến không áp dụng, cưỡng chế bỏ border */
+.n8n-chat__message--bot{ border: none !important; box-shadow: none !important; }
+.n8n-chat__window{ border: none !important; }
 </style>
 
 <script type="module">

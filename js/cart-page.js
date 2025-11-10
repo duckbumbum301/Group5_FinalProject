@@ -180,8 +180,7 @@ async function openProductModal(productId) {
   if (pmRatingEl) pmRatingEl.textContent = stars;
   if (priceEl) priceEl.textContent = `${money(eff)}`;
   if (descEl)
-    descEl.textContent =
-      p.desc || "Sản phẩm tươi ngon, giao nhanh trong ngày. (Mô tả demo)";
+    descEl.textContent = useSmartDescription(p);
   if (thumbEl) {
     thumbEl.innerHTML = p.image
       ? `<img src="${p.image}" alt="${p.name}" style="width:160px;height:160px;object-fit:cover;border-radius:12px;" />`
@@ -201,6 +200,73 @@ async function openProductModal(productId) {
     renderPmReviews(p.id);
   } catch {}
   modal.hidden = false;
+}
+
+// Mô tả tự động theo danh mục, dùng khi thiếu description
+function useSmartDescription(p) {
+  const d = String(p?.description || p?.desc || "").trim();
+  if (!isGenericDescription(d)) return d || genProductDescription(p);
+  return genProductDescription(p);
+}
+
+function isGenericDescription(s) {
+  const t = String(s || "").toLowerCase();
+  if (!t) return true;
+  return (
+    t.includes("mô tả demo") ||
+    t.includes("sản phẩm chất lượng cao") ||
+    t.length < 12
+  );
+}
+
+function genProductDescription(p) {
+  const name = String(p?.name || "Sản phẩm");
+  const pack = (name.match(/\b\d+\s?(?:g|kg|ml|l)\b/i) || [""])[0];
+  const cat = String(p?.cat || p?.category || "").toLowerCase();
+  const sub = String(p?.sub || p?.subcategory || "").toLowerCase();
+  const h = hashCode(String(p?.id || name));
+  const adjVeg = ["tươi mỗi ngày", "giòn ngọt tự nhiên", "sạch, an toàn", "hái mới"];
+  const adjFruit = ["chín vừa", "ngọt thanh", "giòn mọng", "hương thơm dịu"];
+  const adjDrink = ["đậm đà", "thanh mát", "cân bằng vị", "dễ pha chế"];
+  const adjDry = ["tiện lợi dự trữ", "chế biến nhanh", "đa dụng", "giữ vị tốt"];
+  const adjSpice = ["đậm vị", "tăng hương", "cân bằng mặn ngọt", "dễ nêm"];
+  const adjMeat = ["chọn lọc", "tươi sạch", "đảm bảo VSATTP", "thịt chắc"];
+  const adjSweet = ["thơm ngon", "ngọt nhẹ", "giòn tan", "tan chảy"];
+  const adjHouse = ["bền", "an toàn", "tiện dụng", "dễ vệ sinh"];
+  const pick = (arr) => arr[h % arr.length];
+  const storage = [
+    "Bảo quản ngăn mát, dùng 2–3 ngày.",
+    "Để nơi khô ráo, tránh ánh nắng.",
+    "Đậy kín nắp sau khi dùng.",
+    "Bảo quản đông lạnh để giữ độ tươi.",
+  ];
+  const store = pick(storage);
+  switch (cat) {
+    case "veg":
+      return `${name} ${pick(adjVeg)}. Phù hợp nấu canh, xào, luộc. ${pack ? `Đóng gói ${pack}. ` : ""}${store}`;
+    case "fruit":
+      return `${name} ${pick(adjFruit)}. Ăn trực tiếp, làm salad hoặc ép nước. ${pack ? `Khối lượng ${pack}. ` : ""}${store}`;
+    case "meat":
+      return `${name} ${pick(adjMeat)}. Thích hợp kho, xào, nướng, hầm. ${store}`;
+    case "drink":
+      return `${name} vị ${pick(adjDrink)}. Dùng trực tiếp hoặc pha chế theo sở thích. ${pack ? `Dung tích ${pack}. ` : ""}${store}`;
+    case "dry":
+      return `${name} ${pick(adjDry)}. Nguyên liệu sẵn sàng cho bữa ăn nhanh. ${store}`;
+    case "spice":
+      return `${name} ${pick(adjSpice)}. Giúp món ăn cân bằng hương vị, dễ kết hợp. ${store}`;
+    case "household":
+      return `${name} ${pick(adjHouse)}. Phục vụ tiện ích gia đình hằng ngày. ${store}`;
+    case "sweet":
+      return `${name} ${pick(adjSweet)}. Phù hợp ăn vặt hoặc tráng miệng. ${store}`;
+    default:
+      return `${name} chất lượng, nguồn gốc rõ ràng, phù hợp nhiều mục đích sử dụng. ${store}`;
+  }
+}
+
+function hashCode(str) {
+  let h = 0;
+  for (let i = 0; i < str.length; i++) h = (h << 5) - h + str.charCodeAt(i);
+  return Math.abs(h);
 }
 
 // ========== Similar products below a cart line ==========

@@ -1,6 +1,6 @@
 // js/header.js — Inject a consistent site header across pages
 import { bindMegaMenu } from "./menu.js";
-import { getCart } from "./cart.js";
+import { getCart, loadCart } from "./cart.js";
 import { apiListProducts, apiCurrentUser } from "./api.js";
 
 function sumCartQty() {
@@ -658,6 +658,8 @@ function mountHeader() {
 (function initHeaderMount() {
   const run = () => {
     try {
+      // Đảm bảo nạp giỏ hàng từ localStorage trước khi dựng header và tính badge
+      try { loadCart(); } catch {}
       mountHeader();
     } catch {}
   };

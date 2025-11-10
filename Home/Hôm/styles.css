@@ -355,17 +355,29 @@ hero-left,
 .awards {
   background: var(--vin-blue);
   color: #fff;
+  overflow: hidden; /* để nội dung cuộn không vượt ra ngoài */
 }
 .awards-row {
   display: flex;
-  justify-content: space-between;
   align-items: center;
   gap: 40px;
   padding: 40px 0;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;        /* marquee cần không xuống dòng */
+  white-space: nowrap;      /* giữ các mục trên 1 dòng */
 }
 .awards-row > div {
   opacity: 0.95;
+  flex: 0 0 auto;           /* tránh co giãn gây giật khi cuộn */
+}
+
+/* Hiệu ứng marquee vô hạn */
+.awards-row.marquee {
+  animation: awards-marquee 28s linear infinite;
+}
+
+@keyframes awards-marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); } /* cuộn nửa chiều rộng khi đã nhân đôi nội dung */
 }
 
 /* -------------------- 6) ICE VISUAL -------------------- */

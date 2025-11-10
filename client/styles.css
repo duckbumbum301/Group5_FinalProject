@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&display=swap');
+/* Removed Google Fonts Montserrat import — dùng Merriweather local */
 /* Merriweather variable font for buttons */
 @font-face {
   font-family: 'Merriweather';
@@ -50,8 +50,7 @@ body {
 body {
   margin: 0;
   color: var(--text);
-  font: 15px/1.6 'Montserrat', system-ui, -apple-system, 'Segoe UI', Roboto, Arial,
-    sans-serif;
+  font: 15px/1.6 'Merriweather', serif;
   background: var(--bg-grad), var(--bg);
 }
 

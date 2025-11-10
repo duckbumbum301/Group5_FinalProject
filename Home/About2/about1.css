@@ -587,6 +587,15 @@ main {
   font-family: "Arial", sans-serif;
 }
 
+/* Căn giữa tiêu đề trong mục Công nghệ (Tech) */
+.tech .title {
+  display: block;
+  width: 100%;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+
 .sustain-news h2 {
   font-family: "Blenda Script", cursive;
   background: linear-gradient(90deg, #3f7d3a, #6cbf3f, #4f9a28);
@@ -602,7 +611,7 @@ main {
 
 .news-header {
   display: flex;
-  justify-content: space-between;
+  justify-content: center; /* căn giữa nội dung header */
   align-items: center;
   margin-bottom: 40px;
 }
@@ -610,6 +619,7 @@ main {
 .news-header h2 {
   font-size: 40px;
   font-weight: 700;
+  text-align: center; /* đảm bảo chữ căn giữa */
 }
 
 .news-header .see-more {

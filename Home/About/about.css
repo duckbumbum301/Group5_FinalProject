@@ -205,6 +205,15 @@ main {
   margin: 8px 0 2px;
   font-family: "Blenda Script", cursive;
 }
+/* Căn giữa riêng cho tiêu đề "Công nghệ sản xuất chuẩn quốc tế" trong section .tech
+   Ghi đè display:flex từ CSS chung để chữ nằm chính giữa màn hình */
+.tech .title {
+  display: block;
+  width: 100%;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+}
 .subtitle {
   text-align: center;
   color: var(--vin-blue);

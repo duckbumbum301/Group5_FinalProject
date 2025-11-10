@@ -19,7 +19,7 @@
       "subcategory": "leaf",
       "price": 18000,
       "unit": "gói",
-      "stock": 31,
+      "stock": 30,
       "image": "../images/VEG/leaf/caibexanh.jpg",
       "description": "Cải bẹ xanh (500g) - Sản phẩm chất lượng cao",
       "popular": 100
@@ -211,7 +211,7 @@
       "subcategory": "cabbage",
       "price": 25000,
       "unit": "gói",
-      "stock": 18,
+      "stock": 17,
       "image": "../images/VEG/cabbage/cải ngọt.jpg",
       "description": "Cải ngọt (500g) - Sản phẩm chất lượng cao",
       "popular": 67
@@ -439,7 +439,7 @@
       "subcategory": "fish",
       "price": 55000,
       "unit": "gói",
-      "stock": 50,
+      "stock": 49,
       "image": "../images/MEAT/fish/ca-basa-cat-lat_202505260007155939.jpg",
       "description": "Cá basa phi lê (500g) - Sản phẩm chất lượng cao",
       "popular": 76
@@ -523,7 +523,7 @@
       "subcategory": "seafood",
       "price": 85000,
       "unit": "gói",
-      "stock": 19,
+      "stock": 18,
       "image": "../images/MEAT/seafood/râu mực.jpg",
       "description": "Râu mực - Sản phẩm chất lượng cao",
       "popular": 103
@@ -679,7 +679,7 @@
       "subcategory": "noodle",
       "price": 24000,
       "unit": "gói",
-      "stock": 38,
+      "stock": 37,
       "image": "../images/DRY/noodle/haohao.jpg",
       "description": "Mì Hảo Hảo (5 gói) - Sản phẩm chất lượng cao",
       "popular": 49
@@ -847,7 +847,7 @@
       "subcategory": "sauce",
       "price": 25000,
       "unit": "gói",
-      "stock": 40,
+      "stock": 39,
       "image": "../images/SPICE/Sauce/nuocmam.jpg",
       "description": "Nước mắm Nam Ngư (500ml) - Sản phẩm chất lượng cao",
       "popular": 28
@@ -859,7 +859,7 @@
       "subcategory": "sauce",
       "price": 23000,
       "unit": "gói",
-      "stock": 22,
+      "stock": 20,
       "image": "../images/SPICE/Sauce/nuoctuong.jpg",
       "description": "Nước tương Maggi (500ml) - Sản phẩm chất lượng cao",
       "popular": 70
@@ -871,7 +871,7 @@
       "subcategory": "oil",
       "price": 55000,
       "unit": "gói",
-      "stock": 50,
+      "stock": 49,
       "image": "../images/SPICE/Oil/226995-thumb-moi_202411071422115102.jpg",
       "description": "Dầu ăn Neptune (1L) - Sản phẩm chất lượng cao",
       "popular": 103
@@ -883,7 +883,7 @@
       "subcategory": "powder",
       "price": 6000,
       "unit": "gói",
-      "stock": 26,
+      "stock": 25,
       "image": "../images/SPICE/Powder/muoi.jpg",
       "description": "Muối i-ốt (200g) - Sản phẩm chất lượng cao",
       "popular": 101
@@ -895,7 +895,7 @@
       "subcategory": "powder",
       "price": 12000,
       "unit": "gói",
-      "stock": 41,
+      "stock": 40,
       "image": "../images/SPICE/Powder/botngot.jpg",
       "description": "Bột ngọt Ajinomoto (200g) - Sản phẩm chất lượng cao",
       "popular": 105
@@ -1015,7 +1015,7 @@
       "subcategory": "personal",
       "price": 95000,
       "unit": "gói",
-      "stock": 55,
+      "stock": 54,
       "image": "../images/HOUSEHOLD/personal/nivea.jpg",
       "description": "Kem dưỡng da Nivea - Sản phẩm chất lượng cao",
       "popular": 24
@@ -1219,7 +1219,7 @@
       "subcategory": "snack",
       "price": 18000,
       "unit": "gói",
-      "stock": 47,
+      "stock": 46,
       "image": "../images/SWEET/SNACK/oneone.jpg",
       "description": "Bánh gạo One One (100g) - Sản phẩm chất lượng cao",
       "popular": 48
@@ -1231,7 +1231,7 @@
       "subcategory": "chocolate",
       "price": 25000,
       "unit": "gói",
-      "stock": 30,
+      "stock": 29,
       "image": "../images/SWEET/CHOCOLATE/snickers.jpg",
       "description": "Socola Snickers (40g) - Sản phẩm chất lượng cao",
       "popular": 103
@@ -5620,6 +5620,138 @@
       "updatedAt": "2025-11-09T08:30:47.189Z",
       "updated_at": "2025-11-09T08:30:47.189Z",
       "updated_by": "ilovetranduythanh@gmail.com"
+    },
+    {
+      "id": "ORD-20251110-151550-EL6258",
+      "customerName": "Nguyễn Chí Đức",
+      "phone": "0906760495",
+      "address": "669 Đỗ Mười, khu phố 13, phường Linh Xuân, TP.HCM",
+      "email": "ilovetranduythanh@gmail.com",
+      "user": {
+        "name": "Nguyễn Chí Đức",
+        "phone": "0906760495",
+        "address": "669 Đỗ Mười, khu phố 13, phường Linh Xuân, TP.HCM"
+      },
+      "slot": "2025-11-09_09:00-11:00",
+      "voucher": "",
+      "paymentMethod": "VNPAY",
+      "note": "",
+      "status": "placed",
+      "delivery_status": "placed",
+      "payment_status": "pending",
+      "subtotal": 441000,
+      "shipping_fee": 0,
+      "discount": 0,
+      "totalAmount": 441000,
+      "total": 441000,
+      "items": {
+        "101": 1,
+        "152": 1,
+        "310": 1,
+        "341": 1,
+        "510": 1,
+        "600": 1,
+        "601": 1,
+        "610": 1,
+        "620": 1,
+        "621": 1,
+        "751": 1,
+        "801": 1
+      },
+      "created_at": "2025-11-10T08:15:50.292Z",
+      "tracking": [
+        {
+          "code": "placed",
+          "label": "Đã đặt hàng",
+          "at": "2025-11-10T08:15:50.292Z"
+        },
+        {
+          "code": "preparing",
+          "label": "Đang chuẩn bị",
+          "at": null
+        },
+        {
+          "code": "ready",
+          "label": "Sẵn sàng giao",
+          "at": null
+        },
+        {
+          "code": "pickup",
+          "label": "Shipper đã nhận",
+          "at": null
+        },
+        {
+          "code": "delivering",
+          "label": "Đang giao",
+          "at": null
+        },
+        {
+          "code": "delivered",
+          "label": "Giao thành công",
+          "at": null
+        }
+      ]
+    },
+    {
+      "id": "ORD-20251110-162008-MIAMKT",
+      "customerName": "Huỳnh Ngọc Phương Nghi",
+      "phone": "0938229502",
+      "address": "411 BẾN PHÚ LÂM",
+      "email": "thanhnganxinhxeoo@gmail.com",
+      "user": {
+        "name": "Huỳnh Ngọc Phương Nghi",
+        "phone": "0938229502",
+        "address": "411 BẾN PHÚ LÂM"
+      },
+      "slot": "2025-11-09_09:00-11:00",
+      "voucher": "",
+      "paymentMethod": "COD",
+      "note": "",
+      "status": "placed",
+      "delivery_status": "placed",
+      "payment_status": "pending",
+      "subtotal": 31200,
+      "shipping_fee": 20000,
+      "discount": 0,
+      "totalAmount": 51200,
+      "total": 51200,
+      "items": {
+        "601": 1,
+        "810": 1
+      },
+      "created_at": "2025-11-10T09:20:08.647Z",
+      "tracking": [
+        {
+          "code": "placed",
+          "label": "Đã đặt hàng",
+          "at": "2025-11-10T09:20:08.647Z"
+        },
+        {
+          "code": "preparing",
+          "label": "Đang chuẩn bị",
+          "at": null
+        },
+        {
+          "code": "ready",
+          "label": "Sẵn sàng giao",
+          "at": null
+        },
+        {
+          "code": "pickup",
+          "label": "Shipper đã nhận",
+          "at": null
+        },
+        {
+          "code": "delivering",
+          "label": "Đang giao",
+          "at": null
+        },
+        {
+          "code": "delivered",
+          "label": "Giao thành công",
+          "at": null
+        }
+      ]
     }
   ],
   "users": [
@@ -7371,6 +7503,79 @@
         "newStatus": "pickup"
       },
       "timestamp": "2025-11-09T08:30:47.223Z"
+    },
+    {
+      "id": "1762762550233rxdf2",
+      "action": "profile.update",
+      "who": "ilovetranduythanh@gmail.com",
+      "metadata": {
+        "userId": "client-seed-0906760495",
+        "changes": {
+          "name": "Nguyễn Chí Đức",
+          "address": "669 Đỗ Mười, khu phố 13, phường Linh Xuân, TP.HCM"
+        }
+      },
+      "timestamp": "2025-11-10T08:15:50.233Z"
+    },
+    {
+      "id": "17627625503334pojj",
+      "action": "order.create",
+      "who": "ilovetranduythanh@gmail.com",
+      "metadata": {
+        "orderId": "ORD-20251110-151550-EL6258",
+        "total": 441000
+      },
+      "timestamp": "2025-11-10T08:15:50.333Z"
+    },
+    {
+      "id": "1762762932219s3tg5",
+      "action": "user.login",
+      "who": "ilovetranduythanh@gmail.com",
+      "metadata": {
+        "userId": "client-seed-0906760495"
+      },
+      "timestamp": "2025-11-10T08:22:12.219Z"
+    },
+    {
+      "id": "1762762960246lsmj7",
+      "action": "user.login",
+      "who": "ilovetranduythanh@gmail.com",
+      "metadata": {
+        "userId": "client-seed-0906760495"
+      },
+      "timestamp": "2025-11-10T08:22:40.246Z"
+    },
+    {
+      "id": "1762763068292ks8ll",
+      "action": "user.register",
+      "who": "thanhnganxinhxeoo@gmail.com",
+      "metadata": {
+        "userId": "1762763068292"
+      },
+      "timestamp": "2025-11-10T08:24:28.292Z"
+    },
+    {
+      "id": "1762766408600kin9k",
+      "action": "profile.update",
+      "who": "thanhnganxinhxeoo@gmail.com",
+      "metadata": {
+        "userId": "1762763068292",
+        "changes": {
+          "name": "Huỳnh Ngọc Phương Nghi",
+          "address": "411 BẾN PHÚ LÂM"
+        }
+      },
+      "timestamp": "2025-11-10T09:20:08.600Z"
+    },
+    {
+      "id": "17627664086999w9tv",
+      "action": "order.create",
+      "who": "thanhnganxinhxeoo@gmail.com",
+      "metadata": {
+        "orderId": "ORD-20251110-162008-MIAMKT",
+        "total": 51200
+      },
+      "timestamp": "2025-11-10T09:20:08.699Z"
     }
   ]
 }
