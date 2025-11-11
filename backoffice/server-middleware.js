@@ -31,30 +31,59 @@ export function stockDeductionMiddleware(req, res, next) {
       });
     }
 
-    //KIỂM TRA: Nếu thanh toán pending (VNPay chưa thanh toán), KHÔNG trừ stock
+    // ✅ KIỂM TRA: Nếu VNPay (pending payment), KHÔNG trừ stock ngay
+    const isVNPay = order.paymentMethod === "VNPAY";
     const isPendingPayment = order.payment_status === "pending";
 
-    if (isPendingPayment) {
+    if (isVNPay && isPendingPayment) {
       console.log(
-        ` Order with pending payment (VNPay) - Stock will be deducted after payment success`
+        `⏳ VNPay pending - Stock will be deducted ONLY after payment success`
       );
       // Tiếp tục tạo order nhưng KHÔNG trừ stock
       return next();
     }
 
+    // ✅ COD (unpaid) → TRỪ STOCK NGAY
+    console.log(
+      `💵 COD Order detected (payment_status: ${order.payment_status}) - Deducting stock now...`
+    );
     try {
       // Lấy database từ json-server router (trong memory)
       const db = req.app.db;
       const errors = [];
       const updates = [];
 
-      // Convert items object to array for processing
-      // Frontend gửi: { items: { "100": 2, "101": 3 } }
-      const itemsArray = Object.entries(order.items).map(
-        ([productId, quantity]) => ({
-          productId,
-          quantity: parseInt(quantity, 10),
-        })
+      // Convert items to array for processing
+      // Support both formats:
+      // 1. Object: { items: { "231": 1, "232": 7 } }
+      // 2. Array: { items: [{productId: "231", quantity: 1, ...}] }
+      let itemsArray = [];
+
+      if (Array.isArray(order.items)) {
+        // Already array format
+        itemsArray = order.items.map((item) => ({
+          productId: item.productId || item.id,
+          quantity: parseInt(item.quantity, 10),
+          name: item.name || item.productName || "",
+        }));
+      } else if (typeof order.items === "object") {
+        // Object format - convert to array
+        itemsArray = Object.entries(order.items).map(
+          ([productId, quantity]) => ({
+            productId,
+            quantity: parseInt(quantity, 10),
+            name: "",
+          })
+        );
+      } else {
+        return res.status(400).json({
+          error: "Invalid items format",
+          message: "Items must be an array or object",
+        });
+      }
+
+      console.log(
+        `📦 Processing ${itemsArray.length} items for stock deduction...`
       );
 
       // Kiểm tra và trừ stock cho từng sản phẩm
@@ -66,9 +95,11 @@ export function stockDeductionMiddleware(req, res, next) {
           continue;
         }
 
-        if (product.stock < item.quantity) {
+        const currentStock = product.stock || 0;
+
+        if (currentStock < item.quantity) {
           errors.push(
-            `Sản phẩm "${product.name}" không đủ hàng (còn ${product.stock}, cần ${item.quantity})`
+            `Sản phẩm "${product.name}" không đủ hàng (còn ${currentStock}, cần ${item.quantity})`
           );
           continue;
         }
@@ -76,7 +107,7 @@ export function stockDeductionMiddleware(req, res, next) {
         // Lưu thông tin cập nhật
         updates.push({
           product: product,
-          oldStock: product.stock,
+          oldStock: currentStock,
           quantity: item.quantity,
         });
       }
@@ -93,12 +124,12 @@ export function stockDeductionMiddleware(req, res, next) {
       for (const update of updates) {
         update.product.stock -= update.quantity;
         console.log(
-          `✅ Trừ stock: ${update.product.name} (${update.oldStock} → ${update.product.stock})`
+          `✅ Trừ stock: ${update.product.name} (${update.oldStock} → ${update.product.stock}, -${update.quantity})`
         );
       }
 
       console.log(
-        `✅ Order created successfully. Stock deducted for ${updates.length} products.`
+        `✅ COD Order - Stock deducted for ${updates.length} products.`
       );
 
       // Tiếp tục để json-server lưu order

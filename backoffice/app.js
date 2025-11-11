@@ -1091,11 +1091,12 @@ async function renderOrders() {
           "pending"
         ).toLowerCase();
 
-        // ✅ ÉP LOGIC: Nếu đơn hàng "delivered" → thanh toán = "paid"
-        let paymentStatus =
-          o.payment_status || (o.paymentMethod === "cod" ? "pending" : "paid");
-        if (orderStatus === "delivered") {
-          paymentStatus = "paid"; // Bắt buộc hiển thị "Đã thanh toán"
+        // ✅ Logic thanh toán mới
+        let paymentStatus = o.payment_status || "pending";
+
+        // Nếu đơn COD và đã "delivered" → payment_status = "paid"
+        if (orderStatus === "delivered" && o.paymentMethod === "COD") {
+          paymentStatus = "paid";
         }
 
         const orderTotal = o.totalAmount || o.total || 0;
@@ -1114,12 +1115,12 @@ async function renderOrders() {
           returned: "Đã trả",
         };
         const paymentLabels = {
-          pending: "Chờ thanh toán",
-          paid: "Đã thanh toán",
-          cod: "COD",
-          failed: "Thanh toán thất bại",
-          cancelled: "Đã hủy",
-          banking: "Chuyển khoản",
+          pending: "⏳ Chờ thanh toán",
+          paid: "✅ Đã thanh toán",
+          cod: "💵 COD",
+          failed: "❌ Chưa thanh toán - Đơn hàng đã bị hủy",
+          cancelled: "🚫 Đã hủy",
+          banking: "🏦 Chuyển khoản",
         };
         return `<tr>
         <td><a href="javascript:void(0)" data-id="${o.id}" class="lnk">${
@@ -1736,9 +1737,14 @@ async function renderAudit() {
     "user.logout": "Đăng xuất",
   };
 
+  // ✅ Sort theo timestamp mới nhất lên đầu
   const rows = logs
     .slice()
-    .reverse()
+    .sort((a, b) => {
+      const timeA = new Date(a.timestamp || a.createdAt || 0).getTime();
+      const timeB = new Date(b.timestamp || b.createdAt || 0).getTime();
+      return timeB - timeA; // Mới nhất lên đầu
+    })
     .map((a) => {
       const actionLabel = actionLabels[a.action] || a.action;
       const metadata = a.metadata || {};

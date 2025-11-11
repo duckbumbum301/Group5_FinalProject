@@ -33,7 +33,7 @@ export async function createVNPayPaymentUrl({
       language: "vn",
       orderDescription: orderInfo || `Thanh toán đơn hàng ${orderId}`,
       orderType: "other",
-      orderId: orderId.toString(),
+      orderId: orderId.toString(), // ✅ Gửi orderId từ frontend
     });
 
     console.log("🔄 Calling VNPay API...", {

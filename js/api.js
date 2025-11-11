@@ -429,7 +429,7 @@ export async function apiReturnOrder(orderId, returnedBy = "Customer") {
 export async function apiMarkOrderPaid(orderId) {
   try {
     // Gọi endpoint mới để xử lý thanh toán và trừ stock
-    const response = await fetch(`${API_BASE}/orders/${orderId}/paid`, {
+    const response = await fetch(`${API_BASE}/api/orders/${orderId}/paid`, {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
     });
@@ -460,7 +460,7 @@ export async function apiMarkOrderPaymentFailed(
 ) {
   try {
     const response = await fetch(
-      `${API_BASE}/orders/${orderId}/payment-failed`,
+      `${API_BASE}/api/orders/${orderId}/payment-failed`,
       {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },

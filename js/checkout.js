@@ -264,7 +264,7 @@ export async function openCheckoutModal(selected) {
         note,
         status: "placed",
         delivery_status: "placed",
-        payment_status: payment === "VNPAY" ? "pending" : "cod",
+        payment_status: payment === "VNPAY" ? "pending" : "unpaid",
         subtotal,
         shipping_fee: shipping,
         discount: discountNow,

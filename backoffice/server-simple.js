@@ -34,9 +34,125 @@ server.use((req, res, next) => {
   next();
 });
 
+// ====== CUSTOM API ENDPOINTS (PHẢI ĐẶT TRƯỚC ROUTER) ======
+
+// ✅ API: Đánh dấu đơn hàng đã thanh toán (VNPay success)
+server.patch("/api/orders/:id/paid", (req, res) => {
+  const { id } = req.params;
+  const db = router.db.getState();
+  const order = db.orders.find((o) => o.id === id);
+
+  if (!order) {
+    return res.status(404).json({ error: "Order not found" });
+  }
+
+  console.log(`💳 Processing VNPay payment for order ${id}...`);
+
+  // ✅ Cập nhật trạng thái
+  order.payment_status = "paid";
+  order.paid_at = new Date().toISOString();
+  order.updatedAt = new Date().toISOString();
+
+  // ✅ TRỪ STOCK (VNPay success)
+  let itemsToProcess = [];
+
+  // Support both array and object formats
+  if (Array.isArray(order.items)) {
+    itemsToProcess = order.items;
+  } else if (typeof order.items === "object") {
+    // Convert object {"231": 1} to array [{productId: "231", quantity: 1}]
+    itemsToProcess = Object.entries(order.items).map(
+      ([productId, quantity]) => ({
+        productId,
+        quantity: parseInt(quantity, 10),
+      })
+    );
+  }
+
+  itemsToProcess.forEach((item) => {
+    const product = db.products.find(
+      (p) => p.id === (item.productId || item.id)
+    );
+    if (product) {
+      const oldStock = product.stock || 0;
+      const qty = item.quantity || 1;
+      product.stock = Math.max(0, oldStock - qty);
+      console.log(
+        `📦 Stock deducted: ${product.name} (${oldStock} → ${product.stock}, -${qty})`
+      );
+    }
+  });
+
+  router.db.write();
+  console.log(`✅ Order ${id} marked as PAID + stock deducted`);
+
+  res.json({ success: true, order });
+});
+
+// ❌ API: Đánh dấu thanh toán thất bại (VNPay failed)
+server.patch("/api/orders/:id/payment-failed", (req, res) => {
+  const { id } = req.params;
+  const { reason } = req.body;
+  const db = router.db.getState();
+  const order = db.orders.find((o) => o.id === id);
+
+  if (!order) {
+    return res.status(404).json({ error: "Order not found" });
+  }
+
+  console.log(`❌ Processing VNPay payment failed for order ${id}...`);
+
+  // ❌ Cập nhật trạng thái
+  order.payment_status = "failed";
+  order.status = "cancelled";
+  order.delivery_status = "cancelled";
+  order.payment_failed_reason = reason || "Khách hàng hủy giao dịch";
+  order.payment_failed_at = new Date().toISOString();
+  order.updatedAt = new Date().toISOString();
+
+  // ❌ KHÔNG TRỪ STOCK (VNPay failed)
+
+  router.db.write();
+  console.log(`❌ Order ${id} marked as PAYMENT FAILED (stock NOT deducted)`);
+
+  res.json({ success: true, order });
+});
+
+// 🔄 API: Admin cập nhật trạng thái đơn hàng (COD)
+server.patch("/orders/:id", (req, res, next) => {
+  const { id } = req.params;
+  const { delivery_status } = req.body;
+  const db = router.db.getState();
+  const order = db.orders.find((o) => o.id === id);
+
+  if (!order) {
+    return next(); // Let json-server handle 404
+  }
+
+  console.log(`🔄 Admin updating order ${id}: ${delivery_status}`);
+
+  // ✅ Nếu COD và admin đánh dấu "Hoàn tất" (delivered) → payment_status = "paid"
+  if (order.paymentMethod === "COD" && delivery_status === "delivered") {
+    req.body.payment_status = "paid";
+    req.body.paid_at = new Date().toISOString();
+    console.log(`✅ COD Order ${id} delivered → marked as PAID`);
+  }
+
+  // ❌ Nếu admin hủy đơn → payment_status = "cancelled"
+  if (delivery_status === "cancelled") {
+    req.body.payment_status = "cancelled";
+    req.body.status = "cancelled";
+    console.log(`❌ Order ${id} cancelled by admin`);
+  }
+
+  // Gọi json-server xử lý tiếp
+  next();
+});
+
+// ====== STOCK MIDDLEWARE (SAU CUSTOM API) ======
 server.use(stockDeductionMiddleware);
 server.use(stockRestoreMiddleware);
-server.use(productSyncMiddleware); // Sync products to file
+server.use(productSyncMiddleware);
 
 // Custom render để sync sau khi json-server xử lý
 router.render = (req, res) => {
@@ -102,7 +218,8 @@ server.get("/proxy/rss", async (req, res) => {
     }
 
     const contentType =
-      upstream.headers.get("content-type") || "application/rss+xml; charset=utf-8";
+      upstream.headers.get("content-type") ||
+      "application/rss+xml; charset=utf-8";
     const buffer = Buffer.from(await upstream.arrayBuffer());
 
     // CORS + cache
@@ -111,7 +228,9 @@ server.get("/proxy/rss", async (req, res) => {
     res.setHeader("Content-Type", contentType);
     return res.status(200).send(buffer);
   } catch (err) {
-    return res.status(502).json({ error: "Proxy fetch failed", detail: err.message });
+    return res
+      .status(502)
+      .json({ error: "Proxy fetch failed", detail: err.message });
   }
 });
 
@@ -122,5 +241,7 @@ server.listen(PORT, () => {
   console.log(` Products: http://localhost:${PORT}/products`);
   console.log(` Orders: http://localhost:${PORT}/orders`);
   console.log(` Users: http://localhost:${PORT}/users\n`);
-  console.log(` RSS Proxy: http://localhost:${PORT}/proxy/rss?url=<encoded_url>`);
+  console.log(
+    ` RSS Proxy: http://localhost:${PORT}/proxy/rss?url=<encoded_url>`
+  );
 });

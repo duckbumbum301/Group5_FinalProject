@@ -1020,33 +1020,45 @@ input::placeholder {
 
 /* Payment Status Badges */
 .tag.payment-paid {
-  background: var(--success-bg);
-  color: var(--success);
-  border: 1px solid var(--success);
+  background: #d1fae5;
+  color: #065f46;
+  border: 1px solid #10b981;
+  font-weight: 600;
 }
 
 .tag.payment-pending {
   background: #fef3c7;
-  color: #d97706;
-  border: 1px solid #fbbf24;
+  color: #92400e;
+  border: 1px solid #f59e0b;
+  font-weight: 600;
 }
 
 .tag.payment-cod {
   background: #dbeafe;
-  color: #2563eb;
-  border: 1px solid #60a5fa;
+  color: #1e40af;
+  border: 1px solid #3b82f6;
+  font-weight: 600;
 }
 
 .tag.payment-failed {
-  background: var(--error-bg);
-  color: var(--error);
-  border: 1px solid var(--error);
+  background: #fee2e2;
+  color: #991b1b;
+  border: 1px solid #ef4444;
+  font-weight: 600;
 }
 
 .tag.payment-cancelled {
   background: #f3f4f6;
-  color: #6b7280;
+  color: #4b5563;
   border: 1px solid #9ca3af;
+  font-weight: 600;
+}
+
+.tag.payment-banking {
+  background: #e0e7ff;
+  color: #3730a3;
+  border: 1px solid #6366f1;
+  font-weight: 600;
 }
 
 /* ============================================
