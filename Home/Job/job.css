@@ -66,10 +66,10 @@ img {
 /* ===== HERO banner đầu trang ===== */
 .hero-banner { margin: 0; padding: 0; }
 .hero-banner figure { margin: 0; }
-.hero-banner img { width: 100%; height: 800px; display: block; object-fit: cover; }
+.hero-banner img { width: 100%; height: calc(100vh - var(--header-h, 68px)); display: block; object-fit: cover; }
 
 .hero-banner {
-  margin-top: -100px; /* kéo lên mạnh hơn, chỉnh tùy ý */
+  margin-top: calc(-1 * var(--header-h, 68px)); /* kéo sát dưới header, bỏ khoảng trắng */
 }
 /* =========================================================
    HEADER
@@ -140,6 +140,9 @@ main img {
   .burger {
     display: block;
   }
+  /* hero trên mobile: kéo sát header nhỏ và phủ full viewport */
+  .hero-banner { margin-top: calc(-1 * var(--header-h-small, 58px)); }
+  .hero-banner img { height: calc(100vh - var(--header-h-small, 58px)); }
 }
 
 /* =========================================================

@@ -6,7 +6,7 @@
     "subcategory": "leaf",
     "price": 15000,
     "unit": "gói",
-    "stock": 55,
+    "stock": 44,
     "image": "../images/VEG/leaf/raumuong.jpg",
     "description": "Rau muống (500g) - Sản phẩm chất lượng cao",
     "popular": 11
@@ -18,7 +18,7 @@
     "subcategory": "leaf",
     "price": 18000,
     "unit": "gói",
-    "stock": 27,
+    "stock": 26,
     "image": "../images/VEG/leaf/caibexanh.jpg",
     "description": "Cải bẹ xanh (500g) - Sản phẩm chất lượng cao",
     "popular": 29
@@ -54,7 +54,7 @@
     "subcategory": "root",
     "price": 15000,
     "unit": "gói",
-    "stock": 27,
+    "stock": 15,
     "image": "../images/VEG/root/Cà Rốt.jpg",
     "description": "Cà rốt (500g) - Sản phẩm chất lượng cao",
     "popular": 75
@@ -66,7 +66,7 @@
     "subcategory": "root",
     "price": 20000,
     "unit": "gói",
-    "stock": 19,
+    "stock": 16,
     "image": "../images/VEG/root/Khoai Tây.jpg",
     "description": "Khoai tây (1kg) - Sản phẩm chất lượng cao",
     "popular": 39
@@ -78,7 +78,7 @@
     "subcategory": "root",
     "price": 18000,
     "unit": "gói",
-    "stock": 38,
+    "stock": 29,
     "image": "../images/VEG/root/Bí Đỏ.jpg",
     "description": "Bí Đỏ (500g) - Sản phẩm chất lượng cao",
     "popular": 103
@@ -138,7 +138,7 @@
     "subcategory": "mushroom",
     "price": 18000,
     "unit": "gói",
-    "stock": 47,
+    "stock": 46,
     "image": "../images/VEG/mushroom/namkimcham.jpg",
     "description": "Nấm kim châm (200g) - Sản phẩm chất lượng cao",
     "popular": 70
@@ -150,7 +150,7 @@
     "subcategory": "herb",
     "price": 8000,
     "unit": "gói",
-    "stock": 49,
+    "stock": 46,
     "image": "../images/VEG/herb/hành lá.jpg",
     "description": "Hành Lá (100g) - Sản phẩm chất lượng cao",
     "popular": 80
@@ -283,7 +283,7 @@
     "name": "Nho nhập khẩu (500g)",
     "category": "Rau củ",
     "price": 120000,
-    "stock": 59,
+    "stock": 50,
     "image": "..\\images\\bsthieu\\nhonhaukhau.png",
     "status": "active"
   },
@@ -330,7 +330,7 @@
     "subcategory": "mixed",
     "price": 85000,
     "unit": "gói",
-    "stock": 27,
+    "stock": 22,
     "image": "../images/FRUIT/Mixed/Táo.jpg",
     "description": "Táo Mỹ (1kg) - Sản phẩm chất lượng cao",
     "popular": 94
@@ -387,7 +387,7 @@
     "subcategory": "pork",
     "price": 70000,
     "unit": "gói",
-    "stock": 47,
+    "stock": 45,
     "image": "../images/MEAT/pork/baroi.jpg",
     "description": "Thịt heo ba rọi (500g) - Sản phẩm chất lượng cao",
     "popular": 21
@@ -495,7 +495,7 @@
     "subcategory": "seafood",
     "price": 85000,
     "unit": "gói",
-    "stock": 43,
+    "stock": 42,
     "image": "../images/MEAT/seafood/râu mực.jpg",
     "description": "Râu mực - Sản phẩm chất lượng cao",
     "popular": 24
@@ -780,7 +780,7 @@
     "subcategory": "sauce",
     "price": 25000,
     "unit": "gói",
-    "stock": 41,
+    "stock": 38,
     "image": "../images/SPICE/Sauce/nuocmam.jpg",
     "description": "Nước mắm Nam Ngư (500ml) - Sản phẩm chất lượng cao",
     "popular": 54
@@ -804,7 +804,7 @@
     "subcategory": "oil",
     "price": 55000,
     "unit": "gói",
-    "stock": 30,
+    "stock": 28,
     "image": "../images/SPICE/Oil/226995-thumb-moi_202411071422115102.jpg",
     "description": "Dầu ăn Neptune (1L) - Sản phẩm chất lượng cao",
     "popular": 92
@@ -816,7 +816,7 @@
     "subcategory": "powder",
     "price": 6000,
     "unit": "gói",
-    "stock": 19,
+    "stock": 17,
     "image": "../images/SPICE/Powder/muoi.jpg",
     "description": "Muối i-ốt (200g) - Sản phẩm chất lượng cao",
     "popular": 107
@@ -1023,7 +1023,7 @@
     "subcategory": "snack",
     "price": 15000,
     "unit": "gói",
-    "stock": 55,
+    "stock": 48,
     "image": "../images/SWEET/SNACK/oreo.jpg",
     "description": "Bánh Oreo (133g) - Sản phẩm chất lượng cao",
     "popular": 81

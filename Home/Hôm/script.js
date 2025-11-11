@@ -194,65 +194,6 @@ window.scrollByX = scrollByX;
   }
 })();
 
-// (Hoàn tác) đã gỡ logic popup vào trang
-
-/* ===== Popup: mở khi vào trang, đóng bằng X/ESC/nhấn ngoài ===== */
-(() => {
-  const backdrop = document.getElementById('entry-popup');
-  if (!backdrop) return;
-
-  const closeBtn = backdrop.querySelector('.popup-close');
-  const modal    = backdrop.querySelector('.popup-modal');
-
-  const open = () => {
-    backdrop.classList.add('show');
-    document.documentElement.style.overflow = 'hidden';
-  };
-  const close = () => {
-    backdrop.classList.remove('show');
-    document.documentElement.style.overflow = '';
-  };
-
-  // Hiển thị ngay sau khi DOM sẵn sàng
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', open);
-  } else {
-    open();
-  }
-
-  // Đóng bằng nút X
-  if (closeBtn) closeBtn.addEventListener('click', close);
-  // Đóng khi bấm ra ngoài modal
-  backdrop.addEventListener('click', (e) => {
-    if (!modal) return;
-    if (!modal.contains(e.target)) close();
-  });
-  // Đóng bằng phím ESC
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') close();
-  });
-})();
-
-/* ===== Awards marquee (cuộn vô hạn) ===== */
-(() => {
-  const row = document.querySelector('.awards-row');
-  if (!row) return;
-  // Nhân đôi nội dung để cuộn seamless
-  const items = Array.from(row.children);
-  // Clone cho đến khi chiều rộng >= 2x chiều rộng hiển thị
-  const container = row.parentElement;
-  const needWidth = () => (container ? container.clientWidth * 2 : 0);
-  const fillTrack = () => {
-    let guard = 0;
-    while (row.scrollWidth < needWidth() && guard < 50) {
-      items.forEach((el) => row.appendChild(el.cloneNode(true)));
-      guard++;
-    }
-  };
-  fillTrack();
-  row.classList.add('marquee');
-})();
-
 /* ===== Hover pill ===== */
 const pill     = $('#hover-pill');
 const pillName = $('#pill-name');
@@ -333,7 +274,8 @@ window.addEventListener("load", handleScrollHeader);
   };
 
 })();
-(() => {
+
+ (() => {
   window.addEventListener("load", () => {
     const logoImg = document.querySelector("header.header .logo__img");
     if (!logoImg) return;
@@ -342,11 +284,64 @@ window.addEventListener("load", handleScrollHeader);
     logoImg.src = "../../images/brand/logo.png.png";
     logoImg.alt = "Vựa Vui Vẻ - Home";
 
-    // ✅ Làm logo nhìn bự hơn + xích xuống, nhưng KHÔNG làm header cao lên
+    // Giữ scale + translate cố định, không animation
     logoImg.style.transform = "scale(1.86) translateY(8px)";
-    logoImg.style.transformOrigin = "left center"; // phóng từ bên trái, không lệch nhiều
-
-    // Nếu muốn mượt hơn:
-    logoImg.style.transition = "transform 0.35s ease";
+    logoImg.style.transformOrigin = "left center"; 
+    logoImg.style.transition = "none"; // ❌ bỏ animation
   });
 })();
+
+
+window.addEventListener('load', () => {
+  document.body.classList.add('ready');
+});
+// ===== Pop-up vào trang (độc lập, không ảnh hưởng các phần khác) =====
+(() => {
+  const popup = document.getElementById('entry-popup');
+  if (!popup) return;
+
+  const closeBtn = popup.querySelector('.popup-close');
+  const modal = popup.querySelector('.popup-modal');
+
+  // Hiển thị popup
+  function openPopup() {
+    popup.classList.add('show');
+    document.documentElement.style.overflow = 'hidden';
+  }
+
+  // Ẩn popup
+  function closePopup() {
+    popup.classList.remove('show');
+    document.documentElement.style.overflow = '';
+  }
+
+  // Mở popup sau khi trang tải xong (delay nhẹ để mượt)
+  window.addEventListener('load', () => {
+    setTimeout(openPopup, 500);
+  });
+
+  // Đóng khi bấm nút X
+  if (closeBtn) closeBtn.addEventListener('click', closePopup);
+
+  // Đóng khi click ra ngoài modal
+  popup.addEventListener('click', (e) => {
+    if (!modal.contains(e.target)) closePopup();
+  });
+
+  // Đóng khi nhấn ESC
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closePopup();
+  });
+})();
+
+(() => {
+  window.addEventListener("DOMContentLoaded", () => {
+    const logoImg = document.querySelector("header.header .logo__img");
+    if (!logoImg) return;
+    // Đặt src đúng & ưu tiên tải
+    logoImg.src = "../../images/brand/LogoVVV.png";
+    logoImg.setAttribute("fetchpriority","high");
+    logoImg.decoding = "async";
+    // KHÔNG apply transform ở JS nữa
+  });
+})();s

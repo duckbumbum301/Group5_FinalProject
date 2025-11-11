@@ -34,7 +34,7 @@ main.container {
   justify-content: center;
   align-items: center;
   /* top ↓, bottom gần như sát tabs */
-  padding: 22px 16px 6px;
+  padding: 16px 16px 0 !important; /* trả lại khoảng cách an toàn dưới header */
 }
 
 
@@ -46,28 +46,30 @@ main.container {
   font-size: clamp(42px, 8vw, 96px);
   color: var(--vin-blue); /* fallback */
   font-family: "Blenda Script", cursive;
-    margin-top: 90px; /* đẩy chữ xuống dưới 40px */
+    margin-top: 70px !important; /* hạ tiêu đề xuống một chút dưới header */
+    margin-bottom: 0px; /* kéo tabs lên gần hơn nhưng vẫn thoáng */
 }
 
 /* Tabs */
 .tabs {
   position: relative;
   display: flex;
-  gap: 34px;
+  gap: 32px;
   justify-content: center;
   align-items: center;
 
   /* kéo tab lên gần tiêu đề hơn */
-  margin:  auto 16px;   /* top = 0 thay vì 8px */
+  margin:  0 20px 0 !important;   /* kéo tabs lên sát hơn, ưu tiên trên live */
   flex-wrap: wrap;
-
-  padding-bottom: 8px;   /* thu nhẹ đáy cho gọn */
+  /* tăng nhẹ chiều cao tổng thể của thanh tabs */
+  padding-bottom: 16px;
   border-bottom: 4px solid #e5eed8;
 }
 
 .tab {
   position: relative;
-  padding: 6px 2px;
+  padding: 10px 8px; /* tab to hơn một chút */
+  font-size: clamp(18px, 2.2vw, 24px); /* tăng size chữ tab */
   color: var(--vin-blue); /* fallback */
   font-weight: 700;
   text-decoration: none;
@@ -82,12 +84,17 @@ main.container {
   position: absolute;
   left: 0;
   bottom: -4px;
-  height: 4px;
+  height: 8px; /* tăng độ dày indicator */
   width: 40px;
   background: var(--vin-blue);
-  border-radius: 2px;
+  border-radius: 3px;
   transition: left .25s ease, width .25s ease;
 }
+
+/* Đảm bảo header nổi trên và chữ hiển thị rõ ràng */
+.header { z-index: 100; }
+.header .nav a { color: #2a2a2a; }
+.header .btn { color: #2a2a2a; }
 
 /* Section titles & “xem thêm” */
 .row-head {
@@ -106,6 +113,10 @@ main.container {
   color: var(--vin-blue); /* fallback */
   font-weight: 800;
   font-family: "Blenda Script", cursive;
+  /* tránh bị cắt chữ cuối khi dùng background-clip */
+  display: inline-block;
+  padding-right: 0.12em;
+  line-height: 1.1;
 }
 
 /* Gradient xanh lá cho các tiêu đề/tabs yêu cầu */
@@ -120,6 +131,10 @@ main.container {
     -webkit-text-fill-color: transparent;
   }
 }
+
+/* bổ sung padding phải nhẹ cho các text gradient để tránh bị cắt mép phải */
+.page-title { display:inline-block; padding-right: 0.12em; }
+.tabs .tab { padding-right: 0.12em; }
 
 .more {
   display: inline-flex;

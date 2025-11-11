@@ -135,27 +135,55 @@ async function fetchRSS(url) {
 
   // ưu tiên proxy nội bộ để vượt CORS ổn định nhất, sau đó mới đến public proxies
   const localProxy = (u) => `http://localhost:3000/proxy/rss?url=${encodeURIComponent(u)}`;
+  // Jina proxy (r.jina.ai) rất ổn định cho bypass CORS, trả về nội dung thô
+  const jinaProxy = (u) => `https://r.jina.ai/http://${u.replace(/^https?:\/\//, '')}`;
+  const isomorphic = (u) => `https://cors.isomorphic-git.org/${u}`;
+  const allOriginsRaw = (u) => `https://api.allorigins.win/raw?url=${encodeURIComponent(u)}`;
+  const allOriginsJson = (u) => `https://api.allorigins.win/get?url=${encodeURIComponent(u)}`;
+  const thingProxy = (u) => `https://thingproxy.freeboard.io/fetch/${u}`;
+
   const proxiesPrimary = [
+    // Thử các proxy ổn định trước
+    isomorphic,
+    jinaProxy,
     localProxy,
-    (u) => `https://api.allorigins.win/raw?url=${encodeURIComponent(u)}`,
-    (u) => `https://cors.isomorphic-git.org/${u}`,
-    (u) => `https://thingproxy.freeboard.io/fetch/${u}`,
+    allOriginsRaw,
+    thingProxy,
+    allOriginsJson,
   ];
   // lượt thử thứ hai đảo thứ tự để tăng xác suất thành công
   const proxiesSecondary = [
-    (u) => `https://api.allorigins.win/raw?url=${encodeURIComponent(u)}`,
+    allOriginsRaw,
+    thingProxy,
     localProxy,
-    (u) => `https://cors.isomorphic-git.org/${u}`,
-    (u) => `https://thingproxy.freeboard.io/fetch/${u}`,
+    jinaProxy,
+    isomorphic,
+    allOriginsJson,
   ];
 
   async function tryList(list) {
     for (const to of list) {
       try {
         const controller = new AbortController();
-        const res = await withTimeout(fetch(to(url), { signal: controller.signal }), 6000, controller);
+        const res = await withTimeout(
+          fetch(to(url), { signal: controller.signal }),
+          10000,
+          controller
+        );
         if (!res || !res.ok) throw new Error('bad response');
-        const text = await res.text();
+        let text;
+        // Một số proxy (allorigins/get) trả JSON với field `contents`
+        const ct = res.headers.get('content-type') || '';
+        if (ct.includes('application/json')) {
+          const j = await res.json();
+          text = j?.contents || '';
+        } else {
+          text = await res.text();
+        }
+        if (!text || !(/<item[\s>]/i.test(text) || /<entry[\s>]/i.test(text))) {
+          // Nếu nội dung không giống RSS, thử proxy kế tiếp
+          throw new Error('not rss');
+        }
         setCache(url, text);
         return text;
       } catch (_) {
@@ -168,6 +196,12 @@ async function fetchRSS(url) {
   let xml = await tryList(proxiesPrimary);
   if (xml) return xml;
   xml = await tryList(proxiesSecondary);
+  if (xml) return xml;
+  // Thử lại với phiên bản http (một số nguồn chặn https qua proxy)
+  const altUrl = url.replace(/^https:/, 'http:');
+  xml = await tryList(proxiesPrimary.map((fn) => (u) => fn(altUrl)));
+  if (xml) return xml;
+  xml = await tryList(proxiesSecondary.map((fn) => (u) => fn(altUrl)));
   if (xml) return xml;
   throw new Error('Fetch RSS failed');
 }

@@ -1737,14 +1737,9 @@ async function renderAudit() {
     "user.logout": "Đăng xuất",
   };
 
-  // ✅ Sort theo timestamp mới nhất lên đầu
   const rows = logs
     .slice()
-    .sort((a, b) => {
-      const timeA = new Date(a.timestamp || a.createdAt || 0).getTime();
-      const timeB = new Date(b.timestamp || b.createdAt || 0).getTime();
-      return timeB - timeA; // Mới nhất lên đầu
-    })
+    .reverse()
     .map((a) => {
       const actionLabel = actionLabels[a.action] || a.action;
       const metadata = a.metadata || {};

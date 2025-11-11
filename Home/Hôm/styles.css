@@ -230,8 +230,6 @@ a {
   cursor: pointer;
 }
 
-/* (Hoàn tác) đã gỡ popup vào trang */
-
 /* Account tabs & orders embed */
 .account-tabs {
   display: grid;
@@ -352,49 +350,47 @@ hero-left,
     width: 66px;
   }
 }
-
-/* -------------------- 5) AWARDS -------------------- */
 .awards {
-  background: #2f6b2d; /* xanh lá đậm như mẫu */
+  background: var(--vin-blue);
   color: #fff;
-  overflow: hidden; /* để nội dung cuộn không vượt ra ngoài */
-  border-top: 1px solid rgba(255,255,255,0.18);
-  border-bottom: 1px solid rgba(255,255,255,0.18);
+  padding: 40px 0;
 }
-.awards-row {
+
+.marquee-wrapper {
+  overflow: hidden;
+  width: 100%;
+}
+
+.marquee-track {
   display: flex;
-  align-items: center;
-  gap: 64px; /* khoảng cách lớn như mẫu */
-  padding: 18px 0; /* độ cao thanh marquee */
-  font-size: 26px; /* chữ to dễ đọc */
-  font-weight: 700;
-  flex-wrap: nowrap;        /* marquee cần không xuống dòng */
-  white-space: nowrap;      /* giữ các mục trên 1 dòng */
+  gap: 60px;
+  animation: marquee 20s linear infinite;
 }
-.awards-row > div {
+
+.award-item {
+  flex-shrink: 0;
+  white-space: nowrap;
+  font-weight: 600;
+  font-size: 1.1rem;
   opacity: 0.95;
-  flex: 0 0 auto;           /* tránh co giãn gây giật khi cuộn */
-  background: rgba(255,255,255,0.15);
-  border: 1px solid rgba(255,255,255,0.35);
-  border-radius: 6px;
-  padding: 8px 14px;
 }
 
-/* Hiệu ứng marquee vô hạn */
-.awards-row.marquee {
-  animation: awards-marquee 24s linear infinite; /* tốc độ cuộn */
+/* Keyframes chạy ngang */
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); } /* trôi đi nửa track, nhờ copy thứ 2 liền mạch */
 }
 
-@keyframes awards-marquee {
-  from { transform: translateX(0); }
-  to   { transform: translateX(-50%); } /* cuộn nửa chiều rộng khi đã nhân đôi nội dung */
+/* Pause khi hover */
+.marquee-wrapper:hover .marquee-track {
+  animation-play-state: paused;
 }
+
 
 /* -------------------- 6) ICE VISUAL -------------------- */
 .ice-visual {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  margin-top: 40px;
 }
 .ice-left img,
 .ice-right img {
@@ -1277,6 +1273,8 @@ header.header:not(.header--solid) .logo__img--home {
   filter: brightness(1.1);
   transition: all 0.4s ease;
 }
+
+
 /* Ẩn pop info trên từng lon nước, chỉ dùng pill dưới */
 .shop .pcard .pop {
   display: none !important;

@@ -1,4 +1,4 @@
-﻿/* Removed Google Fonts Montserrat import — dùng Merriweather local */
+/* Removed Google Fonts Montserrat import — dùng Merriweather local */
 @font-face {
   font-family: "Merriweather";
   src: url("../assets/font/Merriweather-VariableFont_opsz,wdth,wght.ttf")
@@ -2925,4 +2925,43 @@ input[type="range"] {
   text-decoration: line-through;
   margin-left: 6px;
   font-weight: 500;
+}
+/* === Custom font for Product Detail modal (index + cart pages) === */
+@font-face {
+  font-family: "BlendaScript";
+  src: url("../assets/font/1FTV-blenda-script.otf") format("opentype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Apply the font + green gradient to Product Detail title and name */
+/* Brand-like soft green gradient */
+:root {
+  /* Tuned to match sample gradient like screenshot */
+  --vvv-green-1: #3f6a33; /* deep olive green */
+  --vvv-green-2: #6fa45a; /* mid soft green */
+  --vvv-green-3: #a6cf77; /* light fresh green */
+}
+
+#productModal #pmTitle,
+#productModal #pmName {
+  font-family: "BlendaScript", cursive;
+  font-weight: 700;
+  line-height: 1.2;
+  /* Match the Flash Sale gradient exactly */
+  background: linear-gradient(180deg, #1b5223 0%, #72c97a 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Slightly larger, elegant look for product name in modal */
+#productModal #pmName {
+  font-size: 1.35rem;
+}
+
+/* Ensure modal header title uses the custom font as well */
+#productModal .modal__head h3#pmTitle {
+  font-size: 1.25rem;
 }
