@@ -128,7 +128,11 @@ echo.
 REM Mở browser tự động
 timeout /t 3 /nobreak >nul
 echo 🌐 Đang mở browser...
+echo    ├─ Trang chủ...
 start http://localhost:8000/Home/Hôm/index.html
+timeout /t 1 /nobreak >nul
+echo    └─ Backoffice...
+start http://localhost:8000/backoffice/
 
 echo.
 echo 💡 Cửa sổ này có thể đóng. Services sẽ tiếp tục chạy.
